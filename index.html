@@ -17,19 +17,7 @@
   <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#333333">
 
   <link rel="stylesheet" href="style.css">
-  <script class="nightmode">
-    if (localStorage.getItem("darkMode")) document.documentElement.classList.toggle("dark")
-    const darkModeToggle = document.documentElement;
-    const darkMode = () => document.documentElement.classList.toggle("dark");
-    darkModeToggle.addEventListener("dblclick", e => {
-        darkMode();
-        if (document.documentElement.classList.contains("dark")) {
-            localStorage.setItem("darkMode", true);
-        } else {
-            localStorage.removeItem("darkMode");
-        }
-    });
-  </script>
+  <script> if (localStorage.getItem("darkMode")) document.documentElement.classList.toggle("dark") </script>
 
 </head>
 
@@ -43,6 +31,11 @@
   <section class="sketch-list">
     <p> <a href="010119.html"> 010119 </a> </p>
   </section>
+
+  <!-- Scripts -->
+  <script src="main.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"> </script>
+  <script> if (!window.p5) document.write('<script src="p5/p5.min.js"> <\/script>'); </script>
 
 </body>
 

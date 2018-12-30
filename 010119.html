@@ -18,19 +18,7 @@
   <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#333333">
 
   <link rel="stylesheet" href="style.css">
-  <script class="nightmode">
-    if (localStorage.getItem("darkMode")) document.documentElement.classList.toggle("dark")
-    const darkModeToggle = document.documentElement;
-    const darkMode = () => document.documentElement.classList.toggle("dark");
-    darkModeToggle.addEventListener("dblclick", e => {
-        darkMode();
-        if (document.documentElement.classList.contains("dark")) {
-            localStorage.setItem("darkMode", true);
-        } else {
-            localStorage.removeItem("darkMode");
-        }
-    });
-  </script>
+  <script> if (localStorage.getItem("darkMode")) document.documentElement.classList.toggle("dark") </script>
 
 </head>
 
@@ -38,10 +26,11 @@
 
   <footer>
     <p> <a class="home" href="index.html">← Home</a> </p>
-    <p> <a class="date">010119</a> </p>
+    <p> <a class="date" href="https://github.com/neefrehman/Generative/blob/master/sketches/010119.js" target="_blank">010119</a> </p>
   </footer>
 
-  <!-- p5 & sketch -->
+  <!-- Scripts -->
+  <script src="main.js"> </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"> </script>
   <script> if (!window.p5) document.write('<script src="p5/p5.min.js"> <\/script>'); </script>
   <script src="sketches/010119.js"> </script>

@@ -74,17 +74,20 @@ html.dark header p a {
 body.sketch {
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
 }
 footer {
+  position: fixed;
+}
+footer a {
+  position: fixed;
   --edgeMargin: 40px;
 }
 footer a.home {
-  position: fixed;
   bottom: var(--edgeMargin);
   left: var(--edgeMargin);
 }
 footer a.date {
-  position: fixed;
   bottom: var(--edgeMargin);
   right: var(--edgeMargin);
 }

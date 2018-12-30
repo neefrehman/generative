@@ -73,6 +73,7 @@ html.dark header p a {
 /* Sketch */
 body.sketch {
   margin: 0;
+  padding: 0;
 }
 footer {
   --edgeMargin: 40px;

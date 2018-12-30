@@ -4,8 +4,8 @@ function setup() {
 
 function draw() {
   if (mouseIsPressed) {
-    stroke(0);
-    fill(Math.floor((Math.random()*255)), Math.floor((Math.random()*255)), Math.floor((Math.random()*255)), 80);
+    noStroke();
+    fill(Math.floor((Math.random()*255)), Math.floor((Math.random()*255)), Math.floor((Math.random()*255)));
   } else {
     noStroke();
     fill(Math.floor((Math.random()*255)), Math.floor((Math.random()*255)), Math.floor((Math.random()*255)), 80);

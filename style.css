@@ -92,7 +92,7 @@ footer a.home {
   bottom: var(--edgeMargin);
   left: var(--edgeMargin);
 }
-footer a.date {
+footer a.code {
   bottom: var(--edgeMargin);
   right: var(--edgeMargin);
 }

@@ -28,3 +28,5 @@ darkModeToggle.addEventListener("dblclick", e => {
 //     });
 //
 // });
+//
+// If URL contains numbers. Find it in sketchLinks and click()

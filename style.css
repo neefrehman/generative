@@ -54,9 +54,11 @@ html.dark a:hover {
 
 /* Home */
 header {
+  margin-bottom: 40px;
+}
+header h1 {
   transform: scale(1.05, 1);
   transform-origin: left;
-  margin-bottom: 40px;
 }
 header a {
   text-decoration: underline;

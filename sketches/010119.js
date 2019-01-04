@@ -6,6 +6,7 @@ function draw() {
 
   noStroke();
   fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
+  frameRate(30);
 
   if (mouseIsPressed) {
     noStroke();
@@ -15,12 +16,11 @@ function draw() {
     fill(255, 0);
   }
 
+  ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
+
   if (windowWidth < 550) {
     ellipse(mouseX, mouseY, (Math.random() * 70), (Math.random() * 70));
-  } else {
-    ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
+    frameRate(20);
   }
-
-  frameRate(30);
 
 }

@@ -36,7 +36,6 @@ html.dark body {
 html.dark a {
   color: #fff;
   background-color: #555;
-  background-color: rgb(225, 225, 225, 0.3);
 }
 
 html.dark a:hover {

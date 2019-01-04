@@ -80,6 +80,7 @@ body.sketch {
 }
 canvas {
   position: fixed;
+  z-index: -1;
 }
 footer {
   position: fixed;

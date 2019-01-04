@@ -4,15 +4,15 @@ function setup() {
 
 function draw() {
 
+  noStroke();
+  fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
+
   if (mouseIsPressed) {
     noStroke();
     fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255));
   } if (mouseX == pmouseX && mouseY == pmouseY) {
     noStroke();
     fill(255, 0);
-  } else {
-    noStroke();
-    fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
   }
 
   if (windowWidth < 550) {

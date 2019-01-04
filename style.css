@@ -76,6 +76,9 @@ body.sketch {
   padding: 0;
   overflow-y: hidden;
 }
+canvas {
+  position: fixed;
+}
 footer {
   position: fixed;
 }

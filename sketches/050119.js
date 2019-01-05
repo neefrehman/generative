@@ -4,6 +4,8 @@ function setup() {
 
 function draw() {
 
+  frameRate(10);
+
   const x1 = (Math.random() * 200);
   const y1 = (Math.random() * 200);
   const x2 = (Math.random() * 200);
@@ -14,22 +16,33 @@ function draw() {
   const y4 = (Math.random() * 200);
 
   noStroke();
-  frameRate(10);
   fill((Math.random() * 255), 200);
 
   translate((-windowWidth/2), -windowHeight/2);
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
   for (var i = 0; i <= windowWidth; i += 200) {
     translate(200, 0);
     quad(x1, y1, x2, y2, x3, y3, x4, y4);
   }
 
-  translate(-windowWidth, 0);
+  for (var i2 = 0; i2 <= windowHeight; i2 += 200) {
 
-  for (var i2 = 0; i2 <= windowWidth; i2 += 200) {
-    translate(0, 200);
-    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    stroke((Math.random() * 255), 200);
+    noFill();
+    translate(-windowWidth - 400, 200);
+    for (var i = 0; i <= windowWidth + 200; i += 200) {
+      translate(200, 0);
+      quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    }
+
+    noStroke();
+    fill((Math.random() * 255), 200);
+    translate(-windowWidth - 400, 200);
+    for (var i = 0; i <= windowWidth + 200; i += 200) {
+      translate(200, 0);
+      quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    }
+
   }
 
 }

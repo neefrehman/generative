@@ -17,124 +17,19 @@ function draw() {
   frameRate(10);
   fill((Math.random() * 255), 200);
 
-  translate(-windowWidth/2, -windowHeight/2);
+  translate((-windowWidth/2), -windowHeight/2);
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
 
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
+  for (var i = 0; i <= windowWidth; i += 200) {
+    translate(200, 0);
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+  }
 
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
+  translate(-windowWidth, 0);
 
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(-windowWidth, 200);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(-windowWidth, 200);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(-windowWidth, 200);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(-windowWidth, 200);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-
-  translate(200, 0);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
+  for (var i2 = 0; i2 <= windowWidth; i2 += 200) {
+    translate(0, 200);
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+  }
 
 }

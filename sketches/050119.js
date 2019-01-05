@@ -15,33 +15,36 @@ function draw() {
   const x4 = (Math.random() * 200);
   const y4 = (Math.random() * 200);
 
-  noStroke();
-  fill((Math.random() * 255), 200);
+  const filled = ()=> {
+    noStroke();
+    fill((Math.random() * 255), 200);
+  };
 
-  translate((-windowWidth/2), -windowHeight/2);
-  quad(x1, y1, x2, y2, x3, y3, x4, y4);
-  for (var i = 0; i <= windowWidth; i += 200) {
-    translate(200, 0);
-    quad(x1, y1, x2, y2, x3, y3, x4, y4);
-  }
+  const outlined = ()=> {
+    stroke((Math.random() * 255), 200);
+    noFill();
+  };
+
+  const drawHorizontally = () => {
+    for (var i = 0; i <= windowWidth + 200; i += 200) {
+      translate(200, 0);
+      quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    }
+  };
+
+  translate((-windowWidth/2) - 200, -windowHeight/2);
+  filled();
+  drawHorizontally();
 
   for (var i2 = 0; i2 <= windowHeight; i2 += 200) {
 
-    stroke((Math.random() * 255), 200);
-    noFill();
     translate(-windowWidth - 400, 200);
-    for (var i = 0; i <= windowWidth + 200; i += 200) {
-      translate(200, 0);
-      quad(x1, y1, x2, y2, x3, y3, x4, y4);
-    }
+    outlined();
+    drawHorizontally();
 
-    noStroke();
-    fill((Math.random() * 255), 200);
     translate(-windowWidth - 400, 200);
-    for (var i = 0; i <= windowWidth + 200; i += 200) {
-      translate(200, 0);
-      quad(x1, y1, x2, y2, x3, y3, x4, y4);
-    }
+    filled();
+    drawHorizontally();
 
   }
 

@@ -25,26 +25,24 @@ function draw() {
   };
 
   const drawHorizontally = () => {
-    for (var i = 0; i <= windowWidth + 400; i += 200) {
+    for (var i = 0; i <= width + 400; i += 200) {
       translate(200, 0);
       quad(x1, y1, x2, y2, x3, y3, x4, y4);
     }
   };
 
-  translate((-windowWidth/2) - 200, -windowHeight/2);
+  translate((-width/2) - 200, -height/2);
   filled();
   drawHorizontally();
 
-  for (var i2 = 0; i2 <= windowHeight; i2 += 200) {
-
-    translate(-windowWidth - 600, 200);
+  for (var i2 = 0; i2 <= height; i2 += 200) {
+    translate(-width - 600, 200);
     outlined();
     drawHorizontally();
 
-    translate(-windowWidth - 600, 200);
+    translate(-width - 600, 200);
     filled();
     drawHorizontally();
-
   }
 
 }

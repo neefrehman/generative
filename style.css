@@ -70,6 +70,18 @@ html.dark header p a {
   text-decoration: underline;
   background-color: initial;
 }
+.sketch-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 420px;
+  width: max-content;
+  justify-content: flex-start;
+}
+.sketch-list a {
+  margin: 0 1em 1em 0;
+  width: max-content;
+}
 
 /* Sketch */
 body.sketch {

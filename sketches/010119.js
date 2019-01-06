@@ -5,6 +5,7 @@ function setup() {
 function draw() {
 
   noStroke();
+  // background(255);
   ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
   fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
   frameRate(30);

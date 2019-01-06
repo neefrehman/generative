@@ -5,8 +5,9 @@ function setup() {
 
 function draw() {
 
-  const posX = mouseX + (200 * Math.random()) - 200 * Math.random();
-  const posY = mouseY + (200 * Math.random()) - 200 * Math.random();
+  let distanceFromMouse = width > 769 ? 200 : 100;
+  const posX = mouseX + (distanceFromMouse * Math.random()) - distanceFromMouse * Math.random();
+  const posY = mouseY + (distanceFromMouse * Math.random()) - distanceFromMouse * Math.random();
   const col = mouseX / width * (255 * Math.random());
 
   noStroke();

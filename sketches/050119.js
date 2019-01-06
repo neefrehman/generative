@@ -1,10 +1,9 @@
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
+  frameRate(10);
 }
 
 function draw() {
-
-  frameRate(10);
 
   const x1 = (Math.random() * 200);
   const y1 = (Math.random() * 200);

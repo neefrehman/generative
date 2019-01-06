@@ -1,5 +1,6 @@
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
+  frameRate(10);
 }
 
 const x1 = (Math.random() * 100);
@@ -12,8 +13,6 @@ const x4 = (Math.random() * 100);
 const y4 = (Math.random() * 100);
 
 function draw() {
-
-  frameRate(10);
 
   const filled = ()=> {
     noStroke();

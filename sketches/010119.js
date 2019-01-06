@@ -1,14 +1,14 @@
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  frameRate(30);
 }
 
 function draw() {
 
-  noStroke();
   // background(255);
   ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
+  noStroke();
   fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
-  frameRate(30);
 
   if (mouseIsPressed) {
     fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255));

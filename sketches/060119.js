@@ -24,7 +24,7 @@ function draw() {
     noFill();
   };
 
-  const drawHorizontal = () => {
+  const drawHorizontally = () => {
     for (var i = 0; i <= windowWidth + 100; i += 100) {
       translate(100, 0);
       quad(x1, y1, x2, y2, x3, y3, x4, y4);
@@ -33,17 +33,17 @@ function draw() {
 
   translate((-windowWidth/2) - 100, -windowHeight/2);
   filled();
-  drawHorizontal();
+  drawHorizontally();
 
   for (var i2 = 0; i2 <= windowHeight; i2 += 100) {
 
     translate(-windowWidth - 180, 100);
     outlined();
-    drawHorizontal();
+    drawHorizontally();
 
     translate(-windowWidth - 180, 100);
     filled();
-    drawHorizontal();
+    drawHorizontally();
 
   }
 

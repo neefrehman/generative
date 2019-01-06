@@ -17,3 +17,7 @@ function draw() {
   specularMaterial(255, 255, 255);
 
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}

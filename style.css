@@ -74,7 +74,7 @@ html.dark header p a {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  max-height: 420px;
+  max-height: 75vh;
   width: max-content;
   justify-content: flex-start;
 }

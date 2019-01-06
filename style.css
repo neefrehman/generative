@@ -82,6 +82,11 @@ html.dark header p a {
   margin: 0 1em 1em 0;
   width: max-content;
 }
+@media (max-width: 769px) {
+  header {
+    margin-bottom: 30px;
+  }
+}
 
 /* Sketch */
 body.sketch {

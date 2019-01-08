@@ -53,7 +53,7 @@ homeLink.addEventListener("click", () => {
         canvas.remove();
     }
 
-    history.replaceState("", document.title, window.location.href);
+    history.replaceState("", document.title, window.location.pathname);
     document.title = "Generative - Neef Rehman";
 });
 

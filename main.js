@@ -60,9 +60,6 @@ homeLink.addEventListener("click", () => {
 
 
 // Back button
-window.addEventListener('popstate', () => {
-    history.pushState(null, null, document.URL);
-});
 
 
 // if (URL contains xxxxxx) {

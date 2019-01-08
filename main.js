@@ -28,7 +28,8 @@ sketchLinks.forEach(sketchLink => {
         footer.classList.add("show");
         homeContent.classList.add("hide");
 
-        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, `${sketchName}.html`);
+        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
+        document.title = `${sketchName} - Generative - Neef Rehman`;
         codeLink.innerHTML = sketchName;
         codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
 

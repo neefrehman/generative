@@ -33,6 +33,7 @@ sketchLinks.forEach(sketchLink => {
         codeLink.innerHTML = sketchName;
         codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
 
+        // make the script run once appended
         const script = document.createElement("script");
         script.onload = () => {
         };
@@ -58,4 +59,15 @@ homeLink.addEventListener("click", () => {
 });
 
 
-// If URL contains numbers. Find it in sketchLinks and click()
+// Back button
+window.addEventListener('popstate', () => {
+    history.pushState(null, null, document.URL);
+});
+
+
+// if (URL contains xxxxxx) {
+//     const linkedSketch = window.url;
+//     const linkedSketchButton = document.querySelector(".sketchURL");
+//
+//     linkedSketchButton.click();
+// }

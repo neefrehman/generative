@@ -99,7 +99,7 @@ footer.show {
 
 footer a {
   position: fixed;
-  --edgeMargin: 40px;
+  --edgeMargin: 45px;
 }
 
 footer a.home {

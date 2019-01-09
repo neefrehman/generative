@@ -25,11 +25,11 @@ sketchLinks.forEach(sketchLink => {
 
     sketchLink.addEventListener("click", () => {
         const sketchName = sketchLink.innerHTML;
+        const script = document.createElement("script");
 
         footer.classList.add("show");
         homeContent.classList.add("hide");
 
-        const script = document.createElement("script");
         script.src = `sketches/${sketchName}.js`;
         document.body.appendChild(script);
 

@@ -53,18 +53,19 @@ homeLink.addEventListener("click", () => {
 });
 
 
-// Back button back to index.html
+// TODO: Back button back to index.html
+
 
 const getURLPath = () => location.pathname.split('/').filter((v) => v !== '');
 const linkedSketch = getURLPath();
 
-if (linkedSketch.length >= 1) {
+if (linkedSketch.length >= 1 && (location.protocol != "file:")) {
     const sketchId = linkedSketch[linkedSketch.length - 1];
     const linkedSketchButton = document.getElementById(sketchId);
 
     if (linkedSketchButton) {
         linkedSketchButton.click();
-    } else if (linkedSketch.length < 5) {
+    } else {
         window.location.href = "/404";
     }
 }

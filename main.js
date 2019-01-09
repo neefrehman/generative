@@ -65,6 +65,6 @@ if (5 > linkedSketch.length >= 1) {
     if (linkedSketchButton) {
         linkedSketchButton.click();
     } else {
-        window.location.href = "/404";
+        // window.location.href = "/404";
     }
 }

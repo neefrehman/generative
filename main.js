@@ -64,8 +64,8 @@ const getURLPath = () => location.pathname.split('/').filter((v) => v !== '');
         } else if (linkedSketch.length >= 1) {
             const sketchId = linkedSketch[linkedSketch.length - 1];
             console.log(sketchId);
-            
-            const linkedSketchButton = document.querySelector(`#${sketchId}`);
+
+            const linkedSketchButton = document.getElementById(sketchId);
             linkedSketchButton.click();
         }
 // }

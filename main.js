@@ -47,14 +47,13 @@ const goHome = () => {
 
 const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
 const linkedSketch = urlPath()[urlPath().length - 1];
-const filePath = location.href.split(location.host)[1];
 
 if (urlPath().length >= 1 && location.protocol != "file:") {
     const sketchButton = document.getElementById(linkedSketch);
 
     if (sketchButton) {
         goToSketch(linkedSketch);
-    } else if (filePath != "/404") {
+    } else if (location.href.split(location.host)[1] != "/404") {
         window.location.href = "/404";
     }
 }
@@ -69,7 +68,7 @@ window.addEventListener("popstate", () => {
     const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
     const newLinkedSketch = newUrlPath()[newUrlPath().length - 1];
 
-    if (filePath != "/") {
+    if (newUrlPath().length == 0) {
         goHome();
     } else {
         goToSketch(newLinkedSketch);

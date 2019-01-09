@@ -52,8 +52,8 @@ if (urlPath().length >= 1 && location.protocol != "file:") {
 
     if (sketchButton) {
         goToSketch(linkedSketch);
-    } else {
-        if (location.href.split(location.host)[1] != "/404") window.location.href = "/404";
+    } else if (location.href.split(location.host)[1] != "/404") {
+        window.location.href = "/404";
     }
 }
 

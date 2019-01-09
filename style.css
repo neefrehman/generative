@@ -102,13 +102,13 @@ footer a {
   --edgeMargin: 45px;
 }
 
-footer a.home {
+footer a.home-link {
   bottom: var(--edgeMargin);
   left: var(--edgeMargin);
   cursor: pointer;
 }
 
-footer a.code {
+footer a.code-link {
   bottom: var(--edgeMargin);
   right: var(--edgeMargin);
 }

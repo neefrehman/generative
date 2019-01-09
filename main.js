@@ -14,12 +14,11 @@ darkModeToggle.addEventListener("dblclick", e => {
 
 
 // SPA logic
-const sketchLinks = document.querySelectorAll(".sketchlink");
-const codeLink = document.querySelector(".code");
-const scriptContainer = document.querySelector(".script-container");
 const homeContent = document.querySelector(".home-content");
+const sketchLinks = document.querySelectorAll(".sketchlink");
 const footer = document.querySelector("footer");
-const homeLink = document.querySelector(".home");
+const homeLink = document.querySelector(".home-link");
+const codeLink = document.querySelector(".code-link");
 
 sketchLinks.forEach(sketchLink => {
 

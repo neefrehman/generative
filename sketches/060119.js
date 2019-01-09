@@ -3,14 +3,14 @@ function setup() {
   frameRate(10);
 }
 
-const x1 = (Math.random() * 100);
-const y1 = (Math.random() * 100);
-const x2 = (Math.random() * 100);
-const y2 = (Math.random() * 100);
-const x3 = (Math.random() * 100);
-const y3 = (Math.random() * 100);
-const x4 = (Math.random() * 100);
-const y4 = (Math.random() * 100);
+let x1 = (Math.random() * 100);
+let y1 = (Math.random() * 100);
+let x2 = (Math.random() * 100);
+let y2 = (Math.random() * 100);
+let x3 = (Math.random() * 100);
+let y3 = (Math.random() * 100);
+let x4 = (Math.random() * 100);
+let y4 = (Math.random() * 100);
 
 function draw() {
 

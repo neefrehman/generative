@@ -1,5 +1,3 @@
-console.log("I've been loaded");
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
@@ -17,3 +15,5 @@ function draw() {
   ellipse(posX, posY, 30, 30);
 
 }
+
+new p5();

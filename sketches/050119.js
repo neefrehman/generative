@@ -1,5 +1,3 @@
-console.log("I've been loaded");
-
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   frameRate(10);
@@ -52,3 +50,5 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
+new p5();

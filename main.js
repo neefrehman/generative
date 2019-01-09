@@ -19,6 +19,7 @@ const codeLink = document.querySelector(".code");
 const scriptContainer = document.querySelector(".script-container");
 const homeContent = document.querySelector(".home-content");
 const footer = document.querySelector("footer");
+const homeLink = document.querySelector(".home");
 
 sketchLinks.forEach(sketchLink => {
 
@@ -28,31 +29,28 @@ sketchLinks.forEach(sketchLink => {
         footer.classList.add("show");
         homeContent.classList.add("hide");
 
-        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
-        document.title = `${sketchName} - Generative - Neef Rehman`;
-        codeLink.innerHTML = sketchName;
-        codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
-
         const script = document.createElement("script");
         script.src = `sketches/${sketchName}.js`;
         document.body.appendChild(script);
+
+        document.title = `${sketchName} - Generative - Neef Rehman`;
+        codeLink.innerHTML = sketchName;
+        codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
+        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
     });
 
 });
 
 
-const homeLink = document.querySelector(".home");
-const canvas = document.querySelector("canvas");
-
 homeLink.addEventListener("click", () => {
     footer.classList.remove("show");
     homeContent.classList.remove("hide");
-    if (canvas) canvas.remove();
 
-    history.replaceState("", document.title, "/");
-    document.title = "Generative - Neef Rehman";
-
+    remove();
     document.body.removeChild(document.body.lastChild);
+
+    document.title = "Generative - Neef Rehman";
+    history.replaceState("", document.title, "/");
 });
 
 

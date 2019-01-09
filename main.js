@@ -21,19 +21,17 @@ const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 
 const goToSketch = sketch => {
-    const sketchName = sketch.innerHTML;
-    const script = document.createElement("script");
-
     footer.classList.add("show");
     homeContent.classList.add("hide");
 
-    script.src = `sketches/${sketchName}.js`;
+    const script = document.createElement("script");
+    script.src = `sketches/${sketch}.js`;
     document.body.appendChild(script);
 
-    document.title = `${sketchName} - Generative - Neef Rehman`;
-    codeLink.innerHTML = sketchName;
-    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
-    history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
+    document.title = `${sketch} - Generative - Neef Rehman`;
+    codeLink.innerHTML = sketch;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketch}.js`;
+    history.replaceState("", `${sketch} - Generative - Neef Rehman`, sketch);
 };
 
 const goHome = () => {
@@ -48,7 +46,7 @@ const goHome = () => {
 };
 
 sketchLinks.forEach(sketchLink => {
-    sketchLink.addEventListener("click", () => goToSketch(sketchLink));
+    sketchLink.addEventListener("click", () => goToSketch(sketchLink.innerHTML));
 });
 
 homeLink.addEventListener("click", () => goHome());
@@ -65,7 +63,7 @@ if (linkedSketch.length >= 1 && (location.protocol != "file:")) {
     const linkedSketchButton = document.getElementById(sketchId);
 
     if (linkedSketchButton) {
-        goToSketch(linkedSketchButton);
+        goToSketch(sketchId);
     } else {
         window.location.href = "/404";
     }

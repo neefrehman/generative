@@ -66,7 +66,7 @@ const getURLPath = () => location.pathname.split('/').filter((v) => v !== '');
             console.log(sketchId);
         }
 
-    const linkedSketchButton = document.querySelector(".sketchURL");
+    const linkedSketchButton = document.querySelector(`#${sketchId}`);
 
     linkedSketchButton.click();
 // }

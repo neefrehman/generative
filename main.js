@@ -15,28 +15,26 @@ darkModeToggle.addEventListener("dblclick", e => {
 // SPA logic
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
-const footer = document.querySelector("footer");
+const sketchContent = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
-const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
-const linkedSketch = urlPath()[urlPath().length - 1];
 
 const goToSketch = sketch => {
-    footer.classList.add("show");
+    sketchContent.classList.add("show");
     homeContent.classList.add("hide");
 
     const script = document.createElement("script");
     script.src = `sketches/${sketch}.js`;
     document.body.appendChild(script);
 
-    document.title = `${sketch} - Generative - Neef Rehman`;
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketch}.js`;
+    document.title = `${sketch} - Generative - Neef Rehman`;
     history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
 };
 
 const goHome = () => {
-    footer.classList.remove("show");
+    sketchContent.classList.remove("show");
     homeContent.classList.remove("hide");
 
     remove();
@@ -45,6 +43,9 @@ const goHome = () => {
     document.title = "Generative - Neef Rehman";
     history.pushState("", document.title, "/");
 };
+
+const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
+const linkedSketch = urlPath()[urlPath().length - 1];
 
 if (urlPath().length >= 1 && location.protocol != "file:") {
     const sketchButton = document.getElementById(linkedSketch);
@@ -67,6 +68,7 @@ window.addEventListener("popstate", () => goHome());
 // window.addEventListener("popstate", () => {
 //     let newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
 //     let newLinkedSketch = urlPath()[urlPath().length - 1];
+
 //     if (newUrlPath.length == 0) {
 //         goHome();
 //     } else {

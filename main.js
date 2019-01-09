@@ -1,9 +1,8 @@
 // Dark mode
 const darkModeToggle = document.documentElement;
-const darkMode = () => document.documentElement.classList.toggle("dark");
 
 darkModeToggle.addEventListener("dblclick", e => {
-    darkMode();
+    document.documentElement.classList.toggle("dark");
 
     if (document.documentElement.classList.contains("dark")) {
         localStorage.setItem("darkMode", true);
@@ -33,7 +32,7 @@ const goToSketch = sketch => {
     document.title = `${sketch} - Generative - Neef Rehman`;
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketch}.js`;
-    history.replaceState("", `${sketch} - Generative - Neef Rehman`, sketch);
+    history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
 };
 
 const goHome = () => {
@@ -44,10 +43,10 @@ const goHome = () => {
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";
-    history.replaceState("", document.title, "/");
+    history.pushState("", document.title, "/");
 };
 
-if (urlPath().length >= 1 && (location.protocol != "file:")) {
+if (urlPath().length >= 1 && location.protocol != "file:") {
     const sketchButton = document.getElementById(linkedSketch);
 
     if (sketchButton) {

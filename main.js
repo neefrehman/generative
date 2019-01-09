@@ -16,6 +16,7 @@ darkModeToggle.addEventListener("dblclick", e => {
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
 const sketchContent = document.querySelector("footer");
+const canvas = document.querySelector("canvas");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 
@@ -38,6 +39,7 @@ const goHome = () => {
     homeContent.classList.remove("hide");
 
     remove();
+    canvas.remove();
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";

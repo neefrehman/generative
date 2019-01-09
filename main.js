@@ -53,7 +53,7 @@ if (urlPath().length >= 1 && location.protocol != "file:") {
     if (sketchButton) {
         goToSketch(linkedSketch);
     } else {
-        window.location.href = "/404";
+        if (location.href.split(location.host)[1] != "/404") window.location.href = "/404";
     }
 }
 

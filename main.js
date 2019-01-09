@@ -63,15 +63,13 @@ sketchLinks.forEach(link => {
 
 homeLink.addEventListener("click", () => goHome());
 
-window.addEventListener("popstate", () => goHome());
+window.addEventListener("popstate", () => {
+    const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
+    const newLinkedSketch = urlPath()[urlPath().length - 1];
 
-// window.addEventListener("popstate", () => {
-//     let newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
-//     let newLinkedSketch = urlPath()[urlPath().length - 1];
-
-//     if (newUrlPath.length == 0) {
-//         goHome();
-//     } else {
-//         goToSketch(newLinkedSketch);
-//     }
-//   });
+    if (newUrlPath.length == 0) {
+        goHome();
+    } else {
+        goToSketch(newLinkedSketch);
+    }
+  });

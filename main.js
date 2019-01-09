@@ -39,7 +39,6 @@ const goHome = () => {
     homeContent.classList.remove("hide");
 
     remove();
-    canvas.remove();
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";

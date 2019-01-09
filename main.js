@@ -58,14 +58,13 @@ homeLink.addEventListener("click", () => {
 const getURLPath = () => location.pathname.split('/').filter((v) => v !== '');
 const linkedSketch = getURLPath();
 
-if (linkedSketch.length == 0) {
-    console.log("at home page");
-} else if (linkedSketch.length >= 1) {
+if (5 > linkedSketch.length >= 1) {
     const sketchId = linkedSketch[linkedSketch.length - 1];
     const linkedSketchButton = document.getElementById(sketchId);
-    if (!linkedSketchButton) {
-        window.location.href = "/404.html";
-    } else {
+
+    if (linkedSketchButton) {
         linkedSketchButton.click();
+    } else {
+        window.location.href = "/404";
     }
 }

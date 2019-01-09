@@ -67,11 +67,11 @@ homeLink.addEventListener("click", () => goHome());
 
 window.addEventListener("popstate", () => {
     // const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
-    // const linkedSketch = urlPath()[urlPath().length - 1];
+    const pastSketch = urlPath()[urlPath().length - 1];
 
     if (urlPath().length == 0) {
         goHome();
     } else {
-        goToSketch(linkedSketch);
+        goToSketch(pastSketch);
     }
   });

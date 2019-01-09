@@ -41,7 +41,7 @@ const goHome = () => {
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";
-    history.pushState("", document.title, "/");
+    history.replaceState("", document.title, "/");
 };
 
 const urlPath = () => location.pathname.split("/").filter((v) => v !== "");

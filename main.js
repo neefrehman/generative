@@ -16,7 +16,6 @@ darkModeToggle.addEventListener("dblclick", e => {
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
 const sketchContent = document.querySelector("footer");
-const canvas = document.querySelector("canvas");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 
@@ -42,7 +41,7 @@ const goHome = () => {
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";
-    history.replaceState("", document.title, "/");
+    history.pushState("", document.title, "/");
 };
 
 const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
@@ -68,9 +67,9 @@ window.addEventListener("popstate", () => {
     const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
     const newLinkedSketch = newUrlPath()[newUrlPath().length - 1];
 
-    if (newUrlPath().length >= 1) {
-        goToSketch(newLinkedSketch);
-    } else {
+    if (newUrlPath().length == 0) {
         goHome();
+    } else {
+        goToSketch(newLinkedSketch);
     }
   });

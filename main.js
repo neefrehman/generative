@@ -19,8 +19,8 @@ const sketchLinks = document.querySelectorAll(".sketchlink");
 const footer = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
-const getURLPath = () => location.pathname.split("/").filter((v) => v !== "");
-const linkedSketch = getURLPath()[getURLPath().length - 1];
+const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
+const linkedSketch = urlPath()[urlPath().length - 1];
 
 const goToSketch = sketch => {
     footer.classList.add("show");
@@ -47,7 +47,7 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
-if (getURLPath().length >= 1 && (location.protocol != "file:")) {
+if (urlPath().length >= 1 && (location.protocol != "file:")) {
     const sketchButton = document.getElementById(linkedSketch);
 
     if (sketchButton) {

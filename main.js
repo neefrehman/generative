@@ -67,7 +67,7 @@ window.addEventListener("popstate", () => {
     const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
     const newLinkedSketch = newUrlPath()[newUrlPath().length - 1];
 
-    if (newUrlPath.length == 0) {
+    if (newUrlPath().length == 0) {
         goHome();
     } else {
         goToSketch(newLinkedSketch);

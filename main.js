@@ -51,7 +51,7 @@ if (getURLPath().length >= 1 && (location.protocol != "file:")) {
     const sketchButton = document.getElementById(linkedSketch);
 
     if (sketchButton) {
-        goToSketch(sketchId);
+        goToSketch(linkedSketch);
     } else {
         window.location.href = "/404";
     }

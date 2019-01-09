@@ -13,7 +13,7 @@ darkModeToggle.addEventListener("dblclick", e => {
 });
 
 
-// SPA
+// SPA logic
 const sketchLinks = document.querySelectorAll(".sketchlink");
 const codeLink = document.querySelector(".code");
 const scriptContainer = document.querySelector(".script-container");
@@ -28,15 +28,12 @@ sketchLinks.forEach(sketchLink => {
         footer.classList.add("show");
         homeContent.classList.add("hide");
 
-        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
+        // history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
         document.title = `${sketchName} - Generative - Neef Rehman`;
         codeLink.innerHTML = sketchName;
         codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
 
-        // make the script run once appended
         const script = document.createElement("script");
-        script.onload = () => {
-        };
         script.src = `sketches/${sketchName}.js`;
         document.body.appendChild(script);
     });
@@ -50,20 +47,20 @@ const canvas = document.querySelector("canvas");
 homeLink.addEventListener("click", () => {
     footer.classList.remove("show");
     homeContent.classList.remove("hide");
-    if (canvas) {
-        canvas.remove();
-    }
+    if (canvas) canvas.remove();
 
-    history.replaceState("", document.title, "/");
+    // history.replaceState("", document.title, "/");
     document.title = "Generative - Neef Rehman";
+
+    document.body.removeChild(document.body.lastChild);
 });
 
 
-// Back button
+// Back button back to index.html
 
 
 // if (URL contains xxxxxx) {
-//     const linkedSketch = window.url;
+//     const linkedSketch = window.url.substring[0];
 //     const linkedSketchButton = document.querySelector(".sketchURL");
 //
 //     linkedSketchButton.click();

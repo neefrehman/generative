@@ -1,3 +1,5 @@
+console.log("I've been loaded");
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(30);

@@ -19,6 +19,8 @@ const sketchLinks = document.querySelectorAll(".sketchlink");
 const footer = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
+const getURLPath = () => location.pathname.split("/").filter((v) => v !== "");
+const linkedSketch = getURLPath()[getURLPath().length - 1];
 
 const goToSketch = sketch => {
     footer.classList.add("show");
@@ -45,26 +47,20 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
-sketchLinks.forEach(sketchLink => {
-    sketchLink.addEventListener("click", () => goToSketch(sketchLink.innerHTML));
-});
+if (getURLPath().length >= 1 && (location.protocol != "file:")) {
+    const sketchButton = document.getElementById(linkedSketch);
 
-homeLink.addEventListener("click", () => goHome());
-
-
-// TODO: Back button => goHome();
-
-
-const getURLPath = () => location.pathname.split("/").filter((v) => v !== "");
-const linkedSketch = getURLPath();
-
-if (linkedSketch.length >= 1 && (location.protocol != "file:")) {
-    const sketchId = linkedSketch[linkedSketch.length - 1];
-    const linkedSketchButton = document.getElementById(sketchId);
-
-    if (linkedSketchButton) {
+    if (sketchButton) {
         goToSketch(sketchId);
     } else {
         window.location.href = "/404";
     }
 }
+
+sketchLinks.forEach(link => {
+    link.addEventListener("click", () => goToSketch(link.innerHTML));
+});
+
+homeLink.addEventListener("click", () => goHome());
+
+// TODO: Back button => goHome();

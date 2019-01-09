@@ -62,9 +62,4 @@ sketchLinks.forEach(link => {
 
 homeLink.addEventListener("click", () => goHome());
 
-window.onpopstate = e => {
-    goHome();
-    e.preventDefault();
-};
-
-// TODO: Back button => goHome();
+window.onpopstate = () => goHome();

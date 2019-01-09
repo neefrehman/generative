@@ -20,28 +20,23 @@ const footer = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 
-sketchLinks.forEach(sketchLink => {
+const goToSketch = sketch => {
+    const sketchName = sketch.innerHTML;
+    const script = document.createElement("script");
 
-    sketchLink.addEventListener("click", () => {
-        const sketchName = sketchLink.innerHTML;
-        const script = document.createElement("script");
+    footer.classList.add("show");
+    homeContent.classList.add("hide");
 
-        footer.classList.add("show");
-        homeContent.classList.add("hide");
+    script.src = `sketches/${sketchName}.js`;
+    document.body.appendChild(script);
 
-        script.src = `sketches/${sketchName}.js`;
-        document.body.appendChild(script);
+    document.title = `${sketchName} - Generative - Neef Rehman`;
+    codeLink.innerHTML = sketchName;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
+    history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
+};
 
-        document.title = `${sketchName} - Generative - Neef Rehman`;
-        codeLink.innerHTML = sketchName;
-        codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchName}.js`;
-        history.replaceState("", `${sketchName} - Generative - Neef Rehman`, sketchName);
-    });
-
-});
-
-
-homeLink.addEventListener("click", () => {
+const goHome = () => {
     footer.classList.remove("show");
     homeContent.classList.remove("hide");
 
@@ -50,13 +45,19 @@ homeLink.addEventListener("click", () => {
 
     document.title = "Generative - Neef Rehman";
     history.replaceState("", document.title, "/");
+};
+
+sketchLinks.forEach(sketchLink => {
+    sketchLink.addEventListener("click", () => goToSketch(sketchLink));
 });
 
+homeLink.addEventListener("click", () => goHome());
 
-// TODO: Back button back to index.html
+
+// TODO: Back button => goHome();
 
 
-const getURLPath = () => location.pathname.split('/').filter((v) => v !== '');
+const getURLPath = () => location.pathname.split("/").filter((v) => v !== "");
 const linkedSketch = getURLPath();
 
 if (linkedSketch.length >= 1 && (location.protocol != "file:")) {
@@ -64,7 +65,7 @@ if (linkedSketch.length >= 1 && (location.protocol != "file:")) {
     const linkedSketchButton = document.getElementById(sketchId);
 
     if (linkedSketchButton) {
-        linkedSketchButton.click();
+        goToSketch(sketchId);
     } else {
         window.location.href = "/404";
     }

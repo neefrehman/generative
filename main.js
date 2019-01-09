@@ -70,7 +70,7 @@ window.addEventListener("popstate", () => {
 
     if (newUrlPath().length == 0) {
         goHome();
-    } else {
+    } else if (newLinkedSketch) {
         goToSketch(newLinkedSketch);
     }
   });

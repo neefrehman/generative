@@ -64,7 +64,7 @@ sketchLinks.forEach(link => {
 homeLink.addEventListener("click", () => goHome());
 
 window.addEventListener("popstate", () => {
-    urlPath = getURLPath();
+    urlPath = getUrlPath();
     const newLinkedSketch = urlPath[urlPath.length - 1];
 
     if (urlPath.length == 0 || newLinkedSketch == linkedSketch) {

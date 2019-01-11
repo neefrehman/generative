@@ -66,7 +66,7 @@ homeLink.addEventListener("click", () => goHome());
 window.addEventListener("popstate", () => {
     const newLinkedSketch = urlPath()[urlPath().length - 1];
 
-    if (newUrlPath().length == 0 || newLinkedSketch == linkedSketch) {
+    if (urlPath().length == 0 || newLinkedSketch == linkedSketch) {
         goHome();
     } else {
         goToSketch(newLinkedSketch);

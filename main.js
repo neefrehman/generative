@@ -45,7 +45,7 @@ const goHome = () => {
 };
 
 const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
-const linkedSketch = urlPath()[urlPath().length - 1];
+let linkedSketch = urlPath()[urlPath().length - 1];
 
 if (urlPath().length >= 1 && location.protocol != "file:") {
     const sketchButton = document.getElementById(linkedSketch);
@@ -64,12 +64,13 @@ sketchLinks.forEach(link => {
 homeLink.addEventListener("click", () => goHome());
 
 window.addEventListener("popstate", () => {
-    const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
-    const newLinkedSketch = newUrlPath()[newUrlPath().length - 1];
+    const newLinkedSketch = urlPath()[urlPath().length - 1];
 
-    if (newUrlPath().length == 0) {
+    if (newUrlPath().length == 0 || newLinkedSketch == linkedSketch) {
         goHome();
     } else {
         goToSketch(newLinkedSketch);
     }
-  });
+
+    linkedSketch = urlPath()[urlPath().length - 1];
+});

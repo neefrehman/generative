@@ -41,7 +41,7 @@ const goHome = () => {
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";
-    // history.replaceState("", document.title, "/");
+    history.pushState("", document.title, "/");
 };
 
 const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
@@ -61,10 +61,7 @@ sketchLinks.forEach(link => {
     link.addEventListener("click", () => goToSketch(link.innerHTML));
 });
 
-homeLink.addEventListener("click", () => {
-  goHome();
-  history.pushState("", document.title, "/");
-});
+homeLink.addEventListener("click", () => goHome());
 
 window.addEventListener("popstate", () => {
     const newUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
@@ -72,7 +69,6 @@ window.addEventListener("popstate", () => {
 
     if (newUrlPath().length == 0) {
         goHome();
-        history.replaceState("", document.title, "/");
     } else {
         goToSketch(newLinkedSketch);
     }

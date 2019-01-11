@@ -57,12 +57,6 @@ if (urlPath.length >= 1 && location.protocol != "file:") {
     }
 }
 
-sketchLinks.forEach(link => {
-    link.addEventListener("click", () => goToSketch(link.innerHTML));
-});
-
-homeLink.addEventListener("click", () => goHome());
-
 window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
     const newLinkedSketch = urlPath[urlPath.length - 1];
@@ -76,3 +70,9 @@ window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
     linkedSketch = urlPath[urlPath.length - 1];
 });
+
+sketchLinks.forEach(link => {
+    link.addEventListener("click", () => goToSketch(link.innerHTML));
+});
+
+homeLink.addEventListener("click", () => goHome());

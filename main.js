@@ -19,7 +19,7 @@ const sketchContent = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
-let urlPath = getURLPath();
+let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 
 const goToSketch = sketch => {

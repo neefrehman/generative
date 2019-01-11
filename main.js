@@ -18,8 +18,9 @@ const sketchLinks = document.querySelectorAll(".sketchlink");
 const sketchContent = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
-const urlPath = () => location.pathname.split("/").filter((v) => v !== "");
-let linkedSketch = urlPath()[urlPath().length - 1];
+const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
+let urlPath = getUrlPath();
+let linkedSketch = urlPath[urlPath.length - 1];
 
 const goToSketch = sketch => {
     sketchContent.classList.add("show");
@@ -46,7 +47,7 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
-if (urlPath().length >= 1 && location.protocol != "file:") {
+if (urlPath.length >= 1 && location.protocol != "file:") {
     const sketchButton = document.getElementById(linkedSketch);
 
     if (sketchButton) {
@@ -63,13 +64,15 @@ sketchLinks.forEach(link => {
 homeLink.addEventListener("click", () => goHome());
 
 window.addEventListener("popstate", () => {
-    const newLinkedSketch = urlPath()[urlPath().length - 1];
+    urlPath = getUrlPath();
+    const newLinkedSketch = urlPath[urlPath.length - 1];
 
-    if (urlPath().length == 0 || newLinkedSketch == linkedSketch) {
+    if (urlPath.length == 0 || newLinkedSketch == linkedSketch) {
         goHome();
     } else {
         goToSketch(newLinkedSketch);
     }
 
-    linkedSketch = urlPath()[urlPath().length - 1];
+    urlPath = getUrlPath();
+    linkedSketch = urlPath[urlPath.length - 1];
 });

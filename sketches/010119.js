@@ -1,13 +1,14 @@
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
+  noStroke();
+  noFill();
 }
 
 function draw() {
 
   // background(255);
   ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
-  noStroke();
   fill(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 80);
 
   if (mouseIsPressed) {
@@ -20,3 +21,5 @@ function draw() {
   }
 
 }
+
+new p5();

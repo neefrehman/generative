@@ -3,14 +3,14 @@ function setup() {
   frameRate(10);
 }
 
-const x1 = (Math.random() * 100);
-const y1 = (Math.random() * 100);
-const x2 = (Math.random() * 100);
-const y2 = (Math.random() * 100);
-const x3 = (Math.random() * 100);
-const y3 = (Math.random() * 100);
-const x4 = (Math.random() * 100);
-const y4 = (Math.random() * 100);
+var x1 = (Math.random() * 100);
+var y1 = (Math.random() * 100);
+var x2 = (Math.random() * 100);
+var y2 = (Math.random() * 100);
+var x3 = (Math.random() * 100);
+var y3 = (Math.random() * 100);
+var x4 = (Math.random() * 100);
+var y4 = (Math.random() * 100);
 
 function draw() {
 
@@ -50,3 +50,5 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
+new p5();

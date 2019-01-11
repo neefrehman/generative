@@ -15,3 +15,5 @@ function draw() {
   ellipse(posX, posY, 30, 30);
 
 }
+
+new p5();

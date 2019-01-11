@@ -5,8 +5,10 @@ body {
   color: #333;
   -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -moz-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
-  margin: 45px;
   max-width: max-content;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;
 }
 
 h1::selection, span.stretch::selection, h2::selection, h3::selection, p::selection, a::selection {
@@ -43,33 +45,34 @@ html.dark a:hover {
   background-color: #eee;
 }
 
-
-@media (max-width: 769px) {
-  body {
-    font-size: 13px;
-    margin: 30px;
-  }
-}
-
-/* Home */
-header {
-  margin-bottom: 40px;
-}
-header h1 {
-  transform: scale(1.05, 1);
-  transform-origin: left;
-}
-header a {
-  text-decoration: underline;
-  background-color: initial;
-}
-h1 {
-  margin-block-end: 0.5em;
-}
 html.dark header p a {
   text-decoration: underline;
   background-color: initial;
 }
+
+.home-content {
+  margin: 45px;
+}
+
+.home-content.hide {
+  display: none;
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+header h1 {
+  transform: scale(1.05, 1);
+  transform-origin: left;
+  margin-block-end: 0.5em;
+}
+
+header a {
+  text-decoration: underline;
+  background-color: initial;
+}
+
 .sketch-list {
   display: flex;
   flex-direction: column;
@@ -78,42 +81,53 @@ html.dark header p a {
   width: max-content;
   justify-content: flex-start;
 }
+
 .sketch-list a {
   margin: 0 1em 1em 0;
   width: max-content;
-}
-@media (max-width: 769px) {
-  header {
-    margin-bottom: 30px;
-  }
+  cursor: pointer;
 }
 
-/* Sketch */
-body.sketch {
-  margin: 0;
-  padding: 0;
-  overflow-y: hidden;
+footer {
+  display: none;
+  position: fixed;
 }
+
+footer.show {
+  display: block;
+}
+
+footer a {
+  position: fixed;
+  --edgeMargin: 45px;
+}
+
+footer a.home-link {
+  bottom: var(--edgeMargin);
+  left: var(--edgeMargin);
+  cursor: pointer;
+}
+
+footer a.code-link {
+  bottom: var(--edgeMargin);
+  right: var(--edgeMargin);
+}
+
 canvas {
   position: fixed;
   z-index: -1;
 }
-footer {
-  position: fixed;
-}
-footer a {
-  position: fixed;
-  --edgeMargin: 40px;
-}
-footer a.home {
-  bottom: var(--edgeMargin);
-  left: var(--edgeMargin);
-}
-footer a.code {
-  bottom: var(--edgeMargin);
-  right: var(--edgeMargin);
-}
+
 @media (max-width: 769px) {
+  body {
+    font-size: 13px;
+  }
+  .home-content {
+    margin: 30px;
+  }
+  header {
+    margin-bottom: 30px;
+  }
   footer {
     --edgeMargin: 30px;
   }

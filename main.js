@@ -1,8 +1,8 @@
+// Dark mode
 const darkModeToggle = document.documentElement;
-const darkMode = () => document.documentElement.classList.toggle("dark");
 
 darkModeToggle.addEventListener("dblclick", e => {
-    darkMode();
+    document.documentElement.classList.toggle("dark");
 
     if (document.documentElement.classList.contains("dark")) {
         localStorage.setItem("darkMode", true);
@@ -12,21 +12,67 @@ darkModeToggle.addEventListener("dblclick", e => {
 });
 
 
-// // SPA
-// const sketchLinks = document.querySelectorAll(".sketchlink");
-// const codeLink = document.querySelector(".code");
-//
-// sketchLinks.forEach(link => {
-//
-//     link.addEventListener("click", () => {
-//         const sketchName = link.innerHTML;
-//         history.replaceState(stateObj, `${sketchName} - Generative - Neef Rehman`, `${sketchName}.html`);
-//         codeLink.innerHTML = sketchName;
-//         // Show Footer
-//         // Hide body & add .sketch
-//         // Load in script
-//     });
-//
-// });
-//
-// If URL contains numbers. Find it in sketchLinks and click()
+// SPA logic
+const homeContent = document.querySelector(".home-content");
+const sketchLinks = document.querySelectorAll(".sketchlink");
+const sketchContent = document.querySelector("footer");
+const homeLink = document.querySelector(".home-link");
+const codeLink = document.querySelector(".code-link");
+const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
+let urlPath = getUrlPath();
+let linkedSketch = urlPath[urlPath.length - 1];
+
+const goToSketch = sketch => {
+    sketchContent.classList.add("show");
+    homeContent.classList.add("hide");
+
+    const script = document.createElement("script");
+    script.src = `sketches/${sketch}.js`;
+    document.body.appendChild(script);
+
+    codeLink.innerHTML = sketch;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketch}.js`;
+    document.title = `${sketch} - Generative - Neef Rehman`;
+    history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
+};
+
+const goHome = () => {
+    sketchContent.classList.remove("show");
+    homeContent.classList.remove("hide");
+
+    remove();
+    document.body.removeChild(document.body.lastChild);
+
+    document.title = "Generative - Neef Rehman";
+    history.replaceState("", document.title, "/");
+};
+
+if (urlPath.length >= 1 && location.protocol != "file:") {
+    const sketchButton = document.getElementById(linkedSketch);
+
+    if (sketchButton) {
+        goToSketch(linkedSketch);
+    } else if (location.href.split(location.host)[1] != "/404") {
+        window.location.href = "/404";
+    }
+}
+
+window.addEventListener("popstate", () => {
+    urlPath = getUrlPath();
+    const newLinkedSketch = urlPath[urlPath.length - 1];
+
+    if (urlPath.length == 0 || newLinkedSketch == linkedSketch) {
+        goHome();
+    } else {
+        goToSketch(newLinkedSketch);
+    }
+
+    urlPath = getUrlPath();
+    linkedSketch = urlPath[urlPath.length - 1];
+});
+
+sketchLinks.forEach(link => {
+    link.addEventListener("click", () => goToSketch(link.innerHTML));
+});
+
+homeLink.addEventListener("click", () => goHome());

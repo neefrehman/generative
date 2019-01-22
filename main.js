@@ -18,9 +18,6 @@ const sketchLinks = document.querySelectorAll(".sketchlink");
 const sketchContent = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
-const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
-let urlPath = getUrlPath();
-let linkedSketch = urlPath[urlPath.length - 1];
 
 const goToSketch = sketch => {
     sketchContent.classList.add("show");
@@ -47,10 +44,14 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
-if (urlPath.length >= 1 && location.protocol != "file:") {
-    const sketchButton = document.getElementById(linkedSketch);
+const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
+let urlPath = getUrlPath();
+let linkedSketch = urlPath[urlPath.length - 1];
 
-    if (sketchButton) {
+if (urlPath.length >= 1 && location.protocol != "file:") {
+    const linkedSketchButton = document.getElementById(linkedSketch);
+
+    if (linkedSketchButton) {
         goToSketch(linkedSketch);
     } else if (location.href.split(location.host)[1] != "/404") {
         window.location.href = "/404";

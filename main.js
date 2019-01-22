@@ -44,7 +44,7 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
-const getUrlPath = () => location.pathname.split("/").filter((v) => v !== "");
+const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 

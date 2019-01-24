@@ -55,12 +55,9 @@ html.dark header p a {
   background-color: initial;
 }
 
-.home-content {
+.home-content,
+.fourohfour-content {
   margin: 45px;
-}
-
-.home-content.hide {
-  display: none;
 }
 
 header {
@@ -93,13 +90,13 @@ header a {
   cursor: pointer;
 }
 
+.fourohfour-content {
+  display: none;
+}
+
 footer {
   display: none;
   position: fixed;
-}
-
-footer.show {
-  display: block;
 }
 
 footer a {
@@ -121,6 +118,14 @@ footer a.code-link {
 canvas {
   position: fixed;
   z-index: -1;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
 
 @media (max-width: 769px) {

@@ -15,6 +15,7 @@ darkModeToggle.addEventListener("dblclick", e => {
 // SPA logic
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
+const fourOhFourContent = document.querySelector(".fourohfour-content");
 const sketchContent = document.querySelector("footer");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
@@ -44,6 +45,14 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
+const goTo404 = () => {
+    homeContent.classList.add("hide");
+    sketchContent.classList.remove("show");
+    fourOhFourContent.classList.add("show");
+
+    document.title = "404 - Generative - Neef Rehman";
+};
+
 const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
@@ -53,8 +62,8 @@ if (urlPath.length >= 1 && location.protocol != "file:") {
 
     if (linkedSketchButton) {
         goToSketch(linkedSketch);
-    } else if (location.href.split(location.host)[1] != "/404") {
-        window.location.href = "/404";
+    } else {
+        goTo404();
     }
 }
 

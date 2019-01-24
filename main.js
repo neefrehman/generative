@@ -1,7 +1,7 @@
 // Dark mode
 const darkModeToggle = document.documentElement;
 
-darkModeToggle.addEventListener("dblclick", e => {
+darkModeToggle.addEventListener("dblclick", () => {
     document.documentElement.classList.toggle("dark");
 
     if (document.documentElement.classList.contains("dark")) {

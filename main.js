@@ -15,10 +15,10 @@ darkModeToggle.addEventListener("dblclick", e => {
 // SPA logic
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
-const fourOhFourContent = document.querySelector(".fourohfour-content");
-const sketchContent = document.querySelector("footer");
+const sketchContent = document.querySelector(".sketch-content");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
+const fourOhFourContent = document.querySelector(".fourohfour-content");
 
 const goToSketch = sketch => {
     sketchContent.classList.add("show");

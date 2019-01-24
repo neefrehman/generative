@@ -94,23 +94,23 @@ header a {
   display: none;
 }
 
-footer {
+.sketch-content {
   display: none;
   position: fixed;
 }
 
-footer a {
+.sketch-content a {
   position: fixed;
   --edgeMargin: 45px;
 }
 
-footer a.home-link {
+.sketch-content a.home-link {
   bottom: var(--edgeMargin);
   left: var(--edgeMargin);
   cursor: pointer;
 }
 
-footer a.code-link {
+.sketch-content a.code-link {
   bottom: var(--edgeMargin);
   right: var(--edgeMargin);
 }

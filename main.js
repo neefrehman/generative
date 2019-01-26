@@ -84,6 +84,7 @@ window.addEventListener("popstate", () => {
 window.addEventListener("beforeunload", e => {
   remove();
   e.returnValue = "";
+  goToSketch(linkedSketch);
 });
 
 sketchLinks.forEach(link => {

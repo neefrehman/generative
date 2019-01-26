@@ -1,4 +1,4 @@
-/*! p5.sound.js v0.3.8 2018-06-15 */
+/*! p5.sound.js v0.3.10 2019-01-10 */
 /**
  *  p5.sound extends p5 with <a href="http://caniuse.com/audio-api"
  *  target="_blank">Web Audio</a> functionality including audio input,
@@ -14,7 +14,7 @@
  *    Triangle, Square and Sawtooth waveforms. Base class of
  *    <a href="#/p5.Noise">p5.Noise</a> and <a href="#/p5.Pulse">p5.Pulse</a>.
  *    <br/>
- *  <a href="#/p5.Env"><b>p5.Env</b></a>: An Envelope is a series
+ *  <a href="#/p5.Envelope"><b>p5.Envelope</b></a>: An Envelope is a series
  *    of fades over time. Often used to control an object's
  *    output gain level as an "ADSR Envelope" (Attack, Decay,
  *    Sustain, Release). Can also modulate other parameters.<br/>
@@ -254,9 +254,111 @@ shims = function () {
     }
   };
 }();
+var StartAudioContext;
+(function (root, factory) {
+  if (true) {
+    StartAudioContext = function () {
+      return factory();
+    }();
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    root.StartAudioContext = factory();
+  }
+}(this, function () {
+  var TapListener = function (element, context) {
+    this._dragged = false;
+    this._element = element;
+    this._bindedMove = this._moved.bind(this);
+    this._bindedEnd = this._ended.bind(this, context);
+  };
+  TapListener.prototype._moved = function (e) {
+    this._dragged = true;
+  };
+  TapListener.prototype._ended = function (context) {
+    if (!this._dragged) {
+      startContext(context);
+    }
+    this._dragged = false;
+  };
+  TapListener.prototype.dispose = function () {
+    this._element.removeEventListener('touchstart', this._bindedEnd);
+    this._element.removeEventListener('touchmove', this._bindedMove);
+    this._element.removeEventListener('touchend', this._bindedEnd);
+    this._element.removeEventListener('mouseup', this._bindedEnd);
+    this._bindedMove = null;
+    this._bindedEnd = null;
+    this._element = null;
+  };
+  function startContext(context) {
+    var buffer = context.createBuffer(1, 1, context.sampleRate);
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+    if (context.resume) {
+      context.resume();
+    }
+  }
+  function isStarted(context) {
+    return context.state === 'running';
+  }
+  function onStarted(context, callback) {
+    function checkLoop() {
+      if (isStarted(context)) {
+        callback();
+      } else {
+        requestAnimationFrame(checkLoop);
+        if (context.resume) {
+          context.resume();
+        }
+      }
+    }
+    if (isStarted(context)) {
+      callback();
+    } else {
+      checkLoop();
+    }
+  }
+  function bindTapListener(element, tapListeners, context) {
+    if (Array.isArray(element) || NodeList && element instanceof NodeList) {
+      for (var i = 0; i < element.length; i++) {
+        bindTapListener(element[i], tapListeners, context);
+      }
+    } else if (typeof element === 'string') {
+      bindTapListener(document.querySelectorAll(element), tapListeners, context);
+    } else if (element.jquery && typeof element.toArray === 'function') {
+      bindTapListener(element.toArray(), tapListeners, context);
+    } else if (Element && element instanceof Element) {
+      var tap = new TapListener(element, context);
+      tapListeners.push(tap);
+    }
+  }
+  function StartAudioContext(context, elements, callback) {
+    var promise = new Promise(function (success) {
+      onStarted(context, success);
+    });
+    var tapListeners = [];
+    if (!elements) {
+      elements = document.body;
+    }
+    bindTapListener(elements, tapListeners, context);
+    promise.then(function () {
+      for (var i = 0; i < tapListeners.length; i++) {
+        tapListeners[i].dispose();
+      }
+      tapListeners = null;
+      if (callback) {
+        callback();
+      }
+    });
+    return promise;
+  }
+  return StartAudioContext;
+}));
 var audiocontext;
 'use strict';
-audiocontext = function () {
+audiocontext = function (StartAudioContext) {
   // Create the Audio Context
   var audiocontext = new window.AudioContext();
   /**
@@ -296,32 +398,60 @@ audiocontext = function () {
   p5.prototype.getAudioContext = function () {
     return audiocontext;
   };
-  // if it is iOS, we have to have a user interaction to start Web Audio
-  // http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
-  var iOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false;
-  if (iOS) {
-    var iosStarted = false;
-    var startIOS = function () {
-      if (iosStarted)
-        return;
-      // create empty buffer
-      var buffer = audiocontext.createBuffer(1, 1, 22050);
-      var source = audiocontext.createBufferSource();
-      source.buffer = buffer;
-      // connect to output (your speakers)
-      source.connect(audiocontext.destination);
-      // play the file
-      source.start(0);
-      console.log('start ios!');
-      if (audiocontext.state === 'running') {
-        iosStarted = true;
-      }
-    };
-    document.addEventListener('touchend', startIOS, false);
-    document.addEventListener('touchstart', startIOS, false);
-  }
+  /**
+   *  <p>It is a good practice to give users control over starting audio playback.
+   *  This practice is enforced by Google Chrome's autoplay policy as of r70
+   *  (<a href="https://goo.gl/7K7WLu">info</a>), iOS Safari, and other browsers.
+   *  </p>
+   *
+   *  <p>
+   *  userStartAudio() starts the <a href="https://developer.mozilla.org/en-US/docs/Web/API/AudioContext"
+   *  target="_blank" title="Audio Context @ MDN">Audio Context</a> on a user gesture. It utilizes
+   *  the <a href="https://github.com/tambien/StartAudioContext">StartAudioContext</a> library by
+   *  Yotam Mann (MIT Licence, 2016). Read more at https://github.com/tambien/StartAudioContext.
+   *  </p>
+   *
+   *  <p>Starting the audio context on a user gesture can be as simple as <code>userStartAudio()</code>.
+   *  Optional parameters let you decide on a specific element that will start the audio context,
+   *  and/or call a function once the audio context is started.</p>
+   *  @param  {Element|Array}   [element(s)] This argument can be an Element,
+   *                                Selector String, NodeList, p5.Element,
+   *                                jQuery Element, or an Array of any of those.
+   *  @param  {Function} [callback] Callback to invoke when the AudioContext has started
+   *  @return {Promise}            Returns a Promise which is resolved when
+   *                                       the AudioContext state is 'running'
+   * @method userStartAudio
+   *  @example
+   *  <div><code>
+   *  function setup() {
+   *    var myDiv = createDiv('click to start audio');
+   *    myDiv.position(0, 0);
+   *
+   *    var mySynth = new p5.MonoSynth();
+   * 
+   *    // This won't play until the context has started
+   *    mySynth.play('A6');
+   *
+   *    // Start the audio context on a click/touch event
+   *    userStartAudio().then(function() {
+   *       myDiv.remove();
+   *     });
+   *  }
+   *  </code></div>
+   */
+  p5.prototype.userStartAudio = function (elements, callback) {
+    var elt = elements;
+    if (elements instanceof p5.Element) {
+      elt = elements.elt;
+    } else if (elements instanceof Array && elements[0] instanceof p5.Element) {
+      elt = elements.map(function (e) {
+        return e.elt;
+      });
+    }
+    return StartAudioContext(audiocontext, elt, callback);
+  };
   return audiocontext;
-}();
+}(StartAudioContext);
 var master;
 'use strict';
 master = function () {
@@ -334,8 +464,9 @@ master = function () {
     this.output = audiocontext.createGain();
     //put a hard limiter on the output
     this.limiter = audiocontext.createDynamicsCompressor();
-    this.limiter.threshold.value = 0;
+    this.limiter.threshold.value = -3;
     this.limiter.ratio.value = 20;
+    this.limiter.knee.value = 1;
     this.audiocontext = audiocontext;
     this.output.disconnect();
     // connect input to limiter
@@ -500,7 +631,7 @@ helpers = function () {
     return 440 * Math.pow(2, (m - 69) / 12);
   };
   // This method converts ANSI notes specified as a string "C4", "Eb3" to a frequency
-  noteToFreq = function (note) {
+  var noteToFreq = function (note) {
     if (typeof note !== 'string') {
       return note;
     }
@@ -661,7 +792,72 @@ helpers = function () {
     o.mathOps[thisChain] = math;
     return o;
   };
+  // helper methods to convert audio file as .wav format,
+  // will use as saving .wav file and saving blob object
+  // Thank you to Matt Diamond's RecorderJS (MIT License)
+  // https://github.com/mattdiamond/Recorderjs
+  function convertToWav(audioBuffer) {
+    var leftChannel, rightChannel;
+    leftChannel = audioBuffer.getChannelData(0);
+    // handle mono files
+    if (audioBuffer.numberOfChannels > 1) {
+      rightChannel = audioBuffer.getChannelData(1);
+    } else {
+      rightChannel = leftChannel;
+    }
+    var interleaved = interleave(leftChannel, rightChannel);
+    // create the buffer and view to create the .WAV file
+    var buffer = new window.ArrayBuffer(44 + interleaved.length * 2);
+    var view = new window.DataView(buffer);
+    // write the WAV container,
+    // check spec at: https://web.archive.org/web/20171215131933/http://tiny.systems/software/soundProgrammer/WavFormatDocs.pdf
+    // RIFF chunk descriptor
+    writeUTFBytes(view, 0, 'RIFF');
+    view.setUint32(4, 36 + interleaved.length * 2, true);
+    writeUTFBytes(view, 8, 'WAVE');
+    // FMT sub-chunk
+    writeUTFBytes(view, 12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    // stereo (2 channels)
+    view.setUint16(22, 2, true);
+    view.setUint32(24, 44100, true);
+    view.setUint32(28, 44100 * 4, true);
+    view.setUint16(32, 4, true);
+    view.setUint16(34, 16, true);
+    // data sub-chunk
+    writeUTFBytes(view, 36, 'data');
+    view.setUint32(40, interleaved.length * 2, true);
+    // write the PCM samples
+    var lng = interleaved.length;
+    var index = 44;
+    var volume = 1;
+    for (var i = 0; i < lng; i++) {
+      view.setInt16(index, interleaved[i] * (32767 * volume), true);
+      index += 2;
+    }
+    return view;
+  }
+  // helper methods to save waves
+  function interleave(leftChannel, rightChannel) {
+    var length = leftChannel.length + rightChannel.length;
+    var result = new Float32Array(length);
+    var inputIndex = 0;
+    for (var index = 0; index < length;) {
+      result[index++] = leftChannel[inputIndex];
+      result[index++] = rightChannel[inputIndex];
+      inputIndex++;
+    }
+    return result;
+  }
+  function writeUTFBytes(view, offset, string) {
+    var lng = string.length;
+    for (var i = 0; i < lng; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  }
   return {
+    convertToWav: convertToWav,
     midiToFreq: midiToFreq,
     noteToFreq: noteToFreq
   };
@@ -805,6 +1001,7 @@ soundfile = function () {
   var p5sound = master;
   var ac = p5sound.audiocontext;
   var midiToFreq = helpers.midiToFreq;
+  var convertToWav = helpers.convertToWav;
   /**
    *  <p>SoundFile object with a path to a file.</p>
    *
@@ -881,6 +1078,7 @@ soundfile = function () {
     this._pauseTime = 0;
     // cues for scheduling events with addCue() removeCue()
     this._cues = [];
+    this._cueIDCounter = 0;
     //  position of the most recently played sample
     this._lastPos = 0;
     this._counterNode = null;
@@ -992,8 +1190,12 @@ soundfile = function () {
       request.onload = function () {
         if (request.status === 200) {
           // on sucess loading file:
+          if (!self.panner)
+            return;
           ac.decodeAudioData(request.response, // success decoding buffer:
           function (buff) {
+            if (!self.panner)
+              return;
             self.buffer = buff;
             self.panner.inputChannels(buff.numberOfChannels);
             if (callback) {
@@ -1001,6 +1203,8 @@ soundfile = function () {
             }
           }, // error decoding buffer. "e" is undefined in Chrome 11/22/2015
           function () {
+            if (!self.panner)
+              return;
             var err = new CustomError('decodeAudioData', errorTrace, self.url);
             var msg = 'AudioContext error at decodeAudioData for ' + self.url;
             if (errorCallback) {
@@ -1011,6 +1215,8 @@ soundfile = function () {
             }
           });
         } else {
+          if (!self.panner)
+            return;
           var err = new CustomError('loadSound', errorTrace, self.url);
           var msg = 'Unable to load ' + self.url + '. The request status was: ' + request.status + ' (' + request.statusText + ')';
           if (errorCallback) {
@@ -1036,7 +1242,11 @@ soundfile = function () {
     } else if (this.file !== undefined) {
       var reader = new FileReader();
       reader.onload = function () {
+        if (!self.panner)
+          return;
         ac.decodeAudioData(reader.result, function (buff) {
+          if (!self.panner)
+            return;
           self.buffer = buff;
           self.panner.inputChannels(buff.numberOfChannels);
           if (callback) {
@@ -1045,6 +1255,8 @@ soundfile = function () {
         });
       };
       reader.onerror = function (e) {
+        if (!self.panner)
+          return;
         if (onerror) {
           onerror(e);
         }
@@ -1944,6 +2156,8 @@ soundfile = function () {
     // Render the song
     // act on the result
     offlineContext.oncomplete = function (e) {
+      if (!self.panner)
+        return;
       var filteredBuffer = e.renderedBuffer;
       var bufferData = filteredBuffer.getChannelData(0);
       // step 1:
@@ -2195,7 +2409,8 @@ soundfile = function () {
     for (var i = 0; i < cueLength; i++) {
       var cue = this._cues[i];
       if (cue.id === id) {
-        this.cues.splice(i, 1);
+        this._cues.splice(i, 1);
+        break;
       }
     }
     if (this._cues.length === 0) {
@@ -2226,7 +2441,91 @@ soundfile = function () {
     }
     this._prevTime = playbackTime;
   };
-}(errorHandler, master, helpers);
+  /**
+   * Save a p5.SoundFile as a .wav file. The browser will prompt the user
+   * to download the file to their device. To upload a file to a server, see
+   * <a href="/docs/reference/#/p5.SoundFile/getBlob">getBlob</a>
+   * 
+   * @method save
+   * @param  {String} [fileName]      name of the resulting .wav file.
+   * @example
+   *  <div><code>
+   *  var inp, button, mySound;
+   *  var fileName = 'cool';
+   *  function preload() {
+   *    mySound = loadSound('assets/doorbell.mp3');
+   *  }
+   *  function setup() {
+   *    btn = createButton('click to save file');
+   *    btn.position(0, 0);
+   *    btn.mouseClicked(handleMouseClick);
+   *  }
+   *
+   *  function handleMouseClick() {
+   *    mySound.save(fileName);
+   *  }
+   * </code></div>
+   */
+  p5.SoundFile.prototype.save = function (fileName) {
+    const dataView = convertToWav(this.buffer);
+    p5.prototype.saveSound([dataView], fileName, 'wav');
+  };
+  /**
+   * This method is useful for sending a SoundFile to a server. It returns the
+   * .wav-encoded audio data as a "<a target="_blank" title="Blob reference at
+   * MDN" href="https://developer.mozilla.org/en-US/docs/Web/API/Blob">Blob</a>".
+   * A Blob is a file-like data object that can be uploaded to a server
+   * with an <a href="/docs/reference/#/p5/httpDo">http</a> request. We'll
+   * use the `httpDo` options object to send a POST request with some
+   * specific options: we encode the request as `multipart/form-data`,
+   * and attach the blob as one of the form values using `FormData`.
+   * 
+   *
+   * @method getBlob
+   * @returns {Blob} A file-like data object
+   * @example
+   *  <div><code>
+   *
+   *  function preload() {
+   *    mySound = loadSound('assets/doorbell.mp3');
+   *  }
+   *
+   *  function setup() {
+   *    noCanvas();
+   *    var soundBlob = mySound.getBlob();
+   *
+   *    // Now we can send the blob to a server...
+   *    var serverUrl = 'https://jsonplaceholder.typicode.com/posts';
+   *    var httpRequestOptions = {
+   *      method: 'POST',
+   *      body: new FormData().append('soundBlob', soundBlob),
+   *      headers: new Headers({
+   *        'Content-Type': 'multipart/form-data'
+   *      })
+   *    };
+   *    httpDo(serverUrl, httpRequestOptions);
+   *
+   *    // We can also create an `ObjectURL` pointing to the Blob
+   *    var blobUrl = URL.createObjectURL(soundBlob);
+   *
+   *    // The `<Audio>` Element accepts Object URL's
+   *    var htmlAudioElt = createAudio(blobUrl).showControls();
+   *
+   *    createDiv();
+   *
+   *    // The ObjectURL exists as long as this tab is open
+   *    var input = createInput(blobUrl);
+   *    input.attribute('readonly', true);
+   *    input.mouseClicked(function() { input.elt.select() });
+   *  }
+   *
+   * </code></div>
+   */
+  p5.SoundFile.prototype.getBlob = function () {
+    const dataView = convertToWav(this.buffer);
+    return new Blob([dataView], { type: 'audio/wav' });
+  };
+}(errorHandler, master, helpers, helpers);
 var amplitude;
 'use strict';
 amplitude = function () {
@@ -6030,7 +6329,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.2;
    *  var susPercent = 0.2;
    *  var releaseTime = 0.5;
@@ -6055,7 +6354,7 @@ envelope = function () {
    *    cnv.mousePressed(playEnv);
    *  }
    *
-   *  function playEnv(){
+   *  function playEnv()  {
    *    env.play();
    *  }
    *  </code></div>
@@ -6206,7 +6505,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.2;
    *  var susPercent = 0.2;
    *  var releaseTime = 0.5;
@@ -6231,7 +6530,7 @@ envelope = function () {
    *    cnv.mousePressed(playEnv);
    *  }
    *
-   *  function playEnv(){
+   *  function playEnv()  {
    *    env.play();
    *  }
    *  </code></div>
@@ -6257,7 +6556,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.2;
    *  var susPercent = 0.2;
    *  var releaseTime = 0.5;
@@ -6282,7 +6581,7 @@ envelope = function () {
    *    cnv.mousePressed(playEnv);
    *  }
    *
-   *  function playEnv(){
+   *  function playEnv()  {
    *    env.play();
    *  }
    *  </code></div>
@@ -6376,7 +6675,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.2;
    *  var susPercent = 0.2;
    *  var releaseTime = 0.5;
@@ -6401,7 +6700,7 @@ envelope = function () {
    *    cnv.mousePressed(playEnv);
    *  }
    *
-   *  function playEnv(){
+   *  function playEnv()  {
    *    // trigger env on triOsc, 0 seconds from now
    *    // After decay, sustain for 0.2 seconds before release
    *    env.play(triOsc, 0, 0.2);
@@ -6436,7 +6735,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.3;
    *  var susPercent = 0.4;
    *  var releaseTime = 0.5;
@@ -6461,7 +6760,7 @@ envelope = function () {
    *    cnv.mousePressed(envAttack);
    *  }
    *
-   *  function envAttack(){
+   *  function envAttack()  {
    *    console.log('trigger attack');
    *    env.triggerAttack();
    *
@@ -6540,7 +6839,7 @@ envelope = function () {
    *  var attackLevel = 1.0;
    *  var releaseLevel = 0;
    *
-   *  var attackTime = 0.001
+   *  var attackTime = 0.001;
    *  var decayTime = 0.3;
    *  var susPercent = 0.4;
    *  var releaseTime = 0.5;
@@ -6565,7 +6864,7 @@ envelope = function () {
    *    cnv.mousePressed(envAttack);
    *  }
    *
-   *  function envAttack(){
+   *  function envAttack()  {
    *    console.log('trigger attack');
    *    env.triggerAttack();
    *
@@ -7170,10 +7469,25 @@ audioin = function () {
    */
   p5.AudioIn = function (errorCallback) {
     // set up audio input
+    /**
+     * @property {GainNode} input
+     */
     this.input = p5sound.audiocontext.createGain();
+    /**
+     * @property {GainNode} output
+     */
     this.output = p5sound.audiocontext.createGain();
+    /**
+     * @property {MediaStream|null} stream
+     */
     this.stream = null;
+    /**
+     * @property {MediaStreamAudioSourceNode|null} mediaStream
+     */
     this.mediaStream = null;
+    /**
+     * @property {Number|null} currentSource
+     */
     this.currentSource = null;
     /**
      *  Client must allow browser to access their microphone / audioin source.
@@ -7182,7 +7496,11 @@ audioin = function () {
      *  @property {Boolean} enabled
      */
     this.enabled = false;
-    // create an amplitude, connect to it by default but not to master out
+    /**
+     * Input amplitude, connect to it by default but not to master out
+     *
+     *  @property {p5.Amplitude} amplitude
+     */
     this.amplitude = new p5.Amplitude();
     this.output.connect(this.amplitude.input);
     if (!window.MediaStreamTrack || !window.navigator.mediaDevices || !window.navigator.mediaDevices.getUserMedia) {
@@ -8317,7 +8635,6 @@ filter = function () {
       freq = 1;
     }
     if (typeof freq === 'number') {
-      this.biquad.frequency.value = freq;
       this.biquad.frequency.cancelScheduledValues(this.ac.currentTime + 0.01 + t);
       this.biquad.frequency.exponentialRampToValueAtTime(freq, this.ac.currentTime + 0.02 + t);
     } else if (freq) {
@@ -9460,11 +9777,9 @@ reverb = function () {
    */
   p5.Reverb = function () {
     Effect.call(this);
-    this.convolverNode = this.ac.createConvolver();
+    this._initConvolverNode();
     // otherwise, Safari distorts
     this.input.gain.value = 0.5;
-    this.input.connect(this.convolverNode);
-    this.convolverNode.connect(this.wet);
     // default params
     this._seconds = 3;
     this._decay = 2;
@@ -9472,6 +9787,22 @@ reverb = function () {
     this._buildImpulse();
   };
   p5.Reverb.prototype = Object.create(Effect.prototype);
+  p5.Reverb.prototype._initConvolverNode = function () {
+    this.convolverNode = this.ac.createConvolver();
+    this.input.connect(this.convolverNode);
+    this.convolverNode.connect(this.wet);
+  };
+  p5.Reverb.prototype._teardownConvolverNode = function () {
+    if (this.convolverNode) {
+      this.convolverNode.disconnect();
+      delete this.convolverNode;
+    }
+  };
+  p5.Reverb.prototype._setBuffer = function (audioBuffer) {
+    this._teardownConvolverNode();
+    this._initConvolverNode();
+    this.convolverNode.buffer = audioBuffer;
+  };
   /**
    *  Connect a source to the reverb, and assign reverb parameters.
    *
@@ -9571,14 +9902,11 @@ reverb = function () {
       impulseL[i] = (Math.random() * 2 - 1) * Math.pow(1 - n / length, decay);
       impulseR[i] = (Math.random() * 2 - 1) * Math.pow(1 - n / length, decay);
     }
-    this.convolverNode.buffer = impulse;
+    this._setBuffer(impulse);
   };
   p5.Reverb.prototype.dispose = function () {
     Effect.prototype.dispose.apply(this);
-    if (this.convolverNode) {
-      this.convolverNode.buffer = null;
-      this.convolverNode = null;
-    }
+    this._teardownConvolverNode();
   };
   // =======================================================================
   //                          *** p5.Convolver ***
@@ -9637,19 +9965,17 @@ reverb = function () {
    *  </code></div>
    */
   p5.Convolver = function (path, callback, errorCallback) {
-    Effect.call(this);
+    p5.Reverb.call(this);
     /**
      *  Internally, the p5.Convolver uses the a
      *  <a href="http://www.w3.org/TR/webaudio/#ConvolverNode">
      *  Web Audio Convolver Node</a>.
      *
-     *  @property {ConvolverNode} convolverNod
+     *  @property {ConvolverNode} convolverNode
      */
-    this.convolverNode = this.ac.createConvolver();
+    this._initConvolverNode();
     // otherwise, Safari distorts
     this.input.gain.value = 0.5;
-    this.input.connect(this.convolverNode);
-    this.convolverNode.connect(this.wet);
     if (path) {
       this.impulses = [];
       this._loadBuffer(path, callback, errorCallback);
@@ -9747,7 +10073,7 @@ reverb = function () {
           buffer.name = chunks[chunks.length - 1];
           buffer.audioBuffer = buff;
           self.impulses.push(buffer);
-          self.convolverNode.buffer = buffer.audioBuffer;
+          self._setBuffer(buffer.audioBuffer);
           if (callback) {
             callback(buffer);
           }
@@ -9884,28 +10210,24 @@ reverb = function () {
    */
   p5.Convolver.prototype.toggleImpulse = function (id) {
     if (typeof id === 'number' && id < this.impulses.length) {
-      this.convolverNode.buffer = this.impulses[id].audioBuffer;
+      this._setBuffer(this.impulses[id].audioBuffer);
     }
     if (typeof id === 'string') {
       for (var i = 0; i < this.impulses.length; i++) {
         if (this.impulses[i].name === id) {
-          this.convolverNode.buffer = this.impulses[i].audioBuffer;
+          this._setBuffer(this.impulses[i].audioBuffer);
           break;
         }
       }
     }
   };
   p5.Convolver.prototype.dispose = function () {
-    Effect.prototype.dispose.apply(this);
+    p5.Reverb.prototype.dispose.apply(this);
     // remove all the Impulse Response buffers
     for (var i in this.impulses) {
       if (this.impulses[i]) {
         this.impulses[i] = null;
       }
-    }
-    if (this.convolverNode) {
-      this.convolverNode.disconnect();
-      this.concolverNode = null;
     }
   };
 }(errorHandler, effect);
@@ -10232,14 +10554,14 @@ looper = function () {
   };
   /**
    *  <p>A p5.Part plays back one or more p5.Phrases. Instantiate a part
-   *  with steps and tatums. By default, each step represents 1/16th note.</p>
+   *  with steps and tatums. By default, each step represents a 1/16th note.</p>
    *
    *  <p>See p5.Phrase for more about musical timing.</p>
    *
    *  @class p5.Part
    *  @constructor
    *  @param {Number} [steps]   Steps in the part
-   *  @param {Number} [tatums] Divisions of a beat (default is 1/16, a quarter note)
+   *  @param {Number} [tatums] Divisions of a beat, e.g. use 1/4, or 0.25 for a quater note (default is 1/16, a sixteenth note)
    *  @example
    *  <div><code>
    *  var box, drum, myPart;
@@ -10318,7 +10640,7 @@ looper = function () {
     this.metro.setBPM(tempo, rampTime);
   };
   /**
-   *  Returns the Beats Per Minute of this currently part.
+   *  Returns the tempo, in Beats Per Minute, of this part.
    *
    *  @method getBPM
    *  @return {Number}
@@ -10372,7 +10694,7 @@ looper = function () {
     };
   };
   /**
-   *  Stop the part and cue it to step 0.
+   *  Stop the part and cue it to step 0. Playback will resume from the begining of the Part when it is played again.
    *
    *  @method  stop
    *  @param  {Number} [time] seconds from now
@@ -10443,8 +10765,7 @@ looper = function () {
     }
   };
   /**
-   *  Get a phrase from this part, based on the name it was
-   *  given when it was created. Now you can modify its array.
+   *  Find all sequences with the specified name, and replace their patterns with the specified array.
    *
    *  @method  replaceSequence
    *  @param  {String} phraseName
@@ -10471,7 +10792,7 @@ looper = function () {
     }
   };
   /**
-   *  Fire a callback function at every step.
+   *  Set the function that will be called at every step. This will clear the previous function.
    *
    *  @method onStep
    *  @param  {Function} callback The name of the callback
@@ -11085,6 +11406,7 @@ var soundRecorder;
 soundRecorder = function () {
   // inspiration: recorder.js, Tone.js & typedarray.org
   var p5sound = master;
+  var convertToWav = helpers.convertToWav;
   var ac = p5sound.audiocontext;
   /**
    *  <p>Record sounds for playback and/or to save as a .wav file.
@@ -11305,73 +11627,22 @@ soundRecorder = function () {
     this._jsNode = null;
   };
   /**
-   *  Save a p5.SoundFile as a .wav audio file.
+   * Save a p5.SoundFile as a .wav file. The browser will prompt the user
+   * to download the file to their device.
+   * For uploading audio to a server, use
+   * <a href="/docs/reference/#/p5.SoundFile/saveBlob">`p5.SoundFile.saveBlob`</a>.
    *
+   *  @for p5
    *  @method saveSound
    *  @param  {p5.SoundFile} soundFile p5.SoundFile that you wish to save
-   *  @param  {String} name      name of the resulting .wav file.
+   *  @param  {String} fileName      name of the resulting .wav file.
    */
-  p5.prototype.saveSound = function (soundFile, name) {
-    var leftChannel, rightChannel;
-    leftChannel = soundFile.buffer.getChannelData(0);
-    // handle mono files
-    if (soundFile.buffer.numberOfChannels > 1) {
-      rightChannel = soundFile.buffer.getChannelData(1);
-    } else {
-      rightChannel = leftChannel;
-    }
-    var interleaved = interleave(leftChannel, rightChannel);
-    // create the buffer and view to create the .WAV file
-    var buffer = new window.ArrayBuffer(44 + interleaved.length * 2);
-    var view = new window.DataView(buffer);
-    // write the WAV container,
-    // check spec at: https://ccrma.stanford.edu/courses/422/projects/WaveFormat/
-    // RIFF chunk descriptor
-    writeUTFBytes(view, 0, 'RIFF');
-    view.setUint32(4, 36 + interleaved.length * 2, true);
-    writeUTFBytes(view, 8, 'WAVE');
-    // FMT sub-chunk
-    writeUTFBytes(view, 12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    // stereo (2 channels)
-    view.setUint16(22, 2, true);
-    view.setUint32(24, 44100, true);
-    view.setUint32(28, 44100 * 4, true);
-    view.setUint16(32, 4, true);
-    view.setUint16(34, 16, true);
-    // data sub-chunk
-    writeUTFBytes(view, 36, 'data');
-    view.setUint32(40, interleaved.length * 2, true);
-    // write the PCM samples
-    var lng = interleaved.length;
-    var index = 44;
-    var volume = 1;
-    for (var i = 0; i < lng; i++) {
-      view.setInt16(index, interleaved[i] * (32767 * volume), true);
-      index += 2;
-    }
-    p5.prototype.writeFile([view], name, 'wav');
+  // add to p5.prototype as this is used by the p5 `save()` method.
+  p5.prototype.saveSound = function (soundFile, fileName) {
+    const dataView = convertToWav(soundFile.buffer);
+    p5.prototype.writeFile([dataView], fileName, 'wav');
   };
-  // helper methods to save waves
-  function interleave(leftChannel, rightChannel) {
-    var length = leftChannel.length + rightChannel.length;
-    var result = new Float32Array(length);
-    var inputIndex = 0;
-    for (var index = 0; index < length;) {
-      result[index++] = leftChannel[inputIndex];
-      result[index++] = rightChannel[inputIndex];
-      inputIndex++;
-    }
-    return result;
-  }
-  function writeUTFBytes(view, offset, string) {
-    var lng = string.length;
-    for (var i = 0; i < lng; i++) {
-      view.setUint8(offset + i, string.charCodeAt(i));
-    }
-  }
-}(master);
+}(master, helpers);
 var peakdetect;
 'use strict';
 peakdetect = function () {
@@ -11834,26 +12105,20 @@ monosynth = function () {
   p5.MonoSynth = function () {
     AudioVoice.call(this);
     this.oscillator = new p5.Oscillator();
-    // this.oscillator.disconnect();
     this.env = new p5.Envelope();
     this.env.setRange(1, 0);
     this.env.setExp(true);
     //set params
     this.setADSR(0.02, 0.25, 0.05, 0.35);
-    // filter
-    this.filter = new p5.Filter('highpass');
-    this.filter.set(5, 1);
-    // oscillator --> env --> filter --> this.output (gain) --> p5.soundOut
+    // oscillator --> env --> this.output (gain) --> p5.soundOut
     this.oscillator.disconnect();
-    this.oscillator.connect(this.filter);
+    this.oscillator.connect(this.output);
     this.env.disconnect();
-    this.env.setInput(this.oscillator);
-    // this.env.connect(this.filter);
-    this.filter.connect(this.output);
+    this.env.setInput(this.output.gain);
+    // reset oscillator gain to 1.0
+    this.oscillator.output.gain.value = 1;
     this.oscillator.start();
     this.connect();
-    //Audiovoices are connected to soundout by default
-    this._isOn = false;
     p5sound.soundArray.push(this);
   };
   p5.MonoSynth.prototype = Object.create(p5.AudioVoice.prototype);
@@ -11935,9 +12200,8 @@ monosynth = function () {
     var secondsFromNow = ~~secondsFromNow;
     var freq = noteToFreq(note);
     var vel = velocity || 0.1;
-    this._isOn = true;
     this.oscillator.freq(freq, 0, secondsFromNow);
-    this.env.ramp(this.output, secondsFromNow, vel);
+    this.env.ramp(this.output.gain, secondsFromNow, vel);
   };
   /**
    *  Trigger the release of the Envelope. This is similar to releasing
@@ -11961,8 +12225,7 @@ monosynth = function () {
    */
   p5.MonoSynth.prototype.triggerRelease = function (secondsFromNow) {
     var secondsFromNow = secondsFromNow || 0;
-    this.env.ramp(this.output, secondsFromNow, 0);
-    this._isOn = false;
+    this.env.ramp(this.output.gain, secondsFromNow, 0);
   };
   /**
    *  Set values like a traditional
@@ -12076,9 +12339,6 @@ monosynth = function () {
    */
   p5.MonoSynth.prototype.dispose = function () {
     AudioVoice.prototype.dispose.apply(this);
-    if (this.filter) {
-      this.filter.dispose();
-    }
     if (this.env) {
       this.env.dispose();
     }

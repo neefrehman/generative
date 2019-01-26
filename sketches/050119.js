@@ -31,7 +31,7 @@ function draw() {
     }
   };
 
-  translate((-width/2) - 200, -height/2);
+  translate((-width / 2) - 200, (-height / 2));
   filled();
   drawHorizontally();
 

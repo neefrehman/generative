@@ -77,7 +77,7 @@ header a {
 
 .sketch-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   flex-wrap: wrap;
   max-height: 75vh;
   width: max-content;

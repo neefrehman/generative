@@ -77,9 +77,9 @@ header a {
 
 .sketch-list {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   flex-wrap: wrap;
-  max-height: 75vh;
+  max-height: calc(100vh - 170px);
   width: max-content;
   justify-content: flex-start;
 }
@@ -134,6 +134,9 @@ canvas {
   }
   .home-content {
     margin: 30px;
+  }
+  .sketch-list{
+    max-height: calc(100vh - 135px);
   }
   header {
     margin-bottom: 30px;

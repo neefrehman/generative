@@ -1,35 +1,77 @@
 var bubbles = [];
-var numberOfBubbles = 100;
 var Bubble = class Bubble {
-  constructor(x, y) {
-    this.x = x || windowWidth / 2;
-    this.y = y || windowHeight / 2;
+
+  constructor(x, y, r) {
+    this.x = x || random((windowWidth / 2) + 50, (windowWidth / 2) - 50);
+    this.y = y || random((windowHeight / 2) + 50, (windowHeight / 2) - 50);
+    this.r = r || 15;
+    this.alpha = 0;
+    this.speed = 2;
   }
+
   move() {
-    this.x = this.x + random(-3, 3);
-    this.y = this.y + random(-3, 3);
+    this.x = this.x + random(-this.speed, this.speed);
+    this.y = this.y + random(-this.speed, this.speed);
   }
+
   show() {
     stroke(255);
     strokeWeight(2);
-    noFill();
-    ellipse(this.x, this.y, 24);
+    fill(255, this.alpha);
+    ellipse(this.x, this.y, this.r * 2);
   }
+
+  hovered() {
+    const d = dist(mouseX, mouseY, this.x, this.y);
+    return (d < this.r);
+  }
+
+  intersects(other) {
+    const d = dist(this.x, this.y, other.x, other.y);
+    return (d < this.r + other.r);
+  }
+
 };
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (var i = 0; i < numberOfBubbles; i++) {
+  for (var i = 0; i < 30; i++) {
     bubbles[i] = new Bubble();
   }
 }
 
 function draw() {
-  background(10);
-  for (var i = 0; i < bubbles.length; i++) {
-    bubbles[i].move();
-    bubbles[i].show();
+
+  background(20);
+
+  for (const bubble of bubbles) {
+
+    bubble.move();
+    bubble.show();
+
+    if (bubble.hovered()) {
+      bubble.alpha = 255;
+      bubble.speed = 10;
+    } else {
+      bubble.alpha = 0;
+      bubble.speed = 1;
+    }
+
+    for (const other of bubbles) {
+      if (bubble != other && bubble.intersects(other)) {
+        bubble.alpha = 255;
+        other.alpha = 255;
+        bubble.speed = 10;
+        other.speed = 10;
+      }
+    }
+
   }
+
+  if (bubbles.length > 300) {
+    bubbles.splice(0, 1);
+  }
+
 }
 
 function mousePressed() {

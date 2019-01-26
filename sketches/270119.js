@@ -23,12 +23,22 @@ var Bubble = class Bubble {
 
   hovered() {
     const d = dist(mouseX, mouseY, this.x, this.y);
-    return (d < this.r);
+    return (d - 15 < this.r);
   }
 
   intersects(other) {
     const d = dist(this.x, this.y, other.x, other.y);
     return (d < this.r + other.r);
+  }
+
+  normal() {
+    this.alpha = 0;
+    this.speed = 2;
+  }
+
+  excited() {
+    this.alpha = 255;
+    this.speed = 8;
   }
 
 };
@@ -50,19 +60,15 @@ function draw() {
     bubble.show();
 
     if (bubble.hovered()) {
-      bubble.alpha = 255;
-      bubble.speed = 10;
+      bubble.excited();
     } else {
-      bubble.alpha = 0;
-      bubble.speed = 1;
+      bubble.normal();
     }
 
     for (const other of bubbles) {
       if (bubble != other && bubble.intersects(other)) {
-        bubble.alpha = 255;
-        other.alpha = 255;
-        bubble.speed = 10;
-        other.speed = 10;
+        bubble.excited();
+        other.excited();
       }
     }
 
@@ -75,13 +81,13 @@ function draw() {
 }
 
 function mousePressed() {
-  const b = new Bubble(mouseX, mouseY);
-  bubbles.push(b);
+  const bubble = new Bubble(mouseX, mouseY);
+  bubbles.push(bubble);
 }
 
 function mouseDragged() {
-  const b = new Bubble(mouseX, mouseY);
-  bubbles.push(b);
+  const bubble = new Bubble(mouseX, mouseY);
+  bubbles.push(bubble);
 }
 
 function windowResized() {

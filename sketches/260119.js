@@ -1,12 +1,17 @@
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  background(10);
 }
 
 function draw() {
 
   stroke(255);
-  line(mouseX, 0, mouseX, windowHeight);
+
+  if (windowWidth > windowHeight) {
+    line(mouseX, 0, mouseX, windowHeight);
+  } else if (windowHeight > windowWidth) {
+    line(0, mouseY, windowHeight, mouseY);
+  }
 
 }
 

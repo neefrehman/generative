@@ -18,7 +18,7 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  background(0);
+  background(10);
 }
 
 new p5();

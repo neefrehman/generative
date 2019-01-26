@@ -81,12 +81,6 @@ window.addEventListener("popstate", () => {
     linkedSketch = urlPath[urlPath.length - 1];
 });
 
-window.addEventListener("beforeunload", e => {
-  remove();
-  e.returnValue = "";
-  goToSketch(linkedSketch);
-});
-
 sketchLinks.forEach(link => {
     link.addEventListener("click", () => goToSketch(link.innerHTML));
 });

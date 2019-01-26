@@ -1,6 +1,6 @@
 var bubbles = [];
 var numberOfBubbles = 100;
-class Bubble {
+var Bubble = class Bubble {
   constructor(x, y) {
     this.x = x || windowWidth / 2;
     this.y = y || windowHeight / 2;
@@ -15,7 +15,7 @@ class Bubble {
     noFill();
     ellipse(this.x, this.y, 24);
   }
-}
+};
 
 function setup() {
   createCanvas(windowWidth, windowHeight);

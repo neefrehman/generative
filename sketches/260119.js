@@ -10,6 +10,7 @@ function draw() {
   if (windowWidth > windowHeight) {
     line(mouseX, 0, mouseX, windowHeight);
   } else if (windowHeight > windowWidth) {
+    frameRate(30);
     line(0, mouseY, windowHeight, mouseY);
   }
 

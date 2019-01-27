@@ -34,7 +34,7 @@ var Bubble = class Bubble {
   }
 
   excited() {
-    this.speed = (width > 450) ? 6 : 5;
+    this.speed = (width > 450) ? 6 : 4;
   }
 
   normal() {

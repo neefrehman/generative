@@ -25,8 +25,7 @@ const goToSketch = sketch => {
     homeContent.classList.add("hide");
 
     const script = document.createElement("script");
-    const r = Math.floor(Math.random() * 100);
-    script.src = `sketches/${sketch}.js?a=${r}`;
+    script.src = `sketches/${sketch}.js`;
     document.body.appendChild(script);
 
     codeLink.innerHTML = sketch;

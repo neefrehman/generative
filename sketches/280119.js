@@ -5,20 +5,20 @@ var Bubble = class Bubble {
     this.x = x || random((width / 2) + 30, (width / 2) - 30);
     this.y = y || random((height / 2) + 30, (height / 2) - 30);
     this.r = r || 17;
-    this.speed = (width > 450) ? 2 : 1.5;
+    this.speed = (width > 450) ? 2.5 : 1.5;
     this.color = 255;
-    this.colorChange = -0.3 + random(0.003);
+    this.colorChangeRate = -0.3 + random(0.003);
   }
 
   move() {
     this.x = this.x + random(-this.speed, this.speed);
     this.y = this.y + random(-this.speed, this.speed);
-    this.color = this.color + this.colorChange;
+    this.color = this.color + this.colorChangeRate;
 
-    if (this.color <= -10) {
-      this.colorChange = -this.colorChange;
-    } else if (this.color >= 265) {
-      this.colorChange = -this.colorChange;
+    if (this.color <= 0) {
+      this.colorChangeRate = -this.colorChangeRate;
+    } else if (this.color >= 255) {
+      this.colorChangeRate = -this.colorChangeRate;
     }
   }
 
@@ -34,11 +34,11 @@ var Bubble = class Bubble {
   }
 
   excited() {
-    this.speed = (width > 450) ? 5 : 4;
+    this.speed = (width > 450) ? 6 : 5;
   }
 
   normal() {
-    this.speed = (width > 450) ? 2 : 1.5;
+    this.speed = (width > 450) ? 2.5 : 1.5;
   }
 
 };
@@ -89,6 +89,7 @@ function mouseDragged() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  background(20);
 }
 
 new p5();

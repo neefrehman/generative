@@ -15,9 +15,9 @@ var Spore = class Spore {
     this.y = this.y + random(-this.speed, this.speed);
     this.color = this.color + this.colorChangeRate;
 
-    if (this.color <= 0) {
+    if (this.color <= -5) {
       this.colorChangeRate = -this.colorChangeRate;
-    } else if (this.color >= 255) {
+    } else if (this.color >= 260) {
       this.colorChangeRate = -this.colorChangeRate;
     }
   }

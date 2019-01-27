@@ -4,20 +4,21 @@ var Bubble = class Bubble {
   constructor(x, y, r) {
     this.x = x || random((windowWidth / 2) + 50, (windowWidth / 2) - 50);
     this.y = y || random((windowHeight / 2) + 50, (windowHeight / 2) - 50);
-    this.r = r || 15;
+    this.r = r || 17;
     this.speed = 2;
     this.color = 255;
-    this.colorChange = -0.4;
+    this.colorChange = -0.3 + random(0.003);
   }
 
   move() {
     this.x = this.x + random(-this.speed, this.speed);
     this.y = this.y + random(-this.speed, this.speed);
     this.color = this.color + this.colorChange;
-    if (this.color <= -30) {
-      this.colorChange = this.colorChange * -1;
-    } else if (this.color >= 285) {
-      this.colorChange = this.colorChange * -1;
+
+    if (this.color <= -10) {
+      this.colorChange = -this.colorChange;
+    } else if (this.color >= 265) {
+      this.colorChange = -this.colorChange;
     }
   }
 

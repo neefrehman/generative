@@ -1,5 +1,5 @@
-var bubbles = [];
-var Bubble = class Bubble {
+var spores = [];
+var Spore = class Spore {
 
   constructor(x, y, r) {
     this.x = x || random((width / 2) + 30, (width / 2) - 30);
@@ -28,9 +28,9 @@ var Bubble = class Bubble {
     ellipse(this.x, this.y, this.r * 2);
   }
 
-  intersects(other) {
-    const d = dist(this.x, this.y, other.x, other.y);
-    return (d < this.r + other.r);
+  intersects(sibling) {
+    const d = dist(this.x, this.y, sibling.x, sibling.y);
+    return (d < this.r + sibling.r);
   }
 
   excited() {
@@ -44,48 +44,51 @@ var Bubble = class Bubble {
 };
 
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
   background(20);
   frameRate(40);
-  const initialBubbleCount = (width > 450) ? 50 : 40;
-  for (var i = 0; i < initialBubbleCount; i++) {
-    bubbles[i] = new Bubble();
+
+  const initialSporeCount = (width > 450) ? 50 : 40;
+  for (var i = 0; i < initialSporeCount; i++) {
+    spores[i] = new Spore();
   }
+
 }
 
 function draw() {
 
-  for (const bubble of bubbles) {
+  for (const spore of spores) {
 
-    bubble.move();
-    bubble.show();
+    spore.move();
+    spore.show();
 
-    for (const other of bubbles) {
-      if (bubble != other && bubble.intersects(other)) {
-        bubble.excited();
-        other.excited();
+    for (const sibling of spores) {
+      if (spore != sibling && spore.intersects(sibling)) {
+        spore.excited();
+        sibling.excited();
       } else {
-        bubble.normal();
-        other.normal();
+        spore.normal();
+        sibling.normal();
       }
     }
 
   }
 
-  if (bubbles.length > 300) {
-    bubbles.splice(0, 1);
+  if (spores.length > 300) {
+    spores.splice(0, 1);
   }
 
 }
 
 function mousePressed() {
-  const bubble = new Bubble(mouseX, mouseY);
-  bubbles.push(bubble);
+  const spore = new Spore(mouseX, mouseY);
+  spores.push(spore);
 }
 
 function mouseDragged() {
-  const bubble = new Bubble(mouseX, mouseY);
-  bubbles.push(bubble);
+  const spore = new Spore(mouseX, mouseY);
+  spores.push(spore);
 }
 
 function windowResized() {

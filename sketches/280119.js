@@ -37,6 +37,10 @@ var Bubble = class Bubble {
     this.speed = (windowWidth > 450) ? 5 : 4;
   }
 
+  normal() {
+    this.speed = (windowWidth > 450) ? 2 : 1;
+  }
+
 };
 
 function setup() {
@@ -59,6 +63,9 @@ function draw() {
       if (bubble != other && bubble.intersects(other)) {
         bubble.excited();
         other.excited();
+      } else {
+        bubble.normal();
+        other.normal();
       }
     }
 

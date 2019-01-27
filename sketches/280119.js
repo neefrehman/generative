@@ -2,8 +2,8 @@ var bubbles = [];
 var Bubble = class Bubble {
 
   constructor(x, y, r) {
-    this.x = x || random((windowWidth / 2) + 50, (windowWidth / 2) - 50);
-    this.y = y || random((windowHeight / 2) + 50, (windowHeight / 2) - 50);
+    this.x = x || random((windowWidth / 2) + 30, (windowWidth / 2) - 30);
+    this.y = y || random((windowHeight / 2) + 30, (windowHeight / 2) - 30);
     this.r = r || 17;
     this.speed = 2;
     this.color = 255;

@@ -2,8 +2,8 @@ var bubbles = [];
 var Bubble = class Bubble {
 
   constructor(x, y, r) {
-    this.x = x || random((windowWidth / 2) + 50, (windowWidth / 2) - 50);
-    this.y = y || random((windowHeight / 2) + 50, (windowHeight / 2) - 50);
+    this.x = x || random((windowWidth / 2) + 60, (windowWidth / 2) - 60);
+    this.y = y || random((windowHeight / 2) + 60, (windowHeight / 2) - 60);
     this.r = r || 15;
     this.alpha = 0;
     this.speed = 2;
@@ -55,7 +55,7 @@ function draw() {
 
   background(20);
 
-  for (const bubble of bubbles) {
+  for (var bubble of bubbles) {
 
     bubble.move();
     bubble.show();
@@ -66,7 +66,7 @@ function draw() {
       bubble.normal();
     }
 
-    for (const other of bubbles) {
+    for (var other of bubbles) {
       if (bubble != other && bubble.intersects(other)) {
         bubble.excited();
         other.excited();

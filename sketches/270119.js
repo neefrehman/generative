@@ -2,10 +2,10 @@ var bubbles = [];
 var Bubble = class Bubble {
 
   constructor(x, y, r) {
-    this.x = x || random((windowWidth / 2) + 60, (windowWidth / 2) - 60);
-    this.y = y || random((windowHeight / 2) + 60, (windowHeight / 2) - 60);
+    this.x = x || random((width / 2) + 60, (width / 2) - 60);
+    this.y = y || random((height / 2) + 60, (height / 2) - 60);
     this.r = r || 15;
-    this.speed = (windowWidth > 450) ? 2 : 1;
+    this.speed = (width > 450) ? 2 : 1.5;
     this.alpha = 0;
   }
 
@@ -31,14 +31,14 @@ var Bubble = class Bubble {
     return (d < this.r + other.r);
   }
 
-  normal() {
-    this.alpha = 0;
-    this.speed = 2;
-  }
-
   excited() {
     this.alpha = 255;
-    this.speed = (windowWidth > 450) ? 8 : 6;
+    this.speed = (width > 450) ? 8 : 6;
+  }
+
+  normal() {
+    this.alpha = 0;
+    this.speed = (width > 450) ? 2 : 1.5;
   }
 
 };

@@ -5,14 +5,20 @@ var Bubble = class Bubble {
     this.x = x || random((windowWidth / 2) + 50, (windowWidth / 2) - 50);
     this.y = y || random((windowHeight / 2) + 50, (windowHeight / 2) - 50);
     this.r = r || 15;
-    this.color = 255;
     this.speed = 2;
+    this.color = 255;
+    this.colorChange = -0.4;
   }
 
   move() {
     this.x = this.x + random(-this.speed, this.speed);
     this.y = this.y + random(-this.speed, this.speed);
-    this.color = this.color - 0.3;
+    this.color = this.color + this.colorChange;
+    if (this.color <= -30) {
+      this.colorChange = this.colorChange * -1;
+    } else if (this.color >= 285) {
+      this.colorChange = this.colorChange * -1;
+    }
   }
 
   show() {

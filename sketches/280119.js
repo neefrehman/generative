@@ -5,7 +5,7 @@ var Bubble = class Bubble {
     this.x = x || random((windowWidth / 2) + 30, (windowWidth / 2) - 30);
     this.y = y || random((windowHeight / 2) + 30, (windowHeight / 2) - 30);
     this.r = r || 17;
-    this.speed = 2;
+    this.speed = (windowWidth > 450) ? 2 : 1;
     this.color = 255;
     this.colorChange = -0.3 + random(0.003);
   }
@@ -34,7 +34,7 @@ var Bubble = class Bubble {
   }
 
   excited() {
-    this.speed = 5;
+    this.speed = (windowWidth > 450) ? 5 : 4;
   }
 
 };

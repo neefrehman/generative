@@ -5,8 +5,8 @@ var Bubble = class Bubble {
     this.x = x || random((windowWidth / 2) + 60, (windowWidth / 2) - 60);
     this.y = y || random((windowHeight / 2) + 60, (windowHeight / 2) - 60);
     this.r = r || 15;
+    this.speed = (windowWidth > 450) ? 2 : 1;
     this.alpha = 0;
-    this.speed = 2;
   }
 
   move() {
@@ -22,7 +22,7 @@ var Bubble = class Bubble {
   }
 
   hovered() {
-    const d = dist(mouseX, mouseY, this.x, this.y);
+    const d = dist(this.x, this.y, mouseX, mouseY);
     return (d - 15 < this.r);
   }
 
@@ -38,7 +38,7 @@ var Bubble = class Bubble {
 
   excited() {
     this.alpha = 255;
-    this.speed = 8;
+    (windowWidth > 450) ? 8 : 6;
   }
 
 };

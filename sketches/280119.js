@@ -47,7 +47,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(20);
   frameRate(40);
-  var initialBubbleCount = (windowWidth > 450) ? 50 : 40;
+  var initialBubbleCount = (width > 450) ? 50 : 40;
   for (var i = 0; i < initialBubbleCount; i++) {
     bubbles[i] = new Bubble();
   }

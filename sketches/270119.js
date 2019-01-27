@@ -45,6 +45,7 @@ var Bubble = class Bubble {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  frameRate(40);
   for (var i = 0; i < 30; i++) {
     bubbles[i] = new Bubble();
   }

@@ -5,7 +5,7 @@ var Bubble = class Bubble {
     this.x = x || random((width / 2) + 30, (width / 2) - 30);
     this.y = y || random((height / 2) + 30, (height / 2) - 30);
     this.r = r || 17;
-    this.speed = (width > 450) ? 2.5 : 1.5;
+    this.speed = (width > 450) ? 3 : 2;
     this.color = 255;
     this.colorChangeRate = -0.3 + random(0.003);
   }
@@ -38,7 +38,7 @@ var Bubble = class Bubble {
   }
 
   normal() {
-    this.speed = (width > 450) ? 2.5 : 1.5;
+    this.speed = (width > 450) ? 3 : 2;
   }
 
 };

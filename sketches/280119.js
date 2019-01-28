@@ -7,7 +7,7 @@ var Spore = class Spore {
     this.r = r || 17;
     this.speed = (width > 450) ? 3.5 : 2.5;
     this.color = 255;
-    this.colorChangeRate = -0.3 + random(0.003);
+    this.colorChangeRate = -0.3 + random(0.004);
   }
 
   move() {
@@ -28,7 +28,7 @@ var Spore = class Spore {
     ellipse(this.x, this.y, this.r * 2);
   }
 
-  intersects(sibling) {
+  collides(sibling) {
     const d = dist(this.x, this.y, sibling.x, sibling.y);
     return (d < this.r + sibling.r);
   }
@@ -64,7 +64,7 @@ function draw() {
     spore.show();
 
     for (const sibling of spores) {
-      if (spore != sibling && spore.intersects(sibling)) {
+      if (spore != sibling && spore.collides(sibling)) {
         spore.excited();
         sibling.excited();
       } else {

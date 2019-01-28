@@ -26,9 +26,9 @@ var Bubble = class Bubble {
     return (d - 15 < this.r);
   }
 
-  intersects(other) {
-    const d = dist(this.x, this.y, other.x, other.y);
-    return (d < this.r + other.r);
+  collides(sibling) {
+    const d = dist(this.x, this.y, sibling.x, sibling.y);
+    return (d < this.r + sibling.r);
   }
 
   excited() {
@@ -66,10 +66,10 @@ function draw() {
       bubble.normal();
     }
 
-    for (var other of bubbles) {
-      if (bubble != other && bubble.intersects(other)) {
+    for (var sibling of bubbles) {
+      if (bubble != sibling && bubble.collides(sibling)) {
         bubble.excited();
-        other.excited();
+        sibling.excited();
       }
     }
 

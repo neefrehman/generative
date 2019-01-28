@@ -139,6 +139,6 @@ canvas {
     margin-bottom: 30px;
   }
   .sketch-content a {
-    --edgeMargin: 25px;
+    --edgeMargin: 30px;
   }
 }

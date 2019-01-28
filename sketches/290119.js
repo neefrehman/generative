@@ -5,7 +5,7 @@ var Slice = class Slice {
     this.x = x || random(width);
     this.y = y || height;
     this.r = r || 30;
-    this.speed = (height > 450) ? 5 : 3;
+    this.speed = 5;
     this.growth = (height > 450) ? 6 : 3;
   }
 
@@ -27,12 +27,12 @@ var Slice = class Slice {
   }
 
   excited() {
-    this.speed = this.speed * 1.5;
-    this.growth = this.growth * 1.5;
+    this.speed = this.speed * 1.2;
+    this.growth = this.growth * 1.2;
   }
 
   normal() {
-    this.speed = (height > 450) ? 5 : 3;
+    this.speed = 5;
     this.growth = (height > 450) ? 4 : 2;
   }
 
@@ -42,9 +42,9 @@ function setup() {
 
   createCanvas(windowWidth, windowHeight);
   background(20);
-  frameRate(10);
+  frameRate(15);
 
-  const initialSliceCount = Math.floor(width / 30);
+  const initialSliceCount = Math.floor(width / 25);
   for (var i = 0; i < initialSliceCount; i++) {
     slices[i] = new Slice();
   }

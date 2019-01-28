@@ -6,7 +6,7 @@ var Slice = class Slice {
     this.y = y || height;
     this.r = r || 30;
     this.speed = 5;
-    this.growth = (height > 450) ? 6 : 3;
+    this.growth = (width > 450) ? 6 : 3;
   }
 
   move() {
@@ -33,7 +33,7 @@ var Slice = class Slice {
 
   normal() {
     this.speed = 5;
-    this.growth = (height > 450) ? 4 : 2;
+    this.growth = (width > 450) ? 4 : 2;
   }
 
 };
@@ -77,8 +77,7 @@ function draw() {
 }
 
 function mousePressed() {
-  const slice = new Slice(mouseX, mouseY);
-  slices.push(slice);
+  background(20);
 }
 
 function windowResized() {

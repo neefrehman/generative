@@ -139,6 +139,6 @@ canvas {
     margin-bottom: 30px;
   }
   footer {
-    --edgeMargin: 25px;
+    --edgeMargin: 15px;
   }
 }

@@ -75,7 +75,7 @@ function draw() {
 
   }
 
-  if (spores.length > 300) {
+  if (spores.length > 500) {
     spores.splice(0, 1);
   }
 

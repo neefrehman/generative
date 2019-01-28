@@ -129,14 +129,11 @@ canvas {
 }
 
 @media (max-width: 769px) {
-  body {
-    font-size: 13px;
-  }
   .home-content {
     margin: 30px;
   }
   .sketch-list{
-    max-height: calc(100vh - 135px);
+    max-height: calc(100vh - 130px);
   }
   header {
     margin-bottom: 30px;

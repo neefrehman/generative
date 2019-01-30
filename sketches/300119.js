@@ -72,6 +72,10 @@ function draw() {
       slice.y = 0 - slice.r;
     }
 
+    if (this.r > 200) {
+      this.r = 200;
+    }
+
   }
 
 }

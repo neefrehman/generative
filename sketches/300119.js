@@ -72,8 +72,8 @@ function draw() {
       slice.y = 0 - slice.r;
     }
 
-    if (this.r > 200) {
-      this.r = 200;
+    if (slice.r > 400) {
+      slice.r = 400;
     }
 
   }

@@ -40,7 +40,7 @@ var Particle = class Particle {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
-    const initialParticleCount = (width > 450) ? 800 : 600;
+    const initialParticleCount = (width > 450) ? 800 : 400;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}

@@ -42,7 +42,7 @@ function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(20);
 
-    const initialParticleCount = (width > 450) ? 200 : 150;
+    const initialParticleCount = (width > 450) ? 200 : 100;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles_a[i] = new Particle();
 		particles_b[i] = new Particle();

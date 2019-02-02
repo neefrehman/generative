@@ -1,7 +1,7 @@
 // Forked from yasai on openprocessing.org: openprocessing.org/user/111178
 
 var particles = [];
-var initialParticleCount = 800;
+// var initialParticleCount = 800; (width > 450) ? 800 : 600;
 var noiseScale = 500;
 
 var Particle = class Particle {
@@ -40,7 +40,8 @@ var Particle = class Particle {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
-	for (var i = 0; i < initialParticleCount; i++) {
+    const initialParticleCount = (width > 450) ? 800 : 600;
+	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}
 }
@@ -50,9 +51,9 @@ function draw() {
 	smooth();
     background(20);
 
-	for (var i = 0; i < initialParticleCount; i++) {
-		var radius = map(i, 0, initialParticleCount, 1, 3);
-		var alpha = map(i, 0, initialParticleCount, 0, 250);
+	for (var i = 0; i < particles.length; i++) {
+		var radius = map(i, 0, particles.length, 1, 3);
+		var alpha = map(i, 0, particles.length, 0, 250);
 
         fill(255, 255, 255, alpha);
 		particles[i].move();

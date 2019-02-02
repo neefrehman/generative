@@ -3,7 +3,6 @@
 var particles_a = [];
 var particles_b = [];
 var particles_c = [];
-var initialParticleCount = 200;
 var noiseScale = 1000;
 
 var Particle = class Particle {
@@ -43,7 +42,8 @@ function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(20);
 
-	for (var i = 0; i < initialParticleCount; i++) {
+    const initialParticleCount = (width > 450) ? 200 : 150;
+	for (let i = 0; i < initialParticleCount; i++) {
 		particles_a[i] = new Particle();
 		particles_b[i] = new Particle();
 		particles_c[i] = new Particle();
@@ -54,9 +54,9 @@ function draw() {
 	noStroke();
 	smooth();
 
-	for (var i = 0; i < initialParticleCount; i++) {
-		var radius = map(i, 0, initialParticleCount, 1, 2);
-		var alpha = map(i, 0, initialParticleCount, 0, 250);
+	for (var i = 0; i < particles_a.length; i++) {
+		var radius = map(i, 0, particles_a.length, 1, 2);
+		var alpha = map(i, 0, particles_a.length, 0, 250);
 
 		fill(69, 33, 124, alpha);
 		particles_a[i].move();

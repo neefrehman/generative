@@ -24,13 +24,13 @@ const goToSketch = sketch => {
     sketchContent.classList.add("show");
     homeContent.classList.add("hide");
 
-    const sketchMonth = sketch.substr(2, 7);
+    const month = sketch.substr(2, 7);
     const script = document.createElement("script");
-    script.src = `sketches/${sketchMonth}/${sketch}.js`;
+    script.src = `sketches/${month}/${sketch}.js`;
     document.body.appendChild(script);
 
     codeLink.innerHTML = sketch;
-    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${sketchMonth}/${sketch}.js`;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${month}/${sketch}.js`;
     document.title = `${sketch} - Generative - Neef Rehman`;
     history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
 };

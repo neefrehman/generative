@@ -74,6 +74,8 @@ function draw() {
 
         if (slice.r > 400) {
             slice.r = 400;
+        } else if (slice.r < 1) {
+            slice.r = 1;
         }
 
     }

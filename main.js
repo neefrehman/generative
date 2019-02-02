@@ -27,6 +27,7 @@ const goToSketch = sketch => {
     const day = sketch.substr(0, 2);
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
+    
     const script = document.createElement("script");
     script.src = `sketches/${month + year}/${sketch}.js`;
     document.body.appendChild(script);

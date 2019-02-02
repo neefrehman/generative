@@ -76,7 +76,11 @@ function draw() {
 }
 
 function mousePressed() {
-    background(20);
+    frameRate(20);
+}
+
+function mouseClicked() {
+    frameRate(60);
 }
 
 new p5();

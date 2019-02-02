@@ -1,7 +1,6 @@
 // Forked from yasai on openprocessing.org: openprocessing.org/user/111178
 
 var particles = [];
-// var initialParticleCount = 800; (width > 450) ? 800 : 600;
 var noiseScale = 500;
 
 var Particle = class Particle {

@@ -1,5 +1,3 @@
-// Forked from yasai on openprocessing.org: openprocessing.org/user/111178
-
 var particles_a = [];
 var particles_b = [];
 var particles_c = [];

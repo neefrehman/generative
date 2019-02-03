@@ -1,5 +1,3 @@
-// Forked from yasai on openprocessing.org: openprocessing.org/user/111178
-
 var particles = [];
 var noiseScale = 500;
 

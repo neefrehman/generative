@@ -9,7 +9,7 @@ var Particle = class Particle {
         this.dir = createVector(0, 0);
         this.vel = createVector(0, 0);
         this.pos = createVector(this.x, this.y);
-        this.speed = 0.4;
+        this.speed = 0.3;
     }
 
 	move() {

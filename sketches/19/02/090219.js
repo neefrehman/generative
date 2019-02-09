@@ -1,5 +1,5 @@
 var particles = [];
-var noiseScale = 100000;
+var noiseScale = 20000;
 
 var Particle = class Particle {
 

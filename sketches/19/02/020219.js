@@ -1,3 +1,5 @@
+// Forked, refactored and slightly edited from Yasai on OpenProcessing: https://www.openprocessing.org/sketch/494102
+
 var particles_a = [];
 var particles_b = [];
 var particles_c = [];

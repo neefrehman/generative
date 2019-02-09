@@ -1,5 +1,5 @@
 var particles = [];
-var noiseScale = 500;
+var noiseScale = 15000;
 
 var Particle = class Particle {
 
@@ -9,7 +9,7 @@ var Particle = class Particle {
         this.dir = createVector(0, 0);
         this.vel = createVector(0, 0);
         this.pos = createVector(this.x, this.y);
-        this.speed = 0.4;
+        this.speed = 0.2;
     }
 
 	move() {
@@ -37,7 +37,7 @@ var Particle = class Particle {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
-    const initialParticleCount = (width > 450) ? 800 : 400;
+    const initialParticleCount = (width > 450) ? 600 : 300;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}

@@ -67,7 +67,6 @@ let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 
 if (urlPath.length >= 1 && location.protocol != "file:") {
-    remove();
     const linkedSketchButton = document.getElementById(linkedSketch);
 
     if (linkedSketchButton) {

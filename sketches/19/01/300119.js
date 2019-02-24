@@ -82,9 +82,6 @@ function draw() {
 
 }
 
-function mousePressed() {
-    background(20);
-}
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);

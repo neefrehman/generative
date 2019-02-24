@@ -66,6 +66,7 @@ const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 
+
 if (urlPath.length >= 1 && location.protocol != "file:") {
     const linkedSketchButton = document.getElementById(linkedSketch);
 
@@ -93,7 +94,8 @@ window.addEventListener("popstate", () => {
 
 
 sketchLinks.forEach(link => {
-    link.addEventListener("click", () => goToSketch(link.innerHTML));
+    link.innerHTML = link.id;
+    link.addEventListener("click", () => goToSketch(link.id));
 });
 
 

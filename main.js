@@ -31,7 +31,7 @@ const goToSketch = sketch => {
     const year = sketch.substr(4, 2);
 
     const script = document.createElement("script");
-    script.src = `sketches/${year}/${month}/${sketch}.js?${Math.random()}`;
+    script.src = `sketches/${year}/${month}/${sketch}.js`;
     document.body.appendChild(script);
 
     codeLink.innerHTML = sketch;
@@ -91,9 +91,6 @@ window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
     linkedSketch = urlPath[urlPath.length - 1];
 });
-
-
-window.onbeforeunload = () => window.location.reload(true);
 
 
 sketchLinks.forEach(link => {

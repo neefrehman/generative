@@ -12,6 +12,8 @@ darkModeToggle.addEventListener("dblclick", () => {
 });
 
 
+
+
 // SPA logic
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
@@ -19,6 +21,7 @@ const sketchContent = document.querySelector(".sketch-content");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 const fourOhFourContent = document.querySelector(".fourohfour-content");
+
 
 const goToSketch = sketch => {
     sketchContent.classList.add("show");
@@ -37,6 +40,7 @@ const goToSketch = sketch => {
     history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
 };
 
+
 const goHome = () => {
     sketchContent.classList.remove("show");
     homeContent.classList.remove("hide");
@@ -48,6 +52,7 @@ const goHome = () => {
     history.replaceState("", document.title, "/");
 };
 
+
 const goTo404 = () => {
     homeContent.classList.add("hide");
     sketchContent.classList.remove("show");
@@ -56,11 +61,13 @@ const goTo404 = () => {
     document.title = "404 - Generative - Neef Rehman";
 };
 
+
 const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 
 if (urlPath.length >= 1 && location.protocol != "file:") {
+    remove();
     const linkedSketchButton = document.getElementById(linkedSketch);
 
     if (linkedSketchButton) {
@@ -69,6 +76,7 @@ if (urlPath.length >= 1 && location.protocol != "file:") {
         goTo404();
     }
 }
+
 
 window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
@@ -84,8 +92,10 @@ window.addEventListener("popstate", () => {
     linkedSketch = urlPath[urlPath.length - 1];
 });
 
+
 sketchLinks.forEach(link => {
     link.addEventListener("click", () => goToSketch(link.innerHTML));
 });
+
 
 homeLink.addEventListener("click", () => goHome());

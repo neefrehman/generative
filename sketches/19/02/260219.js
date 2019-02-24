@@ -17,12 +17,6 @@ var Blob = class Blob {
         if (this.y > height || this.y < 0) this.yspeed *= -1;
     }
 
-    show() {
-        noFill();
-        stroke(0);
-        strokeWeight(4);
-        ellipse(this.x, this.y, this.r * 2, this.r * 2);
-    }
 };
 
 
@@ -45,7 +39,7 @@ function draw() {
                 const d = sqrt((xdif * xdif) + (ydif * ydif));
                 sum += 10 * blobs[i].r / d;
             }
-            set(x, y, color(sum, 255, 255));
+            set(x, y, color(sum, 150, 150));
         }
     }
     updatePixels();

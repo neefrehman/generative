@@ -1,72 +1,48 @@
-var particles = [];
-var noiseScale = 0;
-
-var Particle = class Particle {
+var blobs = [];
+var Blob = class Blob {
 
     constructor(x, y) {
-        this.x = random(width);
-        this.y = random(height);
-        this.dir = createVector(0, 0);
-        this.vel = createVector(0, 0);
-        this.pos = createVector(this.x, this.y);
-        this.speed = 0.5;
+        this.x = x;
+        this.y = y;
+        const angle = random(0, 2 * PI);
+        this.xspeed = random(2, 5) * Math.cos(angle);
+        this.yspeed = random(2, 5) * Math.sin(angle);
+        this.r = random(120, 300);
     }
 
-	move() {
-		const angle = noise(this.pos.x / noiseScale, this.pos.y / noiseScale) * TWO_PI * noiseScale;
-		this.dir.x = cos(angle);
-		this.dir.y = sin(angle);
-		this.vel = this.dir.copy();
-		this.vel.mult(this.speed);
-		this.pos.add(this.vel);
-	}
-
-	checkEdge() {
-		if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
-			this.pos.x = random(50, width);
-			this.pos.y = random(50, height);
-		}
-	}
-
-	display(r) {
-		ellipse(this.pos.x, this.pos.y, r);
-	}
+    update() {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+        if (this.x > width || this.x < 0) this.xspeed *= -1;
+        if (this.y > height || this.y < 0) this.yspeed *= -1;
+    }
 
 };
 
-function setup() {
-	createCanvas(windowWidth, windowHeight);
 
-    const initialParticleCount = (width > 450) ? 800 : 400;
-	for (let i = 0; i < initialParticleCount; i++) {
-		particles[i] = new Particle();
-	}
+function setup() {
+    createCanvas(400, 300);
+    for (i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
 }
 
 function draw() {
-	noStroke();
-	smooth();
-    background(20);
+    loadPixels();
+    for (x = 0; x < width; x++) {
+        for (y = 0; y < height; y++) {
+            let sum = 0;
+            for (i = 0; i < blobs.length; i++) {
+                const xdif = x - blobs[i].x;
+                const ydif = y - blobs[i].y;
+                const d = sqrt((xdif * xdif) + (ydif * ydif));
+                sum += 10 * blobs[i].r / d;
+            }
+            set(x, y, color(sum));
+        }
+    }
+    updatePixels();
 
-    noiseScale = noiseScale - 2;
-
-	for (var i = 0; i < particles.length; i++) {
-		var radius = map(i, 0, particles.length, 1, 4);
-		var alpha = map(i, 0, particles.length, 0, 250);
-
-		fill(255, 255, 255, alpha);
-		particles[i].move();
-		particles[i].display(radius);
-		particles[i].checkEdge();
-	}
+    for (i = 0; i < blobs.length; i++) blobs[i].update();
 }
 
-function mousePressed() {
-    frameRate(20);
-}
-
-function mouseClicked() {
-    frameRate(60);
-}
 
 new p5();

@@ -36,8 +36,9 @@ var Particle = class Particle {
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+	background(20);
 
-    const initialParticleCount = (width > 450) ? 800 : 400;
+    const initialParticleCount = (width > 450) ? 600 : 300;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}
@@ -46,12 +47,11 @@ function setup() {
 function draw() {
 	noStroke();
 	smooth();
-    background(20);
 
-    noiseScale = noiseScale - 2;
+    noiseScale = noiseScale - 10;
 
 	for (var i = 0; i < particles.length; i++) {
-		var radius = map(i, 0, particles.length, 1, 4);
+		var radius = map(i, 0, particles.length, 1, 2);
 		var alpha = map(i, 0, particles.length, 0, 250);
 
 		fill(255, 255, 255, alpha);

@@ -37,7 +37,7 @@ function draw() {
                 const d = sqrt((xdif * xdif) + (ydif * ydif));
                 sum += 10 * blobs[i].r / d;
             }
-            set(x, y, color(255 - sum));
+            set(x, y, color(sum, 255, 255));
         }
     }
     updatePixels();

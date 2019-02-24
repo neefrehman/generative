@@ -31,7 +31,7 @@ const goToSketch = sketch => {
     const year = sketch.substr(4, 2);
 
     const script = document.createElement("script");
-    script.src = `sketches/${year}/${month}/${sketch}.js`;
+    script.src = `sketches/${year}/${month}/${sketch}.js?${Math.random()}`;
     document.body.appendChild(script);
 
     codeLink.innerHTML = sketch;

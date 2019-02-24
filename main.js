@@ -93,7 +93,7 @@ window.addEventListener("popstate", () => {
 });
 
 
-window.addEventListener("onbeforeunload", () => window.location.reload(true));
+window.onbeforeunload = () => window.location.reload(true);
 
 
 sketchLinks.forEach(link => {

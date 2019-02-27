@@ -57,11 +57,11 @@ html.dark header p a {
 
 header {
     margin-bottom: 40px;
+    transform: scale(1.04, 1);
+    transform-origin: left;
 }
 
 header h1 {
-    transform: scale(1.05, 1);
-    transform-origin: left;
     margin-block-end: 0.5em;
 }
 

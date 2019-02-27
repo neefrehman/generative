@@ -36,8 +36,8 @@ const goToSketch = sketch => {
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
-    document.title = `${sketch} - Generative - Neef Rehman`;
-    history.pushState("", `${sketch} - Generative - Neef Rehman`, sketch);
+    document.title = `${sketch} - Generative`;
+    history.pushState("", `${sketch} - Generative`, sketch);
 };
 
 

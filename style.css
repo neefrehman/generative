@@ -135,6 +135,9 @@ canvas.not-full-screen {
     .home-content {
         margin: 30px;
     }
+    .sketch-list{
+        max-height: calc(100vh - 180px);
+    }
     header {
         margin-bottom: 30px;
     }

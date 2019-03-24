@@ -48,7 +48,6 @@ const goHome = () => {
     document.body.removeChild(document.body.lastChild);
 
     document.title = "Generative - Neef Rehman";
-    history.replaceState("", document.title, "/");
 };
 
 
@@ -83,6 +82,7 @@ window.addEventListener("popstate", () => {
 
     if (urlPath.length == 0 || newLinkedSketch == linkedSketch) {
         goHome();
+        history.replaceState("", document.title, "/");
     } else {
         goToSketch(newLinkedSketch);
     }

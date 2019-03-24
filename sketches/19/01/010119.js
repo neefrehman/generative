@@ -5,6 +5,7 @@ function setup() {
     noFill();
 }
 
+
 function draw() {
 
     // background(255);
@@ -21,5 +22,6 @@ function draw() {
     }
 
 }
+
 
 new p5();

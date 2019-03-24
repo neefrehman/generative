@@ -43,6 +43,7 @@ var Bubble = class Bubble {
 
 };
 
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     frameRate(40);
@@ -50,6 +51,7 @@ function setup() {
         bubbles[i] = new Bubble();
     }
 }
+
 
 function draw() {
 
@@ -81,18 +83,22 @@ function draw() {
 
 }
 
+
 function mousePressed() {
     const bubble = new Bubble(mouseX, mouseY);
     bubbles.push(bubble);
 }
+
 
 function mouseDragged() {
     const bubble = new Bubble(mouseX, mouseY);
     bubbles.push(bubble);
 }
 
+
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
 
 new p5();

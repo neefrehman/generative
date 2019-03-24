@@ -38,6 +38,7 @@ var Slice = class Slice {
 
 };
 
+
 function setup() {
 
     createCanvas(windowWidth, windowHeight);
@@ -50,6 +51,7 @@ function setup() {
     }
 
 }
+
 
 function draw() {
 
@@ -72,13 +74,16 @@ function draw() {
 
 }
 
+
 function mousePressed() {
     background(20);
 }
+
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     background(20);
 }
+
 
 new p5();

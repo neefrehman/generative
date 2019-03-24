@@ -3,6 +3,7 @@ function setup() {
     frameRate(30);
 }
 
+
 function draw() {
 
     const distanceFromMouse = (width > 769) ? 150 : 100;
@@ -15,5 +16,6 @@ function draw() {
     ellipse(posX, posY, 30, 30);
 
 }
+
 
 new p5();

@@ -2,6 +2,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight, WEBGL);
 }
 
+
 function draw() {
 
     background(0);
@@ -18,8 +19,10 @@ function draw() {
 
 }
 
+
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
 
 new p5();

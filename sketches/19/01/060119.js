@@ -3,6 +3,7 @@ function setup() {
     frameRate(10);
 }
 
+
 var x1 = (Math.random() * 100);
 var y1 = (Math.random() * 100);
 var x2 = (Math.random() * 100);
@@ -11,6 +12,7 @@ var x3 = (Math.random() * 100);
 var y3 = (Math.random() * 100);
 var x4 = (Math.random() * 100);
 var y4 = (Math.random() * 100);
+
 
 function draw() {
 
@@ -47,8 +49,10 @@ function draw() {
 
 }
 
+
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
 
 new p5();

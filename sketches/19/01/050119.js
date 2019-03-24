@@ -3,6 +3,7 @@ function setup() {
     frameRate(10);
 }
 
+
 function draw() {
 
     const x1 = (Math.random() * 200);
@@ -47,8 +48,10 @@ function draw() {
 
 }
 
+
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+
 
 new p5();

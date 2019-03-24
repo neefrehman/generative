@@ -3,6 +3,7 @@ function setup() {
     background(10);
 }
 
+
 function draw() {
 
     stroke(255);
@@ -16,9 +17,11 @@ function draw() {
 
 }
 
+
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     background(10);
 }
+
 
 new p5();

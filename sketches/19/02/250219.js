@@ -21,7 +21,8 @@ var Blob = class Blob {
 
 
 function setup() {
-    createCanvas(400, 300);
+    const canvas = createCanvas(400, 300);
+    canvas.class("p5canvas not-full-screen");
     for (i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
 }
 

@@ -43,6 +43,7 @@ var Spore = class Spore {
 
 };
 
+
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
@@ -55,6 +56,7 @@ function setup() {
   }
 
 }
+
 
 function draw() {
 
@@ -81,19 +83,23 @@ function draw() {
 
 }
 
+
 function mousePressed() {
   const spore = new Spore(mouseX, mouseY);
   spores.push(spore);
 }
+
 
 function mouseDragged() {
   const spore = new Spore(mouseX, mouseY);
   spores.push(spore);
 }
 
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   background(20);
 }
+
 
 new p5();

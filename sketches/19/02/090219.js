@@ -34,6 +34,7 @@ var Particle = class Particle {
 
 };
 
+
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(20);
@@ -43,6 +44,7 @@ function setup() {
 		particles[i] = new Particle();
 	}
 }
+
 
 function draw() {
 	noStroke();
@@ -59,12 +61,15 @@ function draw() {
 	}
 }
 
+
 function mousePressed() {
     frameRate(20);
 }
 
+
 function mouseClicked() {
     frameRate(60);
 }
+
 
 new p5();

@@ -45,7 +45,7 @@ function draw() {
     background(20);
 
     const particleGenerationRate = (width > 800) ? 5 : 3;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < particleGenerationRate; i++) {
         const p = new Particle();
         particles.push(p);
     }

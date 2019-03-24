@@ -11,14 +11,8 @@ var Particle = class Particle {
     }
 
     finished() {
-        return this.alpha < 0;
+        return this.alpha < 0 || this.y < -8;
     }
-
-    pastEdge() {
-		if (this.y < -8) {
-			this.y = height + 8;
-		}
-	}
 
     move() {
         this.x += this.vx;
@@ -53,7 +47,6 @@ function draw() {
     for (const particle of particles) {
         particle.move();
         particle.show();
-        particle.pastEdge();
     }
 
     particles = particles.filter(p => !p.finished());

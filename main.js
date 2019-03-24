@@ -96,7 +96,7 @@ sketchLinks.forEach(link => {
     link.innerHTML = link.id;
     link.addEventListener("click", () => {
         goToSketch(link.id);
-        history.pushState("", `${sketch} - Generative`, link.id);
+        history.pushState("", `${link.id} - Generative`, link.id);
     });
 });
 

@@ -37,7 +37,6 @@ const goToSketch = sketch => {
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
     document.title = `${sketch} - Generative`;
-    history.pushState("", `${sketch} - Generative`, sketch);
 };
 
 
@@ -95,8 +94,14 @@ window.addEventListener("popstate", () => {
 
 sketchLinks.forEach(link => {
     link.innerHTML = link.id;
-    link.addEventListener("click", () => goToSketch(link.id));
+    link.addEventListener("click", () => {
+        goToSketch(link.id);
+        history.pushState("", `${sketch} - Generative`, link.id);
+    });
 });
 
 
-homeLink.addEventListener("click", () => goHome());
+homeLink.addEventListener("click", () => {
+    goHome();
+    history.pushState("", document.title, "/");
+});

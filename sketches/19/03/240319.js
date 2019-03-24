@@ -44,6 +44,7 @@ function setup() {
 function draw() {
     background(20);
 
+    const particleGenerationRate = (width > 800) ? 5 : 3;
     for (let i = 0; i < 5; i++) {
         const p = new Particle();
         particles.push(p);
@@ -66,6 +67,11 @@ function mousePressed() {
 
 function mouseClicked() {
     frameRate(60);
+}
+
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 
 

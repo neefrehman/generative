@@ -67,10 +67,8 @@ let linkedSketch = urlPath[urlPath.length - 1];
 
 if (urlPath.length >= 1 && location.protocol != "file:") {
     const linkedSketchButton = document.getElementById(linkedSketch);
-    const canvas = document.querySelector("canvas");
 
     if (linkedSketchButton) {
-        while (canvas) remove();
         goToSketch(linkedSketch);
     } else {
         goTo404();

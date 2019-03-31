@@ -1,5 +1,5 @@
 var particles = [];
-var noiseScale = 25000;
+var noiseScale = 20000;
 
 var Particle = class Particle {
 
@@ -64,8 +64,6 @@ function draw() {
 	noStroke();
 	smooth();
     background(20);
-
-    noiseScale = noiseScale - 10;
 
 	for (var i = 0; i < particles.length; i++) {
 		var radius = 3;

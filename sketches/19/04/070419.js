@@ -11,7 +11,7 @@ var Particle = class Particle {
         this.dir = createVector(0, 0);
         this.vel = createVector(0, 0);
         this.pos = createVector(this.x, this.y);
-        this.speed = 3;
+        this.speed = (width > 500) ? 3 : 2;
 
         this.history = [];
     }

@@ -32,17 +32,17 @@ var Particle = class Particle {
     }
 
     show() {
+        noStroke();
+        fill(255);
+        ellipse(this.x, this.y, this.d);
+
         for (let i = 0; i < this.history.length; i++) {
             const pos = this.history[i];
-            const col = map(i, 0, this.history.length, 75, 200);
+            const col = map(i, 0, this.history.length, 75, 255);
             fill(col);
             const d = map(i, 0, this.history.length, 1, this.d * 0.9);
             ellipse(pos.x, pos.y, d, d);
         }
-
-        noStroke();
-        fill(200);
-        ellipse(this.x, this.y, this.d);
     }
 };
 

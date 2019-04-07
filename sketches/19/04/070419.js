@@ -4,8 +4,8 @@ var noiseScale = 100000;
 var Particle = class Particle {
 
     constructor(x, y) {
-        this.x = x || random(width);
-        this.y = y || random(height);
+        this.x = x;
+        this.y = y;
         this.d = 36;
 
         this.dir = createVector(0, 0);
@@ -24,6 +24,11 @@ var Particle = class Particle {
 		this.vel.mult(this.speed);
 		this.pos.add(this.vel);
 
+        if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
+			this.pos.x = random(50, width);
+			this.pos.y = random(50, height);
+		}
+
         const v = createVector(this.pos.x, this.pos.y);
         this.history.push(v);
 
@@ -37,17 +42,10 @@ var Particle = class Particle {
         }
     }
 
-	checkEdge() {
-		if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
-			this.pos.x = random(50, width);
-			this.pos.y = random(50, height);
-		}
-	}
-
 	display() {
         noStroke();
         fill(255);
-        ellipse(this.x, this.y, this.d);
+        ellipse(this.pos.x, this.pos.y, this.d);
 
         for (let i = 0; i < this.history.length; i++) {
             const pos = this.history[i];
@@ -66,7 +64,7 @@ function setup() {
 
     const initialParticleCount = (width > 450) ? 30 : 15;
 	for (let i = 0; i < initialParticleCount; i++) {
-		particles[i] = new Particle();
+		particles.push(new Particle(random(width), random(height)));
 	}
 }
 
@@ -74,11 +72,9 @@ function setup() {
 function draw() {
     background(20);
 
-	for (var i = 0; i < particles.length; i++) {
-        fill(255);
+	for (let i = 0; i < particles.length; i++) {
         particles[i].display();
 		particles[i].move();
-		particles[i].checkEdge();
 	}
 }
 

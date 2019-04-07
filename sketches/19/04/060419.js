@@ -9,7 +9,7 @@ var Particle = class Particle {
         this.history = [];
     }
 
-    update() {
+    move() {
         this.x = this.x + random(-8, 8);
         this.y = this.y + random(-8, 8);
 
@@ -31,7 +31,7 @@ var Particle = class Particle {
         }
     }
 
-    show() {
+    display() {
         noStroke();
         fill(255);
         ellipse(this.x, this.y, this.d);
@@ -44,6 +44,7 @@ var Particle = class Particle {
             ellipse(pos.x, pos.y, d, d);
         }
     }
+
 };
 
 
@@ -60,8 +61,8 @@ function draw() {
     background(20);
 
     for (let i = 0; i < vibrations.length; i++) {
-        vibrations[i].show();
-        vibrations[i].update();
+        vibrations[i].display();
+        vibrations[i].move();
     }
 }
 

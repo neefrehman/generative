@@ -32,7 +32,7 @@ var Particle = class Particle {
         const v = createVector(this.pos.x, this.pos.y);
         this.history.push(v);
 
-        if (this.history.length > 70) {
+        if (this.history.length > 50) {
             this.history.splice(0, 1);
         }
 
@@ -43,7 +43,6 @@ var Particle = class Particle {
     }
 
 	display() {
-        noStroke();
         fill(255);
         ellipse(this.pos.x, this.pos.y, this.d);
 
@@ -76,8 +75,6 @@ function draw() {
         particles[i].display();
 		particles[i].move();
 	}
-
-    noiseScale--;
 }
 
 

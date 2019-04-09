@@ -33,7 +33,6 @@ const goToSketch = sketch => {
     const script = document.createElement("script");
     script.src = `sketches/${year}/${month}/${sketch}.js`;
     document.body.appendChild(script);
-    new p5();
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;

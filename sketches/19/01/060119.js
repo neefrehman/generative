@@ -1,7 +1,7 @@
-function setup() {
+setup = () => {
     createCanvas(windowWidth, windowHeight, WEBGL);
     frameRate(10);
-}
+};
 
 
 var x1 = (Math.random() * 100);
@@ -14,7 +14,7 @@ var x4 = (Math.random() * 100);
 var y4 = (Math.random() * 100);
 
 
-function draw() {
+draw = () => {
 
     const filled = () => {
         noStroke();
@@ -47,12 +47,12 @@ function draw() {
         drawHorizontally();
     }
 
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-}
+};
 
 
 new p5();

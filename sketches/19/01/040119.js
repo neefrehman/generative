@@ -1,9 +1,9 @@
-function setup() {
+setup = () => {
     createCanvas(windowWidth, windowHeight, WEBGL);
-}
+};
 
 
-function draw() {
+draw = () => {
 
     background(0);
     rotateX(frameCount * 0.01);
@@ -17,12 +17,12 @@ function draw() {
     directionalLight(255, 255, 255, -dirX, -dirY, 0.25);
     specularMaterial(255, 255, 255);
 
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-}
+};
 
 
 new p5();

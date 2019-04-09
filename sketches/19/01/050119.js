@@ -1,10 +1,10 @@
-function setup() {
+setup = () => {
     createCanvas(windowWidth, windowHeight, WEBGL);
     frameRate(10);
-}
+};
 
 
-function draw() {
+draw = () => {
 
     const x1 = (Math.random() * 200);
     const y1 = (Math.random() * 200);
@@ -26,7 +26,7 @@ function draw() {
     };
 
     const drawHorizontally = () => {
-        for (var i = 0; i <= width + 400; i += 200) {
+        for (let i = 0; i <= width + 400; i += 200) {
             translate(200, 0);
             quad(x1, y1, x2, y2, x3, y3, x4, y4);
         }
@@ -36,7 +36,7 @@ function draw() {
     filled();
     drawHorizontally();
 
-    for (var i2 = 0; i2 <= height; i2 += 200) {
+    for (let i2 = 0; i2 <= height; i2 += 200) {
         translate(-width - 600, 200);
         outlined();
         drawHorizontally();
@@ -46,12 +46,12 @@ function draw() {
         drawHorizontally();
     }
 
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-}
+};
 
 
 new p5();

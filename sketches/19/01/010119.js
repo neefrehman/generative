@@ -1,12 +1,12 @@
-function setup() {
+setup = () => {
     createCanvas(windowWidth, windowHeight);
     frameRate(30);
     noStroke();
     noFill();
-}
+};
 
 
-function draw() {
+draw = () => {
 
     // background(255);
     ellipse(mouseX, mouseY, (Math.random() * 90), (Math.random() * 90));
@@ -21,7 +21,7 @@ function draw() {
         frameRate(20);
     }
 
-}
+};
 
 
 new p5();

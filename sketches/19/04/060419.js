@@ -1,4 +1,4 @@
-var vibrations = [];
+var particles = [];
 
 var Particle = class Particle {
 
@@ -48,28 +48,30 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
     createCanvas(windowWidth, windowHeight);
 
     for (let i = 0; i < 5; i++) {
-        vibrations.push(new Particle(random(width), random(height)));
+        particles.push(new Particle(random(width), random(height)));
     }
-}
+};
 
 
-function draw() {
+draw = () => {
     background(20);
 
-    for (let i = 0; i < vibrations.length; i++) {
-        vibrations[i].display();
-        vibrations[i].move();
-    }
-}
+    for (const particle of particles) {
+        particle.display();
+		particle.move();
+	}
+};
 
 
-function mousePressed() {
-    vibrations.push(new Particle(mouseX, mouseY));
-}
+mousePressed = () => {
+    particles.push(new Particle(mouseX, mouseY));
+};
 
 
 new p5();

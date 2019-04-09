@@ -20,13 +20,16 @@ var Blob = class Blob {
 };
 
 
-function setup() {
+
+
+setup = () => {
     const canvas = createCanvas(400, 300);
     canvas.class("p5canvas not-full-screen");
-    for (i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
-}
+    for (let i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
+};
 
-function draw() {
+
+draw = () => {
     loadPixels();
     for (x = 0; x < width; x++) {
         for (y = 0; y < height; y++) {
@@ -42,8 +45,8 @@ function draw() {
     }
     updatePixels();
 
-    for (i = 0; i < blobs.length; i++) blobs[i].update();
-}
+    for (const blob of blobs) blob.update();
+};
 
 
 new p5();

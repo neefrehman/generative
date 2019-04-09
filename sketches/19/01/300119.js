@@ -39,21 +39,21 @@ var Slice = class Slice {
 };
 
 
-function setup() {
 
+
+setup = () => {
     createCanvas(windowWidth, windowHeight);
     background(20);
     frameRate(24);
 
     const initialSliceCount = Math.floor(width / 8);
-    for (var i = 0; i < initialSliceCount; i++) {
+    for (let i = 0; i < initialSliceCount; i++) {
         slices[i] = new Slice();
     }
+};
 
-}
 
-
-function draw() {
+draw = () => {
 
     background(20);
 
@@ -82,13 +82,13 @@ function draw() {
 
     }
 
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
     background(20);
-}
+};
 
 
 new p5();

@@ -1,8 +1,6 @@
 // Forked, refactored and slightly edited from Yasai on OpenProcessing: https://www.openprocessing.org/sketch/494102
 
-var particles_a = [];
-var particles_b = [];
-var particles_c = [];
+var particles = [];
 var noiseScale = 1000;
 
 var Particle = class Particle {
@@ -39,53 +37,43 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
 	background(20);
 
     const initialParticleCount = (width > 450) ? 200 : 100;
 	for (let i = 0; i < initialParticleCount; i++) {
-		particles_a[i] = new Particle();
-		particles_b[i] = new Particle();
-		particles_c[i] = new Particle();
+		particles[i] = new Particle();
 	}
-}
+};
 
 
-function draw() {
+draw = () => {
 	noStroke();
 	smooth();
 
-	for (var i = 0; i < particles_a.length; i++) {
-		var radius = map(i, 0, particles_a.length, 1, 2);
-		var alpha = map(i, 0, particles_a.length, 0, 250);
+	for (let i = 0; i < particles.length; i++) {
+		var radius = map(i, 0, particles.length, 1, 2);
+		var alpha = map(i, 0, particles.length, 0, 250);
 
-		fill(69, 33, 124, alpha);
-		particles_a[i].move();
-		particles_a[i].display(radius);
-		particles_a[i].checkEdge();
-
-		fill(7, 153, 242, alpha);
-		particles_b[i].move();
-		particles_b[i].display(radius);
-		particles_b[i].checkEdge();
-
-		fill(255, 255, 255, alpha);
-		particles_c[i].move();
-		particles_c[i].display(radius);
-		particles_c[i].checkEdge();
+        fill(255, 255, 255, alpha);
+		particles[i].move();
+		particles[i].display(radius);
+		particles[i].checkEdge();
 	}
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     frameRate(20);
-}
+};
 
 
-function mouseClicked() {
+mouseClicked = () => {
     frameRate(60);
-}
+};
 
 
 new p5();

@@ -58,29 +58,31 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
 
     const initialParticleCount = (width > 450) ? 30 : 15;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles.push(new Particle(random(width), random(height)));
 	}
-}
+};
 
 
-function draw() {
+draw = () => {
     background(20);
 
-	for (let i = 0; i < particles.length; i++) {
-        particles[i].display();
-		particles[i].move();
+    for (const particle of particles) {
+        particle.display();
+		particle.move();
 	}
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     particles.push(new Particle(mouseX, mouseY));
-}
+};
 
 
 new p5();

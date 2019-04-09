@@ -35,7 +35,9 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
 	background(20);
 
@@ -43,10 +45,10 @@ function setup() {
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}
-}
+};
 
 
-function draw() {
+draw = () => {
 	noStroke();
 	smooth();
 
@@ -61,17 +63,17 @@ function draw() {
 		particles[i].display(radius);
 		particles[i].checkEdge();
 	}
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     frameRate(20);
-}
+};
 
 
-function mouseClicked() {
+mouseClicked = () => {
     frameRate(60);
-}
+};
 
 
 new p5();

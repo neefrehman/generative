@@ -39,7 +39,9 @@ var Slice = class Slice {
 };
 
 
-function setup() {
+
+
+setup = () => {
 
     createCanvas(windowWidth, windowHeight);
     background(20);
@@ -50,10 +52,10 @@ function setup() {
         slices[i] = new Slice();
     }
 
-}
+};
 
 
-function draw() {
+draw = () => {
 
     for (const slice of slices) {
 
@@ -72,18 +74,18 @@ function draw() {
 
     }
 
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     background(20);
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
     background(20);
-}
+};
 
 
 new p5();

@@ -35,22 +35,24 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
 
     const initialParticleCount = (width > 450) ? 600 : 300;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}
-}
+};
 
 
-function draw() {
+draw = () => {
 	noStroke();
 	smooth();
     background(20);
 
-	for (var i = 0; i < particles.length; i++) {
+	for (let i = 0; i < particles.length; i++) {
 		var radius = map(i, 0, particles.length, 1, 3);
 		var alpha = map(i, 0, particles.length, 0, 250);
 
@@ -59,17 +61,17 @@ function draw() {
 		particles[i].display(radius);
 		particles[i].checkEdge();
 	}
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     frameRate(20);
-}
+};
 
 
-function mouseClicked() {
+mouseClicked = () => {
     frameRate(60);
-}
+};
 
 
 new p5();

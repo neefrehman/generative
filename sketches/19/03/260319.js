@@ -45,28 +45,30 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
     createCanvas(windowWidth, windowHeight);
 
     for (let i = 0; i < 5; i++) {
         vibrations.push(new Particle(random(width), random(height)));
     }
-}
+};
 
 
-function draw() {
+draw = () => {
     background(20);
 
-    for (let i = 0; i < vibrations.length; i++) {
-        vibrations[i].show();
-        vibrations[i].update();
+    for (const vibration of vibrations) {
+        vibration.show();
+        vibration.update();
     }
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     vibrations.push(new Particle(mouseX, mouseY));
-}
+};
 
 
 new p5();

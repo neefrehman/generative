@@ -44,16 +44,18 @@ var Bubble = class Bubble {
 };
 
 
-function setup() {
+
+
+setup = () => {
     createCanvas(windowWidth, windowHeight);
     frameRate(40);
     for (var i = 0; i < 30; i++) {
         bubbles[i] = new Bubble();
     }
-}
+};
 
 
-function draw() {
+draw = () => {
 
     background(20);
 
@@ -81,24 +83,24 @@ function draw() {
         bubbles.splice(0, 1);
     }
 
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     const bubble = new Bubble(mouseX, mouseY);
     bubbles.push(bubble);
-}
+};
 
 
-function mouseDragged() {
+mouseDragged = () => {
     const bubble = new Bubble(mouseX, mouseY);
     bubbles.push(bubble);
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-}
+};
 
 
 new p5();

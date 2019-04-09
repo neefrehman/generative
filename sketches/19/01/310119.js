@@ -1,5 +1,4 @@
 var particles = [];
-
 var Particle = class Particle {
 
     constructor() {
@@ -29,13 +28,15 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
     smooth();
-}
+};
 
 
-function draw() {
+draw = () => {
     background(20);
 
     const particleGenerationRate = (width > 800) ? 5 : 3;
@@ -50,22 +51,22 @@ function draw() {
     }
 
     particles = particles.filter(p => !p.finished());
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     frameRate(20);
-}
+};
 
 
-function mouseClicked() {
+mouseClicked = () => {
     frameRate(60);
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-}
+};
 
 
 new p5();

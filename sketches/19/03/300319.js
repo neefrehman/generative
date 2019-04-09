@@ -50,40 +50,42 @@ var Particle = class Particle {
 };
 
 
-function setup() {
+
+
+setup = () => {
 	createCanvas(windowWidth, windowHeight);
 
     const initialParticleCount = (width > 450) ? 200 : 100;
 	for (let i = 0; i < initialParticleCount; i++) {
 		particles[i] = new Particle();
 	}
-}
+};
 
 
-function draw() {
+draw = () => {
 	noStroke();
 	smooth();
     background(20);
 
-	for (var i = 0; i < particles.length; i++) {
+	for (const particle of particles) {
 		var radius = 3;
 
         fill(255);
-		particles[i].move();
-		particles[i].display(radius);
-		particles[i].checkEdge();
+		particle.move();
+		particle.display(radius);
+		particle.checkEdge();
 	}
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
     frameRate(20);
-}
+};
 
 
-function mouseClicked() {
+mouseClicked = () => {
     frameRate(60);
-}
+};
 
 
 new p5();

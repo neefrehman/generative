@@ -44,21 +44,23 @@ var Spore = class Spore {
 };
 
 
-function setup() {
+
+
+setup = () => {
 
   createCanvas(windowWidth, windowHeight);
   background(20);
   frameRate(40);
 
   const initialSporeCount = (width > 450) ? 50 : 40;
-  for (var i = 0; i < initialSporeCount; i++) {
+  for (let i = 0; i < initialSporeCount; i++) {
     spores[i] = new Spore();
   }
 
-}
+};
 
 
-function draw() {
+draw = () => {
 
   for (const spore of spores) {
 
@@ -81,25 +83,25 @@ function draw() {
     spores.splice(0, 1);
   }
 
-}
+};
 
 
-function mousePressed() {
+mousePressed = () => {
   const spore = new Spore(mouseX, mouseY);
   spores.push(spore);
-}
+};
 
 
-function mouseDragged() {
+mouseDragged = () => {
   const spore = new Spore(mouseX, mouseY);
   spores.push(spore);
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
   resizeCanvas(windowWidth, windowHeight);
   background(20);
-}
+};
 
 
 new p5();

@@ -1,10 +1,10 @@
-function setup() {
+setup = () => {
     createCanvas(windowWidth, windowHeight);
     background(10);
-}
+};
 
 
-function draw() {
+draw = () => {
 
     stroke(255);
 
@@ -15,13 +15,13 @@ function draw() {
         line(0, mouseY, windowHeight, mouseY);
     }
 
-}
+};
 
 
-function windowResized() {
+windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
     background(10);
-}
+};
 
 
 new p5();

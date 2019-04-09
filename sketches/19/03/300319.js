@@ -1,91 +1,92 @@
-var particles = [];
-var noiseScale = 20000;
+(() => {
 
-var Particle = class Particle {
+    const particles = [];
+    const noiseScale = 20000;
 
-    constructor(x, y) {
-        this.x = random(width);
-        this.y = random(height);
-        this.dir = createVector(0, 0);
-        this.vel = createVector(0, 0);
-        this.pos = createVector(this.x, this.y);
-        this.speed = 2;
-        this.history = [];
+    class Particle {
+
+        constructor(x, y) {
+            this.x = random(width);
+            this.y = random(height);
+            this.dir = createVector(0, 0);
+            this.vel = createVector(0, 0);
+            this.pos = createVector(this.x, this.y);
+            this.speed = 2;
+            this.history = [];
+        }
+
+        move() {
+            const angle = noise(this.pos.x / noiseScale, this.pos.y / noiseScale) * TWO_PI * noiseScale;
+            this.dir.x = cos(angle);
+            this.dir.y = sin(angle);
+            this.vel = this.dir.copy();
+            this.vel.mult(this.speed);
+            this.pos.add(this.vel);
+
+            const v = createVector(this.pos.x, this.pos.y);
+            this.history.push(v);
+            if (this.history.length > 70) {
+                this.history.splice(0, 1);
+            }
+        }
+
+        checkEdge() {
+            if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
+                this.pos.x = random(50, width);
+                this.pos.y = random(50, height);
+            }
+        }
+
+        display(r) {
+            noFill();
+            beginShape();
+            for (let i = 0; i < this.history.length; i++) {
+                const pos = this.history[i];
+                const col = map(i, 0, this.history.length, 75, 200);
+                stroke(col);
+                vertex(pos.x, pos.y);
+            }
+            endShape();
+        }
+
     }
 
-	move() {
-		const angle = noise(this.pos.x / noiseScale, this.pos.y / noiseScale) * TWO_PI * noiseScale;
-		this.dir.x = cos(angle);
-		this.dir.y = sin(angle);
-		this.vel = this.dir.copy();
-		this.vel.mult(this.speed);
-		this.pos.add(this.vel);
 
-        const v = createVector(this.pos.x, this.pos.y);
-        this.history.push(v);
-        if (this.history.length > 70) {
-            this.history.splice(0, 1);
+
+
+    setup = () => {
+        createCanvas(windowWidth, windowHeight);
+
+        const initialParticleCount = (width > 450) ? 200 : 100;
+        for (let i = 0; i < initialParticleCount; i++) {
+            particles[i] = new Particle();
         }
-    }
+    };
 
-	checkEdge() {
-		if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
-			this.pos.x = random(50, width);
-			this.pos.y = random(50, height);
-		}
-	}
 
-	display(r) {
-        noFill();
-        beginShape();
-        for (let i = 0; i < this.history.length; i++) {
-            const pos = this.history[i];
-            const col = map(i, 0, this.history.length, 75, 200);
-            stroke(col);
-            vertex(pos.x, pos.y);
+    draw = () => {
+        noStroke();
+        smooth();
+        background(20);
+
+        for (const particle of particles) {
+            var radius = 3;
+
+            fill(255);
+            particle.move();
+            particle.display(radius);
+            particle.checkEdge();
         }
-        endShape();
-	}
-
-};
+    };
 
 
+    mousePressed = () => {
+        frameRate(20);
+    };
 
 
-setup = () => {
-	createCanvas(windowWidth, windowHeight);
+    mouseClicked = () => {
+        frameRate(60);
+    };
 
-    const initialParticleCount = (width > 450) ? 200 : 100;
-	for (let i = 0; i < initialParticleCount; i++) {
-		particles[i] = new Particle();
-	}
-};
-
-
-draw = () => {
-	noStroke();
-	smooth();
-    background(20);
-
-	for (const particle of particles) {
-		var radius = 3;
-
-        fill(255);
-		particle.move();
-		particle.display(radius);
-		particle.checkEdge();
-	}
-};
-
-
-mousePressed = () => {
-    frameRate(20);
-};
-
-
-mouseClicked = () => {
-    frameRate(60);
-};
-
-
-new p5();
+})(); new p5();

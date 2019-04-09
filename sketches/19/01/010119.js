@@ -1,4 +1,4 @@
-(() => {
+var sketch = (() => {
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);

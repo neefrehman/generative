@@ -46,7 +46,7 @@ const goHome = () => {
     homeContent.classList.remove("hide");
 
     remove();
-    sketchScript.parentNode.removeChild(sketchScript);
+    sketchScript.remove();
 
     document.title = "Generative - Neef Rehman";
 };

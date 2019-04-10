@@ -21,6 +21,7 @@ const sketchContent = document.querySelector(".sketch-content");
 const homeLink = document.querySelector(".home-link");
 const codeLink = document.querySelector(".code-link");
 const fourOhFourContent = document.querySelector(".fourohfour-content");
+let sketchScript;
 
 
 const goToSketch = sketch => {
@@ -30,9 +31,9 @@ const goToSketch = sketch => {
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
 
-    const script = document.createElement("script");
-    script.src = `sketches/${year}/${month}/${sketch}.js`;
-    document.body.appendChild(script);
+    sketchScript = document.createElement("script");
+    sketchScript.src = `sketches/${year}/${month}/${sketch}.js`;
+    document.body.appendChild(sketchScript);
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
@@ -45,7 +46,7 @@ const goHome = () => {
     homeContent.classList.remove("hide");
 
     remove();
-    document.body.removeChild(document.body.lastChild);
+    sketchScript.parentNode.removeChild(sketchScript);
 
     document.title = "Generative - Neef Rehman";
 };

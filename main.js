@@ -1,20 +1,3 @@
-// Dark mode
-const darkModeToggle = document.documentElement;
-
-darkModeToggle.addEventListener("dblclick", () => {
-    document.documentElement.classList.toggle("dark");
-
-    if (document.documentElement.classList.contains("dark")) {
-        localStorage.setItem("darkMode", true);
-    } else {
-        localStorage.removeItem("darkMode");
-    }
-});
-
-
-
-
-// SPA logic
 const homeContent = document.querySelector(".home-content");
 const sketchLinks = document.querySelectorAll(".sketchlink");
 const sketchContent = document.querySelector(".sketch-content");
@@ -34,7 +17,7 @@ const goToSketch = sketch => {
     sketchContent.classList.add("show");
     homeContent.classList.add("hide");
 
-    if (document.querySelector("canvas")) removeSketch();
+    while (document.querySelector("canvas")) removeSketch();
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -53,7 +36,7 @@ const goHome = () => {
     sketchContent.classList.remove("show");
     homeContent.classList.remove("hide");
 
-    removeSketch();
+    while (document.querySelector("canvas")) removeSketch();
 
     document.title = "Generative - Neef Rehman";
 };
@@ -64,7 +47,7 @@ const goTo404 = () => {
     sketchContent.classList.remove("show");
     fourOhFourContent.classList.add("show");
 
-    document.title = "404 - Generative - Neef Rehman";
+    document.title = "404 - Generative";
 };
 
 
@@ -84,7 +67,7 @@ if (urlPath.length >= 1 && location.protocol != "file:") {
 }
 
 
-window.addEventListener("popstate", () => {
+window.addEventListener("popstate", e => {
     urlPath = getUrlPath();
     const newLinkedSketch = urlPath[urlPath.length - 1];
 

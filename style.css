@@ -2,7 +2,8 @@ body {
     font-family: helvetica neue, helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.2;
-    color: #333;
+    color: #fff;
+    background-color: #212121;
     -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -moz-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     max-width: max-content;
@@ -17,37 +18,17 @@ h1::selection, span.stretch::selection, h2::selection, h3::selection, p::selecti
 
 a, a:visited {
     text-decoration: none;
-    color: #333;
+    color: #fff;
     display: inline-block;
-    background-color: #eee;
+    background-color: #4a4a4a;
     background-color: rgb(225, 225, 225, 0.8);
     padding: 0 0.1em;
     line-height: normal;
 }
 
 a:hover {
-    color: #fff;
-    background-color: #333;
-}
-
-html.dark body {
-    color: #fff;
-    background-color: #212121;
-}
-
-html.dark a {
-    color: #fff;
-    background-color: #4a4a4a;
-}
-
-html.dark a:hover {
     color: #212121;
     background-color: #eee;
-}
-
-html.dark header p a {
-    text-decoration: underline;
-    background-color: initial;
 }
 
 .home-content,

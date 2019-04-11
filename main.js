@@ -24,9 +24,17 @@ const fourOhFourContent = document.querySelector(".fourohfour-content");
 let sketchScript;
 
 
+const removeSketch = () => {
+    remove(); // p5
+    sketchScript.remove();
+};
+
+
 const goToSketch = sketch => {
     sketchContent.classList.add("show");
     homeContent.classList.add("hide");
+
+    if (document.querySelector("canvas")) removeSketch();
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -45,8 +53,7 @@ const goHome = () => {
     sketchContent.classList.remove("show");
     homeContent.classList.remove("hide");
 
-    remove(); // p5
-    sketchScript.remove();
+    removeSketch();
 
     document.title = "Generative - Neef Rehman";
 };

@@ -1,10 +1,20 @@
-const homeContent = document.querySelector(".home-content");
-const sketchLinks = document.querySelectorAll(".sketchlink");
-const sketchContent = document.querySelector(".sketch-content");
-const homeLink = document.querySelector(".home-link");
+const allPages = document.querySelectorAll(".page");
+const homePage = document.querySelector(".home-page");
+const sketchPage = document.querySelector(".sketch-page");
+const fourOhFourPage = document.querySelector(".fourohfour-page");
+
+const sketchLinks = document.querySelectorAll(".sketch-link");
+const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
-const fourOhFourContent = document.querySelector(".fourohfour-content");
+
 let sketchScript;
+
+
+const hidePages = () => {
+    allPages.forEach(page => {
+        page.classList.remove("show");
+    });
+};
 
 
 const removeSketch = () => {
@@ -14,8 +24,8 @@ const removeSketch = () => {
 
 
 const goToSketch = sketch => {
-    sketchContent.classList.add("show");
-    homeContent.classList.add("hide");
+    hidePages();
+    sketchPage.classList.add("show");
 
     while (document.querySelector("canvas")) removeSketch();
 
@@ -33,8 +43,8 @@ const goToSketch = sketch => {
 
 
 const goHome = () => {
-    sketchContent.classList.remove("show");
-    homeContent.classList.remove("hide");
+    hidePages();
+    homePage.classList.add("show");
 
     while (document.querySelector("canvas")) removeSketch();
 
@@ -43,9 +53,8 @@ const goHome = () => {
 
 
 const goTo404 = () => {
-    homeContent.classList.add("hide");
-    sketchContent.classList.remove("show");
-    fourOhFourContent.classList.add("show");
+    hidePages();
+    fourOhFourPage.classList.add("show");
 
     document.title = "404 - Generative";
 };
@@ -64,6 +73,8 @@ if (urlPath.length >= 1 && location.protocol != "file:") {
     } else {
         goTo404();
     }
+} else {
+    goHome();
 }
 
 
@@ -91,7 +102,9 @@ sketchLinks.forEach(link => {
 });
 
 
-homeLink.addEventListener("click", () => {
-    goHome();
-    history.pushState("", document.title, "/");
+homeLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        goHome();
+        history.pushState("", document.title, "/");
+    });
 });

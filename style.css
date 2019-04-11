@@ -31,9 +31,17 @@ a:hover {
     background-color: #eee;
 }
 
-.home-content,
-.fourohfour-content {
+.home-page,
+.fourohfour-page {
     margin: 45px;
+}
+
+.page {
+    display: none;
+}
+
+.page.show {
+    display: block;
 }
 
 header {
@@ -66,27 +74,25 @@ header a {
     cursor: pointer;
 }
 
-.fourohfour-content {
-    display: none;
+a.home-link {
+    cursor: pointer;
 }
 
-.sketch-content {
-    display: none;
+.sketch-page {
     position: fixed;
 }
 
-.sketch-content a {
+.sketch-page a {
     position: fixed;
     --edgeMargin: 45px;
 }
 
-.sketch-content a.home-link {
+.sketch-page a.home-link {
     bottom: var(--edgeMargin);
     left: var(--edgeMargin);
-    cursor: pointer;
 }
 
-.sketch-content a.code-link {
+.sketch-page a.code-link {
     bottom: var(--edgeMargin);
     right: var(--edgeMargin);
 }
@@ -104,16 +110,9 @@ canvas.not-full-screen {
     transform: translate(-50%, -50%);
 }
 
-.show {
-    display: block;
-}
-
-.hide {
-    display: none;
-}
 
 @media (max-width: 769px) {
-    .home-content {
+    .home-page {
         margin: 30px;
     }
     .sketch-list{
@@ -122,7 +121,7 @@ canvas.not-full-screen {
     header {
         margin-bottom: 30px;
     }
-    .sketch-content a {
+    .sketch-page a {
         --edgeMargin: 33px;
     }
 }

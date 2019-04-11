@@ -45,7 +45,7 @@ const goHome = () => {
     sketchContent.classList.remove("show");
     homeContent.classList.remove("hide");
 
-    remove();
+    remove(); // p5
     sketchScript.remove();
 
     document.title = "Generative - Neef Rehman";
@@ -94,7 +94,6 @@ window.addEventListener("popstate", () => {
 
 
 sketchLinks.forEach(link => {
-    link.innerHTML = link.id;
     link.addEventListener("click", () => {
         goToSketch(link.id);
         history.pushState("", `${link.id} - Generative`, link.id);

@@ -56,15 +56,17 @@ let urlPath = getUrlPath();
 let linkedSketch = urlPath[urlPath.length - 1];
 
 
-if (urlPath.length >= 1 && location.protocol != "file:") {
-    const linkedSketchButton = document.getElementById(linkedSketch);
+window.addEventListener("DOMContentLoaded", () => {
+    if (urlPath.length >= 1 && location.protocol != "file:") {
+        const linkedSketchButton = document.getElementById(linkedSketch);
 
-    if (linkedSketchButton) {
-        goToSketch(linkedSketch);
-    } else {
-        goTo404();
+        if (linkedSketchButton) {
+            goToSketch(linkedSketch);
+        } else {
+            goTo404();
+        }
     }
-}
+});
 
 
 window.addEventListener("popstate", e => {

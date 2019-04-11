@@ -17,15 +17,17 @@ const showPage = newPage => {
 
 
 const removeSketch = () => {
-    remove(); // p5
-    sketchScript.remove();
+    while (document.querySelector("canvas")) {
+        remove(); // p5
+        sketchScript.remove();
+    }
 };
 
 
 const goToSketch = sketch => {
     showPage(sketchPage);
 
-    while (document.querySelector("canvas")) removeSketch();
+    removeSketch();
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -43,7 +45,7 @@ const goToSketch = sketch => {
 const goHome = () => {
     showPage(homePage);
 
-    while (document.querySelector("canvas")) removeSketch();
+    removeSketch();
 
     document.title = "Generative - Neef Rehman";
 };

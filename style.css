@@ -117,7 +117,7 @@ canvas.not-full-screen {
         margin: 30px;
     }
     .sketch-list{
-        max-height: calc(100vh - 180px);
+        max-height: calc(100vh - 215px);
     }
     header {
         margin-bottom: 30px;

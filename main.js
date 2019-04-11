@@ -11,9 +11,7 @@ let sketchScript;
 
 
 const hidePages = () => {
-    allPages.forEach(page => {
-        page.classList.remove("show");
-    });
+    allPages.forEach(page => page.classList.remove("show"));
 };
 
 

@@ -61,11 +61,13 @@
 
         isHovered() {
             const d = dist(this.pos.x, this.pos.y, mouseX, mouseY);
-            return (d - 15 < this.d);
+            return (d - 50 < this.d);
         }
 
         excite() {
-            this.speed = 8;
+            this.speed = 6;
+            this.pos.x = this.pos.x + random(-25, 25);
+            this.pos.y = this.pos.y + random(-25, 25);
             this.col = 0;
         }
 

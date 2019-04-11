@@ -10,8 +10,9 @@ const codeLink = document.querySelector(".code-link");
 let sketchScript;
 
 
-const hidePages = () => {
+const showPage = newPage => {
     allPages.forEach(page => page.classList.remove("show"));
+    newPage.classList.add("show");
 };
 
 
@@ -22,8 +23,7 @@ const removeSketch = () => {
 
 
 const goToSketch = sketch => {
-    hidePages();
-    sketchPage.classList.add("show");
+    showPage(sketchPage);
 
     while (document.querySelector("canvas")) removeSketch();
 
@@ -41,8 +41,7 @@ const goToSketch = sketch => {
 
 
 const goHome = () => {
-    hidePages();
-    homePage.classList.add("show");
+    showPage(homePage);
 
     while (document.querySelector("canvas")) removeSketch();
 
@@ -51,8 +50,7 @@ const goHome = () => {
 
 
 const goTo404 = () => {
-    hidePages();
-    fourOhFourPage.classList.add("show");
+    showPage(fourOhFourPage);
 
     document.title = "404 - Generative";
 };

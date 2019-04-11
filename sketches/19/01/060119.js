@@ -50,10 +50,4 @@
 
     };
 
-
-    windowResized = () => {
-        resizeCanvas(windowWidth, windowHeight);
-    };
-
-
 })(); new p5();

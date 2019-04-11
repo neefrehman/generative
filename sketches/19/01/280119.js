@@ -99,10 +99,4 @@
         spores.push(spore);
     };
 
-
-    windowResized = () => {
-        resizeCanvas(windowWidth, windowHeight);
-        background(20);
-    };
-
 })(); new p5();

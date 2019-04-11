@@ -30,7 +30,7 @@
 
     }
 
-    
+
 
 
     setup = () => {
@@ -65,11 +65,6 @@
 
     mouseClicked = () => {
         frameRate(60);
-    };
-
-
-    windowResized = () => {
-        resizeCanvas(windowWidth, windowHeight);
     };
 
 })(); new p5();

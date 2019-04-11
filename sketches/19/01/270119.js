@@ -99,9 +99,4 @@
         bubbles.push(bubble);
     };
 
-
-    windowResized = () => {
-        resizeCanvas(windowWidth, windowHeight);
-    };
-
 })(); new p5();

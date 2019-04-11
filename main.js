@@ -108,3 +108,8 @@ homeLinks.forEach(link => {
         history.pushState("", document.title, "/");
     });
 });
+
+
+windowResized = () => {
+    resizeCanvas(windowWidth, windowHeight);
+};

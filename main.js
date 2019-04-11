@@ -10,12 +10,6 @@ const codeLink = document.querySelector(".code-link");
 let sketchScript;
 
 
-const showPage = newPage => {
-    allPages.forEach(page => page.classList.remove("show"));
-    newPage.classList.add("show");
-};
-
-
 const removeSketch = () => {
     while (document.querySelector("canvas")) {
         remove(); // p5
@@ -24,9 +18,14 @@ const removeSketch = () => {
 };
 
 
+const showPage = newPage => {
+    allPages.forEach(page => page.classList.remove("show"));
+    newPage.classList.add("show");
+};
+
+
 const goToSketch = sketch => {
     showPage(sketchPage);
-
     removeSketch();
 
     const month = sketch.substr(2, 2);
@@ -44,7 +43,6 @@ const goToSketch = sketch => {
 
 const goHome = () => {
     showPage(homePage);
-
     removeSketch();
 
     document.title = "Generative - Neef Rehman";

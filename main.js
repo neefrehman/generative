@@ -14,8 +14,8 @@ const removeSketch = () => {
 
 
 const goToSketch = sketch => {
-    sketchContent.classList.add("show");
-    homeContent.classList.add("hide");
+    if (!sketchContent.classList.contains("show")) sketchContent.classList.add("show");
+    if (!homeContent.classList.contains("hide")) homeContent.classList.add("hide");
 
     while (document.querySelector("canvas")) removeSketch();
 

@@ -24,7 +24,6 @@ const showPage = newPage => {
     newPage.classList.add("show");
 };
 
-// broke at https://app.netlify.com/sites/generative/deploys/5cb0fa9f02853e000a290cb1
 
 const goToSketch = sketch => {
     showPage(sketchPage);

@@ -21,12 +21,13 @@ const removeSketch = () => {
 const showPage = newPage => {
     allPages.forEach(page => page.classList.remove("show"));
     newPage.classList.add("show");
+    
+    removeSketch();
 };
 
 
 const goToSketch = sketch => {
     showPage(sketchPage);
-    removeSketch();
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -43,7 +44,6 @@ const goToSketch = sketch => {
 
 const goHome = () => {
     showPage(homePage);
-    removeSketch();
 
     document.title = "Generative - Neef Rehman";
 };

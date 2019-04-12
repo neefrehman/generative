@@ -65,6 +65,7 @@
         }
 
         excite() {
+            this.d = 52;
             this.speed = 6;
             this.pos.x = this.pos.x + random(-25, 25);
             this.pos.y = this.pos.y + random(-25, 25);
@@ -72,6 +73,7 @@
         }
 
         deExcite() {
+            this.d = 36;
             this.speed = (width > 500) ? 3 : 2;
             this.col = 255;
         }

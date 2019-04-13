@@ -57,11 +57,14 @@ const goTo404 = () => {
 
 const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
-let linkedSketch = urlPath[urlPath.length - 1];
+let linkedSketch;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (urlPath.length >= 1) {
+    if (urlPath.length == 0) {
+        goHome();
+    } else {
+        linkedSketch = urlPath[urlPath.length - 1];
         const linkedSketchButton = document.getElementById(linkedSketch);
 
         if (linkedSketchButton) {
@@ -69,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             goTo404();
         }
-    } else {
-        goHome();
     }
 });
 

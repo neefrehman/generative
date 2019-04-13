@@ -60,20 +60,18 @@ let urlPath = getUrlPath();
 let linkedSketch;
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (urlPath.length == 0) {
-        goHome();
-    } else {
-        linkedSketch = urlPath[urlPath.length - 1];
-        const linkedSketchButton = document.getElementById(linkedSketch);
+if (urlPath.length == 0) {
+    goHome();
+} else {
+    linkedSketch = urlPath[urlPath.length - 1];
+    const linkedSketchButton = document.getElementById(linkedSketch);
 
-        if (linkedSketchButton) {
-            goToSketch(linkedSketch);
-        } else {
-            goTo404();
-        }
+    if (linkedSketchButton) {
+        goToSketch(linkedSketch);
+    } else {
+        goTo404();
     }
-});
+}
 
 
 window.addEventListener("popstate", e => {

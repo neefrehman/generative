@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
 
     const allPages = document.querySelectorAll(".page");
     const homePage = document.querySelector(".home-page");
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-});
+})();
 
 
 // p5 windowResize into global namespace

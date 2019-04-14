@@ -20,14 +20,14 @@
             this.y = this.y + random(this.speed);
             this.r = this.r + this.growthDirection * noise(this.growth);
 
-            if (this.r < 0) {
+            if (this.r < 1) {
                 this.growthDirection = 1;
             } else if (this.r > this.maxR) {
                 this.maxR = this.maxR + 4;
                 this.growthDirection = -1;
             }
 
-            if (this.y > height + this.r + 100) {
+            if (this.y > height + this.r + 150) {
                 this.y = -this.r;
             }
         }

@@ -63,6 +63,7 @@
 
 
     draw = () => {
+        background(20);
 
         for (const slice of slices) {
 

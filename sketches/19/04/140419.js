@@ -6,7 +6,7 @@
         constructor(x, y, r) {
             this.x = x || random(width);
             this.y = y || height;
-            this.r = r || 30;
+            this.r = r || 32;
             this.speed = 4;
             this.growth = (width > 450) ? 6 : 3;
 
@@ -15,12 +15,8 @@
         }
 
         move() {
-            this.y = this.y - random(this.speed);
-            this.r = this.r + random(-this.growth, this.growth);
-
-            if (this.y < -this.r) {
-                this.y = height + this.r;
-            }
+            this.y = this.y + random(-this.speed, this.speed);
+            this.r = this.r + noise(this.growth);
         }
 
         show() {
@@ -32,18 +28,16 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d - 15 < this.r);
+            return (d - 5 < this.r);
         }
 
         excited() {
-            this.speed = this.speed * 1.2;
-            this.growth = this.growth * 1.2;
+            this.growth = this.growth * 2;
             this.fill = 255;
             this.stroke = 0;
         }
 
         normal() {
-            this.speed = 4;
             this.growth = (width > 450) ? 4 : 2;
             this.fill = 20;
             this.stroke = 255;
@@ -81,13 +75,12 @@
                 slice.normal();
             }
 
+            if (slice.y < -slice.r) {
+                slice.y = height + slice.r;
+            }
+
         }
 
-    };
-
-
-    mousePressed = () => {
-        background(20);
     };
 
 })(); new p5();

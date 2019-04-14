@@ -5,21 +5,30 @@
 
         constructor(x, y, r) {
             this.x = x || random(width);
-            this.y = y || height;
-            this.r = r || 30;
-            this.speed = 4;
+            this.y = y || 0;
+            this.r = r || 36;
+            this.speed = 5;
             this.growth = (width > 450) ? 6 : 3;
+            this.growthDirection = -1;
+            this.maxR = 48;
 
             this.fill = 20;
             this.stroke = 255;
         }
 
         move() {
-            this.y = this.y - random(this.speed);
-            this.r = this.r + random(-this.growth, this.growth);
+            this.y = this.y + random(this.speed);
+            this.r = this.r + this.growthDirection * noise(this.growth);
 
-            if (this.y < -this.r) {
-                this.y = height + this.r;
+            if (this.r < 0) {
+                this.growthDirection = 1;
+            } else if (this.r > this.maxR) {
+                this.maxR = this.maxR + 4;
+                this.growthDirection = -1;
+            }
+
+            if (this.y > height + this.r + 100) {
+                this.y = -this.r;
             }
         }
 
@@ -32,19 +41,15 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d - 15 < this.r);
+            return (d - 5 < this.r);
         }
 
         excited() {
-            this.speed = this.speed * 1.2;
-            this.growth = this.growth * 1.2;
             this.fill = 255;
             this.stroke = 0;
         }
 
         normal() {
-            this.speed = 4;
-            this.growth = (width > 450) ? 4 : 2;
             this.fill = 20;
             this.stroke = 255;
         }
@@ -81,13 +86,12 @@
                 slice.normal();
             }
 
+            if (slice.y < -slice.r) {
+                slice.y = height + slice.r;
+            }
+
         }
 
-    };
-
-
-    mousePressed = () => {
-        background(20);
     };
 
 })(); new p5();

@@ -50,14 +50,12 @@ const goToSketch = sketch => {
 
 const goHome = () => {
     showPage(homePage);
-
     document.title = "Generative - Neef Rehman";
 };
 
 
 const goTo404 = () => {
     showPage(fourOhFourPage);
-
     document.title = "404 - Generative";
 };
 

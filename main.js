@@ -115,5 +115,7 @@ homeLinks.forEach(link => {
 
 // p5 windowResize into global namespace
 windowResized = () => {
-    resizeCanvas(windowWidth, windowHeight);
+    if (!canvas.classList.contains("not-full-screen")) {
+        resizeCanvas(windowWidth, windowHeight);
+    }
 };

@@ -25,8 +25,11 @@
 
 
     setup = () => {
-        const canvas = createCanvas(400, 300);
+        const canvasWidth = (window.innerWidth > 500) ? 350 : 250;
+        const canvasHeight = canvasWidth * (3 / 4);
+        const canvas = createCanvas(canvasWidth, canvasHeight);
         canvas.class("p5canvas not-full-screen");
+        
         for (let i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
     };
 

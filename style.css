@@ -79,17 +79,18 @@ a.home-link {
     position: fixed;
 }
 
-.sketch-page p.loading {
+.loading {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.05, 1);
+    transform: translate(-50%, -55%) scale(1.05, 1);
     transform-origin: center;
     margin-block-start: 0;
 
     font-size: 6em;
     color: #ffffff50;
+    text-transform: uppercase;
 }
 
 .sketch-page a {
@@ -120,8 +121,7 @@ canvas.not-full-screen {
     transform: translate(-50%, -50%);
 }
 
-.page.show,
-.sketch-page p.loading.show {
+.show {
     display: block;
 }
 

@@ -30,7 +30,10 @@
         const canvas = createCanvas(canvasWidth, canvasHeight);
         canvas.class("p5canvas not-full-screen");
 
-        for (let i = 0; i < 10; i++) blobs[i] = new Blob(random(0, width), random(0, height));
+        const initialBlobCount = (window.innerWidth > 500) ? 10 : 8;
+        for (let i = 0; i < initialBlobCount; i++) {
+            blobs[i] = new Blob(random(0, width), random(0, height));
+        }
     };
 
 

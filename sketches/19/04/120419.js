@@ -85,9 +85,4 @@
 
     };
 
-
-    mousePressed = () => {
-        background(20);
-    };
-
 })(); new p5();

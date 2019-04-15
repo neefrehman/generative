@@ -7,6 +7,8 @@ const sketchLinks = document.querySelectorAll(".sketch-link");
 const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 
+const loadingIndicator = document.querySelector("p.loading");
+
 let sketchScript;
 
 
@@ -27,6 +29,7 @@ const showPage = newPage => {
 
 const goToSketch = sketch => {
     showPage(sketchPage);
+    loadingIndicator.classList.add("show");
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -34,6 +37,10 @@ const goToSketch = sketch => {
     sketchScript = document.createElement("script");
     sketchScript.src = `sketches/${year}/${month}/${sketch}.js`;
     document.body.appendChild(sketchScript);
+
+    sketchScript.addEventListener("load", () => {
+        loadingIndicator.classList.remove("show");
+    });
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;

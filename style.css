@@ -138,4 +138,7 @@ canvas.not-full-screen {
     .sketch-page a {
         --edgeMargin: 33px;
     }
+    .sketch-page p.loading {
+        font-size: 4em;
+    }
 }

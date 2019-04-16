@@ -37,7 +37,7 @@ const goToSketch = sketch => {
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
 
-    codeLink.innerHTML = sketch;
+    codeLink.textContent = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
 
     const xhr = new XMLHttpRequest();

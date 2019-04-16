@@ -32,16 +32,17 @@ const goToSketch = sketch => {
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 200);
+    }, 80);
 
-    const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
+    const month = sketch.substr(2, 2);
+    const pathToSketch = `sketches/${year}/${month}/${sketch}.js`;
 
     codeLink.textContent = sketch;
-    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/${pathToSketch}`;
 
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.open("GET", pathToSketch);
     xhr.send();
 
     xhr.addEventListener("progress", e => {

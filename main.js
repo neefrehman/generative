@@ -32,7 +32,7 @@ const goToSketch = sketch => {
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 180);
+    }, 150);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);

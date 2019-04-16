@@ -101,7 +101,7 @@ if (urlPath.length == 0) {
 }
 
 
-window.addEventListener("popstate", e => {
+window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
     const newLinkedSketch = urlPath[urlPath.length - 1];
 

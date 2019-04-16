@@ -26,13 +26,23 @@ const showPage = newPage => {
 };
 
 
+const loadedIndicator = () => {
+    clearTimeout(loadingIndicatorTimeout);
+    loadingIndicator.textContent = "Loaded";
+    setTimeout(() => {
+        loadingIndicator.classList.remove("show");
+        loadingIndicator.textContent = "Loading";
+    }, 160);
+};
+
+
 const goToSketch = sketch => {
     showPage(sketchPage);
     document.title = `${sketch} - Generative`;
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 120);
+    }, 150);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -47,7 +57,7 @@ const goToSketch = sketch => {
     xhr.addEventListener("progress", e => {
         if (!e.lengthComputable) return;
         const percentComplete = e.loaded / e.total;
-        // Do stuff here!
+        // TODO: loading animator
     });
 
     xhr.addEventListener("load", e => {
@@ -56,7 +66,11 @@ const goToSketch = sketch => {
         document.body.appendChild(sketchScript);
 
         clearTimeout(loadingIndicatorTimeout);
-        loadingIndicator.classList.remove("show");
+        loadingIndicator.textContent = "Loaded";
+        setTimeout(() => {
+            loadingIndicator.classList.remove("show");
+            loadingIndicator.textContent = "Loading";
+        }, 400);
     });
 };
 

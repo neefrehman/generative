@@ -53,7 +53,7 @@ const goToSketch = sketch => {
         e = e.target;
         sketchScript = document.createElement("script");
         sketchScript.innerHTML = e.responseText;
-        // or: s[s.innerText!=undefined?"innerText":"textContent"] = e.responseText
+
         document.documentElement.appendChild(sketchScript);
 
         s.addEventListener("load", function() {

@@ -32,7 +32,7 @@ const goToSketch = sketch => {
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 200);
+    }, 180);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -47,13 +47,12 @@ const goToSketch = sketch => {
     xhr.addEventListener("progress", e => {
         if (!e.lengthComputable) return;
         const percentComplete = e.loaded / e.total;
-        // Do stuff here
+        // Do stuff here!
     });
 
     xhr.addEventListener("load", e => {
-        e = e.target;
         sketchScript = document.createElement("script");
-        sketchScript.innerHTML = e.responseText;
+        sketchScript.innerHTML = e.target.responseText;
         document.body.appendChild(sketchScript);
 
         clearTimeout(loadingIndicatorTimeout);

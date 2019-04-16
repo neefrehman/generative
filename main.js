@@ -29,7 +29,10 @@ const showPage = newPage => {
 
 const goToSketch = sketch => {
     showPage(sketchPage);
-    loadingIndicator.classList.add("show");
+
+    const loadingIndicatorTimeout = setTimeout(() => {
+        loadingIndicator.classList.add("show");
+    }, 150);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -39,6 +42,7 @@ const goToSketch = sketch => {
     document.body.appendChild(sketchScript);
 
     sketchScript.addEventListener("load", () => {
+        clearTimeout(loadingIndicatorTimeout);
         loadingIndicator.classList.remove("show");
     });
 

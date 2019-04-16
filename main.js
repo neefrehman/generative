@@ -6,17 +6,9 @@ const fourOhFourPage = document.querySelector(".fourohfour-page");
 const sketchLinks = document.querySelectorAll(".sketch-link");
 const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
-
 const loadingIndicator = document.querySelector("p.loading");
-let loadingIndicatorTimeout;
 
-const xhr = new XMLHttpRequest();
-let sketchScript;
-
-
-const getSketchScript = () => {
-
-};
+let xhr, sketchScript;
 
 
 const removeSketch = () => {
@@ -37,9 +29,11 @@ const showPage = newPage => {
 const goToSketch = sketch => {
     showPage(sketchPage);
 
-    loadingIndicatorTimeout = setTimeout(() => {
+    const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
     }, 200);
+
+    xhr = new XMLHttpRequest();
 
     xhr.addEventListener("progress", e => {
         if (e.lengthComputable) {

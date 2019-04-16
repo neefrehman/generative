@@ -55,10 +55,8 @@ const goToSketch = sketch => {
         sketchScript.innerHTML = e.target.responseText;
         document.body.appendChild(sketchScript);
 
-        sketchScript.addEventListener("load", () => {
-            clearTimeout(loadingIndicatorTimeout);
-            loadingIndicator.classList.remove("show");
-        });
+        clearTimeout(loadingIndicatorTimeout);
+        loadingIndicator.classList.remove("show");
     });
 };
 

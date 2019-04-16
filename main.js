@@ -8,7 +8,7 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
-let xhr, sketchScript;
+let sketchScript;
 
 
 const removeSketch = () => {
@@ -28,19 +28,27 @@ const showPage = newPage => {
 
 const goToSketch = sketch => {
     showPage(sketchPage);
+    document.title = `${sketch} - Generative`;
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
     }, 200);
 
-    xhr = new XMLHttpRequest();
+    const month = sketch.substr(2, 2);
+    const year = sketch.substr(4, 2);
+
+    codeLink.innerHTML = sketch;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.send();
 
     xhr.addEventListener("progress", e => {
-        if (e.lengthComputable) {
-            const percentComplete = e.loaded / e.total;
-            console.log(percentComplete);
-        }
-    }, false);
+        if (!e.lengthComputable) return;
+        const percentComplete = e.loaded / e.total;
+        // Do stuff here
+    });
 
     xhr.addEventListener("load", e => {
         e = e.target;
@@ -50,16 +58,7 @@ const goToSketch = sketch => {
 
         clearTimeout(loadingIndicatorTimeout);
         loadingIndicator.classList.remove("show");
-    }, false);
-
-    const month = sketch.substr(2, 2);
-    const year = sketch.substr(4, 2);
-    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
-    xhr.send();
-
-    codeLink.innerHTML = sketch;
-    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
-    document.title = `${sketch} - Generative`;
+    });
 };
 
 

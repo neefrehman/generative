@@ -32,19 +32,38 @@ const goToSketch = sketch => {
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 200);
+    }, 0);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
 
-    sketchScript = document.createElement("script");
-    sketchScript.src = `sketches/${year}/${month}/${sketch}.js`;
-    document.body.appendChild(sketchScript);
+    const xhr = new XMLHttpRequest();
 
-    sketchScript.addEventListener("load", () => {
-        clearTimeout(loadingIndicatorTimeout);
-        loadingIndicator.classList.remove("show");
-    });
+    xhr.addEventListener("progress", e => {
+        if (e.lengthComputable) {
+            const percentComplete = e.loaded / e.total;
+            // ...
+        } else {
+            // Unable to compute progress information since the total size is unknown
+        }
+    }, false);
+
+    // load responseText into a new script element
+    xhr.addEventListener("load", e => {
+        e = e.target;
+        sketchScript = document.createElement("script");
+        sketchScript.innerHTML = e.responseText;
+        // or: s[s.innerText!=undefined?"innerText":"textContent"] = e.responseText
+        document.documentElement.appendChild(sketchScript);
+
+        s.addEventListener("load", function() {
+            clearTimeout(loadingIndicatorTimeout);
+            loadingIndicator.classList.remove("show");
+        });
+    }, false);
+
+    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.send();
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;

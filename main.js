@@ -6,7 +6,6 @@ const fourOhFourPage = document.querySelector(".fourohfour-page");
 const sketchLinks = document.querySelectorAll(".sketch-link");
 const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
-
 const loadingIndicator = document.querySelector("p.loading");
 
 let sketchScript;
@@ -29,6 +28,7 @@ const showPage = newPage => {
 
 const goToSketch = sketch => {
     showPage(sketchPage);
+    document.title = `${sketch} - Generative`;
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
@@ -37,18 +37,28 @@ const goToSketch = sketch => {
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
 
-    sketchScript = document.createElement("script");
-    sketchScript.src = `sketches/${year}/${month}/${sketch}.js`;
-    document.body.appendChild(sketchScript);
+    codeLink.innerHTML = sketch;
+    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
 
-    sketchScript.addEventListener("load", () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.send();
+
+    xhr.addEventListener("progress", e => {
+        if (!e.lengthComputable) return;
+        const percentComplete = e.loaded / e.total;
+        // Do stuff here
+    });
+
+    xhr.addEventListener("load", e => {
+        e = e.target;
+        sketchScript = document.createElement("script");
+        sketchScript.innerHTML = e.responseText;
+        document.body.appendChild(sketchScript);
+
         clearTimeout(loadingIndicatorTimeout);
         loadingIndicator.classList.remove("show");
     });
-
-    codeLink.innerHTML = sketch;
-    codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;
-    document.title = `${sketch} - Generative`;
 };
 
 

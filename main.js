@@ -31,6 +31,7 @@ const goToSketch = sketch => {
     document.title = `${sketch} - Generative`;
 
     const loadingIndicatorTimeout = setTimeout(() => {
+        loadingIndicator.textContent = "Loading";
         loadingIndicator.classList.add("show");
     }, 90);
 
@@ -51,6 +52,10 @@ const goToSketch = sketch => {
         // TODO: loading animation
     });
 
+    xhr.addEventListener("error", () => {
+        loadingIndicator.textContent = "Failed";
+    });
+
     xhr.addEventListener("load", e => {
         sketchScript = document.createElement("script");
         sketchScript.innerHTML = e.target.responseText;
@@ -60,7 +65,6 @@ const goToSketch = sketch => {
         loadingIndicator.textContent = "Loaded";
         setTimeout(() => {
             loadingIndicator.classList.remove("show");
-            loadingIndicator.textContent = "Loading";
         }, 400);
     });
 };
@@ -85,7 +89,7 @@ let linkedSketch;
 
 if (urlPath.length == 0) {
     goHome();
-} else {
+} else if (urlPath.length >= 1) {
     linkedSketch = urlPath[urlPath.length - 1];
     const linkedSketchButton = document.getElementById(linkedSketch);
 

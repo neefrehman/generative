@@ -48,7 +48,7 @@ const goToSketch = sketch => {
     xhr.addEventListener("progress", e => {
         if (!e.lengthComputable) return;
         const percentComplete = e.loaded / e.total;
-        // TODO: loading animator
+        // TODO: loading animation
     });
 
     xhr.addEventListener("load", e => {

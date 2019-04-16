@@ -8,8 +8,15 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 
 const loadingIndicator = document.querySelector("p.loading");
+let loadingIndicatorTimeout;
 
+const xhr = new XMLHttpRequest();
 let sketchScript;
+
+
+const getSketchScript = () => {
+
+};
 
 
 const removeSketch = () => {
@@ -30,38 +37,31 @@ const showPage = newPage => {
 const goToSketch = sketch => {
     showPage(sketchPage);
 
-    const loadingIndicatorTimeout = setTimeout(() => {
+    loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 0);
-
-    const month = sketch.substr(2, 2);
-    const year = sketch.substr(4, 2);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
-    xhr.send();
+    }, 200);
 
     xhr.addEventListener("progress", e => {
         if (e.lengthComputable) {
             const percentComplete = e.loaded / e.total;
-            // ...
-        } else {
-            // Unable to compute progress information since the total size is unknown
+            console.log(percentComplete);
         }
     }, false);
 
-    // load responseText into a new script element
     xhr.addEventListener("load", e => {
         e = e.target;
         sketchScript = document.createElement("script");
         sketchScript.innerHTML = e.responseText;
         document.body.appendChild(sketchScript);
 
-        sketchScript.addEventListener("load", () => {
-            clearTimeout(loadingIndicatorTimeout);
-            loadingIndicator.classList.remove("show");
-        });
+        clearTimeout(loadingIndicatorTimeout);
+        loadingIndicator.classList.remove("show");
     }, false);
+
+    const month = sketch.substr(2, 2);
+    const year = sketch.substr(4, 2);
+    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.send();
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;

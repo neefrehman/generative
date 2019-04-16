@@ -38,6 +38,8 @@ const goToSketch = sketch => {
     const year = sketch.substr(4, 2);
 
     const xhr = new XMLHttpRequest();
+    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
+    xhr.send();
 
     xhr.addEventListener("progress", e => {
         if (e.lengthComputable) {
@@ -53,17 +55,13 @@ const goToSketch = sketch => {
         e = e.target;
         sketchScript = document.createElement("script");
         sketchScript.innerHTML = e.responseText;
+        document.body.appendChild(sketchScript);
 
-        document.documentElement.appendChild(sketchScript);
-
-        s.addEventListener("load", function() {
+        sketchScript.addEventListener("load", () => {
             clearTimeout(loadingIndicatorTimeout);
             loadingIndicator.classList.remove("show");
         });
     }, false);
-
-    xhr.open("GET", `sketches/${year}/${month}/${sketch}.js`);
-    xhr.send();
 
     codeLink.innerHTML = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/sketches/${year}/${month}/${sketch}.js`;

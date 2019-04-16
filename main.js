@@ -26,16 +26,6 @@ const showPage = newPage => {
 };
 
 
-const loadedIndicator = () => {
-    clearTimeout(loadingIndicatorTimeout);
-    loadingIndicator.textContent = "Loaded";
-    setTimeout(() => {
-        loadingIndicator.classList.remove("show");
-        loadingIndicator.textContent = "Loading";
-    }, 160);
-};
-
-
 const goToSketch = sketch => {
     showPage(sketchPage);
     document.title = `${sketch} - Generative`;

@@ -65,7 +65,7 @@ const goToSketch = sketch => {
         loadingIndicator.textContent = "Loaded";
         setTimeout(() => {
             loadingIndicator.classList.remove("show");
-        }, 400);
+        }, 360);
     });
 };
 

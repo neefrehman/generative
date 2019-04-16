@@ -32,7 +32,7 @@ const goToSketch = sketch => {
 
     const loadingIndicatorTimeout = setTimeout(() => {
         loadingIndicator.classList.add("show");
-    }, 150);
+    }, 120);
 
     const month = sketch.substr(2, 2);
     const year = sketch.substr(4, 2);
@@ -55,8 +55,10 @@ const goToSketch = sketch => {
         sketchScript.innerHTML = e.target.responseText;
         document.body.appendChild(sketchScript);
 
-        clearTimeout(loadingIndicatorTimeout);
-        loadingIndicator.classList.remove("show");
+        sketchScript.addEventListener("load", () => {
+            clearTimeout(loadingIndicatorTimeout);
+            loadingIndicator.classList.remove("show");
+        });
     });
 };
 

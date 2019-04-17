@@ -12,10 +12,10 @@ let xhr, sketchScript;
 
 
 const removeSketch = () => {
+    if (sketchScript) sketchScript.remove();
     while (document.querySelector("canvas")) {
         const canvas = document.querySelector("canvas");
-        remove() || canvas.remove();
-        sketchScript.remove();
+        canvas.classList.contains("p5Canvas") ? remove() : canvas.remove();
     }
 };
 
@@ -54,7 +54,7 @@ const goToSketch = sketch => {
     });
 
     xhr.addEventListener("error", () => {
-        loadingIndicator.textContent = "Error";
+        loadingIndicator.textContent = "Error"; // TODO: check if works?
     });
 
     xhr.addEventListener("load", e => {
@@ -72,7 +72,7 @@ const goToSketch = sketch => {
 
 
 const goHome = () => {
-    if (xhr) xhr.abort();
+    if (xhr && xhr.status != 200) xhr.abort();
     showPage(homePage);
     document.title = "Generative - Neef Rehman";
 };

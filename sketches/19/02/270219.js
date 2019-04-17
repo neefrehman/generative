@@ -31,7 +31,7 @@
         canvas.class("p5canvas not-full-screen");
 
         colorMode(HSB);
-        const initialBlobCount = (window.innerWidth > 500) ? 10 : 8;
+        const initialBlobCount = (window.innerWidth > 500) ? 10 : 7;
         for (let i = 0; i < initialBlobCount; i++) {
             blobs[i] = new Blob(random(0, width), random(0, height));
         }

@@ -54,7 +54,7 @@ const goToSketch = sketch => {
     });
 
     xhr.addEventListener("error", () => {
-        loadingIndicator.textContent = "Error"; // TODO: check if works?
+        loadingIndicator.textContent = "Error";
     });
 
     xhr.addEventListener("load", e => {

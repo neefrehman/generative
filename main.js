@@ -90,7 +90,7 @@ let linkedSketch;
 
 if (urlPath.length == 0) {
     goHome();
-} else if (urlPath.length >= 1) {
+} else {
     linkedSketch = urlPath[urlPath.length - 1];
     const linkedSketchButton = document.getElementById(linkedSketch);
 

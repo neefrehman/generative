@@ -14,7 +14,7 @@ let xhr, sketchScript;
 const removeSketch = () => {
     while (document.querySelector("canvas")) {
         const canvas = document.querySelector("canvas");
-        canvas.remove();
+        remove() || canvas.remove();
         sketchScript.remove();
     }
 };

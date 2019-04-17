@@ -8,12 +8,13 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
-let sketchScript;
+let xhr, sketchScript;
 
 
 const removeSketch = () => {
-    while (document.querySelector("canvas.p5Canvas")) {
-        remove(); // p5
+    while (document.querySelector("canvas")) {
+        const canvas = document.querySelector("canvas");
+        canvas.remove();
         sketchScript.remove();
     }
 };
@@ -42,7 +43,7 @@ const goToSketch = sketch => {
     codeLink.textContent = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/${pathToSketch}`;
 
-    const xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
     xhr.open("GET", pathToSketch);
     xhr.send();
 
@@ -71,6 +72,7 @@ const goToSketch = sketch => {
 
 
 const goHome = () => {
+    if (xhr) xhr.abort();
     showPage(homePage);
     document.title = "Generative - Neef Rehman";
 };

@@ -1,7 +1,7 @@
 (() => {
 
     const particles = [];
-    const noiseScale = 1000000;
+    const noiseScale = 100000;
 
     class Particle {
 

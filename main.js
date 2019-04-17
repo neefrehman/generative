@@ -13,10 +13,9 @@ let xhr, sketchScript;
 
 const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
-    while (document.querySelector("canvas")) {
-        const canvas = document.querySelector("canvas");
+    document.querySelectorAll("canvas").forEach(canvas => {
         canvas.classList.contains("p5Canvas") ? remove() : canvas.remove();
-    }
+    });
 };
 
 

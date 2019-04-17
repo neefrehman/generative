@@ -12,7 +12,7 @@ let sketchScript;
 
 
 const removeSketch = () => {
-    while (document.querySelector("canvas")) {
+    while (document.querySelector("canvas.p5Canvas")) {
         remove(); // p5
         sketchScript.remove();
     }

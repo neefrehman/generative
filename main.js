@@ -61,7 +61,7 @@ const goToSketch = sketch => {
 
     xhr.addEventListener("load", e => {
         sketchScript = document.createElement("script");
-        sketchScript.innerHTML = e.target.responseText;
+        sketchScript.textContent = e.target.responseText;
         document.body.appendChild(sketchScript);
 
         loadingIndicator.textContent = "Loaded";

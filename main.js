@@ -13,7 +13,7 @@ let xhr, sketchScript;
 
 const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
-
+    
     const canvases = document.querySelectorAll("canvas");
     if (canvases.length == 1 && canvases[0].classList.contains("p5Canvas")) {
         remove();
@@ -93,7 +93,7 @@ if (urlPath.length == 0) {
     goHome();
 } else {
     linkedSketch = urlPath[urlPath.length - 1];
-    
+
     const linkedSketchButton = document.getElementById(linkedSketch);
     if (linkedSketchButton) {
         goToSketch(linkedSketch);

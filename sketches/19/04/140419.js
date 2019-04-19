@@ -32,7 +32,7 @@
         }
 
         excited() {
-            this.growth = this.growth * 2;
+            this.growth = this.growth * 3;
             this.fill = 255;
             this.stroke = 0;
         }

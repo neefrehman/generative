@@ -50,7 +50,7 @@ const goToSketch = sketch => {
     xhr.open("GET", pathToSketch);
     xhr.send();
 
-    xhr.addEventListener("progress", e => { // If doesn't fire try adding listeners before open() and send()
+    xhr.addEventListener("progress", e => { // If not firing try adding listeners before open()/send()
         if (!e.lengthComputable) return;
         // const percentComplete = e.loaded / e.total;
         // if (e.total > 1600) loadingIndicator.textContent = percentComplete;

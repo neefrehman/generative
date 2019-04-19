@@ -52,11 +52,9 @@ const goToSketch = sketch => {
 
     xhr.addEventListener("progress", e => { // If doesn't fire try adding listeners before open() and send()
         if (!e.lengthComputable) return;
-        const percentComplete = e.loaded / e.total;
-        // console.log(percentComplete); // TODO: loading animation
+        // const percentComplete = e.loaded / e.total;
         // if (e.total > 1600) {
             // loadingIndicator.textContent = percentComplete;
-            // loadingIndicator.classList.add("show");
         // }
     });
 

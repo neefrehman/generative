@@ -93,12 +93,12 @@ if (urlPath.length == 0) {
     goHome();
 } else {
     linkedSketch = urlPath[urlPath.length - 1];
+    
     const linkedSketchButton = document.getElementById(linkedSketch);
-
     if (linkedSketchButton) {
         goToSketch(linkedSketch);
     } else {
-         goTo404();
+        goTo404();
     }
 }
 

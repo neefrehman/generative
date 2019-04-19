@@ -13,10 +13,13 @@ let xhr, sketchScript;
 
 const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
+
     const canvases = document.querySelectorAll("canvas");
-    canvases.forEach(canvas => {
-        canvas.classList.contains("p5Canvas") ? remove() : canvas.remove();
-    });
+    if (canvases.length == 1 && canvases[0].classList.contains("p5Canvas")) {
+        remove();
+    } else {
+        canvases.forEach(canvas => canvas.remove());
+    }
 };
 
 
@@ -51,6 +54,10 @@ const goToSketch = sketch => {
         if (!e.lengthComputable) return;
         const percentComplete = e.loaded / e.total;
         // console.log(percentComplete); // TODO: loading animation
+        // if (e.total > 1600) {
+            // loadingIndicator.textContent = percentComplete;
+            // loadingIndicator.classList.add("show");
+        // }
     });
 
     xhr.addEventListener("error", () => {
@@ -62,11 +69,9 @@ const goToSketch = sketch => {
         sketchScript.innerHTML = e.target.responseText;
         document.body.appendChild(sketchScript);
 
-        clearTimeout(loadingIndicatorTimeout);
         loadingIndicator.textContent = "Loaded";
-        setTimeout(() => {
-            loadingIndicator.classList.remove("show");
-        }, 400);
+        clearTimeout(loadingIndicatorTimeout);
+        setTimeout(() => loadingIndicator.classList.remove("show"), 400);
     });
 };
 
@@ -95,7 +100,11 @@ if (urlPath.length == 0) {
     linkedSketch = urlPath[urlPath.length - 1];
     const linkedSketchButton = document.getElementById(linkedSketch);
 
-    linkedSketchButton ? goToSketch(linkedSketch) : goTo404();
+    if (linkedSketchButton) {
+        goToSketch(linkedSketch);
+    } else {
+         goTo404();
+    }
 }
 
 

@@ -35,7 +35,6 @@ const goToSketch = sketch => {
     document.title = `${sketch} - Generative`;
 
     const loadingIndicatorTimeout = setTimeout(() => {
-        loadingIndicator.textContent = "Loading";
         loadingIndicator.classList.add("show");
     }, 90);
 
@@ -73,8 +72,9 @@ const goToSketch = sketch => {
 
 
 const goHome = () => {
-    if (xhr && xhr.status != 200) xhr.abort();
     showPage(homePage);
+    if (xhr && xhr.status != 200) xhr.abort();
+    loadingIndicator.textContent = "Loading";
     document.title = "Generative - Neef Rehman";
 };
 

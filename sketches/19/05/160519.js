@@ -1,14 +1,19 @@
 (() => {
 
-    var video;
-    width = window.innerWidth;
+    let video;
+    const constraints = {
+        audio: false,
+        video: {
+            facingMode: "user"
+        }
+    };
 
 
 
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
-        video = createCapture(VIDEO);
+        video = createCapture(constraints);
         video.hide();
     };
 

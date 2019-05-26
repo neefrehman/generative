@@ -3,7 +3,7 @@ const homePage = document.querySelector(".home-page");
 const sketchPage = document.querySelector(".sketch-page");
 const fourOhFourPage = document.querySelector(".fourohfour-page");
 
-const sketchLinks = document.querySelectorAll(".sketch-link");
+const sketchLinks = document.querySelectorAll(".sketch-list a");
 const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");

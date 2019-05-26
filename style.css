@@ -145,3 +145,15 @@ canvas.not-full-screen {
         font-size: 4em;
     }
 }
+
+@media (pointer: coarse) {
+    .sketch-list a.desktop-only {
+        display: none;
+    }
+}
+
+@media (pointer: fine) {
+    .sketch-list a.mobile-only {
+        display: none;
+    }
+}

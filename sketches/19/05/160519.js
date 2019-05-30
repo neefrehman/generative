@@ -11,7 +11,7 @@
         createCanvas(windowWidth, windowHeight);
         pixelDensity(1);
     };
-
+    
 
     draw = () => {
         background(20);
@@ -30,6 +30,7 @@
 
         updatePixels();
     };
+
 
     mousePressed = () => {
         r = Math.floor((Math.random() * 255));

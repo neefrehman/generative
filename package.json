@@ -18,6 +18,7 @@
   "homepage": "https://github.com/neefrehman/Generative#readme",
   "devDependencies": {
     "@types/p5": "^0.7.2",
+    "eslint": "^5.16.0",
     "eslint-config-p5js": "^1.0.1"
   }
 }

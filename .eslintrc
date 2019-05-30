@@ -1,5 +1,9 @@
 {
-  "extends": ["p5js", "p5js/dom", "p5js/sound"],
+  "extends": [
+    "p5js",
+    "p5js/dom",
+    "p5js/sound"
+  ],
   "parserOptions": {
     "ecmaVersion": 2017,
     "ecmaFeatures": {
@@ -8,8 +12,7 @@
   },
   "env": {
     "browser": true,
-    "es6": true,
-    "node": true
+    "es6": true
   },
   "rules": {
     "no-cond-assign": 2,
@@ -24,7 +27,10 @@
     "no-extra-boolean-cast": 2,
     "no-extra-semi": 2,
     "no-func-assign": 2,
-    "no-inner-declarations": [2, "functions"],
+    "no-inner-declarations": [
+      2,
+      "functions"
+    ],
     "no-invalid-regexp": 2,
     "no-irregular-whitespace": 2,
     "no-negated-in-lhs": 2,
@@ -44,10 +50,12 @@
       }
     ],
     "no-self-compare": 1,
+    "no-undef": 1,
     "no-undefined": 1,
     "no-delete-var": 2,
     "no-label-var": 1,
     "no-shadow": 1,
+    "no-unused-vars": 1,
     "comma-spacing": [
       1,
       {
@@ -55,11 +63,23 @@
       }
     ],
     "no-lonely-if": 1,
-    "no-mixed-spaces-and-tabs": [1, "smart-tabs"],
-    "semi": [1, "always"],
+    "no-mixed-spaces-and-tabs": [
+      1,
+      "smart-tabs"
+    ],
+    "semi": [
+      1,
+      "always"
+    ],
     "keyword-spacing": 1,
-    "space-before-blocks": [1, "always"],
-    "space-before-function-paren": [1, "never"],
+    "space-before-blocks": [
+      1,
+      "always"
+    ],
+    "space-before-function-paren": [
+      1,
+      "never"
+    ],
     "space-infix-ops": [
       1,
       {
@@ -67,7 +87,10 @@
       }
     ],
     "wrap-regex": 2,
-    "arrow-parens": [1, "as-needed"],
+    "arrow-parens": [
+      1,
+      "as-needed"
+    ],
     "arrow-spacing": [
       1,
       {
@@ -78,5 +101,21 @@
     "no-const-assign": 2,
     "prefer-const": 1,
     "prefer-spread": 1
+  },
+  "globals": {
+    "p5": true,
+    "preload": true,
+    "setup": true,
+    "draw": true,
+    "mousePressed": true,
+    "MouseMoved": true,
+    "MouseDragged": true,
+    "MouseReleased": true,
+    "MouseClicked": true,
+    "doubleClicked": true,
+    "windowResized": true,
+    "touchStarted": true,
+    "touchMoved": true,
+    "touchEnded": true
   }
 }

@@ -2,7 +2,6 @@
 
     let graphics;
     const graphicsSize = 300;
-    let angle;
 
     const slices = [];
     class Slice {

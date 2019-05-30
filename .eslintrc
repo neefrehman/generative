@@ -12,6 +12,11 @@
     "browser": true,
     "es6": true
   },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "semi": [2, "always"]
+  },
   "globals": {
     "p5": true,
     "preload": true,

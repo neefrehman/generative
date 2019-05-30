@@ -39,10 +39,10 @@
 
     draw = () => {
         loadPixels();
-        for (x = 0; x < width; x++) {
-            for (y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            for (let y = 0; y < height; y++) {
                 let sum = 0;
-                for (i = 0; i < blobs.length; i++) {
+                for (let i = 0; i < blobs.length; i++) {
                     const xdif = x - blobs[i].x;
                     const ydif = y - blobs[i].y;
                     const d = sqrt((xdif * xdif) + (ydif * ydif));

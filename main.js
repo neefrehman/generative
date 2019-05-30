@@ -8,7 +8,8 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
-let xhr, sketchScript;
+let xhr,
+    sketchScript;
 
 
 const removeSketch = () => {

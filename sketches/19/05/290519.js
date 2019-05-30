@@ -12,7 +12,7 @@
         }
 
         update() {
-            const x = map(noise(xoff), 0, 1, -25, 25);
+            const x = map(noise(xoff), 0, 1, -20, 20);
             this.x += x;
 
             ellipse(this.x, this.y, this.r);

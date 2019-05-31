@@ -8,7 +8,7 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
-let xhr,
+let controller,
     sketchScript;
 
 
@@ -32,6 +32,7 @@ const showPage = newPage => {
 
 
 const goToSketch = sketch => {
+    loadingIndicator.textContent = "Loading";
     showPage(sketchPage);
     document.title = `${sketch} - Generative`;
 
@@ -46,35 +47,28 @@ const goToSketch = sketch => {
     codeLink.textContent = sketch;
     codeLink.href = `https://github.com/neefrehman/Generative/blob/master/${pathToSketch}`;
 
-    xhr = new XMLHttpRequest();
-    xhr.open("GET", pathToSketch);
-    xhr.send();
+    controller = new AbortController();
+    const signal = controller.signal;
+ 
+    fetch(pathToSketch, {signal})
+        .then(response => {
+            response.text().then(text => {
+                sketchScript = document.createElement("script");
+                sketchScript.textContent = text;
+                document.body.appendChild(sketchScript);
 
-    xhr.addEventListener("progress", e => { // If not firing try adding listeners before open()/send()
-        if (!e.lengthComputable) return;
-        // const percentComplete = e.loaded / e.total; //TODO: loading animation
-    });
-
-    xhr.addEventListener("error", () => {
-        loadingIndicator.textContent = "Error";
-    });
-
-    xhr.addEventListener("load", e => {
-        sketchScript = document.createElement("script");
-        sketchScript.textContent = e.target.responseText;
-        document.body.appendChild(sketchScript);
-
-        loadingIndicator.textContent = "Loaded";
-        clearTimeout(loadingIndicatorTimeout);
-        setTimeout(() => loadingIndicator.classList.remove("show"), 400);
-    });
+                loadingIndicator.textContent = "Loaded";
+                clearTimeout(loadingIndicatorTimeout);
+                setTimeout(() => loadingIndicator.classList.remove("show"), 400);
+            });
+        })
+        .catch(() => loadingIndicator.textContent = "Error");
 };
 
 
 const goHome = () => {
+    if (controller) controller.abort();
     showPage(homePage);
-    if (xhr && xhr.status != 200) xhr.abort();
-    loadingIndicator.textContent = "Loading";
     document.title = "Generative - Neef Rehman";
 };
 

@@ -62,7 +62,9 @@ const goToSketch = sketch => {
                 setTimeout(() => loadingIndicator.classList.remove("show"), 400);
             });
         })
-        .catch(() => loadingIndicator.textContent = "Error");
+        .catch((error) => {
+            loadingIndicator.textContent = (error.code == undefined) ? "Error" : `${error.code} Error`;
+        });
 };
 
 

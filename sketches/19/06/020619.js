@@ -14,7 +14,7 @@
 
         update() {
             this.offset += 0.01;
-            this.vel = map(noise(this.offset), 0, 1, -20, 20);
+            this.vel = map(noise(this.offset), 0, 1, -18, 18);
             if (this.isHorizontal == true) {
                 this.x += this.vel;
             } else {

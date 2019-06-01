@@ -13,7 +13,7 @@
 
         update() {
             this.offset += 0.01;
-            this.vel = map(noise(this.offset), 0, 1, -20, 20);
+            this.vel = map(noise(this.offset), 0, 1, -18, 18);
             this.y += this.vel;
 
             ellipse(this.x, this.y, this.r);

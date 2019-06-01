@@ -12,7 +12,7 @@
 
         update() {
             this.xoff += 0.01;
-            this.vel = map(noise(this.xoff), 0, 1, -20, 20);
+            this.vel = map(noise(this.offset), 0, 1, -18, 18);
             this.x += this.vel;
 
             ellipse(this.x, this.y, this.r);

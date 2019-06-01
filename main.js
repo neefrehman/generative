@@ -16,7 +16,7 @@ const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
 
     const canvases = document.querySelectorAll("canvas");
-    if (canvases.length == 1 && canvases[0].classList.contains("p5canvas")) {
+    if (canvases.length == 1 && canvases[0].classList.contains("p5Canvas")) {
         remove();
     } else {
         canvases.forEach(canvas => canvas.remove());
@@ -51,16 +51,15 @@ const goToSketch = sketch => {
     const signal = controller.signal;
 
     fetch(pathToSketch, {signal})
-        .then(response => {
-            response.text().then(text => {
-                sketchScript = document.createElement("script");
-                sketchScript.textContent = text;
-                document.body.appendChild(sketchScript);
+        .then(response => response.text())
+        .then(text => {
+            sketchScript = document.createElement("script");
+            sketchScript.textContent = text;
+            document.body.appendChild(sketchScript);
 
-                loadingIndicator.textContent = "Loaded";
-                clearTimeout(loadingIndicatorTimeout);
-                setTimeout(() => loadingIndicator.classList.remove("show"), 400);
-            });
+            loadingIndicator.textContent = "Loaded";
+            clearTimeout(loadingIndicatorTimeout);
+            setTimeout(() => loadingIndicator.classList.remove("show"), 400);
         })
         .catch(() => loadingIndicator.textContent = "Error");
 };

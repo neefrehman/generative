@@ -49,7 +49,6 @@ const goToSketch = sketch => {
 
     controller = new AbortController();
     const signal = controller.signal;
- 
     fetch(pathToSketch, {signal})
         .then(response => {
             response.text().then(text => {
@@ -62,8 +61,8 @@ const goToSketch = sketch => {
                 setTimeout(() => loadingIndicator.classList.remove("show"), 400);
             });
         })
-        .catch((error) => {
-            loadingIndicator.textContent = (error.code == undefined) ? "Error" : `${error.code} Error`;
+        .catch(error => {
+            loadingIndicator.textContent = (error.code != undefined) ? `${error.code} Error` : "Error";
         });
 };
 

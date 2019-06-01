@@ -15,7 +15,8 @@
   "rules": {
     "no-console": "off",
     "no-unused-vars": "warn",
-    "semi": [2, "always"]
+    "semi": [1, "always"],
+    "arrow-parens": [1, "as-needed"]
   },
   "globals": {
     "p5": true,

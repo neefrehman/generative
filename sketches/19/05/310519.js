@@ -37,6 +37,10 @@
         for (let i = 0; i < balls.length; i++) {
             balls[i].update();
         }
+
+        if (balls.length > 1000) {
+            balls.splice(0, 1);
+        }
     };
 
     mousePressed = () => {

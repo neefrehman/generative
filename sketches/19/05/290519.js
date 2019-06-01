@@ -39,6 +39,10 @@
         }
 
         xoff+= 0.01;
+
+        if (balls.length > 1000) {
+            balls.splice(0, 1);
+        }
     };
 
     mousePressed = () => {

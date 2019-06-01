@@ -9,12 +9,17 @@
             this.y = y;
             this.r = r;
             this.offset = 0;
+            this.isHorizontal = Math.random() >= 0.5;
         }
 
         update() {
             this.offset += 0.01;
             this.vel = map(noise(this.offset), 0, 1, -20, 20);
-            this.y += this.vel;
+            if (this.isHorizontal == true) {
+                this.x += this.vel;
+            } else {
+                this.y += this.vel;
+            }
 
             ellipse(this.x, this.y, this.r);
         }

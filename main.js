@@ -49,7 +49,7 @@ const goToSketch = sketch => {
 
     controller = new AbortController();
     const signal = controller.signal;
-        
+
     fetch(pathToSketch, {signal})
         .then(response => {
             response.text().then(text => {

@@ -26,7 +26,7 @@ body {
     overflow-y: hidden;
 }
 
-h1::selection, span.stretch::selection, h2::selection, h3::selection, p::selection, a::selection {
+*::selection {
     background: #f4cb3d;
 }
 

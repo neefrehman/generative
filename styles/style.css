@@ -79,9 +79,9 @@ header a {
 }
 
 .sketch-list a {
+    font-family: helvetica neue, helvetica, arial, sans-serif;
     margin: 0 1em 1em 0;
     width: max-content;
-    letter-spacing: -0.04em;
     font-variant-numeric: tabular-nums;
     cursor: pointer;
 }
@@ -121,6 +121,7 @@ a.home-link {
 }
 
 .sketch-page a.code-link {
+    font-family: helvetica neue, helvetica, arial, sans-serif;
     bottom: var(--edgeMargin);
     right: var(--edgeMargin);
 }

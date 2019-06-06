@@ -112,6 +112,7 @@ a.home-link {
 
 .sketch-page a {
     position: fixed;
+    font-family: helvetica neue, helvetica, arial, sans-serif;
     --edgeMargin: 45px;
 }
 
@@ -121,7 +122,6 @@ a.home-link {
 }
 
 .sketch-page a.code-link {
-    font-family: helvetica neue, helvetica, arial, sans-serif;
     bottom: var(--edgeMargin);
     right: var(--edgeMargin);
 }

@@ -56,7 +56,7 @@ a:hover {
 
 header {
     margin-bottom: 40px;
-    transform: scale(1.05, 1);
+    transform: scale(1.06, 1);
     transform-origin: left;
 }
 
@@ -81,7 +81,7 @@ header a {
 .sketch-list a {
     margin: 0 1em 1em 0;
     width: max-content;
-    font-size: 0.98em;
+    letter-spacing: -0.04em;
     font-variant-numeric: tabular-nums;
     cursor: pointer;
 }

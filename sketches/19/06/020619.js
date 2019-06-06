@@ -23,7 +23,7 @@
 
             ellipse(this.x, this.y, this.r);
         }
-
+        
     }
 
 

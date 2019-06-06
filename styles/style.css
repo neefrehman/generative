@@ -1,5 +1,13 @@
+@font-face {
+    font-family: "Untitled Sans";
+    font-weight: 400;
+    font-display: block;
+    font-style: normal;
+    src: url("fonts/UntitledSansWeb-Regular.woff2")
+}
+
 body {
-    font-family: helvetica neue, helvetica, arial, sans-serif;
+    font-family: "Untitled Sans", helvetica neue, helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.2;
     color: #fff;
@@ -67,6 +75,7 @@ header a {
 .sketch-list a {
     margin: 0 1em 1em 0;
     width: max-content;
+    font-size: 0.98em;
     font-variant-numeric: tabular-nums;
     cursor: pointer;
 }

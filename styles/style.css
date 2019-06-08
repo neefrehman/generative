@@ -116,6 +116,10 @@ a.home-link {
     --edgeMargin: 45px;
 }
 
+.sketch-page a::selection {
+    background: none;
+}
+
 .sketch-page a.home-link {
     bottom: var(--edgeMargin);
     left: var(--edgeMargin);

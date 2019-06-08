@@ -34,14 +34,14 @@
         strokeWeight(2);
         fill(20, alpha);
 
-        push(new Circle());
+        circles.push(new Circle());
     };
 
 
     draw = () => {
         background(20);
 
-        if (frameCount % 30 == 0) {
+        if (frameCount % 40 == 0) {
             circles.push(new Circle());
         }
 

@@ -37,7 +37,7 @@
             balls[i].update();
         }
 
-        if (balls.length > 1000) {
+        if (balls.length > 500) {
             balls.splice(0, 1);
         }
     };

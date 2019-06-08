@@ -40,6 +40,10 @@
     draw = () => {
         background(20);
 
+        if (frameCount % 15 == 0) {
+            balls.push(new Ball(random(width), random(height), 36));
+        }
+
         for (let i = 0; i < balls.length; i++) {
             balls[i].update();
         }

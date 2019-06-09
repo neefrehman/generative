@@ -81,7 +81,7 @@
             }
         }
 
-        if (balls.length > 500) {
+        if (balls.length > 600) {
             balls.splice(0, 1);
         }
     };
@@ -91,4 +91,6 @@
         balls.push(new Ball(mouseX, mouseY));
     };
 
-})(); new p5();
+})();
+
+new p5();

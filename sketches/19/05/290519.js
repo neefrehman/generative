@@ -53,4 +53,6 @@
         balls.push(new Ball(mouseX, mouseY, 36));
     };
 
-})(); new p5();
+})();
+
+new p5();

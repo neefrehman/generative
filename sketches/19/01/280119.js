@@ -99,4 +99,6 @@
         spores.push(spore);
     };
 
-})(); new p5();
+})();
+
+new p5();

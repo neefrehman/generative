@@ -29,4 +29,6 @@
         screenShots.push(video.get());
     };
 
-})(); new p5();
+})();
+
+new p5();

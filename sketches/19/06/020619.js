@@ -44,7 +44,7 @@
             balls[i].update();
         }
 
-        if (balls.length > 500) {
+        if (balls.length > 1000) {
             balls.splice(0, 1);
         }
     };
@@ -59,4 +59,6 @@
         balls.push(new Ball(mouseX, mouseY, 36));
     };
 
-})(); new p5();
+})();
+
+new p5();

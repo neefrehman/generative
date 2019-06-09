@@ -38,4 +38,6 @@
         b = Math.floor((Math.random() * 255));
     };
 
-})(); new p5();
+})();
+
+new p5();

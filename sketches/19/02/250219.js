@@ -56,4 +56,6 @@
         for (const blob of blobs) blob.update();
     };
 
-})(); new p5();
+})();
+
+new p5();

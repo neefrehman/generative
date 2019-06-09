@@ -23,4 +23,6 @@
         image(video, 0, 0, mouseX, mouseY);
     };
 
-})(); new p5();
+})();
+
+new p5();

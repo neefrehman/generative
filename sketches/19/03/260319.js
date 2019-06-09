@@ -72,4 +72,6 @@
         vibrations.push(new Particle(mouseX, mouseY));
     };
 
-})(); new p5();
+})();
+
+new p5();

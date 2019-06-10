@@ -39,7 +39,7 @@
 
         show() {
             stroke(255);
-            strokeWeight(5);
+            strokeWeight(6);
             point(this.pos.x, this.pos.y);
         }
 

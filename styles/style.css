@@ -57,6 +57,8 @@ a:hover {
 header {
     margin-bottom: 35px;
     width: max-content;
+    transform: scale(1.05, 1);
+    transform-origin: left;
 }
 
 header h1 {
@@ -64,8 +66,6 @@ header h1 {
     white-space: nowrap;
     font-size: 3em;
     margin-right: 1em;
-    transform: scale(1.05, 1);
-    transform-origin: left;
 }
 
 header a {
@@ -170,17 +170,5 @@ canvas.not-full-screen {
     }
     .sketch-page p.loading {
         font-size: 4em;
-    }
-}
-
-@media (pointer: coarse) {
-    .sketch-list a.desktop-only {
-        display: none;
-    }
-}
-
-@media (pointer: fine) {
-    .sketch-list a.mobile-only {
-        display: none;
     }
 }

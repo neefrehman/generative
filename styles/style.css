@@ -56,8 +56,6 @@ a:hover {
 
 header {
     margin-bottom: 40px;
-    transform: scale(1.05, 1);
-    transform-origin: left;
     width: max-content;
 }
 
@@ -66,6 +64,8 @@ header h1 {
     white-space: nowrap;
     font-size: 3em;
     margin-right: 1em;
+    transform: scale(1.05, 1);
+    transform-origin: left;
 }
 
 header a {

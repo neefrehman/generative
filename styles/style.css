@@ -154,7 +154,7 @@ canvas.not-full-screen {
 
 @media (max-width: 769px) {
     .home-page {
-        margin: 30px;
+        margin: 25px;
     }
     .sketch-list{
         max-height: calc(100vh - 200px);

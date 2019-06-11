@@ -57,7 +57,7 @@ a:hover {
 header {
     margin-bottom: 35px;
     width: max-content;
-    transform: scale(1.05, 1);
+    transform: scale(1.03, 1);
     transform-origin: left;
 }
 

@@ -16,7 +16,7 @@ body {
     font-family: "Untitled Sans", helvetica neue, helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.2;
-    color: #fff;
+    color: #ffffff;
     background-color: #212121;
     -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -moz-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -121,6 +121,7 @@ a.home-link {
 }
 
 .sketch-page a::selection {
+    color: #ffffff;
     background: none;
 }
 

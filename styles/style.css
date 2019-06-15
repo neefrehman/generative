@@ -14,7 +14,7 @@
 
 body {
     font-family: "Untitled Sans", helvetica neue, helvetica, arial, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.2;
     color: #ffffff;
     background-color: #212121;
@@ -47,7 +47,7 @@ a:hover {
 
 .home-page,
 .fourohfour-page {
-    margin: 35px;
+    margin: 25px 40px;
 }
 
 .page {
@@ -117,7 +117,7 @@ a.home-link {
 .sketch-page a {
     position: fixed;
     font-family: helvetica neue, helvetica, arial, sans-serif;
-    --edgeMargin: 45px;
+    --edgeMargin: 40px;
 }
 
 .sketch-page a::selection {
@@ -153,8 +153,11 @@ canvas.not-full-screen {
 
 
 @media (max-width: 769px) {
+    body {
+        font-size: 14px;
+    }
     .home-page {
-        margin: 30px;
+        margin: 15px 30px;
     }
     .sketch-list{
         max-height: calc(100vh - 200px);
@@ -163,7 +166,7 @@ canvas.not-full-screen {
         margin-bottom: 30px;
     }
     header h1 {
-        font-size: 2.6em;
+        font-size: 2.36em;
     }
     .sketch-page a {
         --edgeMargin: 33px;

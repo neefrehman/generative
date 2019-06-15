@@ -122,7 +122,6 @@ a.home-link {
 
 .sketch-page a::selection {
     color: #ffffff;
-    background: none;
 }
 
 .sketch-page a.home-link {

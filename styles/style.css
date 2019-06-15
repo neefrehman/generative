@@ -27,7 +27,7 @@ body {
 }
 
 *::selection {
-    background: #f4cb3d;
+    color: #f4cb3d;
 }
 
 a, a:visited {

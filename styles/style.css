@@ -65,6 +65,7 @@ header h1 {
     margin-block-end: 0.5em;
     white-space: nowrap;
     font-size: 3em;
+    font-weight: bold;
     margin-right: 1em;
 }
 

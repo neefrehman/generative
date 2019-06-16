@@ -47,7 +47,7 @@ a:hover {
 
 .home-page,
 .fourohfour-page {
-    margin: 25px 40px;
+    margin: 25px 50px;
 }
 
 .page {
@@ -78,7 +78,7 @@ header a {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 155px);
+    max-height: calc(100vh - 140px);
     width: max-content;
     justify-content: flex-start;
 }
@@ -158,10 +158,10 @@ canvas.not-full-screen {
         font-size: 14px;
     }
     .home-page {
-        margin: 20px 35px;
+        margin: 20px 40px;
     }
     .sketch-list{
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 190px);
     }
     header {
         margin-bottom: 30px;

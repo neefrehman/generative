@@ -158,7 +158,7 @@ canvas.not-full-screen {
         font-size: 14px;
     }
     .home-page {
-        margin: 18px 30px;
+        margin: 20px 35px;
     }
     .sketch-list{
         max-height: calc(100vh - 200px);
@@ -174,5 +174,11 @@ canvas.not-full-screen {
     }
     .sketch-page p.loading {
         font-size: 4em;
+    }
+}
+
+@media (max-width: 425px) {
+    .home-page {
+        margin: 18px 30px;
     }
 }

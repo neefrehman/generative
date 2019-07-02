@@ -8,7 +8,7 @@
     setup = () => {
         const canvasSize = (window.innerWidth > 500) ? 360 : 220;
         const canvas = createCanvas(canvasSize, canvasSize);
-        canvas.class("p5canvas not-full-screen");
+        canvas.class("p5Canvas not-full-screen");
 
         background(20);
         pixelDensity(1);
@@ -48,4 +48,4 @@
 
 })();
 
-new p5();
+

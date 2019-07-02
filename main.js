@@ -61,6 +61,7 @@ const goToSketch = sketch => {
             clearTimeout(loadingIndicatorTimeout);
             setTimeout(() => loadingIndicator.classList.remove("show"), 400);
         })
+        .then(() => new p5())
         .catch(() => loadingIndicator.textContent = "Error");
 };
 

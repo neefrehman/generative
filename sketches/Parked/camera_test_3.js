@@ -10,7 +10,7 @@
 
     setup = () => {
         const canvas = createCanvas(320, 240);
-        canvas.class("p5canvas not-full-screen");
+        canvas.class("p5Canvas not-full-screen");
         pixelDensity(1);
 
         video = createCapture(VIDEO);

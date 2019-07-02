@@ -28,7 +28,7 @@
         const canvasWidth = (window.innerWidth > 500) ? 360 : 220;
         const canvasHeight = canvasWidth * (3 / 4);
         const canvas = createCanvas(canvasWidth, canvasHeight);
-        canvas.class("p5canvas not-full-screen");
+        canvas.class("p5Canvas not-full-screen");
 
         colorMode(HSB);
         const initialBlobCount = (window.innerWidth > 500) ? 10 : 7;
@@ -59,4 +59,4 @@
 
 })();
 
-new p5();
+

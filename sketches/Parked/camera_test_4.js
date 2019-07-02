@@ -59,5 +59,3 @@ function draw() {
 }
 
 })();
-
-new p5();

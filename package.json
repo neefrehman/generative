@@ -21,6 +21,6 @@
     "eslint-config-p5js": "^1.0.1"
   },
   "dependencies": {
-    "p5": "^0.8.0"
+    "p5": "^0.9.0"
   }
 }

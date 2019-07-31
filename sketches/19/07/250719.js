@@ -13,22 +13,10 @@
         update() {
             const newVel = createVector(mouseX - width / 2, mouseY - height / 2);
             newVel.div(50);
-            // newVel.setMag(3);
+            newVel.setMag(3);
             newVel.limit(3);
             this.vel.lerp(newVel, 0.2);
             this.pos.add(this.vel);
-        }
-
-        eats(other) {
-            const d = p5.Vector.dist(this.pos, other.pos);
-            if (d < this.r + other.r) {
-                const sum = (PI * this.r * this.r) + (PI * other.r * other.r)
-                this.r = sqrt(sum / PI);
-                // this.r += other.r;
-                return true;
-            } else {
-                return false;
-            }
         }
 
         constrain() {
@@ -37,24 +25,24 @@
         }
 
         show() {
-            // fill(255);
+            fill(255);
             // ellipse(this.pos.x, this.pos.y, this.r * 2);
             push();
-                translate(this.pos.x, this.pos.y);
+            translate(this.pos.x, this.pos.y);
 
-                beginShape();
-                    let xoff = 0;
+            beginShape();
+            let xoff = 0;
 
-                    for (let a = 0; a < TWO_PI; a += 0.1) {
-                        const offset = map(noise(xoff, yoff), -1, 1, -25, 25);
-                        const r = this.r + offset;
-                        const x = r * cos(a);
-                        const y = r * sin(a);
-                        vertex(x, y);
+            for (let a = 0; a < TWO_PI; a += 0.05) {
+                const offset = map(noise(xoff, yoff), -1, 1, -25, 25);
+                const r = this.r + offset;
+                const x = r * cos(a);
+                const y = r * sin(a);
+                vertex(x, y);
 
-                        xoff += 0.1;
-                    }
-                endShape();
+                xoff += 0.04;
+            }
+            endShape();
             pop();
 
             yoff += 0.01;
@@ -63,7 +51,7 @@
     }
 
     let blob;
-    let blobs = [];
+    // let blobs = [];
     let zoom = 1;
 
 
@@ -84,7 +72,7 @@
         var newZoom = 128 / blob.r;
         zoom = lerp(zoom, newZoom, 0.1);
         scale(zoom);
-        translate(-blob.pos.x, -blob.pos.y)
+        translate(-blob.pos.x, -blob.pos.y);
 
         blob.show();
         blob.update();

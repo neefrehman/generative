@@ -2,6 +2,8 @@
 
     let x2, y2, x3, y3, x4, y4;
 
+    let gridSize;
+
 
 
 
@@ -16,14 +18,16 @@
         y3 = 0,
         x4 = 0,
         y4 = 0;
+
+        gridSize = (width > 450) ? 180 : 150;
     };
 
 
     draw = () => {
         background(20);
 
-        for (let x = 0; x < width; x += 200) {
-            for (let y = 0; y < height; y += 200) {
+        for (let x = 0; x < width; x += gridSize) {
+            for (let y = 0; y < height; y += gridSize) {
 
                 noFill();
                 stroke(random(70, 255));

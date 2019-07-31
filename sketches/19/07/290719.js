@@ -1,6 +1,7 @@
 (() => {
 
-    let randomOffSetOption;
+    let randomOffSetOption,
+        gridSize;
 
 
 
@@ -11,6 +12,7 @@
         frameRate(10);
 
         randomOffSetOption = random(-50, 50);
+        gridSize = (width > 450) ? 100 : 80;
     };
 
 
@@ -24,8 +26,8 @@
             x4 = 0,
             y4 = 0;
 
-        for (let x = 0; x < width; x += 100) {
-            for (let y = 0; y < height; y += 100) {
+        for (let x = 0; x < width; x += gridSize) {
+            for (let y = 0; y < height; y += gridSize) {
                 const offsetOptions = [randomOffSetOption];
 
                 noFill();

@@ -19,7 +19,7 @@
         x4 = 0,
         y4 = 0;
 
-        gridSize = (width > 450) ? 180 : 150;
+        gridSize = (width > 450) ? 180 : 120;
     };
 
 

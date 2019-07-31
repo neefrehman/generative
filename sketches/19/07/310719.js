@@ -1,8 +1,7 @@
 (() => {
 
-    let x2, y2, x3, y3, x4, y4;
-
-    let gridSize;
+    let x2, y2, x3, y3, x4, y4,
+        gridSize;
 
 
 
@@ -12,12 +11,12 @@
         background(20);
         frameRate(10);
 
-        x2 = 0,
-        y2 = 0,
-        x3 = 0,
-        y3 = 0,
-        x4 = 0,
-        y4 = 0;
+        x2 = width / 2,
+        y2 = height / 2,
+        x3 = width / 2,
+        y3 = height / 2,
+        x4 = width / 2,
+        y4 = height / 2;
 
         gridSize = (width > 450) ? 170 : 110;
     };

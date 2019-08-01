@@ -1,5 +1,4 @@
 {
     "explorer.autoReveal": false,
-    "editor.formatOnSave": false,
-    "editor.formatOnPaste": false
+    "editor.formatOnSave": false
 }

@@ -11,6 +11,9 @@
         background(20);
         frameRate(10);
 
+        noFill();
+        strokeWeight(2);
+
         x2 = width / 2,
         y2 = height / 2,
         x3 = width / 2,
@@ -27,10 +30,7 @@
 
         for (let x = 0; x < width; x += gridSize) {
             for (let y = 0; y < height; y += gridSize) {
-
-                noFill();
                 stroke(random(70, 255));
-                strokeWeight(2);
 
                 x += random(1, -1);
                 y += random(1, -1);

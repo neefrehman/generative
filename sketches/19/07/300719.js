@@ -11,6 +11,9 @@
         background(20);
         frameRate(10);
 
+        noFill();
+        strokeWeight(2);
+
         randomOffSetOption = random(-50, 50);
         gridSize = (width > 450) ? 100 : 80;
     };
@@ -30,9 +33,7 @@
             for (let y = 0; y < height; y += gridSize) {
                 const offsetOptions = [x / 5, y / 5, randomOffSetOption];
 
-                noFill();
                 stroke(random(70, 255));
-                strokeWeight(2);
 
                 x += random(1, -1);
                 y += random(1, -1);

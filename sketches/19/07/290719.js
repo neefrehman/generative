@@ -10,6 +10,7 @@
         createCanvas(windowWidth, windowHeight);
         background(20);
         frameRate(10);
+        noFill();
 
         randomOffSetOption = random(-50, 50);
         gridSize = (width > 450) ? 100 : 80;
@@ -30,7 +31,6 @@
             for (let y = 0; y < height; y += gridSize) {
                 const offsetOptions = [randomOffSetOption];
 
-                noFill();
                 stroke(random(70, 255));
 
                 x += random(1, -1);

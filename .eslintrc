@@ -3,7 +3,7 @@
     "eslint:recommended",
     "p5js",
     "p5js/dom",
-    "p5js/sound"
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2017
@@ -18,6 +18,9 @@
     "semi": [1, "always"],
     "arrow-parens": [1, "as-needed"]
   },
+  "plugins": [
+    "prettier"
+  ],
   "globals": {
     "p5": true,
     "preload": true,

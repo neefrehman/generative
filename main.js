@@ -8,9 +8,7 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
-let controller,
-    sketchScript;
-
+let controller, sketchScript;
 
 const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
@@ -23,13 +21,11 @@ const removeSketch = () => {
     }
 };
 
-
 const showPage = newPage => {
     removeSketch();
     allPages.forEach(page => page.classList.remove("show"));
     newPage.classList.add("show");
 };
-
 
 const goToSketch = sketch => {
     loadingIndicator.textContent = "Loading";
@@ -50,7 +46,7 @@ const goToSketch = sketch => {
     controller = new AbortController();
     const signal = controller.signal;
 
-    fetch(pathToSketch, {signal})
+    fetch(pathToSketch, { signal })
         .then(response => response.text())
         .then(text => {
             sketchScript = document.createElement("script");
@@ -62,9 +58,8 @@ const goToSketch = sketch => {
             setTimeout(() => loadingIndicator.classList.remove("show"), 400);
         })
         .then(() => new p5())
-        .catch(() => loadingIndicator.textContent = "Error");
+        .catch(() => (loadingIndicator.textContent = "Error"));
 };
-
 
 const goHome = () => {
     if (controller) controller.abort();
@@ -72,17 +67,14 @@ const goHome = () => {
     document.title = "Generative - Neef Rehman";
 };
 
-
 const goTo404 = () => {
     showPage(fourOhFourPage);
     document.title = "404 - Generative";
 };
 
-
 const getUrlPath = () => location.pathname.split("/").filter(v => v !== "");
 let urlPath = getUrlPath();
 let linkedSketch;
-
 
 if (urlPath.length == 0) {
     goHome();
@@ -96,7 +88,6 @@ if (urlPath.length == 0) {
         goTo404();
     }
 }
-
 
 window.addEventListener("popstate", () => {
     urlPath = getUrlPath();
@@ -113,7 +104,6 @@ window.addEventListener("popstate", () => {
     linkedSketch = urlPath[urlPath.length - 1];
 });
 
-
 sketchLinks.forEach(link => {
     link.addEventListener("click", () => {
         goToSketch(link.id);
@@ -121,14 +111,12 @@ sketchLinks.forEach(link => {
     });
 });
 
-
 homeLinks.forEach(link => {
     link.addEventListener("click", () => {
         goHome();
         history.pushState("", document.title, "/");
     });
 });
-
 
 // p5 windowResize into global namespace
 windowResized = () => {

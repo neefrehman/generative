@@ -1,10 +1,8 @@
 (() => {
-
     const balls = [];
     let xoff = 0;
 
     class Ball {
-
         constructor(x, y, r) {
             this.x = x;
             this.y = y;
@@ -17,11 +15,7 @@
 
             ellipse(this.x, this.y, this.r);
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -29,16 +23,15 @@
 
         balls[0] = new Ball(width / 2, height / 2, 36);
     };
-    
 
     draw = () => {
         background(20);
-        
+
         for (let i = 0; i < balls.length; i++) {
             balls[i].update();
         }
 
-        xoff+= 0.01;
+        xoff += 0.01;
 
         if (balls.length > 500) {
             balls.splice(0, 1);
@@ -52,5 +45,4 @@
     mouseDragged = () => {
         balls.push(new Ball(mouseX, mouseY, 36));
     };
-
 })();

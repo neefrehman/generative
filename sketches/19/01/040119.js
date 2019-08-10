@@ -1,13 +1,10 @@
 (() => {
-
     setup = () => {
         createCanvas(windowWidth, windowHeight, WEBGL);
         colorMode(HSB);
     };
 
-
     draw = () => {
-
         background(0);
         rotateX(frameCount * 0.01);
         rotateY(frameCount * 0.01);
@@ -19,7 +16,5 @@
 
         torus(100, 25, 48, 32);
         sphere(25, 48);
-
     };
-
 })();

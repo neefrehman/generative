@@ -1,5 +1,4 @@
 (() => {
-
     let noiseIncrement = 0.05;
     let tOff = 0;
 
@@ -10,7 +9,6 @@
 
     const particles = [];
     class Particle {
-
         constructor() {
             this.pos = createVector(random(width), random(height));
             this.vel = createVector(0, 0);
@@ -49,11 +47,7 @@
             if (this.pos.y > height) this.pos.y = 0;
             if (this.pos.y < 0) this.pos.y = height;
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -69,7 +63,6 @@
             particles.push(new Particle());
         }
     };
-
 
     draw = () => {
         background(20);
@@ -107,5 +100,4 @@
             particle.follow(flowField);
         }
     };
-
 })();

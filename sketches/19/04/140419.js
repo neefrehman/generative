@@ -1,14 +1,12 @@
 (() => {
-
     const slices = [];
     class Slice {
-
         constructor(x, y, r) {
             this.x = x || random(width);
             this.y = y || height;
             this.r = r || 32;
             this.speed = 4;
-            this.growth = (width > 450) ? 6 : 3;
+            this.growth = width > 450 ? 6 : 3;
 
             this.fill = 20;
             this.stroke = 255;
@@ -28,7 +26,7 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d - 5 < this.r);
+            return d - 5 < this.r;
         }
 
         excited() {
@@ -38,18 +36,13 @@
         }
 
         normal() {
-            this.growth = (width > 450) ? 4 : 2;
+            this.growth = width > 450 ? 4 : 2;
             this.fill = 20;
             this.stroke = 255;
         }
-
     }
 
-
-
-
     setup = () => {
-
         createCanvas(windowWidth, windowHeight);
         background(20);
         frameRate(20);
@@ -58,15 +51,12 @@
         for (let i = 0; i < initialSliceCount; i++) {
             slices[i] = new Slice();
         }
-
     };
-
 
     draw = () => {
         background(20);
 
         for (const slice of slices) {
-
             slice.move();
             slice.show();
 
@@ -79,9 +69,6 @@
             if (slice.y < -slice.r) {
                 slice.y = height + slice.r;
             }
-
         }
-
     };
-
 })();

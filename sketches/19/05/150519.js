@@ -1,11 +1,9 @@
 (() => {
-
     let graphics;
     const graphicsSize = 300;
 
     const slices = [];
     class Slice {
-
         constructor(x, y, r) {
             this.x = x || random(graphicsSize);
             this.y = y || 0;
@@ -44,7 +42,7 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d - 5 < this.r);
+            return d - 5 < this.r;
         }
 
         excited() {
@@ -56,11 +54,7 @@
             this.fill = 20;
             this.stroke = 255;
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -73,7 +67,6 @@
         }
     };
 
-
     draw = () => {
         for (let x = 0; x < width; x += 200) {
             for (let y = 0; y < height; y += 200) {
@@ -82,7 +75,6 @@
         }
 
         for (const slice of slices) {
-
             slice.move();
             slice.show();
 
@@ -95,9 +87,6 @@
             if (slice.y < -slice.r) {
                 slice.y = height + slice.r;
             }
-
         }
-
     };
-
 })();

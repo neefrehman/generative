@@ -1,9 +1,7 @@
 (() => {
-
     let yoff = 0;
 
     class Blob {
-
         constructor(x, y, r) {
             this.pos = createVector(x, y);
             this.r = r;
@@ -11,7 +9,10 @@
         }
 
         update() {
-            const newVel = createVector(mouseX - width / 2, mouseY - height / 2);
+            const newVel = createVector(
+                mouseX - width / 2,
+                mouseY - height / 2
+            );
             newVel.div(50);
             newVel.setMag(3);
             newVel.limit(3);
@@ -47,15 +48,11 @@
 
             yoff += 0.01;
         }
-
     }
 
     let blob;
     // let blobs = [];
     let zoom = 1;
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -63,7 +60,6 @@
 
         blob = new Blob(0, 0, 128);
     };
-
 
     draw = () => {
         background(20);
@@ -78,5 +74,4 @@
         blob.update();
         blob.constrain();
     };
-
 })();

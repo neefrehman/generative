@@ -1,13 +1,10 @@
 (() => {
-
     setup = () => {
         createCanvas(windowWidth, windowHeight);
         background(10);
     };
 
-
     draw = () => {
-
         stroke(255);
 
         if (windowWidth > windowHeight) {
@@ -16,7 +13,5 @@
             frameRate(30);
             line(0, mouseY, windowHeight, mouseY);
         }
-
     };
-
 })();

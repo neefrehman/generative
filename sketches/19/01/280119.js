@@ -1,13 +1,11 @@
 (() => {
-
     const spores = [];
     class Spore {
-
         constructor(x, y, r) {
-            this.x = x || random((width / 2) + 30, (width / 2) - 30);
-            this.y = y || random((height / 2) + 30, (height / 2) - 30);
+            this.x = x || random(width / 2 + 30, width / 2 - 30);
+            this.y = y || random(height / 2 + 30, height / 2 - 30);
             this.r = r || 17;
-            this.speed = (width > 450) ? 3.5 : 2.5;
+            this.speed = width > 450 ? 3.5 : 2.5;
             this.color = 255;
             this.colorChangeRate = -0.3 + random(0.004);
         }
@@ -32,40 +30,31 @@
 
         collides(sibling) {
             const d = dist(this.x, this.y, sibling.x, sibling.y);
-            return (d < this.r + sibling.r);
+            return d < this.r + sibling.r;
         }
 
         excited() {
-            this.speed = (width > 450) ? 6 : 4;
+            this.speed = width > 450 ? 6 : 4;
         }
 
         normal() {
-            this.speed = (width > 450) ? 3.5 : 2.5;
+            this.speed = width > 450 ? 3.5 : 2.5;
         }
-
     }
 
-
-
-
     setup = () => {
-
         createCanvas(windowWidth, windowHeight);
         background(20);
         frameRate(40);
 
-        const initialSporeCount = (width > 450) ? 50 : 40;
+        const initialSporeCount = width > 450 ? 50 : 40;
         for (let i = 0; i < initialSporeCount; i++) {
             spores[i] = new Spore();
         }
-
     };
 
-
     draw = () => {
-
         for (const spore of spores) {
-
             spore.move();
             spore.show();
 
@@ -78,25 +67,20 @@
                     sibling.normal();
                 }
             }
-
         }
 
         if (spores.length > 500) {
             spores.splice(0, 1);
         }
-
     };
-
 
     mousePressed = () => {
         const spore = new Spore(mouseX, mouseY);
         spores.push(spore);
     };
 
-
     mouseDragged = () => {
         const spore = new Spore(mouseX, mouseY);
         spores.push(spore);
     };
-
 })();

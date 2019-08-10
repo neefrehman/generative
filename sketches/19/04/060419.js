@@ -1,9 +1,7 @@
 (() => {
-
     const particles = [];
 
     class Particle {
-
         constructor(x, y) {
             this.x = x;
             this.y = y;
@@ -46,11 +44,7 @@
                 ellipse(pos.x, pos.y, d, d);
             }
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -59,7 +53,6 @@
             particles.push(new Particle(random(width), random(height)));
         }
     };
-
 
     draw = () => {
         background(20);
@@ -70,9 +63,7 @@
         }
     };
 
-
     mousePressed = () => {
         particles.push(new Particle(mouseX, mouseY));
     };
-
 })();

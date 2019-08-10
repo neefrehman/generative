@@ -1,10 +1,5 @@
 (() => {
-
-    let randomOffSetOption,
-        gridSize;
-
-
-
+    let randomOffSetOption, gridSize;
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -15,9 +10,8 @@
         strokeWeight(2);
 
         randomOffSetOption = random(-50, 50);
-        gridSize = (width > 450) ? 100 : 80;
+        gridSize = width > 450 ? 100 : 80;
     };
-
 
     draw = () => {
         background(20);
@@ -46,11 +40,10 @@
                 y4 += random(offsetOptions);
 
                 beginShape();
-                    vertex(x, y);
-                    bezierVertex(x2, y2, x3, y3, x4, y4);
+                vertex(x, y);
+                bezierVertex(x2, y2, x3, y3, x4, y4);
                 endShape();
             }
         }
     };
-
 })();

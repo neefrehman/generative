@@ -1,8 +1,6 @@
 (() => {
-
-    const balls =[];
+    const balls = [];
     class Ball {
-
         constructor() {
             this.xOff = random(200);
             this.yOff = random(400, 600);
@@ -17,11 +15,7 @@
 
             ellipse(this.x, this.y, 36);
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -29,7 +23,6 @@
 
         balls.push(new Ball());
     };
-
 
     draw = () => {
         background(20);
@@ -43,9 +36,7 @@
         }
     };
 
-
     mousePressed = () => {
         balls.push(new Ball());
     };
-
 })();

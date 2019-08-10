@@ -1,10 +1,5 @@
 (() => {
-
-    let x2, y2, x3, y3, x4, y4,
-        gridSize;
-
-
-
+    let x2, y2, x3, y3, x4, y4, gridSize;
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -14,16 +9,15 @@
         noFill();
         strokeWeight(2);
 
-        x2 = width / 2,
-        y2 = height / 2,
-        x3 = width / 2,
-        y3 = height / 2,
-        x4 = width / 2,
+        x2 = width / 2;
+        y2 = height / 2;
+        x3 = width / 2;
+        y3 = height / 2;
+        x4 = width / 2;
         y4 = height / 2;
 
-        gridSize = (width > 450) ? 170 : 110;
+        gridSize = width > 450 ? 170 : 110;
     };
-
 
     draw = () => {
         background(20);
@@ -43,11 +37,10 @@
                 y4 += random(20, -20);
 
                 beginShape();
-                    vertex(x, y);
-                    bezierVertex(x2, y2, x3, y3, x4, y4);
+                vertex(x, y);
+                bezierVertex(x2, y2, x3, y3, x4, y4);
                 endShape();
             }
         }
     };
-
 })();

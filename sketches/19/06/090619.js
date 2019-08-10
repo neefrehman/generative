@@ -1,9 +1,7 @@
 (() => {
-
     const balls = [];
 
     class Ball {
-
         constructor(x, y) {
             this.x = x || width / 2;
             this.y = y || height / 2;
@@ -38,7 +36,7 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d + 10 < this.r);
+            return d + 10 < this.r;
         }
 
         excited() {
@@ -50,11 +48,7 @@
             this.fill = 255;
             this.stroke = 0;
         }
-        
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -62,7 +56,6 @@
 
         balls[0] = new Ball(width / 2, height / 2);
     };
-
 
     draw = () => {
         background(20);
@@ -86,9 +79,7 @@
         }
     };
 
-
     mousePressed = () => {
         balls.push(new Ball(mouseX, mouseY));
     };
-
 })();

@@ -1,9 +1,7 @@
 (() => {
-
     const vibrations = [];
 
     class Particle {
-
         constructor(x, y) {
             this.x = x;
             this.y = y;
@@ -43,11 +41,7 @@
             }
             endShape();
         }
-        
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -56,7 +50,6 @@
             vibrations.push(new Particle(random(width), random(height)));
         }
     };
-
 
     draw = () => {
         background(20);
@@ -67,9 +60,7 @@
         }
     };
 
-
     mousePressed = () => {
         vibrations.push(new Particle(mouseX, mouseY));
     };
-
 })();

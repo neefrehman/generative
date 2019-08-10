@@ -1,19 +1,15 @@
 (() => {
-
     let noiseIncrement = 0.01;
     let tOff = 0;
 
-
-
     setup = () => {
-        const canvasSize = (window.innerWidth > 500) ? 360 : 220;
+        const canvasSize = window.innerWidth > 500 ? 360 : 220;
         const canvas = createCanvas(canvasSize, canvasSize);
         canvas.class("p5Canvas not-full-screen");
 
         background(20);
         pixelDensity(1);
     };
-
 
     draw = () => {
         loadPixels();
@@ -41,9 +37,5 @@
         updatePixels();
     };
 
-
-    mousePressed = () => {
-        
-    };
-
+    mousePressed = () => {};
 })();

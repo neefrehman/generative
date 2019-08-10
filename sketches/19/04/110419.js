@@ -1,10 +1,8 @@
 (() => {
-
     const particles = [];
     const noiseScale = 100000;
 
     class Particle {
-
         constructor(x, y) {
             this.x = x;
             this.y = y;
@@ -14,20 +12,28 @@
             this.dir = createVector(0, 0);
             this.vel = createVector(0, 0);
             this.pos = createVector(this.x, this.y);
-            this.speed = (width > 500) ? 3 : 2;
+            this.speed = width > 500 ? 3 : 2;
 
             this.history = [];
         }
 
         move() {
-            const angle = noise(this.pos.x / noiseScale, this.pos.y / noiseScale) * TWO_PI * noiseScale;
+            const angle =
+                noise(this.pos.x / noiseScale, this.pos.y / noiseScale) *
+                TWO_PI *
+                noiseScale;
             this.dir.x = cos(angle);
             this.dir.y = sin(angle);
             this.vel = this.dir.copy();
             this.vel.mult(this.speed);
             this.pos.add(this.vel);
 
-            if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
+            if (
+                this.pos.x > width ||
+                this.pos.x < 0 ||
+                this.pos.y > height ||
+                this.pos.y < 0
+            ) {
                 this.pos.x = random(50, width);
                 this.pos.y = random(50, height);
             }
@@ -61,7 +67,7 @@
 
         isHovered() {
             const d = dist(this.pos.x, this.pos.y, mouseX, mouseY);
-            return (d - 50 < this.d);
+            return d - 50 < this.d;
         }
 
         excite() {
@@ -74,24 +80,19 @@
 
         deExcite() {
             this.d = 36;
-            this.speed = (width > 500) ? 3 : 2;
+            this.speed = width > 500 ? 3 : 2;
             this.col = 255;
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
 
-        const initialParticleCount = (width > 450) ? 30 : 15;
+        const initialParticleCount = width > 450 ? 30 : 15;
         for (let i = 0; i < initialParticleCount; i++) {
             particles.push(new Particle(random(width), random(height)));
         }
     };
-
 
     draw = () => {
         background(20);
@@ -107,5 +108,4 @@
             }
         }
     };
-
 })();

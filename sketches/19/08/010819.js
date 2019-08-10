@@ -1,12 +1,13 @@
 (() => {
-
-    let x2, y2, x3, y3, x4, y4,
+    let x2,
+        y2,
+        x3,
+        y3,
+        x4,
+        y4,
         gridSize,
         xOff = 0,
         yOff = 200;
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -16,16 +17,15 @@
         noFill();
         strokeWeight(2);
 
-        x2 = width / 2,
-        y2 = height / 2,
-        x3 = width / 2,
-        y3 = height / 2,
-        x4 = width / 2,
+        x2 = width / 2;
+        y2 = height / 2;
+        x3 = width / 2;
+        y3 = height / 2;
+        x4 = width / 2;
         y4 = height / 2;
 
-        gridSize = (width > 450) ? 200 : 120;
+        gridSize = width > 450 ? 200 : 120;
     };
-
 
     draw = () => {
         background(20);
@@ -37,11 +37,11 @@
                 x += random(1, -1);
                 y += random(1, -1);
 
-                x2 = map(noise(xOff +   0), 0, 1, 0, width) + random(-5, 5);
+                x2 = map(noise(xOff + 0), 0, 1, 0, width) + random(-5, 5);
                 y2 = map(noise(yOff + 500), 0, 1, 0, width) + random(-5, 5);
-                x3 = map(noise(xOff +   0), 0, 1, 0, width) + random(-5, 5);
+                x3 = map(noise(xOff + 0), 0, 1, 0, width) + random(-5, 5);
                 y3 = map(noise(yOff + 500), 0, 1, 0, width) + random(-5, 5);
-                x4 = map(noise(xOff +   0), 0, 1, 0, width) + random(-5, 5);
+                x4 = map(noise(xOff + 0), 0, 1, 0, width) + random(-5, 5);
                 y4 = map(noise(yOff + 500), 0, 1, 0, width) + random(-5, 5);
 
                 beginShape();
@@ -54,5 +54,4 @@
         xOff += 0.03;
         yOff += 0.03;
     };
-
 })();

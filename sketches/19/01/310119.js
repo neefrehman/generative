@@ -1,9 +1,7 @@
 (() => {
-
     let particles = [];
     let particleGenerationRate;
     class Particle {
-
         constructor() {
             this.x = random(width);
             this.y = height + 8;
@@ -27,19 +25,14 @@
             fill(255, this.alpha);
             ellipse(this.x, this.y, 16);
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
         smooth();
 
-        particleGenerationRate = (width > 800) ? 5 : 3;
+        particleGenerationRate = width > 800 ? 5 : 3;
     };
-
 
     draw = () => {
         background(20);
@@ -57,14 +50,11 @@
         particles = particles.filter(p => !p.finished());
     };
 
-
     mousePressed = () => {
         frameRate(20);
     };
 
-
     mouseClicked = () => {
         frameRate(60);
     };
-
 })();

@@ -1,12 +1,10 @@
 (() => {
-
     let graphics;
     const graphicsSize = 200;
 
     const particles = [];
 
     class Particle {
-
         constructor(x, y) {
             this.x = x;
             this.y = y;
@@ -25,7 +23,12 @@
                 this.history.splice(0, 1);
             }
 
-            if (this.x > graphicsSize || this.x < 0 || this.y > graphicsSize || this.y < 0) {
+            if (
+                this.x > graphicsSize ||
+                this.x < 0 ||
+                this.y > graphicsSize ||
+                this.y < 0
+            ) {
                 this.x = graphicsSize / 2;
                 this.y = graphicsSize / 2;
             }
@@ -49,11 +52,7 @@
                 graphics.ellipse(pos.x, pos.y, d, d);
             }
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -61,10 +60,11 @@
         graphics.background(20);
 
         for (let i = 0; i < 5; i++) {
-            particles.push(new Particle(random(graphicsSize), random(graphicsSize)));
+            particles.push(
+                new Particle(random(graphicsSize), random(graphicsSize))
+            );
         }
     };
-
 
     draw = () => {
         for (let x = 0; x < width; x += 200) {
@@ -79,9 +79,7 @@
         }
     };
 
-
     mousePressed = () => {
         particles.push(new Particle(mouseX, mouseY));
     };
-
 })();

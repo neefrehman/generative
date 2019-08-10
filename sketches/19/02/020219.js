@@ -1,11 +1,9 @@
 // Forked, refactored and slightly edited from Yasai on OpenProcessing: https://www.openprocessing.org/sketch/494102
 (() => {
-
     const particles = [];
     const noiseScale = 1000;
 
     class Particle {
-
         constructor(x, y) {
             this.x = random(width);
             this.y = random(height);
@@ -16,7 +14,10 @@
         }
 
         move() {
-            const angle = noise(this.pos.x / noiseScale, this.pos.y / noiseScale) * TWO_PI * noiseScale;
+            const angle =
+                noise(this.pos.x / noiseScale, this.pos.y / noiseScale) *
+                TWO_PI *
+                noiseScale;
             this.dir.x = cos(angle);
             this.dir.y = sin(angle);
             this.vel = this.dir.copy();
@@ -25,7 +26,12 @@
         }
 
         checkEdge() {
-            if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0) {
+            if (
+                this.pos.x > width ||
+                this.pos.x < 0 ||
+                this.pos.y > height ||
+                this.pos.y < 0
+            ) {
                 this.pos.x = random(50, width);
                 this.pos.y = random(50, height);
             }
@@ -34,22 +40,17 @@
         display(r) {
             ellipse(this.pos.x, this.pos.y, r);
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
         background(20);
 
-        const initialParticleCount = (width > 450) ? 200 : 100;
+        const initialParticleCount = width > 450 ? 200 : 100;
         for (let i = 0; i < initialParticleCount; i++) {
             particles[i] = new Particle();
         }
     };
-
 
     draw = () => {
         noStroke();
@@ -66,14 +67,11 @@
         }
     };
 
-
     mousePressed = () => {
         frameRate(20);
     };
 
-
     mouseClicked = () => {
         frameRate(60);
     };
-
 })();

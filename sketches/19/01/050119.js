@@ -1,29 +1,26 @@
 (() => {
-
     setup = () => {
         createCanvas(windowWidth, windowHeight, WEBGL);
         frameRate(10);
     };
 
-
     draw = () => {
-
-        const x1 = (Math.random() * 200);
-        const y1 = (Math.random() * 200);
-        const x2 = (Math.random() * 200);
-        const y2 = (Math.random() * 200);
-        const x3 = (Math.random() * 200);
-        const y3 = (Math.random() * 200);
-        const x4 = (Math.random() * 200);
-        const y4 = (Math.random() * 200);
+        const x1 = Math.random() * 200;
+        const y1 = Math.random() * 200;
+        const x2 = Math.random() * 200;
+        const y2 = Math.random() * 200;
+        const x3 = Math.random() * 200;
+        const y3 = Math.random() * 200;
+        const x4 = Math.random() * 200;
+        const y4 = Math.random() * 200;
 
         const filled = () => {
             noStroke();
-            fill((Math.random() * 255), 200);
+            fill(Math.random() * 255, 200);
         };
 
         const outlined = () => {
-            stroke((Math.random() * 255), 200);
+            stroke(Math.random() * 255, 200);
             noFill();
         };
 
@@ -34,7 +31,7 @@
             }
         };
 
-        translate((-width / 2) - 200, (-height / 2));
+        translate(-width / 2 - 200, -height / 2);
         filled();
         drawHorizontally();
 
@@ -47,7 +44,5 @@
             filled();
             drawHorizontally();
         }
-
     };
-
 })();

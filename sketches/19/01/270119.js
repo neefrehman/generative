@@ -1,13 +1,11 @@
 (() => {
-
     const bubbles = [];
     class Bubble {
-
         constructor(x, y, r) {
-            this.x = x || random((width / 2) + 60, (width / 2) - 60);
-            this.y = y || random((height / 2) + 60, (height / 2) - 60);
+            this.x = x || random(width / 2 + 60, width / 2 - 60);
+            this.y = y || random(height / 2 + 60, height / 2 - 60);
             this.r = r || 15;
-            this.speed = (width > 450) ? 2 : 1.5;
+            this.speed = width > 450 ? 2 : 1.5;
             this.alpha = 0;
         }
 
@@ -25,28 +23,24 @@
 
         hovered() {
             const d = dist(this.x, this.y, mouseX, mouseY);
-            return (d - 15 < this.r);
+            return d - 15 < this.r;
         }
 
         collides(sibling) {
             const d = dist(this.x, this.y, sibling.x, sibling.y);
-            return (d < this.r + sibling.r);
+            return d < this.r + sibling.r;
         }
 
         excited() {
             this.alpha = 255;
-            this.speed = (width > 450) ? 8 : 6;
+            this.speed = width > 450 ? 8 : 6;
         }
 
         normal() {
             this.alpha = 0;
-            this.speed = (width > 450) ? 2 : 1.5;
+            this.speed = width > 450 ? 2 : 1.5;
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -56,13 +50,10 @@
         }
     };
 
-
     draw = () => {
-
         background(20);
 
         for (const bubble of bubbles) {
-
             bubble.move();
             bubble.show();
 
@@ -78,25 +69,20 @@
                     sibling.excited();
                 }
             }
-
         }
 
         if (bubbles.length > 300) {
             bubbles.splice(0, 1);
         }
-
     };
-
 
     mousePressed = () => {
         const bubble = new Bubble(mouseX, mouseY);
         bubbles.push(bubble);
     };
 
-
     mouseDragged = () => {
         const bubble = new Bubble(mouseX, mouseY);
         bubbles.push(bubble);
     };
-
 })();

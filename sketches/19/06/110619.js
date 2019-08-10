@@ -1,11 +1,9 @@
 (() => {
-
     const circles = [];
     const transparentCircles = true;
     const alpha = transparentCircles == true ? 0 : 255;
 
     class Circle {
-
         constructor() {
             this.x = width / 2;
             this.y = height / 2;
@@ -21,11 +19,7 @@
 
             ellipse(this.x, this.y, this.r);
         }
-        
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -36,7 +30,6 @@
 
         circles.push(new Circle());
     };
-
 
     draw = () => {
         background(20);
@@ -54,9 +47,7 @@
         }
     };
 
-
     mousePressed = () => {
         circles.push(new Circle());
     };
-
 })();

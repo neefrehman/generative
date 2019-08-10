@@ -1,8 +1,6 @@
 (() => {
-
-    const balls =[];
+    const balls = [];
     class Ball {
-
         constructor() {
             this.xOff = random(200);
             this.yOff = random(400, 600);
@@ -21,18 +19,14 @@
 
         collides(sibling) {
             const d = dist(this.x, this.y, sibling.x, sibling.y);
-            return (d < this.r / 2 + sibling.r);
+            return d < this.r / 2 + sibling.r;
         }
 
         excited() {
             this.xOff += 0.05;
             this.yOff += 0.05;
         }
-
     }
-
-
-
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
@@ -42,7 +36,6 @@
             balls.push(new Ball());
         }
     };
-
 
     draw = () => {
         background(20);
@@ -63,9 +56,7 @@
         }
     };
 
-
     mousePressed = () => {
         balls.push(new Ball());
     };
-
 })();

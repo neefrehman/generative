@@ -8,6 +8,8 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = document.querySelector(".code-link");
 const loadingIndicator = document.querySelector("p.loading");
 
+sketchLinks.forEach(link => (link.textContent = link.id));
+
 let controller, sketchScript;
 
 const removeSketch = () => {

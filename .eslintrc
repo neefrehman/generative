@@ -1,26 +1,26 @@
 {
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
   "extends": [
     "eslint:recommended",
     "p5js",
     "p5js/dom",
     "prettier"
   ],
-  "parserOptions": {
-    "ecmaVersion": 2017
-  },
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "rules": {
-    "no-console": "off",
-    "no-unused-vars": "warn",
-    "semi": [1, "always"],
-    "arrow-parens": [1, "as-needed"]
-  },
   "plugins": [
     "prettier"
   ],
+  "rules": {
+    "prettier/prettier": "warn",
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "arrow-parens": [1, "as-needed"]
+  },
   "globals": {
     "p5": true,
     "preload": true,

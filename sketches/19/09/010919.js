@@ -52,7 +52,7 @@
             line.move();
         }
 
-        if (frameCount % 50 === 0) {
+        if (frameCount % 40 === 0) {
             vertexLines.push(new VertexLine(random(width), random(height)));
         }
     };

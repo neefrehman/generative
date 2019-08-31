@@ -2,12 +2,14 @@
     let vertexLines = [];
     let shortestDimension;
     let angle = 0;
+    let camX = 0,
+        camY = 0;
 
     class VertexLine3D {
         constructor(x, y, z) {
             this.x = x || random(width);
             this.y = y || random(height);
-            this.z = z || random(-shortestDimension, shortestDimension);
+            this.z = z || random(-width, width);
             this.x2 = width / 2;
             this.y2 = height / 2;
             this.z2 = shortestDimension / 2;
@@ -31,7 +33,7 @@
             this.z3 += random(30, -30);
             this.x4 = mouseX + random(3, -3);
             this.y4 = mouseY + random(3, -3);
-            this.z4 += random(20, -20);
+            this.z4 += random(-20, 16);
         }
 
         show() {
@@ -69,6 +71,8 @@
     };
 
     draw = () => {
+        camera(camX, camY, height, tan(PI / 6), 0, 0, 0, 1, 0);
+
         translate(-(width / 2), -(height / 2));
         background(20);
 
@@ -89,12 +93,25 @@
         angle += 0.03;
 
         stroke(50);
-        fill(20);
+        fill(10);
         box(shortestDimension / 3);
+        pop();
+
+        push();
+        translate(width / 2, height);
+        rotateX(HALF_PI);
+        noStroke();
+        fill(10);
+        plane(width);
         pop();
     };
 
     mousePressed = () => {
         vertexLines.push(new VertexLine3D());
+    };
+
+    mouseMoved = () => {
+        camX = map(mouseX, 0, width, -600, 600);
+        camY = map(mouseY, 0, height, -150, 150);
     };
 })();

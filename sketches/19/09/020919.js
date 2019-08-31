@@ -9,7 +9,7 @@
         constructor(x, y, z) {
             this.x = x || random(width);
             this.y = y || random(height);
-            this.z = z || random(-width, width);
+            this.z = z || random(-shortestDimension * 2, shortestDimension * 2);
             this.x2 = width / 2;
             this.y2 = height / 2;
             this.z2 = shortestDimension / 2;
@@ -18,7 +18,7 @@
             this.z3 = shortestDimension / 2;
             this.x4 = width / 2;
             this.y4 = height / 2;
-            this.z4 = shortestDimension / 2;
+            this.z4 = random(-300, 300);
         }
 
         move() {
@@ -33,7 +33,7 @@
             this.z3 += random(30, -30);
             this.x4 = mouseX + random(3, -3);
             this.y4 = mouseY + random(3, -3);
-            this.z4 += random(-20, 16);
+            this.z4 += random(-30, 30);
         }
 
         show() {
@@ -93,7 +93,7 @@
         angle += 0.03;
 
         stroke(50);
-        fill(10);
+        fill(0, 170);
         box(shortestDimension / 3);
         pop();
 
@@ -101,7 +101,7 @@
         translate(width / 2, height);
         rotateX(HALF_PI);
         noStroke();
-        fill(10);
+        fill(0, 170);
         plane(width);
         pop();
     };

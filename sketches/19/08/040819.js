@@ -29,7 +29,7 @@
 
         for (let x = 0; x < width; x += gridSize) {
             for (let y = 0; y < height; y += gridSize) {
-                fill(random(100, 200));
+                fill(random(100, 200), 80);
 
                 x += random(1, -1);
                 y += random(1, -1);

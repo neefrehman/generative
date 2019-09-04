@@ -18,7 +18,7 @@
             this.g = random(255);
             this.b = random(255);
 
-            this.speed = 0.7;
+            this.speed = random([-1, 1]) * 0.7;
             this.accel = 1;
             this.direction = random([
                 [this.speed, 0, 0],
@@ -51,13 +51,13 @@
                 [0, 0, this.speed]
             ]);
             setTimeout(() => {
-                this.speed = 0.7;
+                this.speed = random([-1, 1]) * 0.7;
                 this.direction = random([
                     [this.speed, 0, 0],
                     [0, this.speed, 0],
                     [0, 0, this.speed]
                 ]);
-            }, 300);
+            }, 250);
         }
     }
 

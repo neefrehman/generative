@@ -19,6 +19,7 @@
             this.b = random(255);
 
             this.speed = 0.7;
+            this.accel = 1;
             this.direction = random([
                 [this.speed, 0, 0],
                 [0, this.speed, 0],
@@ -27,13 +28,23 @@
         }
 
         move() {
-            this.x += this.direction[0];
-            this.y += this.direction[1];
-            this.z += this.direction[2];
+            this.x += this.direction[0] * this.accel;
+            this.y += this.direction[1] * this.accel;
+            this.z += this.direction[2] * this.accel;
+            this.accel += 0.1;
+        }
+
+        show() {
+            push();
+            translate(this.x, this.y, this.z);
+            ambientMaterial(this.r, this.g, this.b);
+            box(this.width, this.height, this.depth);
+            pop();
         }
 
         changeDirection() {
             this.speed = 0;
+            this.accel = 1;
             this.direction = random([
                 [this.speed, 0, 0],
                 [0, this.speed, 0],
@@ -48,14 +59,6 @@
                 ]);
             }, 300);
         }
-
-        show() {
-            push();
-            translate(this.x, this.y, this.z);
-            ambientMaterial(this.r, this.g, this.b);
-            box(this.width, this.height, this.depth);
-            pop();
-        }
     }
 
     setup = () => {
@@ -68,13 +71,13 @@
         noStroke();
         strokeWeight(2);
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 40; i++) {
             blocks.push(new Block());
         }
     };
 
     draw = () => {
-        camera(camX, camY, shortestDimension * 2, tan(PI / 6), 0, 0, 0, 1, 0);
+        camera(camX, camY, shortestDimension * 2.2, tan(PI / 6), 0, 0, 0, 1, 0);
 
         translate(-width / 2, -height / 2);
         background(20);
@@ -85,27 +88,23 @@
         pointLight(255, 255, 255, 0, 0, 2000);
 
         for (const block of blocks) {
-            block.show();
-            block.move();
-        }
-
-        if (frameCount % 90 === 0) {
-            for (const block of blocks) {
+            if (frameCount % 40 === 0) {
                 block.changeDirection();
             }
+
+            block.show();
+            block.move();
         }
     };
 
     mousePressed = () => {
-        blocks.push(new Block());
-
         for (const block of blocks) {
             block.changeDirection();
         }
     };
 
     mouseMoved = () => {
-        camX = map(mouseX, 0, width, -400, 400);
+        camX = map(mouseX, 0, width, -200, 200);
         camY = map(mouseY, 0, height, -200, 200);
     };
 })();

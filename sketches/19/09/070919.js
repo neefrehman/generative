@@ -15,7 +15,7 @@
         push();
         translate(width / 2, height / 2);
         rotate(angle);
-        fill(180, 20, 90);
+        fill(200, 0, 100);
         ellipse(0, 0, circleHeight, circleWidth);
         pop();
 

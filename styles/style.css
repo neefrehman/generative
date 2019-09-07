@@ -91,6 +91,10 @@ header a {
     cursor: pointer;
 }
 
+.sketch-list a.seen {
+    text-decoration: line-through;
+}
+
 a.home-link {
     cursor: pointer;
 }

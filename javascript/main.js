@@ -3,10 +3,10 @@ const homePage = document.querySelector(".home-page");
 const sketchPage = document.querySelector(".sketch-page");
 const fourOhFourPage = document.querySelector(".fourohfour-page");
 
-const sketchLinks = document.querySelectorAll(".sketch-list a");
+const sketchLinks = homePage.querySelectorAll(".sketch-list a");
 const homeLinks = document.querySelectorAll(".home-link");
-const codeLink = document.querySelector(".code-link");
-const loadingIndicator = document.querySelector("p.loading");
+const codeLink = sketchPage.querySelector(".code-link");
+const loadingIndicator = sketchPage.querySelector("p.loading");
 
 sketchLinks.forEach(link => (link.textContent = link.id));
 
@@ -109,6 +109,7 @@ window.addEventListener("popstate", () => {
 sketchLinks.forEach(link => {
     link.addEventListener("click", () => {
         goToSketch(link.id);
+        link.classList.add("seen");
         history.pushState("", `${link.id} - Generative`, link.id);
     });
 });

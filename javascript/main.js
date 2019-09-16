@@ -86,6 +86,10 @@ if (urlPath.length == 0) {
     const linkedSketchButton = document.getElementById(linkedSketch);
     if (linkedSketchButton) {
         goToSketch(linkedSketch);
+
+        if (window.location.hash === "#no-ui") {
+            sketchPage.style.display = "none";
+        }
     } else {
         goTo404();
     }

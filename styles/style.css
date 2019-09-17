@@ -47,7 +47,7 @@ a:hover {
 
 .home-page,
 .fourohfour-page {
-    margin: 35px 50px;
+    margin: 34px 50px;
 }
 
 .page {
@@ -78,7 +78,7 @@ header a {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 140px);
+    max-height: calc(100vh - 150px);
     width: max-content;
     justify-content: flex-start;
 }

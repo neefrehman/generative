@@ -9,10 +9,10 @@
 
     const balls = [];
     class Ball {
-        constructor() {
+        constructor(r) {
             this.xOff = random(200);
             this.yOff = random(400, 600);
-            this.r = 36;
+            this.r = r || 1;
         }
 
         update() {
@@ -27,6 +27,7 @@
                 map(noise(this.yOff), 0, 1, -height / 2, height / 2);
 
             ellipse(this.x, this.y, this.r);
+            if (this.r < 36) this.r++;
         }
 
         collides(sibling) {
@@ -45,7 +46,7 @@
         background(20);
 
         for (let i = 0; i < 3; i++) {
-            balls.push(new Ball());
+            balls.push(new Ball(36));
         }
 
         resetMouseLocation = () =>

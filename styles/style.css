@@ -92,7 +92,8 @@ header a {
 }
 
 .sketch-list a.seen {
-    text-decoration: line-through;
+    color: #212121;
+    background-color: #eee;
 }
 
 a.home-link {

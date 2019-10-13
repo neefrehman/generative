@@ -3,9 +3,10 @@
 (() => {
     setup = () => {
         createCanvas(windowWidth, windowHeight);
+        background(20);
     };
 
     draw = () => {
-        //
+        background(20);
     };
 })();

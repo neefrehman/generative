@@ -4,7 +4,7 @@
         constructor(pos, r, c) {
             this.pos = pos
                 ? pos.copy()
-                : createVector(random(width / 2), random(height / 2));
+                : createVector(random(width), random(height));
             this.r = r || 150;
             this.c = c || random(255);
         }
@@ -51,6 +51,17 @@
         for (const cell of cells) {
             cell.move();
             cell.show();
+        }
+
+        if (frameCount % 300 === 0) {
+            const randomCellIndex = floor(random(cells.length));
+            cells.push(cells[randomCellIndex].divideCell());
+            cells.push(cells[randomCellIndex].divideCell());
+            cells.splice(randomCellIndex, 1);
+        }
+
+        if (frameCount % 400 === 0) {
+            cells.push(new Cell());
         }
     };
 

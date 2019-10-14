@@ -1,11 +1,11 @@
 (() => {
-    let w, h;
     let cols, rows;
     let scale = 20;
 
     const terrain = [];
 
     let flying = 0;
+    const noisiness = 0.15;
 
     setup = () => {
         createCanvas(windowWidth, windowHeight, WEBGL);
@@ -15,23 +15,21 @@
         strokeWeight(0.5);
         noFill();
 
-        w = windowWidth;
-        h = windowHeight;
-        cols = w / scale;
-        rows = h / scale;
+        cols = windowWidth / scale;
+        rows = windowHeight / scale;
     };
 
     draw = () => {
-        flying -= 0.2;
+        flying -= noisiness;
         let yOff = 0;
         for (let x = 0; x < rows; x++) {
             terrain[x] = [];
             let xOff = flying;
             for (let y = 0; y < cols; y++) {
                 terrain[x][y] = map(noise(xOff, yOff), 0, 1, -100, 100);
-                xOff += 0.2;
+                xOff += noisiness;
             }
-            yOff += 0.2;
+            yOff += noisiness;
         }
 
         background(20);

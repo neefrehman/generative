@@ -38,9 +38,9 @@
             for (let x = 0; x < cols; x++) {
                 terrain[y][x] = map(noise(xOff, yOff), 0, 1, -maxZOff, maxZOff);
                 vertex(x * scale, y * scale, terrain[y][x]);
-                xOff += 0.005;
+                xOff += 0.01;
             }
-            yOff += 0.005;
+            yOff += 0.01;
             endShape();
         }
     };

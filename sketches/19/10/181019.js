@@ -5,7 +5,7 @@
     const terrain = [];
 
     let flying = 0;
-    const noisiness = 0.05;
+    const noisiness = 0.2;
 
     let camXOff = 0;
 
@@ -18,7 +18,7 @@
         noFill();
 
         cols = windowWidth / scale;
-        rows = windowHeight / scale;
+        rows = windowWidth / scale;
     };
 
     draw = () => {
@@ -39,10 +39,10 @@
         rotateX(PI / 3 + camXOff);
         translate(-width / 2, -height / 2);
 
-        for (let y = 0; y < rows - 1; y++) {
+        for (let x = 0; x < rows - 1; x++) {
             beginShape(TRIANGLE_STRIP);
-            for (let x = 0; x < cols; x++) {
-                vertex(x * scale, y * scale, terrain[y][x]);
+            for (let y = 0; y < cols; y++) {
+                vertex(x * scale, y * scale, terrain[x][y]);
             }
             endShape();
         }

@@ -49,6 +49,6 @@
     };
 
     mouseMoved = () => {
-        camXOff = map(mouseY, 0, height, -1, 1);
+        camXOff = map(mouseY, 0, height, -0.5, 0.5);
     };
 })();

@@ -70,7 +70,7 @@
             sinePoints.push(new SinePoint());
         }
 
-        if (sinePoints.length > 10) {
+        if (sinePoints.length > 12) {
             sinePoints.splice(0, 1);
         }
     };

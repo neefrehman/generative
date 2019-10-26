@@ -22,7 +22,7 @@
 
             const v = createVector(this.pos.x, this.pos.y);
             this.trail.push(v);
-            if (this.trail.length > 1000) {
+            if (this.trail.length > 900) {
                 this.trail.splice(0, 1);
             }
         }
@@ -66,7 +66,7 @@
             sinePoints.push(new SinePoint());
         }
 
-        if (sinePoints.length > 10) {
+        if (sinePoints.length > 7) {
             sinePoints.splice(0, 1);
         }
     };

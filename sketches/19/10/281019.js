@@ -66,7 +66,7 @@
             sinePoint.show();
         }
 
-        if (frameCount % 600 === 0) {
+        if (frameCount % 800 === 0) {
             sinePoints.push(new SinePoint());
         }
 

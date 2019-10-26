@@ -1,6 +1,6 @@
 (() => {
     let cols, rows;
-    let scale = 22;
+    let scale = 25;
 
     let xDir = 1;
     let yDir = 1;
@@ -31,7 +31,7 @@
             endShape();
         }
 
-        scale += 0.01;
+        scale += 0.015;
         yMult += yDir * 0.05;
         xMult += xDir * 0.02;
 

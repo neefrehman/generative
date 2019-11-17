@@ -158,6 +158,8 @@ canvas.not-full-screen {
 
 input[type=range] {
     -webkit-appearance: none;
+    display: block;
+    margin: 24px;
     background: #fcbf9a00;
 }
 

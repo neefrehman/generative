@@ -35,6 +35,8 @@
     "windowResized": true,
     "touchStarted": true,
     "touchMoved": true,
-    "touchEnded": true
+    "touchEnded": true,
+    "loadShader": true,
+    "shader": true
   }
 }

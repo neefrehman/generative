@@ -156,6 +156,30 @@ canvas.not-full-screen {
     transform: translate(-50%, -50%);
 }
 
+input[type=range] {
+    -webkit-appearance: none;
+    background: #fcbf9a00;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    background: #ffffff70;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 22px;
+    width: 16px;
+    border-radius: 4px;
+    background: #ffffff;
+    margin-top: -8px;
+}
+
 .show {
     display: block;
 }

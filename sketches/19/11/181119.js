@@ -13,7 +13,7 @@
             push();
             translate(this.pos.x, this.pos.y);
             beginShape();
-            for (let a = 0; a < TWO_PI; a += 0.1) {
+            for (let a = 0; a < TWO_PI; a += 0.02) {
                 let xOff = map(cos(a), -1, 1, 0, noiseMax);
                 let yOff = map(sin(a), -1, 1, 0, noiseMax);
                 const offset = map(noise(xOff, yOff, zOff), 0, 1, 0, 50);

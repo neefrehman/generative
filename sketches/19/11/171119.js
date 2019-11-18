@@ -108,9 +108,9 @@
             let cohesion = this.cohesion(boids);
             let separation = this.separation(boids);
 
-            alignment.mult(alignSlider.value());
-            cohesion.mult(cohesionSlider.value());
-            separation.mult(separationSlider.value());
+            alignment.mult(alignValue);
+            cohesion.mult(cohesionValue);
+            separation.mult(separationValue);
 
             this.acceleration.add(alignment);
             this.acceleration.add(cohesion);
@@ -133,13 +133,12 @@
 
     const flock = [];
 
-    let alignSlider, cohesionSlider, separationSlider;
+    let alignValue = 1.5,
+        cohesionValue = 1,
+        separationValue = 2;
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
-        alignSlider = createSlider(0, 2, 1.5, 0.1);
-        cohesionSlider = createSlider(0, 2, 1, 0.1);
-        separationSlider = createSlider(0, 2, 2, 0.1);
         for (let i = 0; i < 200; i++) {
             flock.push(new Boid());
         }
@@ -153,5 +152,21 @@
             boid.update();
             boid.show();
         }
+
+        if (frameCount % 240 === 0) {
+            alignValue = random(2);
+            cohesionValue = random(2);
+            separationValue = random(2);
+        }
+    };
+
+    mousePressed = () => {
+        cohesionValue = 1.7;
+        separationValue = 0.3;
+    };
+
+    mouseReleased = () => {
+        cohesionValue = 0.3;
+        separationValue = 1.7;
     };
 })();

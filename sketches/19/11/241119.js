@@ -1,6 +1,3 @@
-// From The Coding Train
-// https://www.youtube.com/watch?v=ZI1dmHv3MeM&list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH&index=195
-
 (() => {
     const blobs = [];
     class Blob {
@@ -11,13 +8,15 @@
 
             this.noiseTurbulence = 0.5;
             this.zOff = 0;
+
+            this.pointCount = 2;
         }
 
         show() {
             push();
             translate(this.pos.x, this.pos.y);
             beginShape();
-            for (let a = 0; a < TWO_PI; a += TWO_PI / 500) {
+            for (let a = 0; a < TWO_PI; a += TWO_PI / this.pointCount) {
                 let xOff = map(cos(a), -1, 1, 0, this.noiseTurbulence);
                 let yOff = map(sin(a), -1, 1, 0, this.noiseTurbulence);
                 const offset = map(noise(xOff, yOff, this.zOff), 0, 1, 0, 50);
@@ -29,8 +28,12 @@
             endShape(CLOSE);
             pop();
 
-            this.zOff += 0.01;
+            this.zOff += 0.015;
             this.noiseTurbulence += 0.0003;
+        }
+
+        increasePointCount(delta) {
+            this.pointCount += delta ? delta : 1;
         }
     }
 
@@ -50,6 +53,12 @@
 
         for (const blob of blobs) {
             blob.show();
+        }
+    };
+
+    mousePressed = () => {
+        for (const blob of blobs) {
+            blob.increasePointCount(1);
         }
     };
 })();

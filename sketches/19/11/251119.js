@@ -1,6 +1,3 @@
-// From The Coding Train
-// https://www.youtube.com/watch?v=ZI1dmHv3MeM&list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH&index=195
-
 (() => {
     const blobs = [];
     class Blob {
@@ -9,43 +6,55 @@
             this.r = r;
             this.vel = createVector(0, 0);
 
-            this.noiseTurbulence = 0.5;
+            this.noiseTurbulence = 1.7;
             this.zOff = 0;
+
+            this.color = 255;
+            this.alpha = 1;
         }
 
         show() {
             push();
             translate(this.pos.x, this.pos.y);
             beginShape();
-            for (let a = 0; a < TWO_PI; a += TWO_PI / 500) {
+            for (let a = 0; a < TWO_PI; a += TWO_PI / 100) {
                 let xOff = map(cos(a), -1, 1, 0, this.noiseTurbulence);
                 let yOff = map(sin(a), -1, 1, 0, this.noiseTurbulence);
                 const offset = map(noise(xOff, yOff, this.zOff), 0, 1, 0, 50);
                 const r = this.r + offset;
                 const x = r * cos(a);
                 const y = r * sin(a);
+
+                if (frameCount % 1600 === 0) {
+                    this.invertColor();
+                }
+
+                stroke(this.color, this.alpha);
                 vertex(x, y);
             }
             endShape(CLOSE);
             pop();
 
-            this.zOff += 0.01;
+            this.zOff += 0.015;
             this.noiseTurbulence += 0.0003;
+        }
+
+        invertColor() {
+            this.color = this.color === 255 ? 20 : 255;
+            this.alpha = this.alpha === 1 ? 25 : 1;
         }
     }
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
         background(20);
-        stroke(255);
-        strokeWeight(2);
+        strokeWeight(3);
         noFill();
 
         blobs.push(new Blob(0, 0, 128));
     };
 
     draw = () => {
-        background(20);
         translate(width / 2, height / 2);
 
         for (const blob of blobs) {

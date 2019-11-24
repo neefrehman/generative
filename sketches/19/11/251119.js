@@ -10,7 +10,7 @@
             this.zOff = 0;
 
             this.color = 255;
-            this.alpha = 1;
+            this.alpha = 4;
         }
 
         show() {
@@ -25,7 +25,7 @@
                 const x = r * cos(a);
                 const y = r * sin(a);
 
-                if (frameCount % 1600 === 0) {
+                if (frameCount % 1200 === 0) {
                     this.invertColor();
                 }
 
@@ -35,20 +35,20 @@
             endShape(CLOSE);
             pop();
 
-            this.zOff += 0.015;
+            this.zOff += 0.02;
             this.noiseTurbulence += 0.0003;
         }
 
         invertColor() {
             this.color = this.color === 255 ? 20 : 255;
-            this.alpha = this.alpha === 1 ? 25 : 1;
+            this.alpha = this.alpha === 4 ? 23 : 4;
         }
     }
 
     setup = () => {
         createCanvas(windowWidth, windowHeight);
         background(20);
-        strokeWeight(3);
+        strokeWeight(1);
         noFill();
 
         blobs.push(new Blob(0, 0, 128));

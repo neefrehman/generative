@@ -8,10 +8,28 @@ const homeLinks = document.querySelectorAll(".home-link");
 const codeLink = sketchPage.querySelector(".code-link");
 const loadingIndicator = sketchPage.querySelector("p.loading");
 
-sketchLinks.forEach(link => (link.textContent = link.id));
-
 let controller, sketchScript;
 
+// Fill link text
+sketchLinks.forEach(link => (link.textContent = link.id));
+
+// Remember seen sketches
+if (localStorage.getItem("seenSketchList")) {
+    const seenSketchList = JSON.parse(localStorage.getItem("seenSketchList"));
+    seenSketchList.forEach(sketch => {
+        const sketchButton = document.getElementById(sketch);
+        sketchButton.classList.add("seen");
+    });
+}
+
+const addSketchToLocalStorage = sketch => {
+    let currentList = JSON.parse(localStorage.getItem("seenSketchList"));
+    if (currentList === null) currentList = [];
+    currentList.push(sketch);
+    localStorage.setItem("seenSketchList", JSON.stringify(currentList));
+};
+
+// Remove sketch (p5 specific with multi-canvas fallback)
 const removeSketch = () => {
     if (sketchScript) sketchScript.remove();
 
@@ -58,13 +76,17 @@ const goToSketch = sketch => {
             loadingIndicator.textContent = "Loaded";
             clearTimeout(loadingIndicatorTimeout);
             setTimeout(() => loadingIndicator.classList.remove("show"), 400);
+
+            const sketchButton = document.getElementById(sketch);
+            sketchButton.classList.add("seen");
+            addSketchToLocalStorage(sketch);
         })
-        .then(() => new p5())
+        .then(() => new p5()) // p5 constructor required for SPA
         .catch(() => (loadingIndicator.textContent = "Error"));
 };
 
 const goHome = () => {
-    if (controller) controller.abort();
+    if (controller) controller.abort(); // Cancel fetch if still running
     showPage(homePage);
     document.title = "Generative - Neef Rehman";
 };
@@ -109,7 +131,6 @@ window.addEventListener("popstate", () => {
 sketchLinks.forEach(link => {
     link.addEventListener("click", () => {
         goToSketch(link.id);
-        link.classList.add("seen");
         history.pushState("", `${link.id} - Generative`, link.id);
     });
 });

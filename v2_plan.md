@@ -23,15 +23,15 @@ sketches
 | | | |____index.js
 | | | |____photo.jpeg
 | | | |____shader.glsl
-| | |____181019.js  // <-- Imports modules from npm
-| | |____201019.js
+| | |____181019.ts  // <-- Imports modules from npm
+| | |____201019.ts
 | | |____261019.js  // <-- Imports module fom ../../helpers
 | | |____271019
 | | | |____index.js
 | | | |____shader.frag
 | | | |____shader.vert
 | | |____281019
-| | | |____index.js
+| | | |____index.ts
 | | | |____open-simplex-noise.js
 | | |____301019.js
 ```
@@ -88,12 +88,12 @@ Next seems to be the front-runner here. The dynamic routing would be great, as t
 
 ```
 pages
-|____ _error.js
-|____index.js
-|____[sketch].js
+|____ _error.tsx
+|____index.tsx
+|____[sketch].tsx
 ```
 
-I'd then be able to import/fetch the right sketch file using a query from the param in `generative.neef.co/:sketch`
+I'd then be able to import/fetch the right sketch file using a query from the param in `generative.neef.co/:sketch`. (If the fetch fails I'll forward them to the error page).
 
 Gatsby's one upside is that it has a glslify plugin to set the webpack and babel configs, but I'm sure I can find a way to implement that in Next. I also don't need to programatically create pages or do any image optimisations.
 
@@ -107,10 +107,20 @@ Gatsby's one upside is that it has a glslify plugin to set the webpack and babel
 3. https://nextjs.org/learn/excel/lazy-loading-modules/lazy-loading
 4. https://nextjs.org/docs#dynamic-import
 5. https://nextjs.org/blog/next-9#dynamic-route-segments
+6. https://github.com/zeit/next.js#dynamic-routing
 
 
 #### Questions:
 1. Need to learn more about unmounting components and memory here. If all the sketch logic is scoped to the component then unmounting should clear it all from memory. Do I still need to call p5's `remove()` function? Perf could go down the shitter fast with these sketches so I need to be clear on that.
+
+2. ~~Does Next support dynamic routes only on ZEIT Now, or can they run on Netlify too? From the announcement post it looks like the fetch always happens inside `getInitialProps()`, which suggests it needs to be run on Now with SSR. Wonder if it can work with `next export`, so that I can deploy to Netlify?~~
+
+    * **Update**: just did some research on the [Next docs](https://github.com/zeit/next.js#dynamic-routing) and found the following useful info (second one is most pertinent): 
+        >**Note**: Predefined routes take precedence over dynamic routes. For example, if you have pages/post/[pid].js and pages/post/create.js, the route /post/create will be matched by pages/post/create.js instead of the dynamic route ([pid]).
+
+        > **Note**: Pages that are statically optimized by [automatic static optimization](https://github.com/zeit/next.js#automatic-static-optimization) will be **hydrated without their route parameters provided (query will be empty, i.e. {}). After hydration, Next.js will trigger an update to your application to provide the route parameters in the query object.** If your application cannot tolerate this behavior, you can opt-out of static optimization by capturing the query parameter in getInitialProps.
+
+        >**Note**: If deploying to ZEIT Now dynamic routes will work out-of-the-box. You do not need to configure custom routes in a now.json file.
 
 2. Relatedly, how do I keep the sketch scripts not dependant on the framework, but executable inside of a component? I want the sketches to be as "plug-and-play" with anyone elses code as possible, but I also don't want to pollute the global namespace if I keep the sketch in memory and then call it later. Is it literally just `async import regularSketchWithOnlyLibDeps -> execute onMount -> unMount cleanly -> job done`. That sounds too easy!
 

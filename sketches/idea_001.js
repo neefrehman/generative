@@ -13,9 +13,9 @@
     };
 
     draw = () => {
-        //var targetX = mouseX;
+        // var targetX = mouseX;
         x += (mouseX - x) * easing;
-        //var targetY = mouseY;
+        // var targetY = mouseY;
         y += (mouseY - y) * easing;
         var weight = dist(x, y, px, py);
         strokeWeight(weight);

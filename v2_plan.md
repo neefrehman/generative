@@ -9,7 +9,7 @@ To allow for importing helper functions and classes, from npm or ones that I mak
 ### Input:
 ```
 sketches
-|____helpers
+|____utils
 | |____open-simplex-noise.js
 | |____resize-handler.js
 | |____circle-vertex-generator.js
@@ -25,7 +25,7 @@ sketches
 | | | |____shader.glsl
 | | |____181019.ts  // <-- Imports modules from npm
 | | |____201019.ts
-| | |____261019.js  // <-- Imports module fom ../../helpers
+| | |____261019.js  // <-- Imports module fom ../../utils
 | | |____271019
 | | | |____index.js
 | | | |____shader.frag
@@ -39,7 +39,7 @@ sketches
 ### Desired Output:
 ```
 sketches
-|____output // or dist, or whatever tbh
+|____output // or dist, or whatever
 | |____[...other-years]
 | |____19
 | | |____[...other-months]
@@ -55,9 +55,15 @@ sketches
 
 Only change needed in `router.js` is in `goToSketch()`
 
-from: `const pathToSketch = sketches/${year}/${month}/${sketch}.js;`
+from:
+```js
+const pathToSketch = `sketches/${year}/${month}/${sketch}.js`;
+```
 
-to: `const pathToSketch = sketches/output/${year}/${month}/${sketch}.js;`
+to:
+```js
+const pathToSketch = `sketches/output/${year}/${month}/${sketch}.js`;
+```
 
 #### References:
 
@@ -65,19 +71,20 @@ to: `const pathToSketch = sketches/output/${year}/${month}/${sketch}.js;`
 3. https://rollupjs.org/guide/en/
 5. https://www.npmjs.com/package/webpack-glsl-loader
 2. https://github.com/glslify/glslify
+6. https://github.com/glslify/babel-plugin-glslify
 3. http://mattdesl.svbtle.com/glslify
 
 
 #### Questions:
 1. Is there a way to do this with ES6 Module syntax and no bundler? I'm not too fussed about supporting older browser here so might be worth looking into.
 
-2. If I'm going to move to a framework later anyway should I start with one now, stick `sketches` inside `src`, let their bundler do the job and run a fetch from the output directory? No point setting up a bundler and then migrating to a framework later as well. Although this would put me pretty close to stage 2 anyway so I should just do them both at once
+2. If I'm going to move to a framework later anyway should I start with one now, stick `sketches` inside `src`, let its bundler do the job, and run a fetch from the output directory? No point setting up a bundler and then migrating to a framework later as well. Although this would put me pretty close to stage 2 anyway so I should just do them both at once
 
-3. Need to figure out the whole npm thing with p5. Read loads that the module doesn't export the right `.min.js` file. Must do more research.
+3. Need to figure out the whole npm thing with p5. Read loads that the module doesn't export the right `.min.js` file. Will that be fine since my bundling setup wil minify the imported modules? Must do more research.
 
-4. How does caching work? Surely bundling would just create loads of big files and I can't share any of the modules in a higher namespace between sketches. Not that pressing right now as the sketched are small, but seems a bit wasteful. Code splitting would solve this?
+4. How does caching work? Surely bundling would just create loads of big files and I can't share any of the modules (like p5) in a higher namespace between sketches. Not that pressing right now as the sketches are small, but seems a bit wasteful. Code splitting would solve this?
 
-5. Would be nice to set up a dev server with hot reloading for this, too. Can I do that with only one subdirectory being bundled?
+5. Would be nice to set up a dev server with hot reloading for this since [live-p5](https://marketplace.visualstudio.com/items?itemName=filipesabella.live-p5) won't bundle my files to run the sketches. Can I do that with only one subdirectory being bundled?
 
 
 ## STAGE 2: Replace custom router with framework and dynamic imports
@@ -162,3 +169,17 @@ For example, to run p5 in an SPA I need to call the `new p5()` constructor once 
         * Wouldn't be able to do any fancy transitions or loading states. Suspense would be great here.
         * code-splitting, again! Would the sketches each be bundled with the libraries? I'd need the libs to be bundled separately so they can be cached and shared. Different html files makes this tricky.
         * It's fun to learn some of the complex stuff!
+
+
+## BEST CASE SCENARIO
+
+A bundling/StaticGen setup that allows for:
+
+1. Loading in a list of sketches
+2. Routing to an effectively blank page on click
+    * Or routing directly to sketch based on url param
+3. Fetching/Dynamic importing the sketch and it's dependencies
+4. Running the sketch — scoped to a function or component
+5. Splits often used libraries in main bundle, to be consumed by future sketches that may need it (p5, THREE, 
+etc.)
+6. Allows for easy unmounting of component and child sketches, without anything left over in memory

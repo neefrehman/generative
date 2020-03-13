@@ -137,6 +137,7 @@ export default Sketch;
 4. https://nextjs.org/docs#dynamic-import
 5. https://nextjs.org/blog/next-9#dynamic-route-segments
 6. https://github.com/zeit/next.js#dynamic-routing
+7. https://webpack.js.org/plugins/split-chunks-plugin/
 
 
 ## Questions:
@@ -155,8 +156,6 @@ export default Sketch;
 2. ~~Also, does dynamic importing support template literals?~~ Yes. But will it bundle all of the sketches into the main bundle and then just eval the correct one? [[1](https://github.com/zeit/next.js/issues/6032#issuecomment-453497214), [2](https://github.com/zeit/next.js/issues/4100#issuecomment-380943474)] Or will it create separate bundles that include each sketch? [[1](https://github.com/zeit/next.js/issues/2514#issuecomment-319605193)]. Neither are good outcomes tbh, so maybe just running a fetch of the sketch and somehow running that inside a component will be best?
 
 1. Need to learn more about unmounting components and memory here. If all the sketch logic is scoped to the component then unmounting should clear it all from memory. Do I still need to call p5's `remove()` function? Perf could go down the shitter fast with these sketches so I need to be clear on that.
-
-2. Relatedly, how do I keep the sketch scripts not dependant on the framework, but executable inside of a component? I want the sketches to be as "plug-and-play" with anyone elses code as possible, but I also don't want to pollute the global namespace if I keep the sketch in memory and then call it later. Is it literally just `async import regularSketchWithOnlyLibDeps -> execute onMount -> unMount cleanly -> job done`. That sounds too easy!
 
 3. How can I get effective code-splitting? Will dynamic imports allow for sharing instances of p5 or r3f into the main bundle, so other sketches can use them laterwithout reimporting/re-bundling them all for each sketch?
 

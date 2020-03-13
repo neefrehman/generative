@@ -2,27 +2,35 @@
 
 Better dx, more modularity, more reusability, more declarative, p5 in instance mode, and maybe even typescript in more complex sketches.
 
-## STAGE 1: Enable bundling for sketches directory
+Likely I'll need to use a framework like Gatsby, Next, Sapper, etc., and replace the custom router I've made with dynamic imports to load and run the sketches, or create my own bundler setup to manage this myself.
 
-To allow for importing helper functions and classes, from npm or ones that I make (module syntax only in /skethces). Also allows for importing glsl files.
+Next seems to be the front-runner here. Ideally i'll be using React so I can use `react-three-fiber`, and the dynamic routing would be great, as then my pages can just have a `[sketch].tsx` file:
 
-### Input:
+## Desired (rough) structure:
 ```
+src
+|____components
+| |____p5Wrapper.tsx
+| |____ThreeWrapper.tsx
+|____pages
+| |____ _error.tsx
+| |____index.tsx
+| |____[sketch]
+| | |____index.tsx
+| | |____HomeButton.tsx
+| | |____ToolTip.tsx
 sketches
 |____utils
 | |____open-simplex-noise.js
 | |____resize-handler.js
 | |____circle-vertex-generator.js
-| |____[...other-functions]
-|____[...other-years]
+| |____{...utils}
 |____19
-| |____[...other-months]
+| |____{...months}
 | |____10
 | | |____161019
-| | | |____blob-class.js
+| | | |____bezier-generator.js
 | | | |____index.js
-| | | |____photo.jpeg
-| | | |____shader.glsl
 | | |____181019.ts  // <-- Imports modules from npm
 | | |____201019.ts
 | | |____261019.js  // <-- Imports module fom ../../utils
@@ -34,82 +42,96 @@ sketches
 | | | |____index.ts
 | | | |____open-simplex-noise.js
 | | |____301019.js
+|____20
+| |____{...months}
 ```
 
-### Desired Output:
+## Page contents:
+
+```JavaScript
+// 161019.js <-- example p5 sketch
+
+import React from 'react';
+import * as p5 from 'p5';
+
+import P5Wrapper from '../../../components/p5Wrapper';
+
+import bezierGenerator from './bezier-generator';
+
+const Sketch = p5 => {
+    let xOff = 0;
+
+    p5.setup = () => {
+        p5.createCanvas(windowWidth, windowHeight);
+        p5.background(20);
+        p5.stroke(255, 18);
+        p5.noFill();
+    };
+
+    p5.draw = () => {
+        const x1 = 2 * width * p5.noise(xOff + 10) - width / 2;
+        const y1 = 2 * height * p5.noise(xOff + 50) - height / 2;
+        const x2 = 2 * width * p5.noise(xOff + 20) - width / 2;
+        const y2 = 2 * height * p5.noise(xOff + 60) - height / 2;
+        const x3 = 2 * width * p5.noise(xOff + 30) - width / 2;
+        const y3 = 2 * height * p5.noise(xOff + 70) - height / 2;
+        const x4 = 2 * width * p5.noise(xOff + 40) - width / 2;
+        const y4 = 2 * height * p5.noise(xOff + 80) - height / 2;
+
+        bezierGenerator(x1, y1, x2, y2, x3, y3, x4, y4);
+
+        xOff += 0.002;
+
+        if (frameCount % 2000 == 0) p5.background(20);
+    };
+};
+
+export default <P5Wrapper sketch={sketch} />;
 ```
-sketches
-|____output // or dist, or whatever
-| |____[...other-years]
-| |____19
-| | |____[...other-months]
-| | |____10
-| | | |____161019.js
-| | | |____181019.js
-| | | |____201019.js
-| | | |____261019.js
-| | | |____271019.js
-| | | |____281019.js
-| | | |____301019.js
+
+```JavaScript
+// [Sketch]/index.js
+
+import React from 'react';
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+import PageWrapper from '../../components/PageWrapper'
+
+import HomeButton from './HomeButton'
+import ToolTip from './ToolTip'
+
+const Sketch = () => {
+    const router = useRouter();
+    const { sketchId } = router.query;
+    const year = sketchId.substr(4, 2);
+    const month = sketchId.substr(2, 2);
+    const Sketch = dynamic(() => import(`../../sketches/${year}/${month}/${sketch}`))
+
+    return (
+        <PageWrapper>
+            <Sketch />
+            <HomeButton />
+            <ToolTip />
+        </PageWrapper>
+    );
+};
+
+export default Sketch;
 ```
 
-Only change needed in `router.js` is in `goToSketch()`
 
-from:
-```js
-const pathToSketch = `sketches/${year}/${month}/${sketch}.js`;
-```
+## References:
 
-to:
-```js
-const pathToSketch = `sketches/output/${year}/${month}/${sketch}.js`;
-```
-
-#### References:
-
-1. https://parceljs.org/   // <-- easy to achieve bundling, but what about glsl?
+1. https://parceljs.org/ 
 3. https://rollupjs.org/guide/en/
 5. https://www.npmjs.com/package/webpack-glsl-loader
 2. https://github.com/glslify/glslify
 6. https://github.com/glslify/babel-plugin-glslify
+5. https://github.com/onnovisser/gatsby-plugin-glslify
 3. http://mattdesl.svbtle.com/glslify
-
-
-#### Questions:
-1. Is there a way to do this with ES6 Module syntax and no bundler? I'm not too fussed about supporting older browser here so might be worth looking into.
-
-2. If I'm going to move to a framework later anyway should I start with one now, stick `sketches` inside `src`, let its bundler do the job, and run a fetch from the output directory? No point setting up a bundler and then migrating to a framework later as well. Although this would put me pretty close to stage 2 anyway so I should just do them both at once
-
-3. Need to figure out the whole npm thing with p5. Read loads that the module doesn't export the right `.min.js` file. Will that be fine since my bundling setup wil minify the imported modules? Must do more research.
-
-4. How does caching work? Surely bundling would just create loads of big files and I can't share any of the modules (like p5) in a higher namespace between sketches. Not that pressing right now as the sketches are small, but seems a bit wasteful. Code splitting would solve this?
-
-5. Would be nice to set up a dev server with hot reloading for this since [live-p5](https://marketplace.visualstudio.com/items?itemName=filipesabella.live-p5) won't bundle my files to run the sketches. Can I do that with only one subdirectory being bundled?
-
-
-## STAGE 2: Replace custom router with framework and dynamic imports
-
-Use a framework like Gatsby, Next, Sapper, etc., and replace the custom router I've made with dynamic imports to load and run the sketches.
-
-Next seems to be the front-runner here. The dynamic routing would be great, as then my pages can just look as follows:
-
-```
-pages
-|____ _error.tsx
-|____index.tsx
-|____[sketch].tsx
-```
-
-I'd then be able to import/fetch the right sketch file using a query from the param in `generative.neef.co/:sketch`. (If the fetch fails I'll forward them to the error page).
-
-Gatsby's one upside is that it has a glslify plugin to set the webpack and babel configs, but I'm sure I can find a way to implement that in Next. I also don't need to programatically create pages or do any image optimisations.
-
-#### References:
-
-1. https://github.com/and-who/react-p5-wrapper  // React
-5. https://github.com/zeit/swr  // React
-5. https://github.com/onnovisser/gatsby-plugin-glslify  // Gatsby
-1. https://github.com/madebywild/wild-next  // Next 👇🏾
+1. https://github.com/and-who/react-p5-wrapper
+1. https://github.com/madebywild/wild-next
 2. https://web.dev/code-splitting-with-dynamic-imports-in-nextjs/
 3. https://nextjs.org/learn/excel/lazy-loading-modules/lazy-loading
 4. https://nextjs.org/docs#dynamic-import
@@ -117,7 +139,8 @@ Gatsby's one upside is that it has a glslify plugin to set the webpack and babel
 6. https://github.com/zeit/next.js#dynamic-routing
 
 
-#### Questions:
+## Questions:
+1. Is there a way to achieve this with ES6 Module syntax, vanilla dynamic imports and no bundler? (probably won't work with glsl). I'm not too fussed about supporting older browser here so might be worth looking into.
 
 1. ~~Does Next support dynamic routes only on ZEIT Now, or can they run on Netlify too? From the announcement post it looks like the fetch always happens inside `getInitialProps()`, which suggests it needs to be run on Now with SSR. Wonder if it can work with `next export`, so that I can deploy to Netlify?~~
 
@@ -135,24 +158,8 @@ Gatsby's one upside is that it has a glslify plugin to set the webpack and babel
 
 2. Relatedly, how do I keep the sketch scripts not dependant on the framework, but executable inside of a component? I want the sketches to be as "plug-and-play" with anyone elses code as possible, but I also don't want to pollute the global namespace if I keep the sketch in memory and then call it later. Is it literally just `async import regularSketchWithOnlyLibDeps -> execute onMount -> unMount cleanly -> job done`. That sounds too easy!
 
-3. Does code-splitting work correctly with this setup? Not sure if the frameworks just look for how much code is statically imported in components (that are imported into pages) to do this. If so then the dynamic import setup from `/sketches` wouldn't get the benefits? Then I'm left still pondering question 4 in stage 1.
+3. How can I get effective code-splitting? Will dynamic imports allow for sharing instances of p5 or r3f into the main bundle, so other sketches can use them laterwithout reimporting/re-bundling them all for each sketch?
 
-## STAGE 3: Custom components to decouple repo from p5 and allow for other library usage (THREE etc.)
-
-Finally, I want to be able to use Generative to house other expermiments alongside p5 ones. Maybe I'll want to do some THREE, WASM, Blotter, ml5 or even vanilla sketches.
-
-Best case scenario is that each sketch with it's dependancies can just be imported into a blank page and then run, creating a full-size canvas and doing it's thing. I'd also want the lib that it runs on to then stay in memory in the global namespace so that if I run a sketch that needs it again it doesn't have to download.
-
-More likely, I'll have to write a component for each library that has logic for rendering and removing each sketch. Or one component that will select it's render and unMount logic based on a prop that I also export from the sketch file?
-
-For example, to run p5 in an SPA I need to call the `new p5()` constructor once I've loaded a new sketch, and then call the `remove()` function once I need to get rid of it. I'm sure each other lib will have it's own quirks. _Maybe_ React et al handles the unmount for me, since the sketch logic, canvas etc. is scoped to the component?
-
-#### References:
-
-1. https://github.com/and-who/react-p5-wrapper/blob/master/src/index.tsx
-5. https://codesandbox.io/s/p5js-svelte-3-yp7vk
-
-#### Questions:
 1. After putting in all this thinking to create an SPA where I basically just need sketches to run only on their page, I'm left wondering if I should just use a bundler to also create separate html pages for each sketch. I'll then be able to use whatever the hell library I like to render sketches, right? Are there any reasons I actually need this site to be an SPA? 🤔 🤔 🤔 I first made it an SPA to avoid writing out so many html pages, but if I'm already going to implement a bundler... 
     
     Pros & cons of going vanilla and generating a html file per sketch:
@@ -163,23 +170,8 @@ For example, to run p5 in an SPA I need to call the `new p5()` constructor once 
         * No framework to load
         * More beginner friendly for contributors or people who want to fork for own purposes
     * Cons:
-        * Build times might get very long after a while
-            * Would need to sort out caching to avoid this?
+        * Build times might get very long after a while still
         * I wouldn't be able to pass props and state to sketches if I need to (which I probably won't tbh)
         * Wouldn't be able to do any fancy transitions or loading states. Suspense would be great here.
         * code-splitting, again! Would the sketches each be bundled with the libraries? I'd need the libs to be bundled separately so they can be cached and shared. Different html files makes this tricky.
         * It's fun to learn some of the complex stuff!
-
-
-## BEST CASE SCENARIO
-
-A bundling/StaticGen setup that allows for:
-
-1. Loading in a list of sketches
-2. Routing to an effectively blank page on click
-    * Or routing directly to sketch based on url param
-3. Fetching/Dynamic importing the sketch and it's dependencies
-4. Running the sketch — scoped to a function or component
-5. Splits often used libraries in main bundle, to be consumed by future sketches that may need it (p5, THREE, 
-etc.)
-6. Allows for easy unmounting of component and child sketches, without anything left over in memory

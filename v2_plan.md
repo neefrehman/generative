@@ -92,9 +92,9 @@ export default <P5Wrapper sketch={sketch} />;
 ```JavaScript
 // [Sketch]/index.js
 
-import React from 'react';
+import React { lazy } from 'react';
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic' // replaced with lazy
 
 import PageWrapper from '../../components/PageWrapper'
 
@@ -106,11 +106,14 @@ const Sketch = () => {
     const { sketchId } = router.query;
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
-    const Sketch = dynamic(() => import(`../../sketches/${year}/${month}/${sketch}`))
+    const Sketch = lazy(() => import(`../../sketches/${year}/${month}/${sketch}`))
+    // const Sketch = dynamic(() => import(`../../sketches/${year}/${month}/${sketch}`))
 
     return (
         <PageWrapper>
-            <Sketch />
+            <Suspense fallback=(<p>loading<p>)>
+                <Sketch />
+            </Suspense>
             <HomeButton />
             <ToolTip />
         </PageWrapper>
@@ -138,6 +141,7 @@ export default Sketch;
 5. https://nextjs.org/blog/next-9#dynamic-route-segments
 6. https://github.com/zeit/next.js#dynamic-routing
 7. https://webpack.js.org/plugins/split-chunks-plugin/
+8. https://frontendmasters.com/courses/intermediate-react-v2/code-splitting-libraries-child-components/
 
 
 ## Questions:

@@ -1,16 +1,24 @@
 {
-  "name": "learn-starter",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+  "name": "generative",
+  "description": "A digital playground for experimenting with generative art",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neefrehman/Generative.git"
   },
+  "author": "@neefrehman",
+  "bugs": {
+    "url": "https://github.com/neefrehman/Generative/issues"
+  },
+  "homepage": "https://github.com/neefrehman/Generative",
   "dependencies": {
     "next": "9.3.5",
     "p5": "^1.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   }
 }

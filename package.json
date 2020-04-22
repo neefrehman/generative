@@ -1,20 +1,36 @@
 {
   "name": "generative",
+  "author": "@neefrehman",
   "description": "A digital playground for experimenting with generative art",
+  "homepage": "https://github.com/neefrehman/Generative",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neefrehman/Generative.git"
   },
-  "author": "@neefrehman",
   "bugs": {
     "url": "https://github.com/neefrehman/Generative/issues"
   },
-  "homepage": "https://github.com/neefrehman/Generative",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "linaria": "^1.3.3",
     "next": "9.3.5",
     "p5": "^1.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@types/p5": "^0.9.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-loader": "^3.0.3",
+    "gatsby-plugin-eslint": "^2.0.8",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.19.0",
+    "prettier": "^1.19.1"
   },
   "scripts": {
     "dev": "next dev",

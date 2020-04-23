@@ -3,7 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from "react";
 
-import LargeTextOverlay from "./LargeTextOverlay";
+import LargeIndicator from "./LargeIndicator";
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -16,12 +16,13 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
+        // eslint-disable-next-line no-console
         console.log(error, errorInfo);
     }
 
     render() {
         if (this.state.hasError) {
-            return <LargeTextOverlay>error</LargeTextOverlay>;
+            return <LargeIndicator>error</LargeIndicator>;
         }
 
         return this.props.children;

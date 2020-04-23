@@ -1,10 +1,8 @@
 import React from "react";
 import { css } from "linaria";
 
-const App = ({ Component, pageProps }) => {
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    return <Component {...pageProps} />;
-};
+// eslint-disable-next-line react/jsx-props-no-spreading
+const App = ({ Component, pageProps }) => <Component {...pageProps} />;
 
 export default App;
 

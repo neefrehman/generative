@@ -1,16 +1,17 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
 import ErrorBoundary from "../components/ErrorBoundary";
-import LargeTextOverlay from "../components/LargeTextOverlay";
+import LargeIndicator from "../components/LargeIndicator";
+import useVisitedSketchList from "../hooks/useVisitedSketchList";
 
 const StyledSketchPage = styled.main`
     margin: 0;
 
-    a {
+    footer a {
         position: fixed;
         font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
@@ -23,10 +24,8 @@ const StyledSketchPage = styled.main`
         ::selection {
             color: #ffffff;
         }
-    }
 
-    @media (max-width: 769px) {
-        a {
+        @media (max-width: 769px) {
             --edgeMargin: 33px;
         }
     }
@@ -51,48 +50,57 @@ const isServer = typeof window === "undefined";
 
 const SketchPage = () => {
     const router = useRouter();
-    const { sketch } = router.query;
-    const sketchId = sketch?.toString();
+    const { sketch: sketchId } = router.query;
+    const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
+
+    const { addToVisitedSketchList } = useVisitedSketchList();
+    useEffect(() => {
+        if (isValidSketchId) addToVisitedSketchList(sketchId);
+    }, []);
+
     const year = sketchId?.substr(4, 2);
     const month = sketchId?.substr(2, 2);
-    const Sketch = lazy(() =>
-        import(`../sketches/${year}/${month}/${sketchId}`)
-    );
+    const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+
+    const Sketch = lazy(() => import(`../${pathToSketch}`));
 
     return (
-        <>
+        <StyledSketchPage>
             <Head>
-                <title>{sketchId} — Generative — Neef Rehman</title>
+                <title>{sketchId} — Generative</title>
             </Head>
 
-            <StyledSketchPage>
-                {!isServer ? (
+            {!isServer &&
+                (isValidSketchId ? (
                     <ErrorBoundary>
                         <Suspense
-                            fallback={
-                                <LargeTextOverlay>loading</LargeTextOverlay>
-                            }
+                            fallback={<LargeIndicator>Loading</LargeIndicator>}
                         >
                             <Sketch />
                         </Suspense>
                     </ErrorBoundary>
                 ) : (
-                    <p>loading</p>
-                )}
+                    <LargeIndicator>Page not found</LargeIndicator>
+                ))}
 
+            <footer>
                 <Link href="/">
                     <HomeLink>← Home</HomeLink>
                 </Link>
 
-                <CodeLink
-                    href={`/sketches/${year}/${month}/${sketchId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    {sketchId}
-                </CodeLink>
-            </StyledSketchPage>
-        </>
+                {isValidSketchId && (
+                    <CodeLink
+                        href={
+                            `https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js` // TODO: change to directory
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {sketchId}
+                    </CodeLink>
+                )}
+            </footer>
+        </StyledSketchPage>
     );
 };
 

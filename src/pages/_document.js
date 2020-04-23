@@ -6,15 +6,9 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <meta charSet="utf-8" />
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1"
-                    />
-
                     <meta
                         name="description"
-                        content="Generative — A digital sketchbook by Neef Rehman"
+                        content="A digital sketchbook by Neef Rehman"
                     />
                     <meta name="author" content="Neef Rehman" />
                     <link rel="icon" href="/static/favicon.ico" />

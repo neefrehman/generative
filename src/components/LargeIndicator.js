@@ -1,6 +1,6 @@
 import { styled } from "linaria/react";
 
-const LargeTextOverlay = styled.p`
+const LargeIndicator = styled.p`
     position: fixed;
     top: 50%;
     left: 50%;
@@ -14,10 +14,11 @@ const LargeTextOverlay = styled.p`
     color: #616161;
     opacity: 0.75;
     text-transform: uppercase;
+    text-align: center;
 
     @media (max-width: 769px) {
         font-size: 4em;
     }
 `;
 
-export default LargeTextOverlay;
+export default LargeIndicator;

@@ -1,6 +1,6 @@
 import { styled } from "linaria/react";
 
-const PageWrapper = styled.main`
+const PageWrapper = styled.div`
     margin: 36px 50px;
 
     header {

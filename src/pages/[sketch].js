@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import { styled } from "linaria/react";
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import LargeIndicator from "../components/LargeIndicator";
-import useVisitedSketchList from "../hooks/useVisitedSketchList";
 
 const StyledSketchPage = styled.main`
     margin: 0;
@@ -15,14 +14,14 @@ const StyledSketchPage = styled.main`
         position: fixed;
         font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
-        padding: 0 0.2em;
-        line-height: 1.3;
+        padding: 0.05em 0.2em;
+        background-color: rgb(85, 85, 85, 0.7);
         --edgeMargin: 40px;
         bottom: var(--edgeMargin);
         cursor: pointer;
 
-        ::selection {
-            color: #ffffff;
+        :hover {
+            background-color: #eee;
         }
 
         @media (max-width: 769px) {
@@ -52,11 +51,6 @@ const SketchPage = () => {
     const router = useRouter();
     const { sketch: sketchId } = router.query;
     const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
-
-    const { addToVisitedSketchList } = useVisitedSketchList();
-    useEffect(() => {
-        if (isValidSketchId) addToVisitedSketchList(sketchId);
-    }, []);
 
     const year = sketchId?.substr(4, 2);
     const month = sketchId?.substr(2, 2);

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { css } from "linaria";
 import { styled } from "linaria/react";
 
 const StyledLink = styled.a`
@@ -9,28 +8,21 @@ const StyledLink = styled.a`
     width: max-content;
     font-variant-numeric: tabular-nums;
     cursor: pointer;
+
+    :visited {
+        color: #212121;
+        background-color: #eee;
+
+        :hover {
+            background-color: #cacaca;
+        }
+    }
 `;
 
-const vistedStyles = css`
-    color: #212121;
-    background-color: #eee;
-`;
-
-const SketchLink = ({ sketchId = "000000", visited }) => {
-    const [highlighted, setHighlighted] = useState(false);
-
-    useEffect(() => {
-        if (visited) setHighlighted(true);
-    }, [visited]);
-
-    return (
-        <Link href="/[sketch]" as={`/${sketchId}`}>
-            {/* `visited && visitedStyles` won't work here due to Next hydration conflicts */}
-            <StyledLink className={highlighted && vistedStyles}>
-                {sketchId}
-            </StyledLink>
-        </Link>
-    );
-};
+const SketchLink = ({ sketchId = "000000" }) => (
+    <Link href="/[sketch]" as={`/${sketchId}`}>
+        <StyledLink href={`/${sketchId}`}>{sketchId}</StyledLink>
+    </Link>
+);
 
 export default SketchLink;

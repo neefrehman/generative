@@ -1,0 +1,13 @@
+{
+	"recommendations": [
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"coenraads.bracket-pair-colorizer-2",
+		"vincaslt.highlight-matching-tag",
+		"visualstudioexptteam.vscodeintellicode",
+		"mgmcdermott.vscode-language-babel",
+		"jpoissonnier.vscode-styled-components",
+		"steoates.autoimport"
+	],
+	"unwantedRecommendations": []
+}

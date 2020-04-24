@@ -7,7 +7,6 @@ import { styled } from "linaria/react";
 
 import PageWrapper from "../components/PageWrapper";
 import SketchLink from "../components/SketchLink";
-import useVisitedSketchList from "../hooks/useVisitedSketchList";
 
 const SketchList = styled.main`
     display: flex;
@@ -22,40 +21,32 @@ const SketchList = styled.main`
     }
 `;
 
-const Home = ({ sketchList }) => {
-    const { visitedSketchList } = useVisitedSketchList();
+const Home = ({ sketchList }) => (
+    <PageWrapper>
+        <Head>
+            <title>Generative — Neef Rehman</title>
+        </Head>
 
-    return (
-        <PageWrapper>
-            <Head>
-                <title>Generative — Neef Rehman</title>
-            </Head>
+        <header>
+            <h1>
+                Generative—A digital sketchbook by{" "}
+                <a
+                    href="https://neef.co"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Neef Rehman
+                </a>
+            </h1>
+        </header>
 
-            <header>
-                <h1>
-                    Generative—A digital sketchbook by{" "}
-                    <a
-                        href="https://neef.co"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Neef Rehman
-                    </a>
-                </h1>
-            </header>
-
-            <SketchList>
-                {sketchList.map(sketchId => (
-                    <SketchLink
-                        sketchId={sketchId}
-                        visited={visitedSketchList.includes(sketchId)}
-                        key={sketchId}
-                    />
-                ))}
-            </SketchList>
-        </PageWrapper>
-    );
-};
+        <SketchList>
+            {sketchList.map(sketchId => (
+                <SketchLink sketchId={sketchId} key={sketchId} />
+            ))}
+        </SketchList>
+    </PageWrapper>
+);
 
 export async function getStaticProps() {
     const sketchList = [];

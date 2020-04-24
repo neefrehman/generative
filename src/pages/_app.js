@@ -37,17 +37,12 @@ export const globalStyles = css`
             overflow-y: hidden;
         }
 
-        *::selection {
-            color: #f4cb3d;
-        }
-
         a,
         a:visited {
             text-decoration: none;
-            color: #fff;
             display: inline-block;
+            color: #fff;
             background-color: #4a4a4a;
-            background-color: rgb(85, 85, 85, 0.7);
             padding: 0 0.1em;
             line-height: normal;
         }

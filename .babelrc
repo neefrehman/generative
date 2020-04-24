@@ -2,7 +2,10 @@
     "presets": [
         [
             "next/babel", {
-                "preset-env": { "useBuiltIns": "entry" }
+                "preset-env": {
+                    "corejs": "3",
+                    "useBuiltIns": "entry"
+                }
             },
             "linaria/babel"
         ]

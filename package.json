@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "core-js": "^3.6.5",
     "linaria": "^1.3.3",
     "next": "9.3.5",
     "p5": "^1.0.0",
@@ -33,20 +34,24 @@
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5"
   },
+  "browserslist": "> 1.7%",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "format": "prettier \"src/**/*.js\"",
-    "format:fix": "prettier --write \"src/**/*.js\"",
+    "format:fix": "prettier \"src/**/*.js\" --write",
     "lint": "eslint \"src/**/*.js\"",
-    "lint:fix": "eslint --fix \"src/**/*.js\""
+    "lint:fix": "eslint \"src/**/*.js\" --fix"
   },
   "lint-staged": {
-    "*.(js|jsx|ts|tsx)": ["npm run lint", "npm run format", "git add"]
+    "*.(js|jsx|ts|tsx)": [
+      "npm run lint",
+      "npm run format",
+      "git add"
+    ]
   },
   "husky": {
-    "hooks": {
-    }
+    "hooks": { "pre-commit": "lint-staged"}
   }
 }

@@ -1,8 +1,7 @@
 const withCSS = require("@zeit/next-css");
 
 module.exports = withCSS({
-    // eslint-disable-next-line no-unused-vars
-    webpack(config, options) {
+    webpack(config /* , options */) {
         config.module.rules.push({
             test: /\.js$/,
             use: [

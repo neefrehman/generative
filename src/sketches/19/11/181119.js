@@ -18,8 +18,8 @@
             translate(this.pos.x, this.pos.y);
             beginShape();
             for (let a = 0; a < TWO_PI; a += TWO_PI / 500) {
-                let xOff = map(cos(a), -1, 1, 0, this.noiseTurbulence);
-                let yOff = map(sin(a), -1, 1, 0, this.noiseTurbulence);
+                const xOff = map(cos(a), -1, 1, 0, this.noiseTurbulence);
+                const yOff = map(sin(a), -1, 1, 0, this.noiseTurbulence);
                 const offset = map(noise(xOff, yOff, this.zOff), 0, 1, 0, 50);
                 const r = this.r + offset;
                 const x = r * cos(a);

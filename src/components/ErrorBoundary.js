@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from "react";
 
@@ -11,7 +9,7 @@ class ErrorBoundary extends Component {
         this.state = { hasError: false };
     }
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError(/* error */) {
         return { hasError: true };
     }
 

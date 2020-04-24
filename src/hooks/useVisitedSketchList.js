@@ -1,8 +1,10 @@
 import { useState } from "react";
 
+const isClient = typeof window !== "undefined";
+
 const useVisitedSketchList = () => {
     const [visitedSketchList, setVisitedSketchList] = useState(
-        typeof window !== "undefined"
+        isClient
             ? JSON.parse(localStorage.getItem("visitedSketchList")) || []
             : []
     );

@@ -46,7 +46,7 @@ const CodeLink = styled.a`
     right: var(--edgeMargin);
 `;
 
-const isServer = typeof window === "undefined";
+const isClient = typeof window !== "undefined";
 
 const SketchPage = () => {
     const router = useRouter();
@@ -70,7 +70,7 @@ const SketchPage = () => {
                 <title>{sketchId} — Generative</title>
             </Head>
 
-            {!isServer &&
+            {isClient &&
                 (isValidSketchId ? (
                     <ErrorBoundary>
                         <Suspense

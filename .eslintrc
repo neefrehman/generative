@@ -25,19 +25,12 @@
   "rules": {
     "strict": 0,
     "no-console": "warn",
-    "quotes": [
-      "warn",
-      "double"
-    ],
     "no-plusplus": [
       "error",
       {
         "allowForLoopAfterthoughts": true
       }
     ],
-    "linebreak-style": "off",
-    "no-underscore-dangle": "off",
-    "no-nested-ternary": "off",
     "import/order": [
       "warn",
       {
@@ -46,7 +39,6 @@
     ],
     "prettier/prettier": "warn",
     "react/prop-types": "off",
-    "react/display-name": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-indent": [
       2,
@@ -57,8 +49,6 @@
       4
     ],
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-wrap-multilines": "off",
-    "react/no-danger": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "react/no-danger": "warn"
   }
 }

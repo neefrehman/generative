@@ -79,9 +79,14 @@ export async function getStaticProps() {
                 process.cwd(),
                 `src/sketches/${yearFolder}/${monthFolder}`
             );
+
             const sketches = fs
                 .readdirSync(monthDirectory)
-                .filter(sketchId => sketchId.length === 9);
+                .filter(
+                    sketchFileName =>
+                        sketchFileName.length === 6 ||
+                        sketchFileName.length === 9
+                );
 
             sketches.forEach(sketch => {
                 const sketchId = sketch.substr(0, 6);

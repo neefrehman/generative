@@ -7,7 +7,7 @@ import { styled } from "linaria/react";
 import ErrorBoundary from "../components/ErrorBoundary";
 import LargeIndicator from "../components/LargeIndicator";
 
-const StyledSketchPage = styled.main`
+const StyledSketchPage = styled.div`
     margin: 0;
 
     footer a {
@@ -84,9 +84,7 @@ const SketchPage = () => {
 
                 {isValidSketchId && (
                     <CodeLink
-                        href={
-                            `https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js` // TODO: change to directory
-                        }
+                        href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

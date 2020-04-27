@@ -4,25 +4,51 @@ import path from "path";
 import React from "react";
 import Head from "next/head";
 import { styled } from "linaria/react";
+import Link from "next/link";
 
-import PageWrapper from "../components/PageWrapper";
-import SketchLink from "../components/SketchLink";
+const HomePageWrapper = styled.div`
+    margin: 35px 50px;
 
-const SketchList = styled.main`
+    @media (max-width: 769px) {
+        margin: 25px 30px;
+    }
+
+    @media (max-width: 425px) {
+        margin: 25px 25px;
+    }
+`;
+
+const SketchList = styled.ul`
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     max-height: calc(100vh - 150px);
     width: max-content;
-    justify-content: flex-start;
+
+    li a {
+        font-family: helvetica neue, helvetica, arial, sans-serif;
+        margin: 0 1em 1em 0;
+        font-variant-numeric: tabular-nums;
+
+        a:visited {
+            color: #212121;
+            background-color: #eee;
+
+            :hover {
+                background-color: #cacaca;
+            }
+        }
+    }
 
     @media (max-width: 769px) {
         max-height: calc(100vh - 190px);
     }
 `;
 
-const Home = ({ sketchList }) => (
-    <PageWrapper>
+const Home = ({ sketchArray }) => (
+    <HomePageWrapper>
         <Head>
             <title>Generative — Neef Rehman</title>
         </Head>
@@ -40,16 +66,22 @@ const Home = ({ sketchList }) => (
             </h1>
         </header>
 
-        <SketchList>
-            {sketchList.map(sketchId => (
-                <SketchLink sketchId={sketchId} key={sketchId} />
-            ))}
-        </SketchList>
-    </PageWrapper>
+        <main>
+            <SketchList>
+                {sketchArray.map(sketchId => (
+                    <li>
+                        <Link href="/[sketch]" as={`/${sketchId}`}>
+                            <a>{sketchId}</a>
+                        </Link>
+                    </li>
+                ))}
+            </SketchList>
+        </main>
+    </HomePageWrapper>
 );
 
 export async function getStaticProps() {
-    const sketchList = [];
+    const sketchArray = [];
 
     const sketchDirectory = path.join(process.cwd(), "src/sketches");
     const yearFolders = fs
@@ -83,15 +115,15 @@ export async function getStaticProps() {
                 const sketchId = sketch.substr(0, 6);
                 const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
 
-                if (isValidSketchId) sketchList.push(sketchId);
+                if (isValidSketchId) sketchArray.push(sketchId);
             });
         });
     });
 
-    sketchList.reverse();
+    sketchArray.reverse();
 
     return {
-        props: { sketchList }
+        props: { sketchArray }
     };
 }
 

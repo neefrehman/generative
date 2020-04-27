@@ -49,6 +49,21 @@
       4
     ],
     "react/jsx-one-expression-per-line": "off",
-    "react/no-danger": "warn"
+    "react/no-danger": "warn",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "href"
+        ],
+        "aspects": [
+          "invalidHref",
+          "preferButton"
+        ]
+      }
+    ]
   }
 }

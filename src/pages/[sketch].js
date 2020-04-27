@@ -10,6 +10,13 @@ import LargeIndicator from "../components/LargeIndicator";
 const StyledSketchPage = styled.div`
     margin: 0;
 
+    canvas {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     footer a {
         position: fixed;
         font-family: helvetica neue, helvetica, arial, sans-serif;
@@ -18,31 +25,23 @@ const StyledSketchPage = styled.div`
         background-color: rgb(85, 85, 85, 0.7);
         --edgeMargin: 40px;
         bottom: var(--edgeMargin);
-        cursor: pointer;
 
         :hover {
             background-color: #eee;
+        }
+
+        :first-child {
+            left: var(--edgeMargin);
+        }
+
+        :nth-child(2) {
+            right: var(--edgeMargin);
         }
 
         @media (max-width: 769px) {
             --edgeMargin: 33px;
         }
     }
-
-    canvas {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-`;
-
-const HomeLink = styled.a`
-    left: var(--edgeMargin);
-`;
-
-const CodeLink = styled.a`
-    right: var(--edgeMargin);
 `;
 
 const isClient = typeof window !== "undefined";
@@ -79,17 +78,17 @@ const SketchPage = () => {
 
             <footer>
                 <Link href="/">
-                    <HomeLink>← Home</HomeLink>
+                    <a>← Home</a>
                 </Link>
 
                 {isValidSketchId && (
-                    <CodeLink
+                    <a
                         href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
                         {sketchId}
-                    </CodeLink>
+                    </a>
                 )}
             </footer>
         </StyledSketchPage>

@@ -45,11 +45,11 @@ export const globalStyles = css`
             background-color: #4a4a4a;
             padding: 0 0.1em;
             line-height: normal;
-        }
 
-        a:hover {
-            color: #212121;
-            background-color: #eee;
+            :hover {
+                color: #212121;
+                background-color: #eee;
+            }
         }
 
         header {

@@ -27,7 +27,7 @@ const SketchList = styled.ul`
     max-height: calc(100vh - 150px);
     width: max-content;
 
-    li a {
+    li {
         font-family: helvetica neue, helvetica, arial, sans-serif;
         margin: 0 1em 1em 0;
         font-variant-numeric: tabular-nums;

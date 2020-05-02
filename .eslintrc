@@ -1,69 +1,89 @@
 {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": true
-  },
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "airbnb",
-    "prettier"
-  ],
-  "plugins": [
-    "prettier",
-    "jsx-a11y",
-    "import"
-  ],
-  "rules": {
-    "strict": 0,
-    "no-console": "warn",
-    "no-plusplus": [
-      "error",
-      {
-        "allowForLoopAfterthoughts": true
-      }
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "allowImportExportEverywhere": true
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "plugins": ["react", "jsx-a11y", "prettier", "import"],
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "prettier"
     ],
-    "import/order": [
-      "warn",
-      {
-        "newlines-between": "always"
-      }
-    ],
-    "prettier/prettier": "warn",
-    "react/prop-types": "off",
-    "react/jsx-filename-extension": "off",
-    "react/jsx-indent": [
-      2,
-      4
-    ],
-    "react/jsx-indent-props": [
-      2,
-      4
-    ],
-    "react/jsx-one-expression-per-line": "off",
-    "react/no-danger": "warn",
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": [
-          "Link"
+    "rules": {
+        "strict": 0,
+        "no-console": "warn",
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
         ],
-        "specialLink": [
-          "href"
+        "no-param-reassign": [
+            "error",
+            {
+                "props": true,
+                "ignorePropertyModificationsForRegex": ["p"]
+            }
         ],
-        "aspects": [
-          "invalidHref",
-          "preferButton"
+        "lines-between-class-members": [
+            "warn",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+        "import/order": [
+            "warn",
+            {
+                "newlines-between": "always"
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "prettier/prettier": "warn",
+        "react/prop-types": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        "react/jsx-one-expression-per-line": "off",
+        "react/no-danger": "warn",
+        "jsx-a11y/anchor-is-valid": [
+            "error",
+            {
+                "components": ["Link"],
+                "specialLink": ["href"],
+                "aspects": ["invalidHref", "preferButton"]
+            }
         ]
-      }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "plugins": ["@typescript-eslint"],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+                "plugin:import/typescript",
+                "prettier/@typescript-eslint"
+            ],
+            "rules": {
+                "@typescript-eslint/explicit-function-return-type": "off"
+            }
+        }
     ]
-  }
 }

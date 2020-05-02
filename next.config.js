@@ -3,7 +3,7 @@ const withCSS = require("@zeit/next-css");
 module.exports = withCSS({
     webpack(config /* , options */) {
         config.module.rules.push({
-            test: /\.js$/,
+            test: /\.(js|ts|tsx)$/,
             use: [
                 {
                     loader: "linaria/loader",
@@ -13,7 +13,6 @@ module.exports = withCSS({
                 }
             ]
         });
-
         return config;
     }
 });

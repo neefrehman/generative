@@ -1,5 +1,4 @@
 {
-  "parser": "babel",
   "printWidth": 80,
   "tabWidth": 4,
   "singleQuote": false,

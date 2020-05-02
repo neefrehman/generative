@@ -4,4 +4,3 @@
   command = "npm run build && npm run export"
 
   NODE_VERSION = "10"
-  NODE_ENV = "production"

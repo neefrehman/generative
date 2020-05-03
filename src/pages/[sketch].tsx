@@ -51,50 +51,27 @@ const SketchPage = () => {
     const { sketch } = router.query;
     const sketchId = typeof sketch === "string" ? sketch : "";
 
-    const sketchExists = RegExp(/^[0-9]{6}$/).test(sketchId);
-    // const sketchExists = sketchArray.includes(sketchId);
-
-    const year = sketchId?.substr(4, 2);
-    const month = sketchId?.substr(2, 2);
-    const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+    const pathToSketch = `sketches/${sketchId}`;
 
     const Sketch = lazy(() => import(`../${pathToSketch}`));
 
     return (
         <StyledSketchPage>
-            {hasMounted &&
-                (sketchExists ? (
-                    <ErrorBoundary fallback={<TextOverlay text="Error" />}>
-                        <Suspense fallback={<TextOverlay text="Loading" />}>
-                            <Sketch />
-                        </Suspense>
-                    </ErrorBoundary>
-                ) : (
-                    <TextOverlay text="Page not found" />
-                ))}
+            {hasMounted && (
+                <ErrorBoundary fallback={<TextOverlay text="Error" />}>
+                    <Suspense fallback={<TextOverlay text="Loading" />}>
+                        <Sketch />
+                    </Suspense>
+                </ErrorBoundary>
+            )}
 
             <footer>
                 <Link href="/">
                     <a>← Home</a>
                 </Link>
-
-                {sketchExists && (
-                    <a
-                        href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {sketchId}
-                    </a>
-                )}
             </footer>
         </StyledSketchPage>
     );
 };
-
-// TODO: Import returned sketchArray from ./index's getStaticProps
-// Abstracting getSketchArray to a util won't work as node code can't be run outside of getStaticProps
-// Importing the getStaticProps function from ./index also causes errors
-// getStaticProps can't even be used in this file as it neccesitates SSG, and this page should be dynamic
 
 export default SketchPage;

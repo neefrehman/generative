@@ -89,40 +89,6 @@ const Sketch = p5 => {
 export default <P5Wrapper sketch={sketch} />;
 ```
 
-```JavaScript
-// [Sketch]/index.js
-
-import React { lazy } from 'react';
-import { useRouter } from 'next/router'
-// import dynamic from 'next/dynamic' // replaced with lazy
-
-import PageWrapper from '../../components/PageWrapper'
-
-import HomeButton from './HomeButton'
-import ToolTip from './ToolTip'
-
-const Sketch = () => {
-    const router = useRouter();
-    const { sketchId } = router.query;
-    const year = sketchId.substr(4, 2);
-    const month = sketchId.substr(2, 2);
-    const Sketch = lazy(() => import(`../../sketches/${year}/${month}/${sketch}`))
-    // const Sketch = dynamic(() => import(`../../sketches/${year}/${month}/${sketch}`))
-
-    return (
-        <PageWrapper>
-            <Suspense fallback=(<p>loading<p>)>
-                <Sketch />
-            </Suspense>
-            <HomeButton />
-            <ToolTip />
-        </PageWrapper>
-    );
-};
-
-export default Sketch;
-```
-
 
 ## References:
 
@@ -142,39 +108,3 @@ export default Sketch;
 6. https://github.com/zeit/next.js#dynamic-routing
 7. https://webpack.js.org/plugins/split-chunks-plugin/
 8. https://frontendmasters.com/courses/intermediate-react-v2/code-splitting-libraries-child-components/
-
-
-## Questions:
-1. Is there a way to achieve this with ES6 Module syntax, vanilla dynamic imports and no bundler? (probably won't work with glsl). I'm not too fussed about supporting older browser here so might be worth looking into.
-
-1. ~~Does Next support dynamic routes only on ZEIT Now, or can they run on Netlify too? From the announcement post it looks like the fetch always happens inside `getInitialProps()`, which suggests it needs to be run on Now with SSR. Wonder if it can work with `next export`, so that I can deploy to Netlify?~~
-
-    **Update**: just did some research on the [Next docs](https://github.com/zeit/next.js#dynamic-routing) and found the following useful info (second one is most pertinent): 
-
-    >**Note**: Predefined routes take precedence over dynamic routes. For example, if you have pages/post/[pid].js and pages/post/create.js, the route /post/create will be matched by pages/post/create.js instead of the dynamic route ([pid]).
-
-    > **Note**: Pages that are statically optimized by [automatic static optimization](https://github.com/zeit/next.js#automatic-static-optimization) will be **hydrated without their route parameters provided (query will be empty, i.e. {}). After hydration, Next.js will trigger an update to your application to provide the route parameters in the query object.** If your application cannot tolerate this behavior, you can opt-out of static optimization by capturing the query parameter in getInitialProps.
-
-    >**Note**: If deploying to ZEIT Now dynamic routes will work out-of-the-box. You do not need to configure custom routes in a now.json file.
-
-2. ~~Also, does dynamic importing support template literals?~~ Yes. But will it bundle all of the sketches into the main bundle and then just eval the correct one? [[1](https://github.com/zeit/next.js/issues/6032#issuecomment-453497214), [2](https://github.com/zeit/next.js/issues/4100#issuecomment-380943474)] Or will it create separate bundles that include each sketch? [[1](https://github.com/zeit/next.js/issues/2514#issuecomment-319605193)]. Neither are good outcomes tbh, so maybe just running a fetch of the sketch and somehow running that inside a component will be best?
-
-1. Need to learn more about unmounting components and memory here. If all the sketch logic is scoped to the component then unmounting should clear it all from memory. Do I still need to call p5's `remove()` function? Perf could go down the shitter fast with these sketches so I need to be clear on that.
-
-3. How can I get effective code-splitting? Will dynamic imports allow for sharing instances of p5 or r3f into the main bundle, so other sketches can use them laterwithout reimporting/re-bundling them all for each sketch?
-
-1. After putting in all this thinking to create an SPA where I basically just need sketches to run only on their page, I'm left wondering if I should just use a bundler to also create separate html pages for each sketch. I'll then be able to use whatever the hell library I like to render sketches, right? Are there any reasons I actually need this site to be an SPA? 🤔 🤔 🤔 I first made it an SPA to avoid writing out so many html pages, but if I'm already going to implement a bundler... 
-    
-    Pros & cons of going vanilla and generating a html file per sketch:
-
-    * Pros:
-        * Fully vanilla sketches to write and share
-        * No framework to maneuvre around
-        * No framework to load
-        * More beginner friendly for contributors or people who want to fork for own purposes
-    * Cons:
-        * Build times might get very long after a while still
-        * I wouldn't be able to pass props and state to sketches if I need to (which I probably won't tbh)
-        * Wouldn't be able to do any fancy transitions or loading states. Suspense would be great here.
-        * code-splitting, again! Would the sketches each be bundled with the libraries? I'd need the libs to be bundled separately so they can be cached and shared. Different html files makes this tricky.
-        * It's fun to learn some of the complex stuff!

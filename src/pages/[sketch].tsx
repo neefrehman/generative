@@ -1,5 +1,4 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { styled } from "linaria/react";
@@ -63,10 +62,6 @@ const SketchPage = () => {
 
     return (
         <StyledSketchPage>
-            <Head>
-                <title>{sketchId} — Generative</title>
-            </Head>
-
             {hasMounted &&
                 (sketchExists ? (
                     <ErrorBoundary fallback={<TextOverlay text="Error" />}>

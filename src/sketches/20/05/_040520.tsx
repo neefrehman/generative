@@ -2,7 +2,7 @@ import React from "react";
 import p5 from "p5";
 
 import P5Wrapper from "../../../components/P5Wrapper";
-import createNDimensionalArray from "../../utils/createNDimesionalArray";
+import createNDimensionalArray from "../../utils/createNDimensionalArray";
 
 // Insiper by Tyler Hobbs' Flow Field Essay: https://tylerxhobbs.com/essays/2020/flow-fields
 

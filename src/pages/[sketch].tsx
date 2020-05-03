@@ -85,7 +85,7 @@ const SketchPage = () => {
 
                 {sketchExists && (
                     <a
-                        href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.tsx`}
+                        href={`https://github.com/neefrehman/Generative/blob/master/src/${pathToSketch}.tsx`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

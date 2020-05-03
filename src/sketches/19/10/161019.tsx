@@ -19,7 +19,7 @@ const sketch = (p: p5) => {
         p.frameRate(24);
         p.stroke(255);
         p.strokeWeight(0.5);
-        p.noFill(); // TODO: Fill check
+        p.noFill();
 
         cols = p.windowWidth / scale;
         rows = p.windowHeight / scale;

@@ -54,7 +54,7 @@ const sketch = (p: p5) => {
                 p.set(x, y, p.color(sum));
             }
         }
-        p.updatePixels(); // TODO: perf testing (this sketch e.g. is way slower than v1)
+        p.updatePixels();
 
         blobs.forEach(blob => blob.update());
     };

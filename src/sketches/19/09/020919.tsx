@@ -57,7 +57,7 @@ const sketch = (p: p5) => {
         show() {
             p.push();
             p.stroke(p.random(80, 240));
-            p.fill(20, 0); // TODO: remove fill
+            p.fill(20, 0);
             p.beginShape();
             p.vertex(this.x, this.y);
             p.bezierVertex(

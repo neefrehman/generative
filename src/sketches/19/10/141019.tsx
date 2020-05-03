@@ -25,7 +25,7 @@ const sketch = (p: p5) => {
         p.background(20);
         p.stroke(255);
         p.strokeWeight(0.7);
-        p.noFill(); // TODO: figure out why there is fill
+        p.noFill();
 
         p.rotateX(p.PI / 3);
         p.translate(-p.width / 2, -p.height / 2);

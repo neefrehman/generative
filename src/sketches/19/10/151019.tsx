@@ -32,7 +32,7 @@ const sketch = (p: p5) => {
     p.draw = () => {
         p.background(20);
         p.stroke(255);
-        p.strokeWeight(0.7); // TODO: figure out why this is so thin
+        p.strokeWeight(0.7);
         p.noFill();
 
         p.rotateX(p.PI / 3);

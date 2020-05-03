@@ -16,9 +16,9 @@ const sketch = (p: p5) => {
 
         const dirY = (p.mouseY / p.height - 0.5) * 2;
         const dirX = (p.mouseX / p.width - 0.5) * 2;
-        p.directionalLight(255, 0, 100, -dirX, -dirY, 0.5); // TODO: fix mouse movement
-        p.ambientMaterial(255, 0, 255);
+        p.directionalLight(255, 0, 100, -dirX, -dirY, 0.5);
 
+        p.ambientMaterial(255, 0, 255);
         p.torus(100, 25, 48, 32);
         p.sphere(25, 48);
     };

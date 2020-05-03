@@ -29,7 +29,8 @@ interface TextOverlayProps {
 
 const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const [isVisible, setIsVisible] = useState(true);
-    const timeoutMs = typeof timeout === "number" ? timeout : 500;
+    const defaultTimeoutMS = 500;
+    const timeoutMs = typeof timeout === "number" ? timeout : defaultTimeoutMS;
 
     useEffect(() => {
         let visibilityTimeout: NodeJS.Timeout;
@@ -39,7 +40,6 @@ const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
                 timeoutMs
             );
         }
-
         return () => clearTimeout(visibilityTimeout);
     }, []);
 

@@ -75,7 +75,7 @@ const SketchPage = () => {
                         </Suspense>
                     </ErrorBoundary>
                 ) : (
-                    <TextOverlay text="Page not found" />
+                    <TextOverlay text="Page not found" /> // FIXME: broken when [sketch] is entrypoint: https://github.com/zeit/next.js/issues/12435
                 ))}
 
             <footer>
@@ -85,7 +85,7 @@ const SketchPage = () => {
 
                 {sketchExists && (
                     <a
-                        href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.js`}
+                        href={`https://github.com/neefrehman/Generative/blob/master/${pathToSketch}.tsx`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

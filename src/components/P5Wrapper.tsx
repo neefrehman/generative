@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 /* eslint-disable new-cap */
 import React, { useRef, useEffect, ReactNode } from "react";
-import p5 from "p5";
+import p5 from "p5/lib/p5.min"; // TODO: alias minified version: https://github.com/processing/p5.js/issues/2920
 
 interface P5WrapperProps {
     sketch: (p: p5) => void;

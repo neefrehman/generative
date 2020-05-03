@@ -11,7 +11,7 @@ class MyDocument extends Document {
                     <link rel="icon" href="/static/favicon.ico" />
                     <meta
                         name="title"
-                        content="Generative — a digital sketchbook Neef Rehman"
+                        content="Generative — a digital sketchbook by Neef Rehman"
                     />
                     <meta
                         name="description"
@@ -26,7 +26,7 @@ class MyDocument extends Document {
                     />
                     <meta
                         property="og:title"
-                        content="Generative — a digital sketchbook Neef Rehman"
+                        content="Generative — a digital sketchbook by Neef Rehman"
                     />
                     <meta
                         property="og:description"
@@ -48,7 +48,7 @@ class MyDocument extends Document {
                     />
                     <meta
                         property="twitter:title"
-                        content="Generative — a digital sketchbook Neef Rehman"
+                        content="Generative — a digital sketchbook by Neef Rehman"
                     />
                     <meta
                         property="twitter:description"

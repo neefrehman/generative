@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { styled } from "linaria/react";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextOverlay from "../components/TextOverlay";
@@ -43,13 +43,9 @@ const StyledSketchPage = styled.div`
     }
 `;
 
-const SketchPage = () => {
+const SketchPage = ({ sketchId }) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
-
-    const router = useRouter();
-    const { sketch } = router.query;
-    const sketchId = typeof sketch === "string" ? sketch : "";
 
     const pathToSketch = `sketches/${sketchId}`;
 
@@ -72,6 +68,19 @@ const SketchPage = () => {
             </footer>
         </StyledSketchPage>
     );
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+        paths: ["030520", "040520", "050520"].map(sketchId => ({
+            params: { id: sketchId }
+        })),
+        fallback: false
+    };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    return { props: { sketchId: params.id } };
 };
 
 export default SketchPage;

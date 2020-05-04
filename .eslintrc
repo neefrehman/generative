@@ -41,6 +41,14 @@
                 "exceptAfterSingleLine": true
             }
         ],
+        "prefer-destructuring": [
+            "error",
+            {
+                "AssignmentExpression": {
+                    "array": false
+                }
+            }
+        ],
         "import/order": [
             "warn",
             {

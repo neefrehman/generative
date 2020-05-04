@@ -1,6 +1,10 @@
+import fs from "fs";
+import path from "path";
+
 import React, { lazy, Suspense, useState, useEffect } from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
@@ -44,13 +48,13 @@ const StyledSketchPage = styled.div`
     }
 `;
 
-const SketchPage = () => {
+const SketchPage = ({ sketchId }) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
-    const router = useRouter();
-    const { sketch } = router.query;
-    const sketchId = typeof sketch === "string" ? sketch : "";
+    // const router = useRouter();
+    // const { sketch } = router.query;
+    // const sketchId = typeof sketch === "string" ? sketch : "";
 
     const sketchExists = RegExp(/^[0-9]{6}$/).test(sketchId);
     // const sketchExists = sketchArray.includes(sketchId);
@@ -97,9 +101,52 @@ const SketchPage = () => {
     );
 };
 
-// TODO: Import returned sketchArray from ./index's getStaticProps
-// Abstracting getSketchArray to a util won't work as node code can't be run outside of getStaticProps
-// Importing the getStaticProps function from ./index also causes errors
-// getStaticProps can't even be used in this file as it neccesitates SSG, and this page should be dynamic
+export const getStaticPaths: GetStaticPaths = async () => {
+    const sketchArray: string[] = [];
+
+    const sketchDirectory = path.join(process.cwd(), "src/sketches");
+    const yearFolders = fs
+        .readdirSync(sketchDirectory)
+        .filter(folderName => folderName.length === 2);
+
+    yearFolders.forEach(yearFolder => {
+        const yearDirectory = path.join(
+            process.cwd(),
+            `src/sketches/${yearFolder}`
+        );
+        const monthFolders = fs
+            .readdirSync(yearDirectory)
+            .filter(folderName => folderName.length === 2);
+
+        monthFolders.forEach(monthFolder => {
+            const monthDirectory = path.join(
+                process.cwd(),
+                `src/sketches/${yearFolder}/${monthFolder}`
+            );
+
+            const sketches = fs
+                .readdirSync(monthDirectory)
+                .filter(sketchFileName => sketchFileName.length === 10);
+
+            sketches.forEach(sketch => {
+                const sketchId = sketch.substr(0, 6);
+                const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
+
+                if (isValidSketchId) sketchArray.push(sketchId);
+            });
+        });
+    });
+
+    return {
+        paths: sketchArray.map(sketchId => ({
+            params: { id: sketchId }
+        })),
+        fallback: false
+    };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    return { props: { sketchId: params.id } };
+};
 
 export default SketchPage;

@@ -2,9 +2,12 @@ import React from "react";
 import p5 from "p5";
 
 import P5Wrapper from "../../../components/P5Wrapper";
-import createNDimensionalArray from "../../utils/createNDimensionalArray";
+import {
+    createNDimensionalArray,
+    Matrix
+} from "../../utils/createNDimensionalArray";
 
-// Insiper by Tyler Hobbs' Flow Field Essay: https://tylerxhobbs.com/essays/2020/flow-fields
+// Inspired by Tyler Hobbs' Flow Field Essay: https://tylerxhobbs.com/essays/2020/flow-fields
 
 const sketch = (p: p5) => {
     let leftX: number;
@@ -14,7 +17,7 @@ const sketch = (p: p5) => {
     let resolution: number;
     let numColumns: number;
     let numRows: number;
-    let grid: unknown[][];
+    // let grid: Matrix<boolean>;
     let defaultAngle: number;
 
     p.setup = () => {
@@ -28,14 +31,16 @@ const sketch = (p: p5) => {
         resolution = p.width * 0.01;
         numColumns = Math.floor((rightX - leftX) / resolution);
         numRows = Math.floor((bottomY - topY) / resolution);
-        grid = createNDimensionalArray(numColumns, numRows);
+        const grid = createNDimensionalArray;
         defaultAngle = p.PI * 0.25;
 
-        for (let column = 0; column < numColumns; column++) {
-            for (let row = 0; row < numRows; row++) {
-                grid[column][row] = defaultAngle;
-            }
-        }
+        // grid;
+
+        // for (let col = 0; col < numColumns; col++) {
+        //     for (let row = 0; row < numRows; row++) {
+        //         grid[col][row] = defaultAngle;
+        //     }
+        // }
     };
 
     // p.draw = () => {};

@@ -1,8 +1,8 @@
 /**
- * The returned  matrix (multidimensional array), typed recusively to ensure each
- * point matches the type of `createNDimensionalArray`'s initialValues parameter.
+ * A multidimensional array returned by `createNDimensionalArray`,
+ * typed recusively to ensure each point has the same type (`T`) as `initialValues`.
  */
-type Matrix<T> = T[] | Matrix<T>[];
+export type Matrix<T> = T[] | Matrix<T>[];
 
 /**
  * Returns a matrix (multidimensional array) with your desired dimensions and values.
@@ -17,13 +17,26 @@ type Matrix<T> = T[] | Matrix<T>[];
  * optional `initialValues` parameter.
  *
  * @param dimensions - The desired dimensions of the matrix. A number or array of numbers.
- * @param initialValues - The value that each point in the matrix will initialise to. Defaults to `null`.
+ * @param initialValues - The value that each point in the matrix will initialise to. Can be anything. Defaults to `null`.
  * @returns A matrix of `N` dimensions, with each point initialised to the `initialValues` parameter.
  */
-const createNDimensionalArray = <T>(
+export function createNDimensionalArray<T>(
+    dimensions: 1,
+    initialValues?: T
+): T[];
+export function createNDimensionalArray<T>(
+    dimensions: 2 | [number, number],
+    initialValues?: T
+): T[][];
+export function createNDimensionalArray<T>(
+    dimensions: 3 | [number, number, number],
+    initialValues?: T
+): T[][][];
+
+export function createNDimensionalArray<T>(
     dimensions: number | number[],
     initialValues: T = null
-): Matrix<T> => {
+): Matrix<T> {
     let currentDimensionWidth: number;
     let remainingDimensions: number | number[];
     let needsRecursion: boolean;
@@ -41,12 +54,8 @@ const createNDimensionalArray = <T>(
     const currentMatrix = Array(currentDimensionWidth).fill(initialValues);
 
     const finalMatrix = needsRecursion
-        ? currentMatrix.map(() =>
-              createNDimensionalArray(remainingDimensions, initialValues)
-          )
+        ? currentMatrix.map(() => createNDimensionalArray(1, initialValues))
         : currentMatrix;
 
     return finalMatrix;
-};
-
-export default createNDimensionalArray;
+}

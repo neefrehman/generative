@@ -87,8 +87,7 @@ const Home = ({ sketchArray }: SketchArrayProp) => (
 
 export const getStaticProps: GetStaticProps = async () => {
     // can't abstract this to ./utils to share with [sketch].tsx as I get the following error:
-    // Module not found: Can't resolve 'fs' in '/Users/neef/Desktop/generative/src/utils'
-
+    // `Module not found: Can't resolve 'fs' in '/Users/neef/Desktop/generative/src/utils'`
     const sketchArray: string[] = [];
 
     const sketchDirectory = path.join(process.cwd(), "src/sketches");

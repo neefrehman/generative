@@ -4,14 +4,13 @@ import path from "path";
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
-// import { useRouter } from "next/router";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextOverlay from "../components/TextOverlay";
 
-const StyledSketchPage = styled.div`
+export const StyledSketchPage = styled.div`
     margin: 0;
 
     canvas {
@@ -52,13 +51,6 @@ const SketchPage = ({ sketchId }) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
-    // const router = useRouter();
-    // const { sketch } = router.query;
-    // const sketchId = typeof sketch === "string" ? sketch : "";
-
-    const sketchExists = RegExp(/^[0-9]{6}$/).test(sketchId);
-    // const sketchExists = sketchArray.includes(sketchId);
-
     const year = sketchId?.substr(4, 2);
     const month = sketchId?.substr(2, 2);
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
@@ -71,31 +63,26 @@ const SketchPage = ({ sketchId }) => {
                 <title>{sketchId} — Generative</title>
             </Head>
 
-            {hasMounted &&
-                (sketchExists ? (
-                    <ErrorBoundary fallback={<TextOverlay text="Error" />}>
-                        <Suspense fallback={<TextOverlay text="Loading" />}>
-                            <Sketch />
-                        </Suspense>
-                    </ErrorBoundary>
-                ) : (
-                    <TextOverlay text="Page not found" /> // FIXME: broken when [sketch] is entrypoint: https://github.com/zeit/next.js/issues/12435
-                ))}
+            {hasMounted && (
+                <ErrorBoundary fallback={<TextOverlay text="Error" />}>
+                    <Suspense fallback={<TextOverlay text="Loading" />}>
+                        <Sketch />
+                    </Suspense>
+                </ErrorBoundary>
+            )}
 
             <footer>
                 <Link href="/">
                     <a>← Home</a>
                 </Link>
 
-                {sketchExists && (
-                    <a
-                        href={`https://github.com/neefrehman/Generative/blob/master/src/${pathToSketch}.tsx`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {sketchId}
-                    </a>
-                )}
+                <a
+                    href={`https://github.com/neefrehman/Generative/blob/master/src/${pathToSketch}.tsx`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {sketchId}
+                </a>
             </footer>
         </StyledSketchPage>
     );
@@ -139,14 +126,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths: sketchArray.map(sketchId => ({
-            params: { id: sketchId }
+            params: { sketch: sketchId }
         })),
         fallback: false
     };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    return { props: { sketchId: params.id } };
+    return { props: { sketchId: params.sketch } };
 };
 
 export default SketchPage;

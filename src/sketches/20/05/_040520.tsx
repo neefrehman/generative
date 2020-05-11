@@ -1,11 +1,8 @@
 import React from "react";
 import p5 from "p5";
+import makeMatrix from "make-matrix";
 
 import P5Wrapper from "../../../components/P5Wrapper";
-import {
-    createNDimensionalArray,
-    Matrix
-} from "../../utils/createNDimensionalArray";
 
 // Inspired by Tyler Hobbs' Flow Field Essay: https://tylerxhobbs.com/essays/2020/flow-fields
 
@@ -17,7 +14,7 @@ const sketch = (p: p5) => {
     let resolution: number;
     let numColumns: number;
     let numRows: number;
-    // let grid: Matrix<boolean>;
+    let grid: number[][];
     let defaultAngle: number;
 
     p.setup = () => {
@@ -31,19 +28,17 @@ const sketch = (p: p5) => {
         resolution = p.width * 0.01;
         numColumns = Math.floor((rightX - leftX) / resolution);
         numRows = Math.floor((bottomY - topY) / resolution);
-        const grid = createNDimensionalArray;
+        grid = makeMatrix([numColumns, numRows]);
         defaultAngle = p.PI * 0.25;
-
-        // grid;
-
-        // for (let col = 0; col < numColumns; col++) {
-        //     for (let row = 0; row < numRows; row++) {
-        //         grid[col][row] = defaultAngle;
-        //     }
-        // }
     };
 
-    // p.draw = () => {};
+    // p.draw = () => {
+    //     // grid.forEach(_, x => {
+    //     //     grid.forEach(_, y => {
+    //     //         console.log(x, y);
+    //         });
+    //     });
+    // };
 };
 
 const S040520 = () => <P5Wrapper sketch={sketch} />;

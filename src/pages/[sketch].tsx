@@ -47,13 +47,14 @@ export const StyledSketchPage = styled.div`
     }
 `;
 
-const SketchPage = ({ sketchId }) => {
+export interface SketchPageProps {
+    sketchId: string;
+    pathToSketch: string;
+}
+
+const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
-
-    const year = sketchId?.substr(4, 2);
-    const month = sketchId?.substr(2, 2);
-    const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
 
     const Sketch = lazy(() => import(`../${pathToSketch}`));
 
@@ -124,16 +125,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
         });
     });
 
-    return {
-        paths: sketchArray.map(sketchId => ({
-            params: { sketch: sketchId }
-        })),
-        fallback: false
-    };
+    const paths = sketchArray.map(sketchId => ({
+        params: { sketch: sketchId }
+    }));
+
+    return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    return { props: { sketchId: params.sketch } };
+    const sketchId = typeof params.sketch === "string" ? params.sketch : "";
+
+    const year = sketchId.substr(4, 2);
+    const month = sketchId.substr(2, 2);
+    const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+
+    return { props: { sketchId, pathToSketch } };
 };
 
 export default SketchPage;

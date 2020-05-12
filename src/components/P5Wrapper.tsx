@@ -22,7 +22,7 @@ const P5Wrapper = ({ sketch, resizable = true, children }: P5WrapperProps) => {
         }
 
         return () => canvas.remove();
-    }, []);
+    }, [sketch]);
 
     return (
         <>

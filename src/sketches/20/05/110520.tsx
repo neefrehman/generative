@@ -13,15 +13,15 @@ const sketch = (p: p5) => {
     p.setup = () => {
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
         p.stroke(181, 105, 25);
-        p.strokeWeight(2);
+        p.strokeWeight(1);
 
         resolution = p.width * 0.05;
         const numColumns = Math.ceil(p.width / resolution);
         const numRows = Math.ceil(p.height / resolution);
         grid = makeMatrix([numColumns, numRows, numColumns]);
-    };
+        // };
 
-    p.draw = () => {
+        // p.draw = () => {
         p.background(12, 32, 11);
 
         p.translate(-p.width / 2, -p.height / 2);

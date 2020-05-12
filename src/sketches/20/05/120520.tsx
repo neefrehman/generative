@@ -8,8 +8,8 @@ const sketch = (p: p5) => {
     let res: number;
     let grid: number[][][];
 
-    const camZStart = -800;
-    let camZ = camZStart;
+    let camZStart;
+    let camZ;
 
     let camXOff = 0;
     let camYOff = 0;
@@ -23,6 +23,9 @@ const sketch = (p: p5) => {
         const numColumns = Math.ceil(p.width / res);
         const numRows = Math.ceil(p.height / res);
         grid = makeMatrix([numColumns, numRows, numColumns]);
+
+        camZStart = (-res * numColumns) / 2;
+        camZ = camZStart;
     };
 
     p.draw = () => {

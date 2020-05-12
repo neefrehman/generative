@@ -1,5 +1,5 @@
 import React from "react";
-import p5 from "p5";
+import p5 from "p5/lib/p5.min";
 import makeMatrix from "make-matrix";
 
 import P5Wrapper from "../../../components/P5Wrapper";

@@ -31,7 +31,7 @@ const sketch = (p: p5) => {
         res = longestDimension * 0.1;
 
         numColumns = forceOdd(Math.ceil(p.width / res));
-        numRows = forceOdd(Math.ceil(p.height / res));
+        numRows = 2;
 
         grid = makeMatrix([numColumns + 1, numRows, numColumns]);
 
@@ -42,7 +42,7 @@ const sketch = (p: p5) => {
     p.draw = () => {
         p.background(21, 12, 53);
         camZ = camZ >= camZStart + res ? camZStart : camZ + 2;
-        p.translate((-numColumns * res) / 2, (-numRows * res) / 2, camZ);
+        p.translate((-numColumns * res) / 2, -res / 2, camZ);
         p.rotateX(camXOff);
         p.rotateY(camYOff);
 
@@ -56,13 +56,10 @@ const sketch = (p: p5) => {
                     const fogIntensity = p.map(z, 0, row.length, 20, 255);
                     p.stroke(220, 175, 225, fogIntensity);
 
-                    if (y === numColumns / 3 || y === numColumns / 3 - 1) {
-                        // Don't draw last horizontal lines
-                        if (x !== row.length) {
-                            p.line(curX, curY, curZ, curX + res, curY, curZ);
-                        }
-                        p.line(curX, curY, curZ, curX, curY, curZ + res);
+                    if (x !== row.length) {
+                        p.line(curX, curY, curZ, curX + res, curY, curZ);
                     }
+                    p.line(curX, curY, curZ, curX, curY, curZ + res);
                 });
             });
         });

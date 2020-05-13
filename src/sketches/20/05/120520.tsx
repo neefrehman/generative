@@ -5,6 +5,7 @@ import makeMatrix from "make-matrix";
 import P5Wrapper from "../../../components/P5Wrapper";
 
 const sketch = (p: p5) => {
+    let longestDimension: number;
     let res: number;
     let grid: number[][][];
 
@@ -19,12 +20,13 @@ const sketch = (p: p5) => {
         p.stroke(181, 105, 25);
         p.strokeWeight(3);
 
-        res = p.width * 0.1;
+        longestDimension = Math.max(p.width, p.height);
+        res = longestDimension * 0.1;
         const numColumns = Math.ceil(p.width / res);
         const numRows = Math.ceil(p.height / res);
         grid = makeMatrix([numColumns, numRows, numColumns]);
 
-        camZStart = (-res * numColumns) / 2;
+        camZStart = p.width > 800 ? (-res * numColumns) / 2 : 2 * res;
         camZ = camZStart;
     };
 
@@ -55,6 +57,13 @@ const sketch = (p: p5) => {
     };
 
     p.mouseMoved = () => {
+        const mappedMouseY = p.map(p.mouseY, 0, p.height, -0.02, 0.02);
+        const mappedMouseX = p.map(p.mouseX, 0, p.width, -0.02, 0.02);
+        camXOff = p.lerp(camXOff, mappedMouseY, 0.5);
+        camYOff = p.lerp(camYOff, mappedMouseX, 0.5);
+    };
+
+    p.mouseDragged = () => {
         const mappedMouseY = p.map(p.mouseY, 0, p.height, -0.02, 0.02);
         const mappedMouseX = p.map(p.mouseX, 0, p.width, -0.02, 0.02);
         camXOff = p.lerp(camXOff, mappedMouseY, 0.5);

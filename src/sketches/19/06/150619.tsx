@@ -42,6 +42,6 @@ const sketch = (p: p5) => {
     };
 };
 
-const S150619 = () => <P5Wrapper sketch={sketch} resizable={false} />;
+const S150619 = () => <P5Wrapper sketch={sketch} autoResizeToWindow={false} />;
 
 export default S150619;

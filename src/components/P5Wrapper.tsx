@@ -5,17 +5,21 @@ import p5 from "p5/lib/p5.min"; // TODO: alias to minified version instead of im
 
 interface P5WrapperProps {
     sketch: (p: p5) => void;
-    resizable?: boolean;
+    autoResizeToWindow?: boolean;
     children?: ReactNode | HTMLElement;
 }
 
-const P5Wrapper = ({ sketch, resizable = true, children }: P5WrapperProps) => {
+const P5Wrapper = ({
+    sketch,
+    autoResizeToWindow = true,
+    children
+}: P5WrapperProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const canvas = new p5(sketch, wrapperElement.current);
 
-        if (resizable) {
+        if (autoResizeToWindow) {
             canvas.windowResized = () => {
                 canvas.resizeCanvas(canvas.windowWidth, canvas.windowHeight);
             };

@@ -33,7 +33,7 @@ const sketch = (p: p5) => {
         numColumns = forceOdd(Math.ceil(p.width / res));
         numRows = forceOdd(Math.ceil(p.height / res));
 
-        grid = makeMatrix([numColumns + 1, numRows, numColumns]);
+        grid = makeMatrix([numColumns, numRows, numColumns]);
 
         camZStart = p.width > 800 ? (-res * numColumns) / 2 : 2 * res;
         camZ = camZStart;
@@ -56,13 +56,9 @@ const sketch = (p: p5) => {
                     const fogIntensity = p.map(z, 0, row.length, 20, 255);
                     p.stroke(220, 175, 225, fogIntensity);
 
-                    if (y === numColumns / 3 || y === numColumns / 3 - 1) {
-                        // Don't draw last horizontal lines
-                        if (x !== row.length) {
-                            p.line(curX, curY, curZ, curX + res, curY, curZ);
-                        }
-                        p.line(curX, curY, curZ, curX, curY, curZ + res);
-                    }
+                    p.line(curX, curY, curZ, curX + res, curY, curZ);
+                    p.line(curX, curY, curZ, curX, curY + res, curZ);
+                    p.line(curX, curY, curZ, curX, curY, curZ + res);
                 });
             });
         });
@@ -83,6 +79,6 @@ const sketch = (p: p5) => {
     };
 };
 
-const S120520 = () => <P5Wrapper sketch={sketch} />;
+const S130520 = () => <P5Wrapper sketch={sketch} />;
 
-export default S120520;
+export default S130520;

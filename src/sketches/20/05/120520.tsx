@@ -33,15 +33,16 @@ const sketch = (p: p5) => {
         numColumns = forceOdd(Math.ceil(p.width / res));
         numRows = 2;
 
-        grid = makeMatrix([numColumns + 1, numRows, numColumns]);
+        // Add one extra column as we'll be removing horizontal lines from the last one
+        grid = makeMatrix([numColumns + 1, numRows, numColumns + 5]);
 
-        camZStart = p.width > 800 ? (-res * numColumns) / 2 : 2 * res;
+        camZStart = p.width > 800 ? (-res * numColumns) / 2 : 1 * res;
         camZ = camZStart;
     };
 
     p.draw = () => {
         p.background(21, 12, 53);
-        camZ = camZ >= camZStart + res ? camZStart : camZ + 2;
+        camZ = camZ >= camZStart + res ? camZStart : camZ + 1.5;
         p.translate((-numColumns * res) / 2, -res / 2, camZ);
         p.rotateX(camXOff);
         p.rotateY(camYOff);
@@ -56,10 +57,11 @@ const sketch = (p: p5) => {
                     const fogIntensity = p.map(z, 0, row.length, 20, 255);
                     p.stroke(220, 175, 225, fogIntensity);
 
+                    p.line(curX, curY, curZ, curX, curY, curZ + res);
+                    // Don't draw right-most horizontal lines going outward
                     if (x !== row.length) {
                         p.line(curX, curY, curZ, curX + res, curY, curZ);
                     }
-                    p.line(curX, curY, curZ, curX, curY, curZ + res);
                 });
             });
         });

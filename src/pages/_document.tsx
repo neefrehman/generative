@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
@@ -16,6 +17,24 @@ class MyDocument extends Document {
                     <meta
                         name="description"
                         content="A playground for experimenting with generative art, WebGL, and machine learning."
+                    />
+
+                    {/* GA */}
+                    <script
+                        async
+                        src="https://www.googletagmanager.com/gtag/js?id=UA-129158840-2"
+                    />
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', 'UA-129158840-2', {
+                                    page_path: window.location.pathname,
+                                });
+                            `
+                        }}
                     />
 
                     {/* OG */}

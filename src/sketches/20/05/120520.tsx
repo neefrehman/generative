@@ -24,6 +24,7 @@ const sketch = (p: p5) => {
 
     p.setup = () => {
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
+        p.frameRate(24);
         p.stroke(181, 105, 25);
         p.strokeWeight(3);
 
@@ -42,7 +43,7 @@ const sketch = (p: p5) => {
 
     p.draw = () => {
         p.background(21, 12, 53);
-        camZ = camZ >= camZStart + res ? camZStart : camZ + 1.5;
+        camZ = camZ >= camZStart + res ? camZStart : camZ + 2;
         p.translate((-numColumns * res) / 2, -res / 2, camZ);
         p.rotateX(camXOff);
         p.rotateY(camYOff);

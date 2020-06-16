@@ -9,10 +9,10 @@ const GradientContainer = styled.div`
     height: 100vh;
     --size: 85%;
     --x1: calc(var(--sinFrame) * 3);
-    --x2: calc(var(--sinFrame) * 5);
-    --x3: calc(var(--sinFrame) * 2);
+    --x2: calc(var(--cosFrame) * 5);
+    --x3: calc(var(--cosFrame) * 2);
     --y1: calc(var(--sinFrame) * 4);
-    --y2: calc(var(--sinFrame) * 1.6);
+    --y2: calc(var(--cosFrame) * 1.6);
     --y3: calc(var(--sinFrame) * 3);
 
     background: radial-gradient(
@@ -67,8 +67,9 @@ const s160620 = () => {
                     // @ts-ignore — https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": mouseX,
                     "--mouseY": mouseY,
-                    // replace with trig functions in CSS when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
-                    "--sinFrame": Math.sin(frame / 25)
+                    "--sinFrame": Math.sin(frame / 25),
+                    "--cosFrame": Math.cos(frame / 33)
+                    // ^replace with trig functions in CSS when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />
         </>

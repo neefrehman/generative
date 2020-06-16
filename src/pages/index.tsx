@@ -1,5 +1,5 @@
-import fs from "fs";
 import path from "path";
+import fs from "fs";
 
 import React from "react";
 import { GetStaticProps } from "next";
@@ -15,7 +15,7 @@ const HomePageWrapper = styled.div`
     }
 
     @media (max-width: 425px) {
-        margin: 25px 25px;
+        margin: 25px;
     }
 `;
 

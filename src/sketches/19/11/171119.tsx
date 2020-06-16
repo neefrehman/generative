@@ -2,7 +2,7 @@
 // https://www.youtube.com/watch?v=mhjuuHl6qHM&list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH&index=179
 
 import React from "react";
-import p5 from "p5/lib/p5.min";
+import p5 from "p5";
 
 import P5Wrapper from "../../../components/P5Wrapper";
 

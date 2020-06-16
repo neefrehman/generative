@@ -3,30 +3,47 @@
     "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module",
-        "allowImportExportEverywhere": true
+        "allowImportExportEverywhere": true,
+        "project": "./tsconfig.json",
+        "tsconfigRootDir": "./"
     },
     "env": {
         "browser": true,
         "node": true
     },
-    "plugins": ["react", "jsx-a11y", "prettier", "import"],
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "prettier",
+        "import",
+        "@typescript-eslint"
+    ],
     "extends": [
         "plugin:react/recommended",
         "airbnb",
+        "plugin:@typescript-eslint/recommended",
         "plugin:jsx-a11y/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "prettier"
+        "plugin:import/typescript",
+        "prettier",
+        "prettier/@typescript-eslint"
     ],
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    },
     "rules": {
         "strict": 0,
         "no-console": "warn",
         "no-plusplus": [
-            "error",
+            "warn",
             {
                 "allowForLoopAfterthoughts": true
             }
         ],
+        "no-unused-expressions": "off",
         "no-param-reassign": [
             "error",
             {
@@ -52,6 +69,14 @@
         "import/order": [
             "warn",
             {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index"
+                ],
                 "newlines-between": "always"
             }
         ],
@@ -78,20 +103,7 @@
                 "specialLink": ["href"],
                 "aspects": ["invalidHref", "preferButton"]
             }
-        ]
-    },
-    "overrides": [
-        {
-            "files": ["*.ts", "*.tsx"],
-            "plugins": ["@typescript-eslint"],
-            "extends": [
-                "plugin:@typescript-eslint/recommended",
-                "plugin:import/typescript",
-                "prettier/@typescript-eslint"
-            ],
-            "rules": {
-                "@typescript-eslint/explicit-function-return-type": "off"
-            }
-        }
-    ]
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off"
+    }
 }

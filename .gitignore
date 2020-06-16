@@ -6,11 +6,8 @@
 # next.js
 /.next/
 /out/
-
-#linaria
 .linaria-cache/
-
-# production
+.netlify/
 /build
 
 # misc

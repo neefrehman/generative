@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 /* eslint-disable new-cap */
 import React, { useRef, useEffect, ReactNode } from "react";
-import p5 from "p5/lib/p5.min"; // TODO: alias to minified version instead of importing, so I can still access types (update: alises don't work with Next)
+import p5 from "p5";
 import { CSSProperties } from "linaria/react";
 
 interface P5WrapperProps {

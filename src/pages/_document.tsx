@@ -2,6 +2,12 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
+const title = "Generative — a digital sketchbook by Neef Rehman";
+const description =
+    "A playground for experimenting with generative art, WebGL, and machine learning.";
+const url = "https://generative.neef.co";
+const imageUrl = "https://generative.neef.co/static/meta-image.png";
+
 class MyDocument extends Document {
     render() {
         return (
@@ -10,14 +16,8 @@ class MyDocument extends Document {
                     {/* General */}
                     <meta name="author" content="Neef Rehman" />
                     <link rel="icon" href="/static/favicon.ico" />
-                    <meta
-                        name="title"
-                        content="Generative — a digital sketchbook by Neef Rehman"
-                    />
-                    <meta
-                        name="description"
-                        content="A playground for experimenting with generative art, WebGL, and machine learning."
-                    />
+                    <meta name="title" content={title} />
+                    <meta name="description" content={description} />
 
                     {/* GA */}
                     <script
@@ -39,44 +39,23 @@ class MyDocument extends Document {
 
                     {/* OG */}
                     <meta property="og:type" content="website" />
-                    <meta
-                        property="og:url"
-                        content="https://generative.neef.co"
-                    />
-                    <meta
-                        property="og:title"
-                        content="Generative — a digital sketchbook by Neef Rehman"
-                    />
-                    <meta
-                        property="og:description"
-                        content="A playground for experimenting with generative art, WebGL, and machine learning."
-                    />
-                    <meta
-                        property="og:image"
-                        content="https://generative.neef.co/static/meta-image.png"
-                    />
+                    <meta property="og:url" content={url} />
+                    <meta property="og:title" content={title} />
+                    <meta property="og:description" content={description} />
+                    <meta property="og:image" content={imageUrl} />
 
                     {/* Twitter */}
                     <meta
                         property="twitter:card"
                         content="summary_large_image"
                     />
-                    <meta
-                        property="twitter:url"
-                        content="https://generative.neef.co"
-                    />
-                    <meta
-                        property="twitter:title"
-                        content="Generative — a digital sketchbook by Neef Rehman"
-                    />
+                    <meta property="twitter:url" content={url} />
+                    <meta property="twitter:title" content={title} />
                     <meta
                         property="twitter:description"
-                        content="A playground for experimenting with generative art, WebGL, and machine learning."
+                        content={description}
                     />
-                    <meta
-                        property="twitter:image"
-                        content="https://generative.neef.co/static/meta-image.png"
-                    />
+                    <meta property="twitter:image" content={imageUrl} />
                 </Head>
 
                 <body>

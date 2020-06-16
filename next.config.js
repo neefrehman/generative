@@ -13,6 +13,16 @@ module.exports = withCSS({
                 }
             ]
         });
+        config.module.rules.push({
+            test: /\.(glsl|vs|fs|vert|frag)$/,
+            exclude: /node_modules/,
+            use: ["raw-loader", "glslify-loader"]
+        });
+        config.module.rules.push({
+            test: /\.(obj|gltf|mtl)$/,
+            exclude: /node_modules/,
+            use: ["url-loader"]
+        });
         return config;
     }
 });

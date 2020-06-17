@@ -7,35 +7,43 @@ import useAnimationFrame from "SketchUtils/useAnimationFrame";
 const GradientContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    --size: 85%;
-    --x1: calc(var(--sinFrame) * 3);
-    --y1: calc(var(--sinFrame) * 4);
-    --x2: calc(var(--cosFrame) * 4);
-    --y2: calc(var(--cosFrame) * 1.6);
-    --x3: calc(var(--cosFrame) * 3);
-    --y3: calc(var(--sinFrame) * 2);
+    --size: 75%;
+    --x1: calc(var(--sinFrame) * 4);
+    --y1: calc(var(--sinFrame) * 2);
+    --x2: calc(var(--cosFrame) * 2.8);
+    --y2: calc(var(--cosFrame) * 3);
+    --x3: calc(var(--cosFrame) * 2);
+    --y3: calc(var(--sinFrame) * 3);
+    --x4: calc(var(--cosFrame) * 1.8);
+    --y4: calc(var(--sinFrame) * 4);
 
     background: radial-gradient(
             circle at calc(40% + var(--mouseX) * var(--x1))
                 calc(100% + var(--mouseY) * var(--y1)),
-            rgba(255, 0, 0, 1) 0%,
-            rgba(255, 0, 0, 0) var(--size)
+            rgba(155, 93, 229, 1) 0%,
+            rgba(155, 93, 229, 0) var(--size)
         ),
         radial-gradient(
             circle at calc(0% + var(--mouseX) * calc(var(--x2) * -1))
                 calc(0% + var(--mouseY) * var(--y2)),
-            rgba(0, 255, 0, 1) 0%,
-            rgba(0, 255, 0, 0) var(--size)
+            rgba(241, 91, 181, 1) 0%,
+            rgba(241, 91, 181, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(70% + var(--mouseX) * var(--x3))
-                calc(20% + var(--mouseY) * var(--y3)),
-            rgba(0, 0, 255, 1) 0%,
-            rgba(0, 0, 255, 0) var(--size)
+            circle at calc(50% + var(--mouseX) * var(--x3))
+                calc(30% + var(--mouseY) * var(--y3)),
+            rgba(254, 228, 64, 1) 0%,
+            rgba(254, 228, 64, 0) var(--size)
+        ),
+        radial-gradient(
+            circle at calc(85% + var(--mouseX) * var(--x4))
+                calc(60% + var(--mouseY) * var(--y4)),
+            rgba(0, 187, 249, 1) 0%,
+            rgba(0, 187, 249, 0) var(--size)
         );
 `;
 
-const s160620 = () => {
+const s180620 = () => {
     const [mouseX, setMouseX] = useState(0.2);
     const [mouseY, setMouseY] = useState(0.2);
 
@@ -59,8 +67,8 @@ const s160620 = () => {
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
-                    "--sinFrame": Math.sin(frameCount / 30),
-                    "--cosFrame": Math.cos(frameCount / 50)
+                    "--sinFrame": Math.sin(frameCount / 25),
+                    "--cosFrame": Math.cos(frameCount / 40)
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />
@@ -68,4 +76,4 @@ const s160620 = () => {
     );
 };
 
-export default s160620;
+export default s180620;

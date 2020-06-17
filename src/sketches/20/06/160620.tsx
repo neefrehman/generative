@@ -12,7 +12,7 @@ const GradientContainer = styled.div`
     --y1: calc(var(--sinFrame) * 4);
     --x2: calc(var(--cosFrame) * 4);
     --y2: calc(var(--cosFrame) * 1.6);
-    --x3: calc(var(--cosFrame) * 4);
+    --x3: calc(var(--cosFrame) * 3);
     --y3: calc(var(--sinFrame) * 2);
 
     background: radial-gradient(
@@ -28,7 +28,7 @@ const GradientContainer = styled.div`
             rgba(0, 255, 0, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(80% + var(--mouseX) * var(--x3))
+            circle at calc(70% + var(--mouseX) * var(--x3))
                 calc(20% + var(--mouseY) * var(--y3)),
             rgba(0, 0, 255, 1) 0%,
             rgba(0, 0, 255, 0) var(--size)
@@ -67,9 +67,10 @@ const s160620 = () => {
                     // @ts-ignore — https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": mouseX,
                     "--mouseY": mouseY,
-                    "--sinFrame": Math.sin(frame / 25),
-                    "--cosFrame": Math.cos(frame / 33)
-                    // ^replace with trig functions in CSS when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
+                    "--sinFrame": Math.sin(frame / 30),
+                    "--cosFrame": Math.cos(frame / 50)
+                    // ^replace with trig functions within CSS when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
+                    // ^ could also replace with simplex-noise for simpler calc() in CSS?
                 }}
             />
         </>

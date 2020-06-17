@@ -9,27 +9,27 @@ const GradientContainer = styled.div`
     height: 100vh;
     --size: 75%;
     --x1: calc(var(--sinFrame) * 2);
-    --y1: calc(var(--sinFrame) * 3.2);
+    --y1: calc(var(--sinFrame) * 3.6);
     --x2: calc(var(--cosFrame) * 1.2);
     --y2: calc(var(--cosFrame) * 2.8);
     --x3: calc(var(--cosFrame) * 4);
-    --y3: calc(var(--sinFrame) * 2.3);
+    --y3: calc(var(--sinFrame) * 2.6);
 
     background: radial-gradient(
-            circle at calc(40% + var(--mouseX) * var(--x1))
+            circle at calc(33% + var(--mouseX) * var(--x1))
                 calc(100% + var(--mouseY) * var(--y1)),
             rgba(254, 127, 45, 1) 0%,
             rgba(254, 127, 45, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(0% + var(--mouseX) * calc(var(--x2) * -1))
+            circle at calc(10% + var(--mouseX) * calc(var(--x2) * -1))
                 calc(0% + var(--mouseY) * var(--y2)),
             rgba(251, 188, 14, 1) 0%,
             rgba(251, 188, 14, 0) var(--size)
         ),
         radial-gradient(
             circle at calc(70% + var(--mouseX) * var(--x3))
-                calc(20% + var(--mouseY) * var(--y3)),
+                calc(30% + var(--mouseY) * var(--y3)),
             rgba(64, 111, 140, 1) 0%,
             rgba(64, 111, 140, 0) var(--size)
         );

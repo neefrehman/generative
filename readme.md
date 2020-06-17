@@ -12,3 +12,4 @@ More in-depth readme coming in the future.
 [The Coding Train](https://www.youtube.com/user/shiffman)
 
 <!-- https://medium.com/@jtnimoy/how-to-extract-isolines-in-p5-js-e268b2b046a0 -->
+<!-- https://mrdoob.com/lab/javascript/webcam/slitscan/ -->

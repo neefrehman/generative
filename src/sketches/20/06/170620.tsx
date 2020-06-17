@@ -18,19 +18,19 @@ const GradientContainer = styled.div`
     --y4: calc(var(--sinFrame) * 5);
 
     background: radial-gradient(
-            circle at calc(40% + var(--mouseX) * var(--x1))
-                calc(100% + var(--mouseY) * var(--y1)),
+            circle at calc(30% + var(--mouseX) * var(--x1))
+                calc(80% + var(--mouseY) * var(--y1)),
             rgba(53, 80, 112, 1) 0%,
             rgba(53, 80, 112, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(0% + var(--mouseX) * calc(var(--x2) * -1))
-                calc(0% + var(--mouseY) * var(--y2)),
+            circle at calc(20% + var(--mouseX) * calc(var(--x2) * -1))
+                calc(30% + var(--mouseY) * var(--y2)),
             rgba(109, 89, 122, 1) 0%,
             rgba(109, 89, 122, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(60% + var(--mouseX) * var(--x3))
+            circle at calc(50% + var(--mouseX) * var(--x3))
                 calc(20% + var(--mouseY) * var(--y3)),
             rgba(229, 107, 111, 1) 0%,
             rgba(229, 107, 111, 0) var(--size)
@@ -67,8 +67,8 @@ const s170620 = () => {
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
-                    "--sinFrame": Math.sin(frameCount / 33),
-                    "--cosFrame": Math.cos(frameCount / 45)
+                    "--sinFrame": Math.sin(frameCount / 50),
+                    "--cosFrame": Math.cos(frameCount / 33)
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />

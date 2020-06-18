@@ -7,7 +7,7 @@ import useAnimationFrame from "SketchUtils/useAnimationFrame";
 const GradientContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    --size: 75%;
+    --size: 65%;
     --x1: calc(var(--sinFrame) * 4);
     --y1: calc(var(--sinFrame) * 2);
     --x2: calc(var(--cosFrame) * 2.8);
@@ -30,10 +30,10 @@ const GradientContainer = styled.div`
             rgba(241, 91, 181, 0) var(--size)
         ),
         radial-gradient(
-            circle at calc(55% + var(--mouseX) * var(--x3))
-                calc(20% + var(--mouseY) * var(--y3)),
+            circle at calc(60% + var(--mouseX) * var(--x3))
+                calc(30% + var(--mouseY) * var(--y3)),
             rgba(254, 228, 64, 1) 0%,
-            rgba(254, 228, 64, 0) var(--size)
+            rgba(254, 228, 64, 0) 55%
         ),
         radial-gradient(
             circle at calc(85% + var(--mouseX) * var(--x4))

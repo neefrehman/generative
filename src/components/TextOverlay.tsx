@@ -41,7 +41,7 @@ const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
             );
         }
         return () => clearTimeout(visibilityTimeout);
-    }, []);
+    }, [timeout, timeoutMs]);
 
     return <>{isVisible && <StyledText>{text}</StyledText>}</>;
 };

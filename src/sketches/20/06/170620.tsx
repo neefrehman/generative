@@ -43,7 +43,7 @@ const GradientContainer = styled.div`
         );
 `;
 
-const s170620 = () => {
+const S170620 = () => {
     const [mouseX, setMouseX] = useState(0.2);
     const [mouseY, setMouseY] = useState(0.2);
 
@@ -67,8 +67,8 @@ const s170620 = () => {
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
-                    "--sinFrame": Math.sin(frameCount / 50),
-                    "--cosFrame": Math.cos(frameCount / 33)
+                    "--sinFrame": Math.sin(frameCount / 62),
+                    "--cosFrame": Math.cos(frameCount / 45)
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />
@@ -76,4 +76,4 @@ const s170620 = () => {
     );
 };
 
-export default s170620;
+export default S170620;

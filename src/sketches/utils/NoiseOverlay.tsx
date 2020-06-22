@@ -18,11 +18,11 @@ interface NoiseProps {
 /**
  * Adds an svg noise overlay to the page to achieve a film-like grain effect
  *
- * @param {string} width The overlay's width
- * @param {string} height The overlay's height
- * @param {number} opacity The overlay's opacity (noise strength) — a number between 0 and 1
- * @param {number} grainSize The size of the grain (noise size) — a number between 0 and 1
- * @param {boolean} isAnimated Animates the noise to achieve a static effect
+ * @param width - The overlay's width
+ * @param height - The overlay's height
+ * @param opacity - The overlay's opacity (noise strength) — a number between 0 and 1
+ * @param grainSize - The size of the grain (noise size) — a number between 0 and 1
+ * @param isAnimated - Animates the noise to achieve a static effect
  */
 const NoiseOverlay = ({
     width = "100vw",

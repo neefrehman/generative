@@ -31,7 +31,7 @@ const P5Wrapper = ({
         }
 
         return () => canvas.remove();
-    }, [sketch]);
+    }, [sketch, autoResizeToWindow]);
 
     return (
         <>

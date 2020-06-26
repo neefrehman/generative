@@ -3,27 +3,45 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import getMean from "./getMean";
 
 /**
+ * An optional configuration object for `useAnimationFrame`
+ */
+interface UseAnimationFrameOptions {
+    /** A callback that will be run once when the animation starts */
+    onStart?: () => void;
+    /** A callback that will be run on every frame of the animation */
+    onFrame?: () => void;
+    /** A callback that will be run on once when the animation ends */
+    onEnd?: () => void;
+    /** A delay (in ms) after which the animation will start */
+    delay?: number;
+    /** A time in ms after which the animation will be stopped */
+    endAfter?: number;
+    /** The desired fps that the animation will be throttled to */
+    fps?: number;
+}
+
+interface UseAnimationFrameResult {
+    /** The current elapsed time of the animation in ms */
+    elapsedTime: number;
+    /** The current number of elapsed frames */
+    frameCount: number;
+    /** The current fps of the animation (averaged over the last 10 frames) */
+    fps: number;
+    /** A function that will stop the animation when called */
+    endAnimation: () => void;
+    /** A function that will restart the animation when called */
+    startAnimation: () => void;
+}
+
+/**
  * A custom hook to use `requestAnimationFrame` in a React component
  *
  * @param options - An optional configuration object for the hook
- * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a function to stop the animation
+ * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a functions to stop and start the animation
  */
 const useAnimationFrame = (
-    options: {
-        /** A callback that will be run once when the animation starts */
-        onStart?: () => void;
-        /** A callback that will be run on every frame of the animation */
-        onFrame?: () => void;
-        /** A callback that will be run on once when the animation ends */
-        onEnd?: () => void;
-        /** A delay (in ms) after which the animation will start */
-        delay?: number;
-        /** A time in ms after which the animation will be stopped */
-        endAfter?: number;
-        /** The desired fps that the animation will be throttled to */
-        fps?: number;
-    } = {}
-) => {
+    options: UseAnimationFrameOptions = {}
+): UseAnimationFrameResult => {
     const {
         onStart,
         onFrame,
@@ -84,8 +102,16 @@ const useAnimationFrame = (
     }, [animate, onStart, onEnd, delay, endAfter]);
 
     const endAnimation = () => cancelAnimationFrame(requestRef.current);
+    const startAnimation = () =>
+        (requestRef.current = requestAnimationFrame(animate));
 
-    return { elapsedTime, frameCount, fps: getMean(fpsArray), endAnimation };
+    return {
+        elapsedTime,
+        frameCount,
+        fps: getMean(fpsArray),
+        endAnimation,
+        startAnimation
+    };
 };
 
 export default useAnimationFrame;

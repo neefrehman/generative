@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import { styled } from "linaria/react";
 
 import NoiseOverlay from "SketchUtils/NoiseOverlay";
@@ -42,9 +42,9 @@ const S190620 = () => {
     const { frameCount } = useAnimationFrame();
 
     const mouseScale = 0.333;
-    const updateGradient = e => {
-        const x = e.nativeEvent.offsetX / e.target.clientWidth - 0.5;
-        const y = e.nativeEvent.offsetY / e.target.clientHeight - 0.5;
+    const updateGradient = (e: MouseEvent<HTMLDivElement>) => {
+        const x = e.nativeEvent.offsetX / e.currentTarget.clientWidth - 0.5;
+        const y = e.nativeEvent.offsetY / e.currentTarget.clientHeight - 0.5;
         setMouseX(x * mouseScale);
         setMouseY(y * mouseScale);
     };

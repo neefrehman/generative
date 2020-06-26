@@ -8,21 +8,20 @@ const SVG = styled.svg`
 `;
 
 interface NoiseProps {
+    /** The overlay's width */
     width?: string;
+    /** he overlay's height */
     height?: string;
+    /** The overlay's opacity (noise strength) — a number between 0 and 1 */
     opacity?: number;
+    /** The size of the grain (noise size) — a number between 0 and 1 */
     grainSize?: number;
+    /** Animates the noise to achieve a TV static-like effect */
     isAnimated?: boolean;
 }
 
 /**
- * Adds an svg noise overlay to the page to achieve a film-like grain effect
- *
- * @param width - The overlay's width
- * @param height - The overlay's height
- * @param opacity - The overlay's opacity (noise strength) — a number between 0 and 1
- * @param grainSize - The size of the grain (noise size) — a number between 0 and 1
- * @param isAnimated - Animates the noise to achieve a static effect
+ * Adds an svg noise overlay to achieve a film-like grain effect
  */
 const NoiseOverlay = ({
     width = "100vw",

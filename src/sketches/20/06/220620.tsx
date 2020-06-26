@@ -21,7 +21,7 @@ const Controls = () => {
         z: 20,
         config: {
             mass: 5.2,
-            tension: 310,
+            tension: 270,
             friction: 150
         },
         onFrame: ({ z }) => {
@@ -44,9 +44,7 @@ const Controls = () => {
             args={[camera, gl.domElement]}
             autoRotate
             autoRotateSpeed={rotationSpeed}
-            enablePan={false}
             enableZoom={false}
-            enableRotate={false}
         />
     );
 };

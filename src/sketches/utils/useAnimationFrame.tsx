@@ -5,31 +5,34 @@ import getMean from "./getMean";
 /**
  * A custom hook to use `requestAnimationFrame` in a React component
  *
- * @param config - An optional configuration object for the hook
- * @param config.onStart - A callback that will be run once when the animation starts
- * @param config.onFrame - A callback that will be run on every frame of the animation
- * @param config.onEnd - A callback that will be run on once when the animation ends
- * @param config.delay - A delay in ms after which the animation will start
- * @param config.endAfter - A time in ms after which the animation will be stopped
- * @param config.fps - The desired fps that the animation will be throttled to
- *
+ * @param options - An optional configuration object for the hook
  * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a function to stop the animation
  */
-const useAnimationFrame = ({
-    onStart,
-    onFrame,
-    onEnd,
-    delay,
-    endAfter,
-    fps: throttledFps
-}: {
-    onStart?: () => void;
-    onFrame?: () => void;
-    onEnd?: () => void;
-    delay?: number;
-    endAfter?: number;
-    fps?: number;
-} = {}) => {
+const useAnimationFrame = (
+    options: {
+        /** A callback that will be run once when the animation starts */
+        onStart?: () => void;
+        /** A callback that will be run on every frame of the animation */
+        onFrame?: () => void;
+        /** A callback that will be run on once when the animation ends */
+        onEnd?: () => void;
+        /** A delay (in ms) after which the animation will start */
+        delay?: number;
+        /** A time in ms after which the animation will be stopped */
+        endAfter?: number;
+        /** The desired fps that the animation will be throttled to */
+        fps?: number;
+    } = {}
+) => {
+    const {
+        onStart,
+        onFrame,
+        onEnd,
+        delay,
+        endAfter,
+        fps: throttledFps
+    } = options;
+
     const requestRef = useRef<number>();
     const startTimeRef = useRef<DOMHighResTimeStamp>(performance.now());
     const prevFrameTimeRef = useRef<DOMHighResTimeStamp>(performance.now());

@@ -25,6 +25,10 @@ export const globalStyles = css`
             src: url("/static/fonts/UntitledSansWeb-Medium.woff2");
         }
 
+        * {
+            margin: 0;
+        }
+
         body {
             font-family: "Untitled Sans", helvetica neue, helvetica, arial,
                 sans-serif;
@@ -77,6 +81,10 @@ export const globalStyles = css`
                     }
                 }
             }
+        }
+
+        canvas:focus {
+            outline: none;
         }
     }
 

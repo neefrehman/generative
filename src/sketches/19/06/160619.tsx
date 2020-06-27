@@ -1,7 +1,7 @@
 import React from "react";
 import p5 from "p5";
 
-import P5Wrapper from "../../../components/P5Wrapper";
+import P5Wrapper from "../../../components/renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     const noiseIncrement = 0.05;

@@ -10,9 +10,9 @@ import CanvasSketchWrapper, {
     CanvasSketchSketchFunction,
     TwoD,
     CanvasSketchSettings
-} from "../../../components/CanvasSketchWrapper";
+} from "../../../components/renderers/CanvasSketchWrapper";
 
-const shortestDimension = getShortestDimension() * 2 - 100;
+const shortestDimension = getShortestDimension(true) * 2;
 
 const settings: CanvasSketchSettings = {
     dimensions: [shortestDimension, shortestDimension]

@@ -9,9 +9,9 @@ import CanvasSketchWrapper, {
     CanvasSketchSketchFunction,
     TwoD,
     CanvasSketchSettings
-} from "../../../components/CanvasSketchWrapper";
+} from "../../../components/renderers/CanvasSketchWrapper";
 
-const shortestDimension = getShortestDimension() * 2 - 100;
+const shortestDimension = getShortestDimension(true) * 2;
 
 const settings: CanvasSketchSettings = {
     dimensions: [shortestDimension, shortestDimension]
@@ -42,7 +42,7 @@ const sketch = ({ width, height }): CanvasSketchSketchFunction<TwoD> => {
     };
 
     let grid = createGrid();
-    let shapes = [];
+    const shapes = [];
 
     while (grid.length > 2) {
         const pointsToRemove = random.shuffle(grid).slice(0, 2);
@@ -63,7 +63,7 @@ const sketch = ({ width, height }): CanvasSketchSketchFunction<TwoD> => {
 
     shapes.sort((a, b) => a.y - b.y);
 
-    return ({ context, width, height }) => {
+    return ({ context }) => {
         context.globalAlpha = 1;
         context.fillStyle = background;
         context.fillRect(0, 0, width, height);
@@ -78,7 +78,8 @@ const sketch = ({ width, height }): CanvasSketchSketchFunction<TwoD> => {
             context.fillStyle = color;
             context.fill();
 
-            context.lineJoin = context.lineCap = "round";
+            context.lineJoin = "round";
+            context.lineCap = "round";
             context.strokeStyle = background;
             context.globalAlpha = 1;
             context.stroke();

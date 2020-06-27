@@ -20,16 +20,17 @@ const CanvasSketchWrapper = ({
     style,
     children
 }: CanvasSketchWrapperProps) => {
-    const wrapperElement = useRef<HTMLDivElement>(null);
+    const wrapper = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const settings = {
-            parent: wrapperElement.current,
+            parent: wrapper.current,
             ...rawSettings
         };
-
         const canvas = canvasSketch(sketch, settings);
-        return () => wrapperElement.current.querySelector("canvas").remove(); // canvas.unload() not working - https://github.com/mattdesl/canvas-sketch/blob/master/docs/api.md#sketchmanager;
+
+        const wrapperEl = wrapper.current;
+        return () => wrapperEl.querySelector("canvas").remove(); // canvas.unload() not working - https://github.com/mattdesl/canvas-sketch/blob/master/docs/api.md#sketchmanager;
     }, [sketch, rawSettings]);
 
     // Fix for blur
@@ -40,7 +41,7 @@ const CanvasSketchWrapper = ({
     return (
         <>
             <div
-                ref={wrapperElement}
+                ref={wrapper}
                 className={className}
                 style={{
                     width: halvedDimensions[0],

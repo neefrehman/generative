@@ -2,7 +2,7 @@ import React from "react";
 import p5 from "p5";
 import makeMatrix from "make-matrix";
 
-import P5Wrapper from "../../../components/P5Wrapper";
+import P5Wrapper from "../../../components/renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     let longestDimension: number;

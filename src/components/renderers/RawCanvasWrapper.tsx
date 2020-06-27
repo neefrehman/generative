@@ -28,11 +28,12 @@ const RawCanvasWrapper = ({
     const canvas = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        const ctx = canvas.current.getContext(contextType);
+        const canvasEl = canvas.current;
+        const ctx = canvasEl.getContext(contextType);
         sketch(ctx);
 
-        return () => canvas.current.remove();
-    }, [sketch]);
+        return () => canvasEl.remove();
+    }, [contextType, sketch]);
 
     return (
         <>

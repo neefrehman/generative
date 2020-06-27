@@ -20,6 +20,9 @@ interface UseAnimationFrameOptions {
     fps?: number;
 }
 
+/**
+ * The returned object from `useAnimationFrame`
+ */
 interface UseAnimationFrameResult {
     /** The current elapsed time of the animation in ms */
     elapsedTime: number;

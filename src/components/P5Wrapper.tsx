@@ -12,6 +12,9 @@ interface P5WrapperProps {
     children?: ReactNode | HTMLElement;
 }
 
+/**
+ * A wrapper component for running P5 sketches. Handles rendering and cleanup.
+ */
 const P5Wrapper = ({
     sketch,
     autoResizeToWindow = true,

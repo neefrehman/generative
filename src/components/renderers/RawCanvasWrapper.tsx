@@ -36,7 +36,7 @@ const RawCanvasWrapper = ({
 
     useEffect(() => {
         const canvasEl = canvas.current;
-        const ctx: any = canvasEl.getContext("contextType"); // any used to fix BitmapRenderer type error
+        const ctx: any = canvasEl.getContext(contextType); // any used to fix BitmapRenderer type error
 
         if (contextType === "2d") {
             const dpr = window.devicePixelRatio || 1;

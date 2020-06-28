@@ -4,6 +4,8 @@ import React from "react";
 import { pick } from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
+import NoiseOverlay from "SketchUtils/NoiseOverlay";
+
 import RawCanvasWrapper, {
     RawCanvasSettings
 } from "../../../components/renderers/RawCanvasWrapper";
@@ -171,6 +173,11 @@ const sketch = (ctx: CanvasRenderingContext2D) => {
     init();
 };
 
-const S280620 = () => <RawCanvasWrapper sketch={sketch} settings={settings} />;
+const S280620 = () => (
+    <>
+        <RawCanvasWrapper sketch={sketch} settings={settings} />
+        <NoiseOverlay opacity={0.1} />
+    </>
+);
 
 export default S280620;

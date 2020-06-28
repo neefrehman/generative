@@ -1,12 +1,13 @@
 import React from "react";
 import p5 from "p5";
 
+import moveToVector from "SketchUtils/p5/moveToVector";
+
 import P5Wrapper from "../../../components/renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     let mouseLocation: p5.Vector;
     let target: p5.Vector;
-    let distance: number;
     let resetMouseLocation: () => void;
 
     let mouseHasMoved = false;
@@ -95,12 +96,7 @@ const sketch = (p: p5) => {
             resetMouseLocation();
         }
 
-        distance = target.dist(mouseLocation);
-        target.sub(mouseLocation);
-        target.normalize();
-        const mappedDistance = p.map(distance, 100, 0, 5, 0.5);
-        target.mult(mappedDistance);
-        mouseLocation.add(target);
+        mouseLocation = moveToVector(mouseLocation, target, p);
     };
 
     p.mouseMoved = () => {

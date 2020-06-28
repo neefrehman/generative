@@ -15,6 +15,8 @@ import CanvasSketchWrapper, {
 const shortestDimension = getShortestDimension({ withMargin: true });
 
 const settings: CanvasSketchSettings = {
+    animate: true,
+    duration: 30,
     dimensions: [shortestDimension, shortestDimension]
 };
 
@@ -46,22 +48,30 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
         return points;
     };
 
+    const loopNoise = (x: number, y: number, t: number, scale = 1) => {
+        const duration = scale;
+        const current = t * scale;
+        return (
+            ((duration - current) * random.noise3D(x, y, current) +
+                current * random.noise3D(x, y, current - duration)) /
+            duration
+        );
+    };
+
     const points = createGrid();
     const margin = shortestDimension > 1000 ? 136 : 112;
 
-    return ({ context, width, height }) => {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, width, height);
-
+    return ({ context, width, height, playhead }) => {
         points.forEach(data => {
             const { position, radius, color } = data;
             const [u, v] = position;
 
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
+            const r = radius + Math.abs(0.02 * loopNoise(u, v, playhead * 2));
 
             context.beginPath();
-            context.arc(x, y, radius * width, 0, Math.PI * 2, false);
+            context.arc(x, y, r * width, 0, Math.PI * 2, false);
 
             context.fillStyle = color;
             context.fill();

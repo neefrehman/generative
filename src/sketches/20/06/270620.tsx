@@ -9,8 +9,7 @@ import CanvasSketchWrapper, {
     CanvasSketchSettings
 } from "../../../components/renderers/CanvasSketchWrapper";
 
-const shortestDimension = getShortestDimension(true) * 2;
-
+const shortestDimension = getShortestDimension({ withMargin: true });
 const settings: CanvasSketchSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
@@ -44,7 +43,7 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
             context.beginPath();
             context.arc(x, y, 48, 0, Math.PI * 2, false);
             context.strokeStyle = "black";
-            context.lineWidth = 28;
+            context.lineWidth = 24;
             context.stroke();
         });
     };

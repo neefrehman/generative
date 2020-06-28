@@ -13,3 +13,5 @@ More in-depth readme coming in the future.
 
 <!-- https://medium.com/@jtnimoy/how-to-extract-isolines-in-p5-js-e268b2b046a0 -->
 <!-- https://mrdoob.com/lab/javascript/webcam/slitscan/ -->
+<!-- http://solvingsol.com/ -->
+<!-- https://codesandbox.io/s/handpose-fb3tv?file=/package.json -->

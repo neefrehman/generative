@@ -11,7 +11,7 @@ import CanvasSketchWrapper, {
     CanvasSketchSettings
 } from "../../../components/renderers/CanvasSketchWrapper";
 
-const shortestDimension = getShortestDimension(true) * 2;
+const shortestDimension = getShortestDimension({ withMargin: true });
 
 const settings: CanvasSketchSettings = {
     dimensions: [shortestDimension, shortestDimension]

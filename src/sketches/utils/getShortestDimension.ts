@@ -1,11 +1,17 @@
 /**
  * Returns the shortest screen dimension (width or height)
- * @param withMargin - If true, a margin will be created to reduce the size, to give the canvas some room
+ * @param withMargin - Creates a margin to reduce the size of the dimension. Used to give the canvas some room.
  */
-const getShortestDimension = (withMargin?: boolean): number => {
+const getShortestDimension = ({
+    withMargin
+}: {
+    /** Adds a margin to the dimension, reducing it's size to give some room around it */
+    withMargin?: boolean | number;
+}): number => {
     const shortestDimension = Math.min(window.innerWidth, window.innerHeight);
-    const calculatedMargin = shortestDimension > 600 ? 50 : 25;
-    const usedMargin = withMargin ? calculatedMargin : 0;
+    const autoMargin = shortestDimension > 600 ? 100 : 40;
+    const margin = typeof withMargin === "boolean" ? autoMargin : withMargin;
+    const usedMargin = withMargin ? margin : 0;
 
     return shortestDimension - usedMargin;
 };

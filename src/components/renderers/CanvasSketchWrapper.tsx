@@ -22,21 +22,37 @@ const CanvasSketchWrapper = ({
 }: CanvasSketchWrapperProps) => {
     const wrapper = useRef<HTMLDivElement>(null);
 
+    // <- START FIX ->
+    // for blurred sketches - seems like canvas-sketch doesn't
+    // handle resizing for DPR without canvas-sketch-cli?
+    const { dimensions } = rawSettings;
+    const dpr = window.devicePixelRatio || 1;
+
+    const doubledSize = Array.isArray(dimensions)
+        ? dimensions.map(dimension => dimension * dpr) // <- double canvas dimensions to solve blur
+        : null;
+    const usedDimensions = Array.isArray(dimensions) ? doubledSize : dimensions;
+
+    const canvasMarginDeviation = 80; // <- Required hack to ensure canvas is right size for some reason
+    const containerWidth = Array.isArray(dimensions)
+        ? dimensions[0] + canvasMarginDeviation // <- halve container width to double DPR
+        : null;
+    const containerHeight = Array.isArray(dimensions)
+        ? dimensions[0] + canvasMarginDeviation // <- halve container height to double DPR
+        : null;
+    // <- END FIX ->
+
     useEffect(() => {
-        const settings = {
+        const sketchSettings = {
+            ...rawSettings,
             parent: wrapper.current,
-            ...rawSettings
+            dimensions: usedDimensions // <- overwritten dimensions
         };
-        const canvas = canvasSketch(sketch, settings);
+        const canvas = canvasSketch(sketch, sketchSettings);
 
         const wrapperEl = wrapper.current;
         return () => wrapperEl.querySelector("canvas").remove(); // canvas.unload() not working - https://github.com/mattdesl/canvas-sketch/blob/master/docs/api.md#sketchmanager;
-    }, [sketch, rawSettings]);
-
-    // Fix for blur
-    const halvedDimensions = Array.isArray(rawSettings.dimensions)
-        ? rawSettings.dimensions.map(dimension => dimension / 2)
-        : null;
+    }, [sketch, rawSettings, doubledSize, dimensions, usedDimensions]);
 
     return (
         <>
@@ -44,8 +60,8 @@ const CanvasSketchWrapper = ({
                 ref={wrapper}
                 className={className}
                 style={{
-                    width: halvedDimensions[0],
-                    height: halvedDimensions[1],
+                    width: containerWidth, // <- halved width
+                    height: containerHeight, // <- halved height
                     ...style
                 }}
             />
@@ -56,7 +72,7 @@ const CanvasSketchWrapper = ({
 
 export default CanvasSketchWrapper;
 
-// Types
+// <- TYPES ->
 export type TwoD = CanvasRenderingContext2D;
 export type WebGL = WebGLRenderingContext;
 export type WebGL2 = WebGL2RenderingContext;
@@ -104,7 +120,7 @@ export interface CanvasSketchProps<Context extends RenderingContext> {
 }
 
 export interface CanvasSketchSettings {
-    dimensions?: [number, number] | string;
+    dimensions: [number, number] | string;
     units?: string;
     pixelsPerInch?: number;
     orientation?: "initial" | "landscape" | "portrait";
@@ -120,7 +136,7 @@ export interface CanvasSketchSettings {
 
     canvas?: HTMLCanvasElement;
     context?: string | CanvasRenderingContext2D | WebGLRenderingContext;
-    attributes?: Object;
+    attributes?: Record<string, unknown>;
     parent?: HTMLElement | boolean;
 
     file?: string; // | () => void; // how do I type string or function?
@@ -144,7 +160,7 @@ export interface CanvasSketchSettings {
     flush?: boolean;
     pixelated?: boolean;
     hotkeys?: boolean;
-    p5?: boolean; // | p5; typing for a p5 instance would add too much to this file when bundled, and can't import from @types/p5
+    p5?: boolean; // | p5; // typing for a p5 instance would add too much to this file when bundled, and can't import from @types/p5
     id?: string;
     data?: any;
 }

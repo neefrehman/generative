@@ -46,7 +46,7 @@ const sketch: Canvas2DSetupFn = () => {
     const margin = shortestDimension > 1000 ? 112 : 36;
 
     let noiseZ = 0;
-    const noiseZVel = 0.000004;
+    const noiseZVel = 0.000005;
 
     return ({ ctx, width, height }) => {
         ctx.clearRect(0, 0, width, height);

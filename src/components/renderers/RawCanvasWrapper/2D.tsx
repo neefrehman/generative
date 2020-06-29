@@ -1,10 +1,4 @@
-import React, {
-    useRef,
-    useEffect,
-    useState,
-    ReactNode,
-    MouseEvent
-} from "react";
+import React, { useRef, useEffect, ReactNode, MouseEvent } from "react";
 import { CSSProperties } from "linaria/react";
 
 import useAnimationFrame from "SketchUtils/useAnimationFrame";
@@ -26,7 +20,7 @@ const CanvasWrapper2D = ({
     const { dimensions, isAnimated, animationSettings = {} } = settings;
     const [width, height] = dimensions;
 
-    const [mousePos, setMousePos] = useState<[number, number]>([0, 0]);
+    const mousePos = useRef<[number, number]>([width / 2, height / 2]);
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
     const {
@@ -47,7 +41,8 @@ const CanvasWrapper2D = ({
                 startAnimation,
                 stopAnimation,
                 isPlaying,
-                mousePos
+                mousePos: mousePos.current
+                // TODO: onMouseMove, onClick
             }),
         fps: throttledFps,
         delay,
@@ -84,12 +79,11 @@ const CanvasWrapper2D = ({
         return () => ctx.clearRect(0, 0, width, height);
     }, [setupSketch, settings]);
 
-    const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+    const getMousePosition = (e: MouseEvent<HTMLCanvasElement>) => {
         const canvasBounds = e.currentTarget.getBoundingClientRect();
         const mouseX = e.nativeEvent.clientX - canvasBounds.left;
         const mouseY = e.nativeEvent.clientY - canvasBounds.top;
-        setMousePos([mouseX, mouseY]);
-        // FIXME causes speed to change
+        mousePos.current = [mouseX, mouseY];
     };
 
     return (
@@ -100,7 +94,7 @@ const CanvasWrapper2D = ({
                 height={height}
                 className={className}
                 style={style}
-                onMouseMove={isAnimated && handleMouseMove}
+                onMouseMove={isAnimated && getMousePosition}
             />
             {children}
         </>

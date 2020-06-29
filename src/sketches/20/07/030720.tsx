@@ -12,7 +12,7 @@ const shortestDimension = getShortestDimension({ withMargin: true });
 
 const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension],
-    animated: true
+    isAnimated: true
 };
 
 const sketch: Canvas2DSetupFn = () => {

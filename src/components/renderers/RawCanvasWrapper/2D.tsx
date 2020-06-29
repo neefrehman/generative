@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, ReactNode } from "react";
+import React, {
+    useRef,
+    useEffect,
+    useState,
+    ReactNode,
+    MouseEvent
+} from "react";
 import { CSSProperties } from "linaria/react";
 
 import useAnimationFrame from "SketchUtils/useAnimationFrame";
@@ -17,8 +23,10 @@ const CanvasWrapper2D = ({
     const sketchProps = useRef<Canvas2DSketchProps>();
     const drawSketchFn = useRef<Canvas2DDrawFn>();
 
-    const { dimensions, animated, animationSettings = {} } = settings;
+    const { dimensions, isAnimated, animationSettings = {} } = settings;
     const [width, height] = dimensions;
+
+    const [mousePos, setMousePos] = useState<[number, number]>([0, 0]);
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
     const {
@@ -29,7 +37,7 @@ const CanvasWrapper2D = ({
         stopAnimation,
         isPlaying
     } = useAnimationFrame({
-        willPlay: animated,
+        willPlay: isAnimated,
         onFrame: () =>
             drawSketchFn.current?.({
                 ...sketchProps.current,
@@ -38,7 +46,8 @@ const CanvasWrapper2D = ({
                 fps,
                 startAnimation,
                 stopAnimation,
-                isPlaying
+                isPlaying,
+                mousePos
             }),
         fps: throttledFps,
         delay,
@@ -75,6 +84,14 @@ const CanvasWrapper2D = ({
         return () => ctx.clearRect(0, 0, width, height);
     }, [setupSketch, settings]);
 
+    const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+        const canvasBounds = e.currentTarget.getBoundingClientRect();
+        const mouseX = e.nativeEvent.clientX - canvasBounds.left;
+        const mouseY = e.nativeEvent.clientY - canvasBounds.top;
+        setMousePos([mouseX, mouseY]);
+        // FIXME causes speed to change
+    };
+
     return (
         <>
             <canvas
@@ -83,6 +100,7 @@ const CanvasWrapper2D = ({
                 height={height}
                 className={className}
                 style={style}
+                onMouseMove={isAnimated && handleMouseMove}
             />
             {children}
         </>
@@ -99,6 +117,7 @@ interface CanvasWrapper2DProps {
     sketch: Canvas2DSetupFn;
     /** The setting for the sketch function */
     settings: Canvas2DSettings;
+
     className?: string;
     style?: CSSProperties;
     children?: ReactNode | HTMLElement;
@@ -112,7 +131,7 @@ export interface Canvas2DSettings {
     dimensions: [number, number];
 
     /** Used to set if the sketch will be animated */
-    animated?: boolean;
+    isAnimated?: boolean;
     /** Animation setting for the sketch */
     animationSettings?: {
         /** The desired fps to throttle the sketch to - defaults to 60 */
@@ -138,18 +157,21 @@ interface Canvas2DSketchProps {
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
     height: number;
 
-    /** The current elapsed time of the animation in ms */
-    time?: number;
     /** The current frames of the animation */
     frame?: number;
+    /** The current elapsed time of the animation in ms */
+    time?: number;
     /** The current fps of the animation (averaged over the last 10 frames) */
     fps?: number;
-    /** True if the animation is currenty running, otherwise false */
-    isPlaying?: boolean;
     /** A function that will stop the animation when called */
     stopAnimation?: () => void;
     /** A function that will restart the animation when called */
     startAnimation?: () => void;
+    /** True if the animation is currenty running, otherwise false */
+    isPlaying?: boolean;
+
+    /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
+    mousePos?: [number, number];
 }
 
 /**

@@ -25,7 +25,7 @@ const SketchList = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 150px);
+    max-height: calc(100vh - 150px); // TODO: -webkit-fill-available
     width: max-content;
 
     li {

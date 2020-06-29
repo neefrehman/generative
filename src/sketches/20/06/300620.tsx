@@ -2,33 +2,33 @@ import React from "react";
 import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
+import CanvasWrapper2D, {
+    Canvas2DSettings,
+    Canvas2DSetupFn
+} from "Renderers/RawCanvasWrapper/2D";
 import lerp from "SketchUtils/lerp";
 import getShortestDimension from "SketchUtils/getShortestDimension";
 import shuffle from "SketchUtils/shuffle";
 
-import CanvasSketchWrapper, {
-    CanvasSketchSketchFunction,
-    TwoD,
-    CanvasSketchSettings
-} from "../../../components/renderers/CanvasSketchWrapper";
-
 const shortestDimension = getShortestDimension({ withMargin: true });
 
-const settings: CanvasSketchSettings = {
+const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
-const sketch = (): CanvasSketchSketchFunction<TwoD> => {
+const sketch: Canvas2DSetupFn = () => {
     const colorCount = random.rangeFloor(2, 6);
     const randomPalette = shuffle(random.pick(palettes).slice(0, colorCount));
 
     const createGrid = () => {
-        const points: {
+        interface Point {
             position: [number, number];
             radius: number;
             rotation: number;
             color: string;
-        }[] = [];
+        }
+
+        const points: Point[] = [];
         const count = 24;
 
         for (let x = 0; x < count; x++) {
@@ -49,11 +49,11 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
     };
 
     const points = createGrid();
-    const margin = shortestDimension > 1000 ? 136 : 112;
+    const margin = shortestDimension > 1000 ? 60 : 20;
 
-    return ({ context, width, height }) => {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, width, height);
+    return ({ ctx, width, height }) => {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, width, height);
 
         points.forEach(data => {
             const { position, radius, rotation, color } = data;
@@ -62,19 +62,17 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
 
-            context.save();
-            context.fillStyle = color;
-            context.font = `${radius * width}px "arial"`;
-            context.translate(x, y);
-            context.rotate(rotation);
-            context.fillText("=", 0, 0);
-            context.restore();
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.font = `${radius * width}px "arial"`;
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.fillText("=", 0, 0);
+            ctx.restore();
         });
     };
 };
 
-const S300620 = () => (
-    <CanvasSketchWrapper sketch={sketch} settings={settings} />
-);
+const S300620 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
 export default S300620;

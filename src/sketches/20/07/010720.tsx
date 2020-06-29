@@ -2,25 +2,26 @@ import React from "react";
 import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
+import CanvasWrapper2D, {
+    Canvas2DSettings,
+    Canvas2DSetupFn
+} from "Renderers/RawCanvasWrapper/2D";
 import lerp from "SketchUtils/lerp";
 import getShortestDimension from "SketchUtils/getShortestDimension";
 
-import CanvasSketchWrapper, {
-    CanvasSketchSketchFunction,
-    TwoD,
-    CanvasSketchSettings
-} from "../../../components/renderers/CanvasSketchWrapper";
-
 const shortestDimension = getShortestDimension({ withMargin: true });
 
-const settings: CanvasSketchSettings = {
+const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
-const sketch = ({ width, height }): CanvasSketchSketchFunction<TwoD> => {
+const sketch: Canvas2DSetupFn = () => {
     const nColors = random.rangeFloor(1, 6);
     const palette = random.shuffle(random.pick(palettes)).slice(0, nColors);
     const background = "white";
+
+    const { dimensions } = settings;
+    const [width, height] = dimensions;
 
     const margin = width * 0.05;
 
@@ -63,32 +64,30 @@ const sketch = ({ width, height }): CanvasSketchSketchFunction<TwoD> => {
 
     shapes.sort((a, b) => a.y - b.y);
 
-    return ({ context }) => {
-        context.globalAlpha = 1;
-        context.fillStyle = background;
-        context.fillRect(0, 0, width, height);
+    return ({ ctx }) => {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, width, height);
 
         shapes.forEach(({ path, color }) => {
-            context.beginPath();
-            path.forEach(([x, y]) => context.lineTo(x, y));
-            context.closePath();
+            ctx.beginPath();
+            path.forEach(([x, y]) => ctx.lineTo(x, y));
+            ctx.closePath();
 
-            context.lineWidth = 20;
-            context.globalAlpha = 0.85;
-            context.fillStyle = color;
-            context.fill();
+            ctx.lineWidth = 20;
+            ctx.globalAlpha = 0.85;
+            ctx.fillStyle = color;
+            ctx.fill();
 
-            context.lineJoin = "round";
-            context.lineCap = "round";
-            context.strokeStyle = background;
-            context.globalAlpha = 1;
-            context.stroke();
+            ctx.lineJoin = "round";
+            ctx.lineCap = "round";
+            ctx.strokeStyle = background;
+            ctx.globalAlpha = 1;
+            ctx.stroke();
         });
     };
 };
 
-const S010720 = () => (
-    <CanvasSketchWrapper sketch={sketch} settings={settings} />
-);
+const S010720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
 export default S010720;

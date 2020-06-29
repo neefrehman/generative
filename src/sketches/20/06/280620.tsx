@@ -2,23 +2,21 @@ import React from "react";
 import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
+import CanvasWrapper2D, {
+    Canvas2DSettings,
+    Canvas2DSetupFn
+} from "Renderers/RawCanvasWrapper/2D";
 import lerp from "SketchUtils/lerp";
 import getShortestDimension from "SketchUtils/getShortestDimension";
 import shuffle from "SketchUtils/shuffle";
 
-import CanvasSketchWrapper, {
-    CanvasSketchSketchFunction,
-    TwoD,
-    CanvasSketchSettings
-} from "../../../components/renderers/CanvasSketchWrapper";
-
 const shortestDimension = getShortestDimension({ withMargin: true });
 
-const settings: CanvasSketchSettings = {
+const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
-const sketch = (): CanvasSketchSketchFunction<TwoD> => {
+const sketch: Canvas2DSetupFn = () => {
     const colorCount = random.rangeFloor(2, 6);
     const randomPalette = shuffle(random.pick(palettes).slice(0, colorCount));
 
@@ -47,11 +45,11 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
     };
 
     const points = createGrid();
-    const margin = shortestDimension > 1000 ? 136 : 112;
+    const margin = shortestDimension > 800 ? 124 : 104;
 
-    return ({ context, width, height }) => {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, width, height);
+    return ({ ctx, width, height }) => {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, width, height);
 
         points.forEach(data => {
             const { position, radius, color } = data;
@@ -60,17 +58,15 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
 
-            context.beginPath();
-            context.arc(x, y, radius * width, 0, Math.PI * 2, false);
+            ctx.beginPath();
+            ctx.arc(x, y, radius * width, 0, Math.PI * 2, false);
 
-            context.fillStyle = color;
-            context.fill();
+            ctx.fillStyle = color;
+            ctx.fill();
         });
     };
 };
 
-const S280620 = () => (
-    <CanvasSketchWrapper sketch={sketch} settings={settings} />
-);
+const S280620 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
 export default S280620;

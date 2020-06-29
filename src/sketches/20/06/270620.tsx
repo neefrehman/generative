@@ -1,20 +1,19 @@
 import React from "react";
 
+import CanvasWrapper2D, {
+    Canvas2DSettings,
+    Canvas2DSetupFn
+} from "Renderers/RawCanvasWrapper/2D";
 import lerp from "SketchUtils/lerp";
 import getShortestDimension from "SketchUtils/getShortestDimension";
 
-import CanvasSketchWrapper, {
-    CanvasSketchSketchFunction,
-    TwoD,
-    CanvasSketchSettings
-} from "../../../components/renderers/CanvasSketchWrapper";
-
 const shortestDimension = getShortestDimension({ withMargin: true });
-const settings: CanvasSketchSettings = {
+
+const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
-const sketch = (): CanvasSketchSketchFunction<TwoD> => {
+const sketch: Canvas2DSetupFn = () => {
     const createGrid = () => {
         const points: [number, number][] = [];
         const count = 5;
@@ -32,25 +31,23 @@ const sketch = (): CanvasSketchSketchFunction<TwoD> => {
     const points = createGrid().filter(() => Math.random() > 0.3);
     const margin = shortestDimension > 1000 ? 180 : 124;
 
-    return ({ context, width, height }) => {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, width, height);
+    return ({ ctx, width, height }) => {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, width, height);
 
         points.forEach(([u, v]) => {
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
 
-            context.beginPath();
-            context.arc(x, y, 48, 0, Math.PI * 2, false);
-            context.strokeStyle = "black";
-            context.lineWidth = 24;
-            context.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y, width / 20, 0, Math.PI * 2, false);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = width / 72;
+            ctx.stroke();
         });
     };
 };
 
-const S270620 = () => (
-    <CanvasSketchWrapper sketch={sketch} settings={settings} />
-);
+const S270620 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
 export default S270620;

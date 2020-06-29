@@ -1,183 +1,71 @@
-// Sol LeWitt: instructions 273
-
 import React from "react";
-import { pick } from "canvas-sketch-util/random";
-import palettes from "nice-color-palettes";
+import random from "canvas-sketch-util/random";
 
-import NoiseOverlay from "SketchUtils/NoiseOverlay";
+import CanvasWrapper2D, {
+    Canvas2DSettings,
+    Canvas2DSetupFn
+} from "Renderers/RawCanvasWrapper/2D";
+import lerp from "SketchUtils/lerp";
+import getShortestDimension from "SketchUtils/getShortestDimension";
 
-import RawCanvasWrapper, {
-    RawCanvasSettings
-} from "../../../components/renderers/RawCanvasWrapper";
+const shortestDimension = getShortestDimension({ withMargin: true });
 
-const settings: RawCanvasSettings = {
-    dimensions: [window.innerWidth - 30, window.innerHeight - 30],
-    contextType: "2d"
+const settings: Canvas2DSettings = {
+    dimensions: [shortestDimension, shortestDimension],
+    animated: true
 };
 
-const sketch = (ctx: CanvasRenderingContext2D) => {
-    const { dimensions } = settings;
-    const [width, height] = dimensions;
-
-    const colors = pick(palettes);
-    const grey = "rgba(255, 255, 255, 0.02)";
-
-    const midpoints = [
-        {
-            x: width / 2,
-            y: 0
-        },
-        {
-            x: width,
-            y: height / 2
-        },
-        {
-            x: width / 2,
-            y: height
-        },
-        {
-            x: 0,
-            y: height / 2
-        }
-    ];
-
-    const corners = [
-        {
-            x: 0,
-            y: 0
-        },
-        {
-            x: width,
-            y: 0
-        },
-        {
-            x: width,
-            y: height
-        },
-        {
-            x: 0,
-            y: height
-        }
-    ];
-
-    const center = {
-        x: width / 2,
-        y: height / 2
-    };
-
-    ctx.lineWidth = 2;
-
-    // random range
-    const randomRange = (low: number, high: number) => {
-        return Math.floor(Math.random() * (1 + high - low)) + low;
-    };
-
-    const gridSpacing = 50;
-    const gridCols = width / gridSpacing;
-    const gridRows = height / gridSpacing;
-
+const sketch: Canvas2DSetupFn = () => {
     const createGrid = () => {
-        ctx.save();
-        ctx.strokeStyle = grey;
+        const points: {
+            position: [number, number];
+            radius: number;
+        }[] = [];
+        const count = 24;
 
-        for (let x = 0; x < gridCols; x++) {
-            ctx.beginPath();
-            ctx.moveTo(x * gridSpacing, 0);
-            ctx.lineTo(x * gridSpacing, height);
-            ctx.closePath();
-            ctx.stroke();
+        for (let x = 0; x < count; x++) {
+            for (let y = 0; y < count; y++) {
+                const u = x / (count - 1);
+                const v = y / (count - 1);
+                const radius = Math.abs(random.noise2D(u, v)) * 0.05;
+
+                points.push({
+                    position: [u, v],
+                    radius
+                });
+            }
         }
-        for (let y = 0; y < gridRows; y++) {
+        return points;
+    };
+
+    const points = createGrid();
+    const margin = shortestDimension > 1000 ? 112 : 36;
+
+    let noiseZ = 0;
+    const noiseZVel = 0.000007;
+
+    return ({ ctx, width, height }) => {
+        ctx.clearRect(0, 0, width, height);
+
+        points.forEach(data => {
+            const { position, radius } = data;
+            const [u, v] = position;
+
+            const x = lerp(margin, width - margin, u);
+            const y = lerp(margin, height - margin, v);
+            const r = radius + Math.abs(0.02 * random.noise3D(u, v, noiseZ));
+
+            noiseZ += noiseZVel;
+
             ctx.beginPath();
-            ctx.moveTo(0, y * gridSpacing);
-            ctx.lineTo(width, y * gridSpacing);
-            ctx.closePath();
-            ctx.stroke();
-        }
+            ctx.arc(x, y, r * width, 0, Math.PI * 2, false);
 
-        ctx.restore();
-    };
-
-    const points = [];
-    const pointsCount = 20;
-
-    const createPoints = () => {
-        for (let i = pointsCount - 1; i >= 0; i--) {
-            const x = randomRange(0, gridCols) * gridSpacing;
-            const y = randomRange(0, gridRows) * gridSpacing;
-            points.push({ x, y });
-        }
-    };
-
-    const createCornerLines = () => {
-        ctx.save();
-        ctx.strokeStyle = colors[1];
-        corners.forEach(corner => {
-            points.forEach(point => {
-                ctx.beginPath();
-                ctx.moveTo(corner.x, corner.y);
-                ctx.lineTo(point.x, point.y);
-                ctx.closePath();
-                ctx.stroke();
-            });
-        });
-        ctx.restore();
-    };
-
-    const createMidpointLines = () => {
-        ctx.save();
-        ctx.strokeStyle = colors[2];
-        midpoints.forEach(midpoint => {
-            points.forEach(point => {
-                ctx.beginPath();
-                ctx.moveTo(midpoint.x, midpoint.y);
-                ctx.lineTo(point.x, point.y);
-                ctx.closePath();
-                ctx.stroke();
-            });
-        });
-        ctx.restore();
-    };
-
-    const createCenterLines = () => {
-        ctx.save();
-        ctx.strokeStyle = colors[3];
-        points.forEach(point => {
-            ctx.beginPath();
-            ctx.moveTo(center.x, center.y);
-            ctx.lineTo(point.x, point.y);
-            ctx.closePath();
-            ctx.stroke();
-        });
-        ctx.restore();
-    };
-
-    const createText = () => {
-        points.forEach((point, i) => {
-            const letter = String.fromCharCode(65 + i);
-            ctx.fillStyle = pick(colors);
-            ctx.font = `36px "arial"`;
-            ctx.fillText(letter, point.x, point.y);
+            ctx.fillStyle = "white";
+            ctx.fill();
         });
     };
-
-    const init = () => {
-        createPoints();
-        createGrid();
-        createCornerLines();
-        createMidpointLines();
-        createCenterLines();
-        createText();
-    };
-
-    init();
 };
 
-const S280620 = () => (
-    <>
-        <RawCanvasWrapper sketch={sketch} settings={settings} />
-        <NoiseOverlay opacity={0.1} />
-    </>
-);
+const S030720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
-export default S280620;
+export default S030720;

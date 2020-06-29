@@ -63,7 +63,7 @@ const S170620 = () => {
             <GradientContainer
                 onMouseMove={updateGradient}
                 style={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,

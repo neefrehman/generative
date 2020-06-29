@@ -15,7 +15,8 @@
         "jsx": "preserve",
         "baseUrl": "src",
         "paths": {
-            "SketchUtils/*": ["sketches/utils/*"]
+            "SketchUtils/*": ["sketches/utils/*"],
+            "Renderers/*": ["components/renderers/*"]
         }
     },
     "exclude": ["node_modules"],

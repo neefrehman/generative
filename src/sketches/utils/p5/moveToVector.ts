@@ -1,7 +1,7 @@
 import p5 from "p5";
 
 /**
- * Moves a point towards a vector, with speed inversely related to the distance between them
+ * Moves one vector towards another, with velocity related to the distance between them
  * @param currentPosition - The current position of the point that needs moving
  * @param target - The vector target to move towards
  * @param p5Instance - The instance of p5 that the sketch is running

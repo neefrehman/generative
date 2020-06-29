@@ -1,5 +1,3 @@
-import { getMaxListeners } from "process";
-
 /**
  * Gets the mean average from an array of numbers
  *

@@ -29,7 +29,7 @@ const sketch: Canvas2DSetupFn = () => {
     };
 
     const points = createGrid().filter(() => Math.random() > 0.3);
-    const margin = shortestDimension > 1000 ? 180 : 124;
+    const margin = shortestDimension > 1000 ? 120 : 40;
 
     return ({ ctx, width, height }) => {
         ctx.fillStyle = "white";

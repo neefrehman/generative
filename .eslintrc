@@ -97,6 +97,7 @@
         "react/jsx-indent-props": [2, 4],
         "react/jsx-one-expression-per-line": "off",
         "react/no-danger": "warn",
+        "react/require-default-props": "warn",
         "jsx-a11y/anchor-is-valid": [
             "error",
             {

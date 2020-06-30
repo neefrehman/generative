@@ -20,6 +20,7 @@ const CanvasWrapper2D = ({
     const { dimensions, isAnimated, animationSettings = {} } = settings;
     const [width, height] = dimensions;
 
+    const mouseHasEntered = useRef(false);
     const mousePos = useRef<[number, number]>([width / 2, height / 2]);
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
@@ -41,6 +42,7 @@ const CanvasWrapper2D = ({
                 startAnimation,
                 stopAnimation,
                 isPlaying,
+                mouseHasEntered: mouseHasEntered.current,
                 mousePos: mousePos.current
                 // TODO: onMouseMove, onClick
             }),
@@ -68,7 +70,8 @@ const CanvasWrapper2D = ({
             ctx,
             canvas: canvasEl,
             width,
-            height
+            height,
+            mousePos: mousePos.current
         };
 
         sketchProps.current = initialSketchProps;
@@ -84,6 +87,7 @@ const CanvasWrapper2D = ({
         const mouseX = e.nativeEvent.clientX - canvasBounds.left;
         const mouseY = e.nativeEvent.clientY - canvasBounds.top;
         mousePos.current = [mouseX, mouseY];
+        mouseHasEntered.current = true;
     };
 
     return (
@@ -95,6 +99,9 @@ const CanvasWrapper2D = ({
                 className={className}
                 style={style}
                 onMouseMove={isAnimated && getMousePosition}
+                onMouseEnter={() => {
+                    mouseHasEntered.current = true;
+                }}
             />
             {children}
         </>
@@ -164,6 +171,8 @@ interface Canvas2DSketchProps {
     /** True if the animation is currenty running, otherwise false */
     isPlaying?: boolean;
 
+    /** A boolean to indicate whether the mouse has entered the canvas */
+    mouseHasEntered?: boolean;
     /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
     mousePos?: [number, number];
 }

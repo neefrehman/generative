@@ -22,9 +22,11 @@ const sketch: Canvas2DSetupFn = () => {
 
     const createGrid = () => {
         const lines: [number, number][] = [];
+        const randomStartX = 0.4 * Math.random() * window.innerWidth;
+        const randomStartY = 0.4 * Math.random() * window.innerHeight;
 
-        for (let x = 0; x < window.innerWidth; x += 56) {
-            for (let y = 0; y < window.innerHeight; y += 56) {
+        for (let x = randomStartX; x < window.innerWidth; x += 56) {
+            for (let y = randomStartY; y < window.innerHeight; y += 56) {
                 const u = x / (window.innerWidth - 1);
                 const v = y / (window.innerHeight - 1);
 
@@ -42,7 +44,17 @@ const sketch: Canvas2DSetupFn = () => {
     let noiseZ = 0;
     const noiseZVel = 0.000007;
 
-    return ({ ctx, width, height, mouseHasEntered, mousePos }) => {
+    let mouseHasEntered = false;
+
+    return ({ ctx, width, height, mousePosition }) => {
+        if (
+            !mouseHasEntered &&
+            mousePosition[0] !== width / 2 &&
+            mousePosition[1] !== height / 2
+        ) {
+            mouseHasEntered = true;
+        }
+
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = lineColor;
 
@@ -53,10 +65,10 @@ const sketch: Canvas2DSetupFn = () => {
             const y = lerp(margin, height - margin, v);
 
             const angleToMouse = mouseHasEntered
-                ? getAngle(mousePos, [x, y])
+                ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + 0.5 * random.noise3D(u, v, noiseZ);
+            const rotation = angleToMouse + 0.66 * random.noise3D(u, v, noiseZ);
 
             noiseZ += noiseZVel;
 

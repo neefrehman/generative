@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, ReactNode, MouseEvent } from "react";
+import React, {
+    useRef,
+    useEffect,
+    ReactNode,
+    MouseEvent,
+    TouchEvent
+} from "react";
 import { CSSProperties } from "linaria/react";
 
 import useAnimationFrame from "SketchUtils/useAnimationFrame";
@@ -20,8 +26,7 @@ const CanvasWrapper2D = ({
     const { dimensions, isAnimated, animationSettings = {} } = settings;
     const [width, height] = dimensions;
 
-    const mouseHasEntered = useRef(false);
-    const mousePos = useRef<[number, number]>([width / 2, height / 2]);
+    const mousePosition = useRef<[number, number]>([width / 2, height / 2]); // TODO: look into rerender perf issues with state
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
     const {
@@ -42,9 +47,9 @@ const CanvasWrapper2D = ({
                 startAnimation,
                 stopAnimation,
                 isPlaying,
-                mouseHasEntered: mouseHasEntered.current,
-                mousePos: mousePos.current
-                // TODO: onMouseMove, onClick
+                mousePosition: mousePosition.current
+                // onMouseMove, // TODO
+                // onClick
             }),
         fps: throttledFps,
         delay,
@@ -71,7 +76,7 @@ const CanvasWrapper2D = ({
             canvas: canvasEl,
             width,
             height,
-            mousePos: mousePos.current
+            mousePosition: mousePosition.current
         };
 
         sketchProps.current = initialSketchProps;
@@ -82,12 +87,20 @@ const CanvasWrapper2D = ({
         return () => ctx.clearRect(0, 0, width, height);
     }, [setupSketch, settings]);
 
+    const updateMousePosition = (x: number, y: number) => {
+        const canvasBounds = canvas.current.getBoundingClientRect(); // TODO: canvas resize support
+        const posX = x - canvasBounds.left;
+        const posY = y - canvasBounds.top;
+        mousePosition.current = [posX, posY];
+    };
+
     const getMousePosition = (e: MouseEvent<HTMLCanvasElement>) => {
-        const canvasBounds = e.currentTarget.getBoundingClientRect();
-        const mouseX = e.nativeEvent.clientX - canvasBounds.left;
-        const mouseY = e.nativeEvent.clientY - canvasBounds.top;
-        mousePos.current = [mouseX, mouseY];
-        mouseHasEntered.current = true;
+        updateMousePosition(e.clientX, e.clientY);
+    };
+
+    const getTouchPosition = (e: TouchEvent<HTMLCanvasElement>) => {
+        const touch = e.touches[0]; // TODO: multitouch support
+        updateMousePosition(touch.clientX, touch.clientY);
     };
 
     return (
@@ -99,9 +112,7 @@ const CanvasWrapper2D = ({
                 className={className}
                 style={style}
                 onMouseMove={isAnimated && getMousePosition}
-                onMouseEnter={() => {
-                    mouseHasEntered.current = true;
-                }}
+                onTouchMove={isAnimated && getTouchPosition}
             />
             {children}
         </>
@@ -171,10 +182,13 @@ interface Canvas2DSketchProps {
     /** True if the animation is currenty running, otherwise false */
     isPlaying?: boolean;
 
-    /** A boolean to indicate whether the mouse has entered the canvas */
-    mouseHasEntered?: boolean;
     /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
-    mousePos?: [number, number];
+    mousePosition?: [number, number];
+
+    /** A callback that will be run every time the mouse moves across the canvas */
+    onMouseMove?: () => void;
+    /** A callback that will be run every time the user clicks on the canvas */
+    onClick?: () => void;
 }
 
 /**

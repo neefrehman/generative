@@ -1,10 +1,5 @@
-import React, {
-    useRef,
-    useEffect,
-    ReactNode,
-    MouseEvent,
-    TouchEvent
-} from "react";
+import React, { useRef, useEffect } from "react";
+import type { ReactNode, MouseEvent, TouchEvent } from "react";
 import { CSSProperties } from "linaria/react";
 
 import useAnimationFrame from "SketchUtils/useAnimationFrame";

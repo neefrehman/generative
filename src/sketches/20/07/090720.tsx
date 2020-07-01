@@ -82,7 +82,7 @@ const sketch: Canvas2DSetupFn = () => {
     const margin = 52;
 
     let noiseZ = 0;
-    const noiseZVel = 0.00014;
+    const noiseZVel = 0.00009;
 
     let mouseHasEntered = false;
 
@@ -108,7 +108,7 @@ const sketch: Canvas2DSetupFn = () => {
                 ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + random.noise3D(u, v, noiseZ);
+            const rotation = angleToMouse + random.noise3D(u, v, noiseZ, 2);
 
             noiseZ += noiseZVel;
 

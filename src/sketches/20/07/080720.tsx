@@ -22,43 +22,54 @@ const sketch: Canvas2DSetupFn = () => {
 
     const createGrid = () => {
         const lines: [number, number][] = [];
-        const [windowWidth, windowHeight] = settings.dimensions;
+        const [wWidth, wHeight] = settings.dimensions;
 
         const randomHalfX = Math.random() > 0.5;
         const randomHalfY = Math.random() > 0.5;
-        const randStartX = Math.random() * windowWidth;
-        const randStartY = Math.random() * windowHeight;
+        const randStartX = Math.random() * wWidth;
+        const randStartY = Math.random() * wHeight;
 
-        if (randomHalfX) {
-            for (let x = randStartX * 0.5; x < windowWidth; x += 56) {
-                if (randomHalfY) {
-                    for (let y = randStartY * 0.5; y < windowHeight; y += 56) {
-                        const u = x / (windowWidth - 1);
-                        const v = y / (windowHeight - 1);
-                        lines.push([u, v]);
+        // Randomly choose quadrants to start from if on large screens
+        if (wWidth > 700) {
+            if (randomHalfX) {
+                for (let x = randStartX * 0.5; x < wWidth; x += 56) {
+                    if (randomHalfY) {
+                        for (let y = randStartY * 0.5; y < wHeight; y += 56) {
+                            const u = x / (wWidth - 1);
+                            const v = y / (wHeight - 1);
+                            lines.push([u, v]);
+                        }
+                    } else {
+                        for (let y = randStartY * 1.5; y > 0; y -= 56) {
+                            const u = x / (wWidth - 1);
+                            const v = y / (wHeight - 1);
+                            lines.push([u, v]);
+                        }
                     }
-                } else {
-                    for (let y = randStartY * 1.5; y > 0; y -= 56) {
-                        const u = x / (windowWidth - 1);
-                        const v = y / (windowHeight - 1);
-                        lines.push([u, v]);
+                }
+            } else {
+                for (let x = randStartX * 1.5; x > 0; x -= 56) {
+                    if (randomHalfY) {
+                        for (let y = randStartY * 0.5; y < wHeight; y += 56) {
+                            const u = x / (wWidth - 1);
+                            const v = y / (wHeight - 1);
+                            lines.push([u, v]);
+                        }
+                    } else {
+                        for (let y = randStartY * 1.5; y > 0; y -= 56) {
+                            const u = x / (wWidth - 1);
+                            const v = y / (wHeight - 1);
+                            lines.push([u, v]);
+                        }
                     }
                 }
             }
         } else {
-            for (let x = randStartX * 1.5; x > 0; x -= 56) {
-                if (randomHalfY) {
-                    for (let y = randStartY * 0.5; y < windowHeight; y += 56) {
-                        const u = x / (windowWidth - 1);
-                        const v = y / (windowHeight - 1);
-                        lines.push([u, v]);
-                    }
-                } else {
-                    for (let y = randStartY * 1.5; y > 0; y -= 56) {
-                        const u = x / (windowWidth - 1);
-                        const v = y / (windowHeight - 1);
-                        lines.push([u, v]);
-                    }
+            for (let x = 0; x < wWidth; x += 56) {
+                for (let y = 0; y < wHeight; y += 56) {
+                    const u = x / (wWidth - 1);
+                    const v = y / (wHeight - 1);
+                    lines.push([u, v]);
                 }
             }
         }
@@ -97,7 +108,7 @@ const sketch: Canvas2DSetupFn = () => {
                 ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + 0.66 * random.noise3D(u, v, noiseZ);
+            const rotation = angleToMouse + 0.7 * random.noise3D(u, v, noiseZ);
 
             noiseZ += noiseZVel;
 

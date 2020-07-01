@@ -10,7 +10,7 @@ import { CSSProperties } from "linaria/react";
 import useAnimationFrame from "SketchUtils/useAnimationFrame";
 
 /**
- * A wrapper component for running 2d vanilla canvas sketches. Handles rendering and cleanup.
+ * A wrapper component for running vanilla 2d canvas sketches. Handles rendering and cleanup.
  */
 const CanvasWrapper2D = ({
     sketch: setupSketch,

@@ -6,7 +6,7 @@ import CanvasWrapper2D, {
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
 import lerp from "SketchUtils/lerp";
-import getShortestDimension from "SketchUtils/getShortestDimension";
+import getShortestDimension from "SketchUtils/getShortestViewportDimension";
 
 const shortestDimension = getShortestDimension({ withMargin: true });
 

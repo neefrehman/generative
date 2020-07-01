@@ -22,15 +22,44 @@ const sketch: Canvas2DSetupFn = () => {
 
     const createGrid = () => {
         const lines: [number, number][] = [];
-        const randomStartX = 0.4 * Math.random() * window.innerWidth;
-        const randomStartY = 0.4 * Math.random() * window.innerHeight;
+        const [windowWidth, windowHeight] = settings.dimensions;
 
-        for (let x = randomStartX; x < window.innerWidth; x += 56) {
-            for (let y = randomStartY; y < window.innerHeight; y += 56) {
-                const u = x / (window.innerWidth - 1);
-                const v = y / (window.innerHeight - 1);
+        const randomHalfX = Math.random() > 0.5;
+        const randomHalfY = Math.random() > 0.5;
+        const randomStartX = Math.random() * windowWidth;
+        const randomStartY = Math.random() * windowHeight;
 
-                lines.push([u, v]);
+        if (randomHalfX) {
+            for (let x = randomStartX; x < windowWidth; x += 56) {
+                if (randomHalfY) {
+                    for (let y = randomStartY; y < windowHeight; y += 56) {
+                        const u = x / (windowWidth - 1);
+                        const v = y / (windowHeight - 1);
+                        lines.push([u, v]);
+                    }
+                } else {
+                    for (let y = randomStartY; y > 0; y -= 56) {
+                        const u = x / (windowWidth - 1);
+                        const v = y / (windowHeight - 1);
+                        lines.push([u, v]);
+                    }
+                }
+            }
+        } else {
+            for (let x = randomStartX; x > 0; x -= 56) {
+                if (randomHalfY) {
+                    for (let y = randomStartY; y < windowHeight; y += 56) {
+                        const u = x / (windowWidth - 1);
+                        const v = y / (windowHeight - 1);
+                        lines.push([u, v]);
+                    }
+                } else {
+                    for (let y = randomStartY; y > 0; y -= 56) {
+                        const u = x / (windowWidth - 1);
+                        const v = y / (windowHeight - 1);
+                        lines.push([u, v]);
+                    }
+                }
             }
         }
         return lines;

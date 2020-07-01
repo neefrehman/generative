@@ -27,7 +27,7 @@ const useAnimationFrame = (
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
-    const [frameCount, setFrameCount] = useState(0);
+    const [frameCount, setFrameCount] = useState(1);
     const [fpsArray, setFpsArray] = useState<number[]>(
         new Array(10).fill(throttledFps)
     );
@@ -40,10 +40,10 @@ const useAnimationFrame = (
             const currentFps = Math.round(1 / deltaTime);
 
             const runFrame = () => {
+                onFrame?.();
                 // setFpsArray(prevArray => [...[prevArray.shift()], currentFps]);
                 // setFrameCount(prevCount => prevCount + 1);
                 prevFrameTimeRef.current = timestamp;
-                onFrame?.();
             };
 
             if (throttledFps) {

@@ -1,6 +1,7 @@
 /* eslint-disable no-new */
 /* eslint-disable new-cap */
-import React, { useRef, useEffect, ReactNode } from "react";
+import React, { useRef, useEffect } from "react";
+import type { ReactNode } from "react";
 import p5 from "p5";
 import { CSSProperties } from "linaria/react";
 

@@ -1,7 +1,8 @@
 import React from "react";
 import random from "canvas-sketch-util/random";
 
-import CanvasWrapper2D, {
+import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";

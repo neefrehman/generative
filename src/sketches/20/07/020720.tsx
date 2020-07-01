@@ -1,10 +1,10 @@
 // Sol LeWitt: instructions 273
-
 import React from "react";
 import { pick } from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
-import CanvasWrapper2D, {
+import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";

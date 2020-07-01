@@ -26,19 +26,19 @@ const sketch: Canvas2DSetupFn = () => {
 
         const randomHalfX = Math.random() > 0.5;
         const randomHalfY = Math.random() > 0.5;
-        const randomStartX = Math.random() * windowWidth;
-        const randomStartY = Math.random() * windowHeight;
+        const randStartX = Math.random() * windowWidth;
+        const randStartY = Math.random() * windowHeight;
 
         if (randomHalfX) {
-            for (let x = randomStartX; x < windowWidth; x += 56) {
+            for (let x = randStartX * 0.5; x < windowWidth; x += 56) {
                 if (randomHalfY) {
-                    for (let y = randomStartY; y < windowHeight; y += 56) {
+                    for (let y = randStartY * 0.5; y < windowHeight; y += 56) {
                         const u = x / (windowWidth - 1);
                         const v = y / (windowHeight - 1);
                         lines.push([u, v]);
                     }
                 } else {
-                    for (let y = randomStartY; y > 0; y -= 56) {
+                    for (let y = randStartY * 1.5; y > 0; y -= 56) {
                         const u = x / (windowWidth - 1);
                         const v = y / (windowHeight - 1);
                         lines.push([u, v]);
@@ -46,15 +46,15 @@ const sketch: Canvas2DSetupFn = () => {
                 }
             }
         } else {
-            for (let x = randomStartX; x > 0; x -= 56) {
+            for (let x = randStartX * 1.5; x > 0; x -= 56) {
                 if (randomHalfY) {
-                    for (let y = randomStartY; y < windowHeight; y += 56) {
+                    for (let y = randStartY * 0.5; y < windowHeight; y += 56) {
                         const u = x / (windowWidth - 1);
                         const v = y / (windowHeight - 1);
                         lines.push([u, v]);
                     }
                 } else {
-                    for (let y = randomStartY; y > 0; y -= 56) {
+                    for (let y = randStartY * 1.5; y > 0; y -= 56) {
                         const u = x / (windowWidth - 1);
                         const v = y / (windowHeight - 1);
                         lines.push([u, v]);

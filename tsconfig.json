@@ -4,7 +4,8 @@
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "strict": false,
+        "strict": true,
+        "strictNullChecks": false, // Nightmare with useRef()
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "esModuleInterop": true,
@@ -15,8 +16,9 @@
         "jsx": "preserve",
         "baseUrl": "src",
         "paths": {
-            "SketchUtils/*": ["sketches/utils/*"],
-            "Renderers/*": ["components/renderers/*"]
+            "Renderers/*": ["components/renderers/*"],
+            "Utils/*": ["sketches/utils/*"],
+            "LibUtils/*": ["sketches/utils/libs/*"]
         }
     },
     "exclude": ["node_modules"],

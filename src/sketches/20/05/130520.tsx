@@ -1,8 +1,8 @@
 import React from "react";
 import p5 from "p5";
-import makeMatrix from "make-matrix";
 
-import P5Wrapper from "Renderers/P5Wrapper";
+import { createMatrix } from "Utils/math";
+import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     let longestDimension: number;
@@ -12,8 +12,8 @@ const sketch = (p: p5) => {
     let numColumns: number;
     let numRows: number;
 
-    let camZStart;
-    let camZ;
+    let camZStart: number;
+    let camZ: number;
 
     let camXOff = 0;
     let camYOff = 0;
@@ -33,7 +33,7 @@ const sketch = (p: p5) => {
         numColumns = forceOdd(Math.ceil(p.width / res));
         numRows = forceOdd(Math.ceil(p.height / res));
 
-        grid = makeMatrix([numColumns, numRows, numColumns]);
+        grid = createMatrix([numColumns, numRows, numColumns], 0);
 
         camZStart = p.width > 800 ? (-res * numColumns) / 2 : 2 * res;
         camZ = camZStart;

@@ -1,17 +1,15 @@
 import React from "react";
-import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import lerp from "SketchUtils/lerp";
-import getShortestDimension from "SketchUtils/getShortestViewportDimension";
-import shuffle from "SketchUtils/shuffle";
+import { lerp, getShortestViewportDimension } from "Utils/math";
+import { shuffle, pick, inRange, noise3D } from "Utils/random";
 
-const shortestDimension = getShortestDimension({ withMargin: true });
+const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
 const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension],
@@ -19,8 +17,8 @@ const settings: Canvas2DSettings = {
 };
 
 const sketch: Canvas2DSetupFn = () => {
-    const colorCount = random.rangeFloor(2, 6);
-    const randomPalette = shuffle(random.pick(palettes).slice(0, colorCount));
+    const colorCount = inRange(2, 6, { isInteger: true });
+    const randomPalette = shuffle(pick(palettes).slice(0, colorCount));
 
     const createGrid = () => {
         const points: {
@@ -36,7 +34,7 @@ const sketch: Canvas2DSetupFn = () => {
 
                 points.push({
                     position: [u, v],
-                    color: random.pick(randomPalette)
+                    color: pick(randomPalette)
                 });
             }
         }
@@ -58,7 +56,7 @@ const sketch: Canvas2DSetupFn = () => {
 
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
-            const r = Math.abs(0.02 * random.noise3D(u, v, noiseZ));
+            const r = Math.abs(0.02 * noise3D(u, v, noiseZ));
 
             noiseZ += noiseZVel;
 

@@ -1,20 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import three from "three";
-import { CSSProperties } from "linaria/react";
-
-interface ThreeWrapperProps {
-    sketch: () => void;
-    autoResizeToWindow?: boolean;
-    className?: string;
-    style?: CSSProperties;
-    children?: ReactNode | HTMLElement;
-}
+import type { CSSProperties } from "linaria/react";
 
 /**
  * A wrapper component for running three.js sketches. Handles rendering and cleanup.
  */
-const ThreeWrapper = ({
+export const ThreeWrapper = ({
     sketch,
     autoResizeToWindow = true,
     className,
@@ -43,4 +35,10 @@ const ThreeWrapper = ({
     );
 };
 
-export default ThreeWrapper;
+interface ThreeWrapperProps {
+    sketch: () => void;
+    autoResizeToWindow?: boolean;
+    className?: string;
+    style?: CSSProperties;
+    children?: ReactNode | HTMLElement;
+}

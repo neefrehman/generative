@@ -1,14 +1,13 @@
 import React from "react";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import lerp from "SketchUtils/lerp";
-import getShortestDimension from "SketchUtils/getShortestViewportDimension";
+import { lerp, getShortestViewportDimension } from "Utils/math";
 
-const shortestDimension = getShortestDimension({ withMargin: true });
+const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
 const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]

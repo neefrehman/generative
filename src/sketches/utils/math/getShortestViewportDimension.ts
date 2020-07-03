@@ -1,11 +1,12 @@
 /**
  * Returns the shortest screen dimension (width or height)
- * @param withMargin - Creates a margin to reduce the size of the dimension. Used to give the canvas some room.
+ *
+ * @param options.withMargin - Creates a margin to reduce the size of the dimension. Used to give the canvas some room.
  */
-const getShortestViewportDimension = ({
+export const getShortestViewportDimension = ({
     withMargin
 }: {
-    /** Reducing the size of the dimension, used to create a margin around it. If `true`, a default margin will be set */
+    /** Reduces the size of the dimension, used to create a margin around it. If `true`, a default margin will be set */
     withMargin?: boolean | number;
 }): number => {
     const shortestViewportDimension = Math.min(
@@ -19,5 +20,3 @@ const getShortestViewportDimension = ({
 
     return shortestViewportDimension - usedMargin;
 };
-
-export default getShortestViewportDimension;

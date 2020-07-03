@@ -3,27 +3,17 @@ import { styled } from "linaria/react";
 
 const SVG = styled.svg`
     position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 5;
     pointer-events: none;
 `;
 
-interface NoiseProps {
-    /** The overlay's width */
-    width?: string;
-    /** he overlay's height */
-    height?: string;
-    /** The overlay's opacity (noise strength) — a number between 0 and 1 */
-    opacity?: number;
-    /** The size of the grain (noise size) — a number between 0 and 1 */
-    grainSize?: number;
-    /** Animates the noise to achieve a TV static-like effect */
-    isAnimated?: boolean;
-}
-
 /**
  * Adds an svg noise overlay to achieve a film-like grain effect
  */
-const NoiseOverlay = ({
+export const NoiseOverlay = ({
     width = "100vw",
     height = "100vh",
     opacity = 0.15,
@@ -57,4 +47,15 @@ const NoiseOverlay = ({
     </SVG>
 );
 
-export default NoiseOverlay;
+interface NoiseProps {
+    /** The overlay's width */
+    width?: string;
+    /** he overlay's height */
+    height?: string;
+    /** The overlay's opacity (noise strength) — a number between 0 and 1 */
+    opacity?: number;
+    /** The size of the grain (noise size) — a number between 0 and 1 */
+    grainSize?: number;
+    /** Animates the noise to achieve a TV static-like effect */
+    isAnimated?: boolean;
+}

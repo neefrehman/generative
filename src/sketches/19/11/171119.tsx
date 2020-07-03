@@ -4,7 +4,7 @@
 import React from "react";
 import p5 from "p5";
 
-import P5Wrapper from "Renderers/P5Wrapper";
+import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     let alignValue = 1.5;

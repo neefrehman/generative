@@ -1,15 +1,13 @@
 import React from "react";
-import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import lerp from "SketchUtils/lerp";
-import shuffle from "SketchUtils/shuffle";
-import getAngle from "SketchUtils/getAngle";
+import { lerp, getAngle } from "Utils/math";
+import { shuffle, pick, inRange, noise3D } from "Utils/random";
 
 const settings: Canvas2DSettings = {
     dimensions: [window.innerWidth, window.innerHeight],
@@ -17,9 +15,9 @@ const settings: Canvas2DSettings = {
 };
 
 const sketch: Canvas2DSetupFn = () => {
-    const colorCount = random.rangeFloor(2, 6);
-    const randomPalette = shuffle(random.pick(palettes).slice(0, colorCount));
-    const lineColor = random.pick(randomPalette);
+    const colorCount = inRange(2, 6, { isInteger: true });
+    const randomPalette = shuffle(pick(palettes).slice(0, colorCount));
+    const lineColor = pick(randomPalette);
 
     const createGrid = () => {
         const lines: [number, number][] = [];
@@ -109,7 +107,7 @@ const sketch: Canvas2DSetupFn = () => {
                 ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + 0.75 * random.noise3D(u, v, noiseZ);
+            const rotation = angleToMouse + 0.75 * noise3D(u, v, noiseZ);
 
             noiseZ += noiseZVel;
 

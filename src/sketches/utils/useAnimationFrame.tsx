@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-import getMean from "./getMean";
+import { getMean } from "Utils/math";
 
 /**
  * A custom hook to use `requestAnimationFrame` in a React component
@@ -8,7 +8,7 @@ import getMean from "./getMean";
  * @param options - An optional configuration object for the hook
  * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a functions to stop and start the animation
  */
-const useAnimationFrame = (
+export const useAnimationFrame = (
     options: UseAnimationFrameOptions = {}
 ): UseAnimationFrameResult => {
     const {
@@ -21,7 +21,7 @@ const useAnimationFrame = (
         willPlay = false
     } = options;
 
-    const requestRef = useRef<number>();
+    const requestRef = useRef<number>(0);
     const startTimeRef = useRef<DOMHighResTimeStamp>(performance.now());
     const prevFrameTimeRef = useRef<DOMHighResTimeStamp>(performance.now());
 
@@ -97,8 +97,6 @@ const useAnimationFrame = (
         isPlaying
     };
 };
-
-export default useAnimationFrame;
 
 /**
  * An optional configuration object for `useAnimationFrame`

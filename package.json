@@ -10,11 +10,9 @@
     "dependencies": {
         "@tensorflow/tfjs": "^2.0.1",
         "@zeit/next-css": "^1.0.1",
-        "canvas-sketch-util": "^1.10.0",
         "drei": "0.0.60",
         "glslify": "^7.0.0",
         "linaria": "^1.3.3",
-        "make-matrix": "^1.0.2",
         "ml5": "^0.5.0",
         "next": "^9.4.4",
         "nice-color-palettes": "^3.0.0",
@@ -26,6 +24,7 @@
         "react-spring": "^8.0.27",
         "react-three-fiber": "^4.2.12",
         "react-xr": "^1.0.6",
+        "simplex-noise": "^2.4.0",
         "three": "^0.117.1",
         "use-cannon": "^0.4.9"
     },
@@ -51,7 +50,7 @@
         "lint-staged": "^10.2.11",
         "prettier": "^2.0.5",
         "raw-loader": "^4.0.1",
-        "typescript": "^3.9.5",
+        "typescript": "^4.0.0-beta",
         "url-loader": "^4.1.0"
     },
     "scripts": {

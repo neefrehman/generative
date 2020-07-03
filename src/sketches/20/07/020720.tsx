@@ -1,14 +1,14 @@
 // Sol LeWitt: instructions 273
 import React from "react";
-import { pick } from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import NoiseOverlay from "SketchUtils/NoiseOverlay";
+import { NoiseOverlay } from "Utils/NoiseOverlay";
+import { pick, inRange } from "Utils/random";
 
 const settings: Canvas2DSettings = {
     dimensions: [window.innerWidth, window.innerHeight]
@@ -62,11 +62,6 @@ const sketch: Canvas2DSetupFn = () => {
         y: height / 2
     };
 
-    // random range
-    const randomRange = (low: number, high: number) => {
-        return Math.floor(Math.random() * (1 + high - low)) + low;
-    };
-
     const gridSpacing = 50;
     const gridCols = width / gridSpacing;
     const gridRows = height / gridSpacing;
@@ -99,8 +94,8 @@ const sketch: Canvas2DSetupFn = () => {
 
     const createPoints = () => {
         for (let i = pointsCount - 1; i >= 0; i--) {
-            const x = randomRange(0, gridCols) * gridSpacing;
-            const y = randomRange(0, gridRows) * gridSpacing;
+            const x = inRange(0, gridCols, { isInteger: true }) * gridSpacing;
+            const y = inRange(0, gridRows, { isInteger: true }) * gridSpacing;
             points.push({ x, y });
         }
     };

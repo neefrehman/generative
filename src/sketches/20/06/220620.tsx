@@ -3,8 +3,8 @@ import { Canvas, useFrame, useThree } from "react-three-fiber";
 import { useSpring } from "react-spring";
 import { OrbitControls } from "drei";
 
-import lerp from "SketchUtils/lerp";
-import Stars from "SketchUtils/r3f/Stars";
+import { Stars } from "LibUtils/r3f";
+import { lerp } from "Utils/math";
 
 const initialCameraZ = 20000;
 

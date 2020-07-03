@@ -1,5 +1,5 @@
 import React from "react";
-import { AppProps } from "next/app";
+import type { AppProps } from "next/app";
 import { css } from "linaria";
 
 const App = ({ Component, pageProps }: AppProps) => (

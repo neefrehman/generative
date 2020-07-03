@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import React from "react";
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";

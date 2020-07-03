@@ -1,8 +1,8 @@
 import React from "react";
 import p5 from "p5";
-import makeMatrix from "make-matrix";
 
-import P5Wrapper from "Renderers/P5Wrapper";
+import { createMatrix } from "Utils/math";
+import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
     let longestDimension: number;
@@ -35,7 +35,7 @@ const sketch = (p: p5) => {
         numRows = 2;
 
         // Add one extra column as we'll be removing horizontal lines from the last one
-        grid = makeMatrix([numColumns + 1, numRows, numColumns + 5]);
+        grid = createMatrix([numColumns + 1, numRows, numColumns + 5], 0);
 
         camZStart = p.width > 800 ? (-res * numColumns) / 2 : 1 * res;
         camZ = camZStart;
@@ -50,7 +50,7 @@ const sketch = (p: p5) => {
 
         grid.forEach((column, x) => {
             column.forEach((row, y) => {
-                row.forEach((depth, z) => {
+                row.forEach((_, z) => {
                     const curX = x * res;
                     const curY = y * res;
                     const curZ = z * res;

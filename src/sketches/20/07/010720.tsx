@@ -1,24 +1,23 @@
 import React from "react";
-import random from "canvas-sketch-util/random";
 import palettes from "nice-color-palettes";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import lerp from "SketchUtils/lerp";
-import getShortestDimension from "SketchUtils/getShortestViewportDimension";
+import { lerp, getShortestViewportDimension } from "Utils/math";
+import { inRange, shuffle, pick } from "Utils/random";
 
-const shortestDimension = getShortestDimension({ withMargin: true });
+const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
 const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
 const sketch: Canvas2DSetupFn = () => {
-    const nColors = random.rangeFloor(1, 6);
-    const palette = random.shuffle(random.pick(palettes)).slice(0, nColors);
+    const nColors = inRange(1, 6, { isInteger: true });
+    const palette = shuffle(pick(palettes)).slice(0, nColors);
     const background = "white";
 
     const { dimensions } = settings;
@@ -47,12 +46,12 @@ const sketch: Canvas2DSetupFn = () => {
     const shapes = [];
 
     while (grid.length > 2) {
-        const pointsToRemove = random.shuffle(grid).slice(0, 2);
+        const pointsToRemove = shuffle(grid).slice(0, 2);
         if (pointsToRemove.length < 2) {
             break;
         }
 
-        const color = random.pick(palette);
+        const color = pick(palette);
 
         grid = grid.filter(p => !pointsToRemove.includes(p));
         const [a, b] = pointsToRemove;

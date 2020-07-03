@@ -1,8 +1,8 @@
 import React, { useState, MouseEvent } from "react";
 import { styled } from "linaria/react";
 
-import NoiseOverlay from "SketchUtils/NoiseOverlay";
-import useAnimationFrame from "SketchUtils/useAnimationFrame";
+import { NoiseOverlay } from "Utils/NoiseOverlay";
+import { useAnimationFrame } from "Utils/useAnimationFrame";
 
 const GradientContainer = styled.div`
     width: 100vw;

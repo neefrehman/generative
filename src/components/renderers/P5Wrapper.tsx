@@ -3,20 +3,12 @@
 import React, { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import p5 from "p5";
-import { CSSProperties } from "linaria/react";
-
-interface P5WrapperProps {
-    sketch: (p: p5) => void;
-    autoResizeToWindow?: boolean;
-    className?: string;
-    style?: CSSProperties;
-    children?: ReactNode | HTMLElement;
-}
+import type { CSSProperties } from "linaria/react";
 
 /**
  * A wrapper component for running P5 sketches. Handles rendering and cleanup.
  */
-const P5Wrapper = ({
+export const P5Wrapper = ({
     sketch,
     autoResizeToWindow = true,
     className,
@@ -45,4 +37,10 @@ const P5Wrapper = ({
     );
 };
 
-export default P5Wrapper;
+interface P5WrapperProps {
+    sketch: (p: p5) => void;
+    autoResizeToWindow?: boolean;
+    className?: string;
+    style?: CSSProperties;
+    children?: ReactNode | HTMLElement;
+}

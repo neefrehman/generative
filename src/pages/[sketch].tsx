@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import React, { lazy, Suspense, useState, useEffect } from "react";
-import { GetStaticPaths, GetStaticProps } from "next";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";

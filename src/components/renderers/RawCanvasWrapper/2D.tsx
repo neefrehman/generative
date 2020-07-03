@@ -1,13 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import type { ReactNode, MouseEvent, TouchEvent } from "react";
-import { CSSProperties } from "linaria/react";
+import type { CSSProperties } from "linaria/react";
 
-import useAnimationFrame from "SketchUtils/useAnimationFrame";
+import { useAnimationFrame } from "Utils/useAnimationFrame";
+import type { Vector } from "Utils/math";
 
 /**
  * A wrapper component for running vanilla 2d canvas sketches. Handles rendering and cleanup.
  */
-const CanvasWrapper2D = ({
+export const CanvasWrapper2D = ({
     sketch: setupSketch,
     settings,
     className,
@@ -15,13 +16,13 @@ const CanvasWrapper2D = ({
     children
 }: CanvasWrapper2DProps) => {
     const canvas = useRef<HTMLCanvasElement>(null);
-    const sketchProps = useRef<Canvas2DSketchProps>();
-    const drawSketchFn = useRef<Canvas2DDrawFn>();
+    const drawProps = useRef<Canvas2DDrawProps>();
+    const drawFunction = useRef<Canvas2DDrawFunction>();
 
     const { dimensions, isAnimated, animationSettings = {} } = settings;
     const [width, height] = dimensions;
 
-    const mousePosition = useRef<[number, number]>([width / 2, height / 2]); // TODO: look into rerender perf issues with state
+    const mousePosition = useRef<Vector<2>>([width / 2, height / 2]); // TODO: look into rerender perf issues with state
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
     const {
@@ -34,8 +35,8 @@ const CanvasWrapper2D = ({
     } = useAnimationFrame({
         willPlay: isAnimated,
         onFrame: () =>
-            drawSketchFn.current?.({
-                ...sketchProps.current,
+            drawFunction.current?.({
+                ...drawProps.current,
                 frame: frameCount,
                 time: elapsedTime,
                 fps,
@@ -74,8 +75,8 @@ const CanvasWrapper2D = ({
             mousePosition: mousePosition.current
         };
 
-        sketchProps.current = initialSketchProps;
-        drawSketchFn.current = drawSketch;
+        drawProps.current = initialSketchProps;
+        drawFunction.current = drawSketch;
 
         drawSketch(initialSketchProps);
 
@@ -114,8 +115,6 @@ const CanvasWrapper2D = ({
     );
 };
 
-export default CanvasWrapper2D;
-
 /**
  * React props for the CanvasWrapper2D component
  */
@@ -153,7 +152,7 @@ export interface Canvas2DSettings {
 /**
  * Props to be recieved inside the sketches returned function
  */
-interface Canvas2DSketchProps {
+interface Canvas2DDrawProps {
     /** the rendering context to call canvas methods on - in this case 2d */
     ctx: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
@@ -178,7 +177,7 @@ interface Canvas2DSketchProps {
     isPlaying?: boolean;
 
     /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
-    mousePosition?: [number, number];
+    mousePosition?: Vector<2>;
 
     /** A callback that will be run every time the mouse moves across the canvas */
     onMouseMove?: () => void;
@@ -189,9 +188,9 @@ interface Canvas2DSketchProps {
 /**
  * The `sketch` function to be passed into the React compnonent
  */
-export type Canvas2DSetupFn = () => Canvas2DDrawFn;
+export type Canvas2DSetupFn = () => Canvas2DDrawFunction;
 
 /**
- * The function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`
+ * The draw function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`
  */
-type Canvas2DDrawFn = (props: Canvas2DSketchProps) => void;
+type Canvas2DDrawFunction = (props: Canvas2DDrawProps) => void;

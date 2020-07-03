@@ -1,15 +1,20 @@
 import React from "react";
-import random from "canvas-sketch-util/random";
 
-import CanvasWrapper2D from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
 import type {
     Canvas2DSettings,
     Canvas2DSetupFn
 } from "Renderers/RawCanvasWrapper/2D";
-import lerp from "SketchUtils/lerp";
-import getShortestDimension from "SketchUtils/getShortestViewportDimension";
+import {
+    lerp,
+    getShortestViewportDimension,
+    getDistance,
+    mapRange,
+    Vector
+} from "Utils/math";
+import { noise2D, noise3D } from "Utils/random";
 
-const shortestDimension = getShortestDimension({ withMargin: true });
+const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
 const settings: Canvas2DSettings = {
     dimensions: [shortestDimension, shortestDimension],
@@ -19,7 +24,7 @@ const settings: Canvas2DSettings = {
 const sketch: Canvas2DSetupFn = () => {
     const createGrid = () => {
         const points: {
-            position: [number, number];
+            position: Vector<2>;
             radius: number;
         }[] = [];
         const count = 24;
@@ -28,7 +33,7 @@ const sketch: Canvas2DSetupFn = () => {
             for (let y = 0; y < count; y++) {
                 const u = x / (count - 1);
                 const v = y / (count - 1);
-                const radius = Math.abs(random.noise2D(u, v)) * 0.05;
+                const radius = Math.abs(noise2D(u, v)) * 0.05;
 
                 points.push({
                     position: [u, v],
@@ -45,7 +50,7 @@ const sketch: Canvas2DSetupFn = () => {
     let noiseZ = 0;
     const noiseZVel = 0.000007;
 
-    return ({ ctx, width, height }) => {
+    return ({ ctx, width, height, mousePosition }) => {
         ctx.clearRect(0, 0, width, height);
 
         points.forEach(data => {
@@ -54,7 +59,23 @@ const sketch: Canvas2DSetupFn = () => {
 
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
-            const r = radius + Math.abs(0.02 * random.noise3D(u, v, noiseZ));
+
+            const distanceFromMouse = getDistance([x, y], mousePosition);
+            const mappedDistance = mapRange(
+                distanceFromMouse,
+                0,
+                1000,
+                0,
+                0.005,
+                {
+                    clamp: true
+                }
+            );
+
+            const r =
+                radius +
+                Math.abs(0.02 * noise3D(u, v, noiseZ)) +
+                mappedDistance;
 
             noiseZ += noiseZVel;
 

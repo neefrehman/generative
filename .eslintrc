@@ -79,6 +79,13 @@
                     "sibling",
                     "index"
                 ],
+                "pathGroups": [
+                    {
+                        "pattern": "Utils/**",
+                        "group": "internal",
+                        "position": "after"
+                    }
+                ],
                 "newlines-between": "always"
             }
         ],

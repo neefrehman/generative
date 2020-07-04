@@ -1,6 +1,6 @@
 /**
  * A vector point of to up to any dimension.
- * Adding the generic `D` will set the dimension to `D`
+ * Adding the generic `D` will set the number of dimensions
  *
  * @example
  * const vector2D: Vector<2> = [1, 3]

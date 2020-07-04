@@ -1,8 +1,9 @@
 import React from "react";
 import p5 from "p5";
 
-import { createMatrix } from "Utils/math";
 import { P5Wrapper } from "Renderers/P5Wrapper";
+
+import { createMatrix } from "Utils/math";
 
 const sketch = (p: p5) => {
     let longestDimension: number;

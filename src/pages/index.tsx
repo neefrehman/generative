@@ -25,7 +25,7 @@ const SketchList = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 150px); // TODO: -webkit-fill-available
+    max-height: calc(100vh - 150px); // -webkit-fill-available not working
     width: max-content;
 
     li {
@@ -48,11 +48,11 @@ const SketchList = styled.ul`
     }
 `;
 
-export interface SketchArrayProp {
+export interface SketchArrayProps {
     sketchArray: string[];
 }
 
-const Home = ({ sketchArray }: SketchArrayProp) => (
+const Home = ({ sketchArray }: SketchArrayProps) => (
     <HomePageWrapper>
         <Head>
             <title>Generative — Neef Rehman</title>

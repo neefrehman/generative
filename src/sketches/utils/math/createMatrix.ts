@@ -40,8 +40,10 @@ export const createMatrix = <D extends number, T>(
     }
 
     const currentMatrix = Array(currentDimensionLength).fill(initialValues);
-    // // TODO: callback logic for mapping values based on Vector position
-    // // .map((position: Vector<D>) => {})
+    // TODO: callback logic for mapping values based on Vector position
+    // .map((position: Vector<D>) => {
+    //     const [x,y,z,...] = position;
+    // })
 
     const finalMatrix = needsRecursion
         ? currentMatrix.map(() =>
@@ -52,7 +54,7 @@ export const createMatrix = <D extends number, T>(
     return finalMatrix as Matrix<D, T>;
 };
 
-// const n: number[][][][] = createMatrix(6, 0); // FIXME: https://github.com/microsoft/TypeScript/issues/39409
+// const n: number[][][][] = createMatrix([1, 2, 3, 4]); // FIXME: https://github.com/microsoft/TypeScript/issues/39409
 
 /**
  * A multidimensional array returned by `createMatrix`. Provides type-safety up to 5 dimensions.
@@ -68,4 +70,4 @@ export type Matrix<D extends number, T> = D extends 1
     ? T[][][][]
     : D extends 5
     ? T[][][][][]
-    : any[][][][][][]; // Full type safety?
+    : any[][][][][][]; // TODO: Full type safety?

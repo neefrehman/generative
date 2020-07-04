@@ -12,17 +12,10 @@ export default App;
 export const globalStyles = css`
     :global() {
         @font-face {
-            font-family: "Untitled Sans";
+            font-family: "Fleuron";
             font-weight: normal;
             font-display: block;
-            src: url("/static/fonts/UntitledSansWeb-Regular.woff2");
-        }
-
-        @font-face {
-            font-family: "Untitled Sans";
-            font-weight: bold;
-            font-display: block;
-            src: url("/static/fonts/UntitledSansWeb-Medium.woff2");
+            src: url("/static/fonts/fleuronregular.woff2");
         }
 
         * {
@@ -30,8 +23,7 @@ export const globalStyles = css`
         }
 
         body {
-            font-family: "Untitled Sans", helvetica neue, helvetica, arial,
-                sans-serif;
+            font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
             font-size: 16px;
             line-height: 1.2;
             color: #ffffff;
@@ -68,8 +60,8 @@ export const globalStyles = css`
             h1 {
                 margin-block-end: 0.5em;
                 white-space: nowrap;
-                font-size: 3em;
-                font-weight: bold;
+                font-size: 3.4em;
+                font-weight: 400;
                 margin-right: 1em;
 
                 a {

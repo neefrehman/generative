@@ -1,11 +1,9 @@
 import React from "react";
 import palettes from "nice-color-palettes";
 
-import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
-import type {
-    Canvas2DSettings,
-    Canvas2DSetupFn
-} from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/Canvas2D";
+import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
+
 import { lerp, getShortestViewportDimension } from "Utils/math";
 import { inRange, shuffle, pick } from "Utils/random";
 

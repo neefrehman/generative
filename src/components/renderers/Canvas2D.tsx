@@ -44,7 +44,7 @@ export const CanvasWrapper2D = ({
                 stopAnimation,
                 isPlaying,
                 mousePosition: mousePosition.current
-                // onMouseMove, // TODO
+                // onMouseMove, // TODO event callback
                 // onClick
             }),
         fps: throttledFps,
@@ -84,18 +84,18 @@ export const CanvasWrapper2D = ({
     }, [setupSketch, settings]);
 
     const updateMousePosition = (x: number, y: number) => {
-        const canvasBounds = canvas.current.getBoundingClientRect(); // TODO: canvas resize support
+        const canvasBounds = canvas.current.getBoundingClientRect();
         const posX = x - canvasBounds.left;
         const posY = y - canvasBounds.top;
         mousePosition.current = [posX, posY];
     };
 
-    const getMousePosition = (e: MouseEvent<HTMLCanvasElement>) => {
+    const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
         updateMousePosition(e.clientX, e.clientY);
     };
 
-    const getTouchPosition = (e: TouchEvent<HTMLCanvasElement>) => {
-        const touch = e.touches[0]; // TODO: multitouch support
+    const handleTouchMove = (e: TouchEvent<HTMLCanvasElement>) => {
+        const touch = e.touches[0];
         updateMousePosition(touch.clientX, touch.clientY);
     };
 
@@ -107,8 +107,8 @@ export const CanvasWrapper2D = ({
                 height={height}
                 className={className}
                 style={style}
-                onMouseMove={isAnimated && getMousePosition}
-                onTouchMove={isAnimated && getTouchPosition}
+                onMouseMove={isAnimated && handleMouseMove}
+                onTouchMove={isAnimated && handleTouchMove}
             />
             {children}
         </>

@@ -1,11 +1,9 @@
 import React from "react";
 import palettes from "nice-color-palettes";
 
-import { CanvasWrapper2D } from "Renderers/RawCanvasWrapper/2D";
-import type {
-    Canvas2DSettings,
-    Canvas2DSetupFn
-} from "Renderers/RawCanvasWrapper/2D";
+import { CanvasWrapper2D } from "Renderers/Canvas2D";
+import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
+
 import { lerp, getAngle } from "Utils/math";
 import { shuffle, inRange, pick, noise3D } from "Utils/random";
 
@@ -28,21 +26,23 @@ const sketch: Canvas2DSetupFn = () => {
         const randStartX = Math.random() * wWidth;
         const randStartY = Math.random() * wHeight;
 
+        const fillGrid = (x: number, y: number) => {
+            const u = x / (wWidth - 1);
+            const v = y / (wHeight - 1);
+            lines.push([u, v]);
+        };
+
         // Randomly choose quadrants to start from if on large screens
         if (wWidth > 700) {
             if (randomHalfX) {
                 for (let x = randStartX * 0.5; x < wWidth; x += 56) {
                     if (randomHalfY) {
                         for (let y = randStartY * 0.5; y < wHeight; y += 56) {
-                            const u = x / (wWidth - 1);
-                            const v = y / (wHeight - 1);
-                            lines.push([u, v]);
+                            fillGrid(x, y);
                         }
                     } else {
                         for (let y = randStartY * 1.5; y > 0; y -= 56) {
-                            const u = x / (wWidth - 1);
-                            const v = y / (wHeight - 1);
-                            lines.push([u, v]);
+                            fillGrid(x, y);
                         }
                     }
                 }
@@ -50,15 +50,11 @@ const sketch: Canvas2DSetupFn = () => {
                 for (let x = randStartX * 1.5; x > 0; x -= 56) {
                     if (randomHalfY) {
                         for (let y = randStartY * 0.5; y < wHeight; y += 56) {
-                            const u = x / (wWidth - 1);
-                            const v = y / (wHeight - 1);
-                            lines.push([u, v]);
+                            fillGrid(x, y);
                         }
                     } else {
                         for (let y = randStartY * 1.5; y > 0; y -= 56) {
-                            const u = x / (wWidth - 1);
-                            const v = y / (wHeight - 1);
-                            lines.push([u, v]);
+                            fillGrid(x, y);
                         }
                     }
                 }
@@ -66,9 +62,7 @@ const sketch: Canvas2DSetupFn = () => {
         } else {
             for (let x = 0; x < wWidth; x += 56) {
                 for (let y = 0; y < wHeight; y += 56) {
-                    const u = x / (wWidth - 1);
-                    const v = y / (wHeight - 1);
-                    lines.push([u, v]);
+                    fillGrid(x, y);
                 }
             }
         }

@@ -9,8 +9,7 @@ const StyledText = styled.p`
     transform-origin: center;
     margin-block-start: 0;
 
-    font-size: 6em;
-    font-weight: bold;
+    font-size: 6.4em;
     letter-spacing: -1px;
     color: #616161;
     opacity: 0.75;

@@ -8,7 +8,7 @@ import type { Vector } from ".";
  *
  * @returns The scalar distance between the two points
  */
-export const getDistance = <D extends 1 | 2 | 3 | 4>(
+export const getDistance = <D extends UpTo4>(
     vector1: Vector<D>,
     vector2: Vector<D>
 ): number => {
@@ -22,3 +22,5 @@ export const getDistance = <D extends 1 | 2 | 3 | 4>(
 
     return Math.hypot(dx, dy, dz, dt);
 };
+
+type UpTo4 = 1 | 2 | 3 | 4;

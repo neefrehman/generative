@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 import React from "react";
 import palettes from "nice-color-palettes";
 

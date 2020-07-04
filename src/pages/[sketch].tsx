@@ -134,9 +134,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
-    // TODO: support for folder-sketches for github link.
-    // SketchArray in getStaticPaths in could be an object with a boolean `isSubfolder`
-    // and can update the url with an `/index.tsx` if true? might not work
+    // TODO: support folder-sketches for github link.
+    // SketchArray in getStaticPaths as an object with a boolean `isSubfolder`
+    // updating the url with an `/index.tsx` if true - Doesn't work
 
     return { props: { sketchId, pathToSketch } };
 };

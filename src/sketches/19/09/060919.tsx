@@ -4,7 +4,7 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const blocks = [];
+    const blocks: Block[] = [];
     let shortestDimension: number;
     let camX = 0;
     let camY = 0;

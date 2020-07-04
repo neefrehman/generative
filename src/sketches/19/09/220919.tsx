@@ -16,7 +16,7 @@ const sketch = (p: p5) => {
 
     let shading = 2;
 
-    const balls = [];
+    const balls: Ball[] = [];
     class Ball {
         xOff: number;
         yOff: number;

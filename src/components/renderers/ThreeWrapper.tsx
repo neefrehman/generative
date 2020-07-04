@@ -16,15 +16,9 @@ export const ThreeWrapper = ({
     const wrapperElement = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        let canvas;
+        const canvasEl = wrapperElement.current;
 
-        if (autoResizeToWindow) {
-            canvas.windowResized = () => {
-                canvas.resizeCanvas(canvas.windowWidth, canvas.windowHeight);
-            };
-        }
-
-        return () => canvas.remove();
+        return () => canvasEl.remove();
     }, [sketch, autoResizeToWindow]);
 
     return (

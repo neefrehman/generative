@@ -1,3 +1,5 @@
+import { stringify } from "querystring";
+
 import React from "react";
 import palettes from "nice-color-palettes";
 
@@ -41,7 +43,7 @@ const sketch: Canvas2DSetupFn = () => {
     };
 
     let grid = createGrid();
-    const shapes = [];
+    const shapes: { color: string; path: number[][]; y?: any }[] = [];
 
     while (grid.length > 2) {
         const pointsToRemove = shuffle(grid).slice(0, 2);

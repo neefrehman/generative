@@ -1,5 +1,5 @@
 import React from "react";
-import p5 from "p5";
+import p5, { Vector } from "p5";
 
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
@@ -11,9 +11,9 @@ const sketch = (p: p5) => {
     let columns: number;
     let rows: number;
 
-    let flowField = [];
+    let flowField: Vector[] = [];
 
-    const particles = [];
+    const particles: Particle[] = [];
     class Particle {
         pos: p5.Vector;
         vel: p5.Vector;

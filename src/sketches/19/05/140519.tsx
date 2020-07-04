@@ -1,13 +1,13 @@
 import React from "react";
-import p5 from "p5";
+import p5, { Graphics } from "p5";
 
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    let graphics;
+    let graphics: Graphics;
     const graphicsSize = 200;
 
-    const particles = [];
+    const particles: Particle[] = [];
 
     class Particle {
         x: number;

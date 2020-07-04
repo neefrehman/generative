@@ -25,7 +25,7 @@ const Controls = () => {
             tension: 270,
             friction: 150
         },
-        onFrame: ({ z }) => {
+        onFrame: ({ z }: { z: number }) => {
             camera.position.z = z;
         },
         onRest: () => setZoomIsFinished(true)

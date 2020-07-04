@@ -8,7 +8,7 @@ const sketch = (p: p5) => {
     let rows: number;
     const scale = 20;
 
-    const terrain = [];
+    const terrain: number[][] = [];
 
     let flying = 0;
     const noisiness = 0.15;

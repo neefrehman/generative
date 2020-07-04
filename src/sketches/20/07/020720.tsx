@@ -64,7 +64,7 @@ const sketch: Canvas2DSetupFn = () => {
     const gridCols = width / gridSpacing;
     const gridRows = height / gridSpacing;
 
-    const createGrid = ctx => {
+    const createGrid = (ctx: CanvasRenderingContext2D) => {
         ctx.save();
         ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
 
@@ -87,7 +87,7 @@ const sketch: Canvas2DSetupFn = () => {
         ctx.restore();
     };
 
-    const points = [];
+    const points: { x: number; y: number }[] = [];
     const pointsCount = 18;
 
     const createPoints = () => {
@@ -98,7 +98,7 @@ const sketch: Canvas2DSetupFn = () => {
         }
     };
 
-    const createCornerLines = ctx => {
+    const createCornerLines = (ctx: CanvasRenderingContext2D) => {
         ctx.save();
         ctx.strokeStyle = colors[1];
         corners.forEach(corner => {
@@ -113,7 +113,7 @@ const sketch: Canvas2DSetupFn = () => {
         ctx.restore();
     };
 
-    const createMidpointLines = ctx => {
+    const createMidpointLines = (ctx: CanvasRenderingContext2D) => {
         ctx.save();
         ctx.strokeStyle = colors[2];
         midpoints.forEach(midpoint => {
@@ -128,7 +128,7 @@ const sketch: Canvas2DSetupFn = () => {
         ctx.restore();
     };
 
-    const createCenterLines = ctx => {
+    const createCenterLines = (ctx: CanvasRenderingContext2D) => {
         ctx.save();
         ctx.strokeStyle = colors[3];
         points.forEach(point => {
@@ -141,7 +141,7 @@ const sketch: Canvas2DSetupFn = () => {
         ctx.restore();
     };
 
-    const createText = ctx => {
+    const createText = (ctx: CanvasRenderingContext2D) => {
         points.forEach((point, i) => {
             const letter = String.fromCharCode(65 + i);
             ctx.fillStyle = pick(colors);

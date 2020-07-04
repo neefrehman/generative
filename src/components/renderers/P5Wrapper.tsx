@@ -1,5 +1,5 @@
-/* eslint-disable no-new */
-/* eslint-disable new-cap */
+/* eslint-disable no-new */ /* <- p5 constructor required */
+/* eslint-disable new-cap */ /* <- p5 constructor used with lowercase p */
 import React, { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import p5 from "p5";

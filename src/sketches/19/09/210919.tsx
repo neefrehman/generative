@@ -14,7 +14,7 @@ const sketch = (p: p5) => {
     let mouseHasMoved = false;
     let lastMouseMovement = 0;
 
-    const balls = [];
+    const balls: Ball[] = [];
     class Ball {
         xOff: number;
         yOff: number;

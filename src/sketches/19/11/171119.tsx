@@ -149,7 +149,7 @@ const sketch = (p: p5) => {
         }
     }
 
-    const flock = [];
+    const flock: Boid[] = [];
 
     p.setup = () => {
         p.createCanvas(p.windowWidth, p.windowHeight);

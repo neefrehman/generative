@@ -101,7 +101,8 @@ const sketch: Canvas2DSetupFn = () => {
                 ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + noise3D(u, v, noiseZ, 2);
+            const rotation =
+                angleToMouse + noise3D(u, v, noiseZ, { frequency: 2 });
 
             noiseZ += noiseZVel;
 

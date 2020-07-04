@@ -10,7 +10,7 @@ const sketch = (p: p5) => {
     let rows: number;
     const scale = 20;
 
-    const terrain = [];
+    const terrain: number[][] = [];
 
     let xOff = 0;
     let yOff = 0;

@@ -5,7 +5,7 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const particles = [];
+    const particles: Particle[] = [];
     const noiseScale = 1000;
 
     class Particle {

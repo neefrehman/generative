@@ -4,7 +4,7 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const spores = [];
+    const spores: Spore[] = [];
     class Spore {
         x: number;
         y: number;

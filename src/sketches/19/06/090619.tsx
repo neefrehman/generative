@@ -4,20 +4,20 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const balls = [];
+    const balls: Ball[] = [];
 
     class Ball {
-        x;
-        y;
-        r;
-        distOffset;
-        isHorizontal;
-        sizeOffset;
-        fill;
-        stroke;
-        vel;
+        x: number;
+        y: number;
+        r: number;
+        distOffset: number;
+        isHorizontal: boolean;
+        sizeOffset: number;
+        fill: number;
+        stroke: number;
+        vel: number;
 
-        constructor(x, y) {
+        constructor(x: number, y: number) {
             this.x = x || p.width / 2;
             this.y = y || p.height / 2;
             this.r = 0;

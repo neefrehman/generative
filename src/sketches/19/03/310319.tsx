@@ -4,7 +4,7 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const particles = [];
+    const particles: Particle[] = [];
     let noiseScale = 25000;
 
     class Particle {
@@ -87,11 +87,9 @@ const sketch = (p: p5) => {
         noiseScale -= 10;
 
         for (let i = 0; i < particles.length; i++) {
-            const radius = 3;
-
             p.fill(255);
             particles[i].move();
-            particles[i].display(radius);
+            particles[i].display();
             particles[i].checkEdge();
         }
     };

@@ -4,7 +4,7 @@ import p5 from "p5";
 import { P5Wrapper } from "Renderers/P5Wrapper";
 
 const sketch = (p: p5) => {
-    const particles = [];
+    const particles: Particle[] = [];
     let noiseScale = 0;
 
     class Particle {
@@ -48,7 +48,7 @@ const sketch = (p: p5) => {
             }
         }
 
-        display(r) {
+        display(r: number) {
             p.ellipse(this.pos.x, this.pos.y, r);
         }
     }

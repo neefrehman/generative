@@ -7,7 +7,7 @@ const sketch = (p: p5) => {
     let shortestDimension: number;
     let maxRadius: number;
 
-    const sinePoints = [];
+    const sinePoints: SinePoint[] = [];
     class SinePoint {
         trailColor: number;
         yVel: number;

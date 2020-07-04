@@ -44,7 +44,7 @@ export const CanvasWrapper2D = ({
                 stopAnimation,
                 isPlaying,
                 mousePosition: mousePosition.current
-                // onMouseMove, // TODO event callback
+                // onMouseMove, // TODO event callback props
                 // onClick
             }),
         fps: throttledFps,

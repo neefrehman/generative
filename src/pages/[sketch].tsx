@@ -114,14 +114,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
             const sketches = fs
                 .readdirSync(monthDirectory)
-                .filter(sketchFileName => sketchFileName.length === 10);
+                .filter(sketchId => RegExp(/[0-9]{6}(\..*)?/).test(sketchId))
+                .map(sketchId => sketchId.substr(0, 6));
 
-            sketches.forEach(sketch => {
-                const sketchId = sketch.substr(0, 6);
-                const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
-
-                if (isValidSketchId) sketchArray.push(sketchId);
-            });
+            sketches.forEach(sketchId => sketchArray.push(sketchId));
         });
     });
 
@@ -138,6 +134,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+    // TODO: support for folder-sketches for github link.
+    // SketchArray in getStaticPaths in could be an object with a boolean `isSubfolder`
+    // and can update the url with an `/index.tsx` if true? might not work
 
     return { props: { sketchId, pathToSketch } };
 };

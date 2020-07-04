@@ -86,10 +86,6 @@ const Home = ({ sketchArray }: SketchArrayProps) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-    // can't abstract this to ./utils to share with [sketch].tsx as I get the following error:
-    // `Module not found: Can't resolve 'fs' in '/Users/neef/Desktop/generative/src/utils'`
-    // Also can't export getSketchArray as a named export from this file:
-    // `Module not found: Can't resolve 'fs' in '/Users/neef/Desktop/generative/src/pages'`
     const sketchArray: string[] = [];
 
     const sketchDirectory = path.join(process.cwd(), "src/sketches");
@@ -114,14 +110,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
             const sketches = fs
                 .readdirSync(monthDirectory)
-                .filter(sketchFileName => sketchFileName.length === 10);
+                .filter(sketchId => RegExp(/[0-9]{6}(\..*)?/).test(sketchId))
+                .map(sketchId => sketchId.substr(0, 6));
 
-            sketches.forEach(sketch => {
-                const sketchId = sketch.substr(0, 6);
-                const isValidSketchId = RegExp(/^[0-9]{6}$/).test(sketchId);
-
-                if (isValidSketchId) sketchArray.push(sketchId);
-            });
+            sketches.forEach(sketchId => sketchArray.push(sketchId));
         });
     });
 

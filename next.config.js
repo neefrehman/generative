@@ -27,4 +27,4 @@ module.exports = withCSS({
     }
 });
 
-// module.exports = { experimental: { modern: true } }; TODO: wait for general release - this breaks linaria
+// module.exports = { experimental: { modern: true } }; wait for general release - this breaks linaria

@@ -7,6 +7,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
+import { getSketchArray } from "./[sketch]";
+
 const HomePageWrapper = styled.div`
     margin: 35px 50px;
 
@@ -86,38 +88,9 @@ const Home = ({ sketchArray }: SketchArrayProps) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-    const sketchArray: string[] = [];
+    const sketchArray = getSketchArray(path, fs).reverse();
 
-    const sketchDirectory = path.join(process.cwd(), "src/sketches");
-    const yearFolders = fs
-        .readdirSync(sketchDirectory)
-        .filter(folderName => folderName.length === 2);
-
-    yearFolders.forEach(yearFolder => {
-        const yearDirectory = path.join(
-            process.cwd(),
-            `src/sketches/${yearFolder}`
-        );
-        const monthFolders = fs
-            .readdirSync(yearDirectory)
-            .filter(folderName => folderName.length === 2);
-
-        monthFolders.forEach(monthFolder => {
-            const monthDirectory = path.join(
-                process.cwd(),
-                `src/sketches/${yearFolder}/${monthFolder}`
-            );
-
-            const sketches = fs
-                .readdirSync(monthDirectory)
-                .filter(sketchId => RegExp(/[0-9]{6}(\..*)?/).test(sketchId))
-                .map(sketchId => sketchId.substr(0, 6));
-
-            sketches.forEach(sketchId => sketchArray.push(sketchId));
-        });
-    });
-
-    return { props: { sketchArray: sketchArray.reverse() } };
+    return { props: { sketchArray } };
 };
 
 export default Home;

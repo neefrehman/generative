@@ -89,41 +89,43 @@ const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
     );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
     const sketchArray: string[] = [];
 
-    const sketchDirectory = path.join(process.cwd(), "src/sketches");
-    const yearFolders = fs
+    const sketchDirectory = nodePath.join(process.cwd(), "src/sketches");
+    const yearFolders = nodeFs
         .readdirSync(sketchDirectory)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearDirectory = path.join(
+        const yearDirectory = nodePath.join(
             process.cwd(),
             `src/sketches/${yearFolder}`
         );
-        const monthFolders = fs
+        const monthFolders = nodeFs
             .readdirSync(yearDirectory)
             .filter(folderName => folderName.length === 2);
 
         monthFolders.forEach(monthFolder => {
-            const monthDirectory = path.join(
+            const monthDirectory = nodePath.join(
                 process.cwd(),
                 `src/sketches/${yearFolder}/${monthFolder}`
             );
-
-            const sketches = fs
+            const sketches = nodeFs
                 .readdirSync(monthDirectory)
-                .filter(sketchId => RegExp(/[0-9]{6}(\..*)?/).test(sketchId))
+                .filter(sketchId => RegExp(/[0-9]{6}(\.tsx)?/).test(sketchId))
                 .map(sketchId => sketchId.substr(0, 6));
 
             sketches.forEach(sketchId => sketchArray.push(sketchId));
         });
     });
 
-    const paths = sketchArray.map(sketchId => ({
-        params: { sketch: sketchId }
-    }));
+    return sketchArray;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const sketchArray = getSketchArray(path, fs);
+    const paths = sketchArray.map(sketch => ({ params: { sketch } }));
 
     return { paths, fallback: false };
 };
@@ -136,7 +138,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
     // TODO: support folder-sketches for github link.
     // SketchArray in getStaticPaths as an object with a boolean `isSubfolder`
-    // updating the url with an `/index.tsx` if true - Doesn't work
+    // updating the url with an `/index.tsx` if true - Doesn't work.
+    // Try pushing boolean to array in upper scope then reading here? - also doesn't work
+    // -> Needs to happen in client as import() wont work otherwise
 
     return { props: { sketchId, pathToSketch } };
 };

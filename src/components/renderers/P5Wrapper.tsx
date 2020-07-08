@@ -38,7 +38,9 @@ export const P5Wrapper = ({
 };
 
 interface P5WrapperProps {
+    /** The p5 sketch function to be run. Must be written in p5's instance mode. */
     sketch: (p: p5) => void;
+    /** If true, the canvas will resize to window whenever the window is resized */
     autoResizeToWindow?: boolean;
     className?: string;
     style?: CSSProperties;

@@ -19,6 +19,9 @@ const sketch = (p: p5) => {
     let camXOff = 0;
     let camYOff = 0;
 
+    let camXoffTarget = 0;
+    let camYoffTarget = 0;
+
     const forceOdd = (number: number) => {
         return number % 2 !== 0 ? number : number - 1;
     };
@@ -27,7 +30,7 @@ const sketch = (p: p5) => {
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
         p.frameRate(24);
         p.stroke(181, 105, 25);
-        p.strokeWeight(3);
+        p.strokeWeight(3.2);
 
         longestDimension = Math.max(p.width, p.height);
         res = longestDimension * 0.1;
@@ -61,26 +64,29 @@ const sketch = (p: p5) => {
 
                     p.line(curX, curY, curZ, curX, curY, curZ + res);
                     // Don't draw right-most horizontal lines going outward
-                    if (x !== row.length) {
+                    if (x !== 9) {
                         p.line(curX, curY, curZ, curX + res, curY, curZ);
                     }
                 });
             });
         });
+
+        camXOff = p.lerp(camXOff, camXoffTarget, 0.25);
+        camYOff = p.lerp(camYOff, camYoffTarget, 0.25);
     };
 
     p.mouseMoved = () => {
         const mappedMouseY = p.map(p.mouseY, 0, p.height, -0.02, 0.02);
         const mappedMouseX = p.map(p.mouseX, 0, p.width, -0.02, 0.02);
-        camXOff = p.lerp(camXOff, mappedMouseY, 0.5);
-        camYOff = p.lerp(camYOff, mappedMouseX, 0.5);
+        camXoffTarget = mappedMouseY;
+        camYoffTarget = mappedMouseX;
     };
 
     p.mouseDragged = () => {
         const mappedMouseY = p.map(p.mouseY, 0, p.height, -0.02, 0.02);
         const mappedMouseX = p.map(p.mouseX, 0, p.width, -0.02, 0.02);
-        camXOff = p.lerp(camXOff, mappedMouseY, 0.5);
-        camYOff = p.lerp(camYOff, mappedMouseX, 0.5);
+        camXoffTarget = mappedMouseY;
+        camYoffTarget = mappedMouseX;
     };
 };
 

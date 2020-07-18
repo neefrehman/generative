@@ -54,7 +54,7 @@ export const createMatrix = <D extends number, T>(
     return finalMatrix as Matrix<D, T>;
 };
 
-// const n: number[][][][] = createMatrix([1, 2, 3, 4]); // FIXME: https://github.com/microsoft/TypeScript/issues/39409
+// const n = createMatrix([1, 2, 3]); // FIXME: https://github.com/microsoft/TypeScript/issues/39409
 
 /**
  * A multidimensional array returned by `createMatrix`. Provides type-safety up to 5 dimensions.

@@ -26,29 +26,22 @@ export const useAnimationFrame = (
     const prevFrameTimeRef = useRef<DOMHighResTimeStamp>(performance.now());
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const elapsedTime = useRef(0);
-    // const [elapsedTime, setElapsedTime] = useState(0);
-    const frameCount = useRef(1);
-    // const [frameCount, setFrameCount] = useState(1);
-    const fpsArray = useRef<number[]>(new Array(10).fill(throttledFps));
-    // const [fpsArray, setFpsArray] = useState<number[]>(
-    //     new Array(10).fill(throttledFps)
-    // );
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [frameCount, setFrameCount] = useState(1);
+    const [fpsArray, setFpsArray] = useState<number[]>(
+        new Array(10).fill(throttledFps)
+    );
 
     const animate = useCallback(
         (timestamp: DOMHighResTimeStamp) => {
-            // TODO: perf issue on unmount with state, feature loss with refs
-
-            elapsedTime.current = Math.round(timestamp - startTimeRef.current);
+            // TODO: perf issue on unmount with state
             // setElapsedTime(Math.round(timestamp - startTimeRef.current));
             const deltaTime = (timestamp - prevFrameTimeRef.current) / 1000;
             const currentFps = Math.round(1 / deltaTime);
 
             const runFrame = () => {
                 onFrame?.();
-                frameCount.current += 1;
                 // setFrameCount(prevCount => prevCount + 1);
-                fpsArray.current = [...[fpsArray.current.shift()], currentFps];
                 // setFpsArray(prevArray => [...[prevArray.shift()], currentFps]);
                 prevFrameTimeRef.current = timestamp;
             };
@@ -96,9 +89,9 @@ export const useAnimationFrame = (
     }, [animate, onStart, onEnd, delay, endAfter, willPlay]);
 
     return {
-        elapsedTime: elapsedTime.current,
-        frameCount: frameCount.current,
-        fps: getMean(fpsArray.current),
+        elapsedTime,
+        frameCount,
+        fps: getMean(fpsArray),
         stopAnimation,
         startAnimation,
         isPlaying

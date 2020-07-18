@@ -5,6 +5,7 @@ export { getMean } from "./getMean";
 export { getShortestViewportDimension } from "./getShortestViewportDimension";
 export { getSign } from "./getSign";
 export { lerp } from "./lerp";
+export { lerpAngle } from "./lerpAngle";
 export { lerpVector } from "./lerpVector";
 export { linspace } from "./linspace";
 export { mapRange } from "./mapRange";

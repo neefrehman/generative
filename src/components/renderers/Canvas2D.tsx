@@ -156,12 +156,12 @@ interface Canvas2DDrawProps {
     /** the rendering context to call canvas methods on - in this case 2d */
     ctx: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
-    canvas: HTMLCanvasElement;
+    canvas?: HTMLCanvasElement;
 
     /** The width of the sketch - maps to dimensions[0] from the sketch settings */
-    width: number;
+    width?: number;
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
-    height: number;
+    height?: number;
 
     /** The current frames of the animation */
     frame?: number;

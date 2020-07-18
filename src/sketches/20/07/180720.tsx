@@ -4,10 +4,11 @@ import palettes from "nice-color-palettes";
 import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { CanvasWrapper2D } from "Renderers/Canvas2D";
 
-import { lerp, getAngle, getDistance, mapRange } from "Utils/math";
+import { lerp, lerpAngle, getAngle, getDistance, mapRange } from "Utils/math";
 import type { Vector } from "Utils/math";
 import { shuffle, pick, inRange } from "Utils/random";
-import { roundRect } from "Utils/libs/canvas2d/roundedRect";
+
+import { roundRect } from "LibUtils/canvas2d/roundedRect";
 
 const settings: Canvas2DSettings = {
     dimensions: [window.innerWidth, window.innerHeight],

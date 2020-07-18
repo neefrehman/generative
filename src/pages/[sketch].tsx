@@ -92,23 +92,19 @@ const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
 export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
     const sketchArray: string[] = [];
 
-    const sketchDirectory = nodePath.join(process.cwd(), "src/sketches");
+    const sketchDirectory = nodePath.resolve("src/sketches");
     const yearFolders = nodeFs
         .readdirSync(sketchDirectory)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearDirectory = nodePath.join(
-            process.cwd(),
-            `src/sketches/${yearFolder}`
-        );
+        const yearDirectory = nodePath.resolve(`src/sketches/${yearFolder}`);
         const monthFolders = nodeFs
             .readdirSync(yearDirectory)
             .filter(folderName => folderName.length === 2);
 
         monthFolders.forEach(monthFolder => {
-            const monthDirectory = nodePath.join(
-                process.cwd(),
+            const monthDirectory = nodePath.resolve(
                 `src/sketches/${yearFolder}/${monthFolder}`
             );
             const sketches = nodeFs
@@ -136,13 +132,26 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
-    // TODO: support folder-sketches for github link.
+
+    // support folder-sketches for github link.
     // SketchArray in getStaticPaths as an object with a boolean `isSubfolder`
     // updating the url with an `/index.tsx` if true - Doesn't work.
     // Try pushing boolean to array in upper scope then reading here? - also doesn't work
     // -> Needs to happen in client as import() wont work otherwise
 
-    return { props: { sketchId, pathToSketch } };
+    // TODO: Check with node to see if path is file or folder?
+    // const thisSketch = fs.statSync(
+    //     path.resolve(`src/sketches/${year}/${month}/${sketchId}`)
+    // );
+    // const isFolderSketch = thisSketch.isDirectory();
+    // ^Error: ENOENT: no such file or directory
+
+    return {
+        props: {
+            sketchId,
+            pathToSketch
+        }
+    };
 };
 
 export default SketchPage;

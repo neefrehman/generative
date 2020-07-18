@@ -84,6 +84,11 @@
                         "pattern": "Utils/**",
                         "group": "internal",
                         "position": "after"
+                    },
+                    {
+                        "pattern": "LibUtils/**",
+                        "group": "internal",
+                        "position": "after"
                     }
                 ],
                 "newlines-between": "always"

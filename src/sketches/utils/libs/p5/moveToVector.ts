@@ -9,7 +9,7 @@ import p5 from "p5";
 const moveToVector = (
     currentPosition: p5.Vector,
     target: p5.Vector,
-    p5Instance: p5 // TODO: find way to run function without passing an instance? Extending from p5.Vector not a good idea...
+    p5Instance: p5
 ) => {
     const distance = target.dist(currentPosition);
     target.sub(currentPosition);

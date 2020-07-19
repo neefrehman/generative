@@ -2,8 +2,6 @@ import SimplexNoise from "simplex-noise";
 
 const noiseGenerator = new SimplexNoise();
 
-// TODO: classical perlin noise config?
-
 /** A configuration object to set the frequency and amplitude of the noise */
 interface NoiseOptions {
     /** Multiplies all coordinates by this value */

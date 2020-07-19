@@ -66,7 +66,6 @@ export const CanvasWrapper2D = ({
         ctx.scale(2, 2);
         // <- End fix ->
 
-        const drawSketch = setupSketch();
         const initialSketchProps = {
             ctx,
             canvas: canvasEl,
@@ -74,6 +73,8 @@ export const CanvasWrapper2D = ({
             height,
             mousePosition: mousePosition.current
         };
+
+        const drawSketch = setupSketch(initialSketchProps);
 
         drawProps.current = initialSketchProps;
         drawFunction.current = drawSketch;
@@ -154,7 +155,7 @@ export interface Canvas2DSettings {
  */
 interface Canvas2DDrawProps {
     /** the rendering context to call canvas methods on - in this case 2d */
-    ctx: CanvasRenderingContext2D;
+    ctx?: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
     canvas?: HTMLCanvasElement;
 
@@ -188,9 +189,11 @@ interface Canvas2DDrawProps {
 /**
  * The `sketch` function to be passed into the React compnonent
  */
-export type Canvas2DSetupFn = () => Canvas2DDrawFunction;
+export type Canvas2DSetupFn = (
+    props?: Canvas2DDrawProps
+) => Canvas2DDrawFunction;
 
 /**
  * The draw function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`
  */
-type Canvas2DDrawFunction = (props: Canvas2DDrawProps) => void;
+type Canvas2DDrawFunction = (props?: Canvas2DDrawProps) => void;

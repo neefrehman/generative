@@ -8,5 +8,7 @@ More in-depth readme coming in the future.
 
 ## Resources
 
-[The Book of Shaders](https://thebookofshaders.com/)
-[The Coding Train](https://www.youtube.com/user/shiffman)
+-   [The Book of Shaders](https://thebookofshaders.com/)
+-   [The Coding Train](https://www.youtube.com/user/shiffman)
+-   [Sebastian Lague](https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ)
+-   [Jamie Wong](http://jamie-wong.com/)

@@ -7,8 +7,7 @@ import { CanvasWrapper2D } from "Renderers/Canvas2D";
 import { lerp, getAngle, getDistance, mapRange } from "Utils/math";
 import type { Vector } from "Utils/math";
 import { shuffle, pick, inRange } from "Utils/random";
-
-import { roundRect } from "LibUtils/canvas2d/roundedRect";
+import { roundedRect } from "Utils/libs/canvas2d";
 
 const settings: Canvas2DSettings = {
     dimensions: [window.innerWidth, window.innerHeight],
@@ -82,7 +81,7 @@ const sketch: Canvas2DSetupFn = () => {
             ctx.beginPath();
             ctx.translate(x, y);
             ctx.rotate(rotation);
-            roundRect(
+            roundedRect(
                 ctx,
                 -lineWidth / 2,
                 -mappedLineLength / 2,

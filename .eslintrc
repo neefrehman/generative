@@ -81,12 +81,12 @@
                 ],
                 "pathGroups": [
                     {
-                        "pattern": "Utils/**",
+                        "pattern": "LibUtils/**",
                         "group": "internal",
                         "position": "after"
                     },
                     {
-                        "pattern": "LibUtils/**",
+                        "pattern": "Utils/**",
                         "group": "internal",
                         "position": "after"
                     }

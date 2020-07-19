@@ -10,7 +10,7 @@
  * @param options.fill - Whether to fill the rectangle.
  * @param options.stroke - Whether to stroke the rectangle.
  */
-export const roundRect = (
+export const roundedRect = (
     ctx: CanvasRenderingContext2D,
     x: number,
     y: number,

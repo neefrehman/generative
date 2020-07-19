@@ -1,1 +1,1 @@
-export { default as moveToVector } from "./moveToVector";
+export { moveToVector } from "./moveToVector";

@@ -1,4 +1,4 @@
-import { lerp } from ".";
+import { lerp } from "./lerp";
 
 /**
  * Performs a linear interpolation between two angles

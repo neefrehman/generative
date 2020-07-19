@@ -6,7 +6,7 @@ import p5 from "p5";
  * @param target - The vector target to move towards
  * @param p5Instance - The instance of p5 that the sketch is running
  */
-const moveToVector = (
+export const moveToVector = (
     currentPosition: p5.Vector,
     target: p5.Vector,
     p5Instance: p5
@@ -20,5 +20,3 @@ const moveToVector = (
 
     return currentPosition;
 };
-
-export default moveToVector;

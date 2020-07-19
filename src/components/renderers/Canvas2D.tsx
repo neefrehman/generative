@@ -33,7 +33,7 @@ export const CanvasWrapper2D = ({
         stopAnimation,
         isPlaying
     } = useAnimationFrame({
-        willPlay: isAnimated,
+        willPlay: isAnimated ?? false,
         onFrame: () =>
             drawFunction.current?.({
                 ...drawProps.current,

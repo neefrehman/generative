@@ -9,7 +9,11 @@ import { NoiseOverlay } from "Utils/NoiseOverlay";
 import { pick, inRange } from "Utils/random";
 
 const settings: Canvas2DSettings = {
-    dimensions: [window.innerWidth, window.innerHeight]
+    dimensions: [window.innerWidth, window.innerHeight],
+    isAnimated: true,
+    animationSettings: {
+        fps: 0.14
+    }
 };
 
 const sketch: Canvas2DSetupFn = () => {
@@ -66,7 +70,8 @@ const sketch: Canvas2DSetupFn = () => {
 
     const createGrid = (ctx: CanvasRenderingContext2D) => {
         ctx.save();
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.01)";
+        ctx.lineWidth = 2;
 
         for (let x = 0; x < gridCols; x++) {
             ctx.beginPath();
@@ -88,7 +93,7 @@ const sketch: Canvas2DSetupFn = () => {
     };
 
     const points: { x: number; y: number }[] = [];
-    const pointsCount = 18;
+    const pointsCount = 1;
 
     const createPoints = () => {
         for (let i = pointsCount - 1; i >= 0; i--) {
@@ -151,7 +156,7 @@ const sketch: Canvas2DSetupFn = () => {
     };
 
     return ({ ctx }) => {
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
 
         createPoints();
         createGrid(ctx);

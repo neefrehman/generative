@@ -50,9 +50,14 @@ export const StyledSketchPage = styled.div`
 export interface SketchPageProps {
     sketchId: string;
     pathToSketch: string;
+    gitHubPath: string;
 }
 
-const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
+const SketchPage = ({
+    sketchId,
+    pathToSketch,
+    gitHubPath
+}: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
@@ -78,7 +83,7 @@ const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
                 </Link>
 
                 <a
-                    href={`https://github.com/neefrehman/Generative/blob/master/src/${pathToSketch}.tsx`}
+                    href={`https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -92,23 +97,21 @@ const SketchPage = ({ sketchId, pathToSketch }: SketchPageProps) => {
 export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
     const sketchArray: string[] = [];
 
-    const sketchDirectory = nodePath.resolve("src/sketches");
+    const sketchPath = nodePath.resolve("src/sketches");
     const yearFolders = nodeFs
-        .readdirSync(sketchDirectory)
+        .readdirSync(sketchPath)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearDirectory = nodePath.resolve(`src/sketches/${yearFolder}`);
+        const yearPath = nodePath.resolve(`${sketchPath}/${yearFolder}`);
         const monthFolders = nodeFs
-            .readdirSync(yearDirectory)
+            .readdirSync(yearPath)
             .filter(folderName => folderName.length === 2);
 
         monthFolders.forEach(monthFolder => {
-            const monthDirectory = nodePath.resolve(
-                `src/sketches/${yearFolder}/${monthFolder}`
-            );
+            const monthPath = nodePath.resolve(`${yearPath}/${monthFolder}`);
             const sketches = nodeFs
-                .readdirSync(monthDirectory)
+                .readdirSync(monthPath)
                 .filter(sketchId => RegExp(/[0-9]{6}(\.tsx)?/).test(sketchId))
                 .map(sketchId => sketchId.substr(0, 6));
 
@@ -133,23 +136,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const month = sketchId.substr(2, 2);
     const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
 
-    // support folder-sketches for github link.
-    // SketchArray in getStaticPaths as an object with a boolean `isSubfolder`
-    // updating the url with an `/index.tsx` if true - Doesn't work.
-    // Try pushing boolean to array in upper scope then reading here? - also doesn't work
-    // -> Needs to happen in client as import() wont work otherwise
-
-    // TODO: Check with node to see if path is file or folder?
-    // const thisSketch = fs.statSync(
-    //     path.resolve(`src/sketches/${year}/${month}/${sketchId}`)
-    // );
-    // const isFolderSketch = thisSketch.isDirectory();
-    // ^Error: ENOENT: no such file or directory
+    let gitHubPath = `src/${pathToSketch}`;
+    try {
+        fs.statSync(path.resolve(gitHubPath));
+        gitHubPath += "/index.tsx"; // Folder
+    } catch {
+        gitHubPath += ".tsx"; // Single file
+    }
 
     return {
         props: {
             sketchId,
-            pathToSketch
+            pathToSketch,
+            gitHubPath
         }
     };
 };

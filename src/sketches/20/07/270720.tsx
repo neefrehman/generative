@@ -37,7 +37,10 @@ const PenBorders = () => {
 
 const InvisibleMouseSphere = () => {
     const { viewport } = useThree();
-    const [, api] = useSphere(() => ({ type: "Kinematic", args: 6 }));
+    const [, api] = useSphere(() => ({
+        type: "Kinematic",
+        args: window.innerWidth > 600 ? 6 : 3
+    }));
 
     return useFrame(state =>
         api.position.set(

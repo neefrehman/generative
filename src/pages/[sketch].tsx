@@ -112,7 +112,7 @@ export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
             const monthPath = nodePath.resolve(`${yearPath}/${monthFolder}`);
             const sketches = nodeFs
                 .readdirSync(monthPath)
-                .filter(sketchId => RegExp(/[0-9]{6}(\.tsx)?/).test(sketchId))
+                .filter(sketchId => RegExp(/^[0-9]{6}(\.tsx)?$/).test(sketchId))
                 .map(sketchId => sketchId.substr(0, 6));
 
             sketches.forEach(sketchId => sketchArray.push(sketchId));

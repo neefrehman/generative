@@ -48,9 +48,10 @@ const InvisibleMouseSphere = () => {
     );
 };
 
-const InstancedSpheres = ({ count = 300 }) => {
-    const sphereRadius = 0.8;
+const InstancedSpheres = () => {
     const { viewport } = useThree();
+    const sphereCount = window.innerWidth > 600 ? 300 : 150;
+    const sphereRadius = 0.8;
 
     const [ref] = useSphere(() => ({
         mass: 100,
@@ -63,10 +64,10 @@ const InstancedSpheres = ({ count = 300 }) => {
             ref={ref}
             castShadow
             receiveShadow
-            args={[undefined, undefined, count]}
+            args={[undefined, undefined, sphereCount]}
         >
             <sphereBufferGeometry args={[sphereRadius, 32, 32]} />
-            <meshLambertMaterial color="#ff7b00" />
+            <meshLambertMaterial color="#5F00BA" />
         </instancedMesh>
     );
 };
@@ -93,7 +94,7 @@ const Post = () => (
                 radius={7}
                 intensity={30}
                 luminanceInfluence={0.6}
-                color="red"
+                color="#5F0077"
             />
         </EffectComposer>
     </Suspense>
@@ -114,7 +115,7 @@ const S270720 = () => (
     >
         <fog attach="fog" args={["red", 25, 40]} />
         {/* @ts-expect-error - until https://github.com/react-spring/react-three-fiber/issues/581 */}
-        <color attach="background" args={["#ffdd41"]} />
+        <color attach="background" args={["#5F00BA"]} />
         <ambientLight intensity={2} />
         <directionalLight
             position={[50, 50, 25]}

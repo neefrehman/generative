@@ -12,15 +12,11 @@ import {
 import { lineBetween, rgbaToString } from "LibUtils/canvas2d";
 
 import { noise3D } from "Utils/random";
-import { getShortestViewportDimension } from "Utils/math";
 
-const shortestDimension = getShortestViewportDimension({
-    cap: 540,
-    withMargin: true
-});
+import { getDimensions190720 } from "./190720";
 
 const settings: Canvas2DSettings = {
-    dimensions: [shortestDimension, shortestDimension],
+    dimensions: getDimensions190720(),
     isAnimated: true
 };
 

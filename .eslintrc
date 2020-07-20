@@ -68,6 +68,7 @@
                 }
             }
         ],
+        "prefer-const": ["warn"],
         "import/order": [
             "warn",
             {

@@ -12,13 +12,19 @@ import {
 import { noise3D } from "Utils/random";
 import { getShortestViewportDimension } from "Utils/math";
 
-const shortestDimension = getShortestViewportDimension({
-    cap: 600,
-    withMargin: true
-});
+export const getDimensions190720 = (): [number, number] => {
+    const shortestDimension = getShortestViewportDimension({
+        cap: 660,
+        withMargin: true
+    });
+
+    return shortestDimension > 425
+        ? [shortestDimension, shortestDimension]
+        : [window.innerWidth, window.innerHeight];
+};
 
 const settings: Canvas2DSettings = {
-    dimensions: [shortestDimension, shortestDimension],
+    dimensions: getDimensions190720(),
     isAnimated: true
 };
 

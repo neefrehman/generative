@@ -1,11 +1,8 @@
 https://medium.com/@jtnimoy/how-to-extract-isolines-in-p5-js-e268b2b046a0
 https://mrdoob.com/lab/javascript/webcam/slitscan/
 https://codesandbox.io/s/handpose-fb3tv?file=/package.json
-https://twitter.com/0xca0a/status/1280213481845919746?s=20 - https://t.co/BhHC5j10St?amp=1
 https://grad.superhi.com/
 https://three-demos.glitch.me/
 https://github.com/mattdesl/workshop-webgl-glsl
-https://www.reddit.com/r/webdev/comments/hqq4zo/how_do_i_make_this_with_css_js_obviously/
 https://wwwtyro.net/2019/11/18/instanced-lines.html
 http://jamie-wong.com/2016/07/06/metaballs-and-webgl/
-https://www.youtube.com/watch?v=EpgB3cNhKPM

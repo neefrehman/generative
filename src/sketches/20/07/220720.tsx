@@ -11,8 +11,9 @@ import {
 
 import { lineBetween, rgbaToString } from "LibUtils/canvas2d";
 
-import { getShortestViewportDimension } from "Utils/math";
 import { inRange } from "Utils/random";
+
+import { getDimensions190720 } from "./190720";
 
 export class Metaball {
     width: number;
@@ -49,13 +50,8 @@ export class Metaball {
     }
 }
 
-const shortestDimension = getShortestViewportDimension({
-    cap: 700,
-    withMargin: true
-});
-
 const settings: Canvas2DSettings = {
-    dimensions: [shortestDimension, shortestDimension],
+    dimensions: getDimensions190720(),
     isAnimated: true
 };
 

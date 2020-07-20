@@ -94,6 +94,6 @@ const sketch: Canvas2DSetupFn = () => {
     };
 };
 
-const S180720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S100720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
 
-export default S180720;
+export default S100720;

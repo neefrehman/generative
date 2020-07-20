@@ -39,7 +39,7 @@ const InvisibleMouseSphere = () => {
     const { viewport } = useThree();
     const [, api] = useSphere(() => ({
         type: "Kinematic",
-        args: window.innerWidth > 600 ? 6 : 3
+        args: window.innerWidth > 600 ? 6 : 4
     }));
 
     return useFrame(state =>

@@ -151,7 +151,7 @@ export interface Canvas2DSettings {
 }
 
 /**
- * Props to be recieved inside the sketches returned function
+ * Props to be recieved by the sketch.
  */
 interface Canvas2DDrawProps {
     /** the rendering context to call canvas methods on - in this case 2d */
@@ -187,7 +187,7 @@ interface Canvas2DDrawProps {
 }
 
 /**
- * The `sketch` function to be passed into the React compnonent
+ * The `sketch` function to be passed into the React compnonent, with access to `Canvas2DSketchProps`
  */
 export type Canvas2DSetupFn = (
     props?: Canvas2DDrawProps

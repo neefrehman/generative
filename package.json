@@ -64,6 +64,9 @@
         "export": "next export",
         "start": "next start"
     },
+    "resolutions": {
+        "webpack": "^5.0.0-beta.22"
+    },
     "lint-staged": {
         "*.(js|ts|tsx)": [
             "eslint --fix",

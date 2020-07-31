@@ -1,4 +1,4 @@
-// Converted from Pauls Henschel's csb, to learn how to use react-postprocessing:
+// Converted from Pauls Henschel's csb to learn react-postprocessing:
 // https://twitter.com/0xca0a/status/1280213481845919746?s=20
 
 import React, { Suspense } from "react";
@@ -7,7 +7,7 @@ import { Physics, usePlane, useSphere } from "use-cannon";
 import { BlendFunction, KernelSize } from "postprocessing";
 import { EffectComposer, Bloom, SSAO } from "react-postprocessing";
 
-const PenBorders = () => {
+const InvisibleBorders = () => {
     const { viewport } = useThree();
 
     const Plane = ({ ...props }): null => {
@@ -53,7 +53,7 @@ const InvisibleMouseSphere = () => {
 
 const InstancedSpheres = () => {
     const { viewport } = useThree();
-    const sphereCount = window.innerWidth > 600 ? 300 : 150;
+    const sphereCount = window.innerWidth > 600 ? 350 : 150;
     const sphereRadius = 0.8;
 
     const [ref] = useSphere(() => ({
@@ -117,7 +117,7 @@ const S270720 = () => (
         style={{ height: "100vh", width: "100vw" }}
     >
         <fog attach="fog" args={["red", 25, 40]} />
-        {/* @ts-expect-error - until https://github.com/react-spring/react-three-fiber/issues/581 */}
+        {/* @ts-expect-error - https://github.com/react-spring/react-three-fiber/issues/581 */}
         <color attach="background" args={["#5F00BA"]} />
         <ambientLight intensity={2} />
         <directionalLight
@@ -133,11 +133,11 @@ const S270720 = () => (
         />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />
         <Physics
-            gravity={[0, -50, 0]}
+            gravity={[0, -20, 0]}
             defaultContactMaterial={{ restitution: 0.5 }}
         >
             <group position={[0, 0, -10]}>
-                <PenBorders />
+                <InvisibleBorders />
                 <InvisibleMouseSphere />
                 <InstancedSpheres />
             </group>

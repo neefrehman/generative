@@ -4,7 +4,7 @@
 
 This repo is for [generative.neef.co](https://generative.neef.co/), a playground for experimentation.
 
-It supports multiple libraies for generating sketches, from p5, to THREE, to anythng else. Built ontop of [Next.js](https://nextjs.org/), it uses a combination of Next's [dynamic routes](https://nextjs.org/docs#dynamic-routing) and React's `lazy` and `Suspense` to build and export each sketch as a static page (with code-splitting to ensure library bundles can be shared between sketches).
+It supports multiple libraies for generating sketches, from p5, to THREE, to anythng else, and incliudes support for shader via [glslify](https://github.com/glslify/glslify). Built ontop of [Next.js](https://nextjs.org/), it uses a combination of Next's [dynamic routes](https://nextjs.org/docs#dynamic-routing) and React's `lazy` and `Suspense` to build and export each sketch as a static page (with code-splitting to ensure library bundles can be shared between sketches).
 
 More documentation coming soon.
 

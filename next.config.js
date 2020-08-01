@@ -16,7 +16,20 @@ module.exports = withCSS({
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
-            use: ["raw-loader", "glslify-loader"]
+            use: [
+                "raw-loader",
+                {
+                    loader: "glslify-loader",
+                    options: {
+                        transform: [
+                            [
+                                "glslify-hex",
+                                { "option-1": true, "option-2": 42 }
+                            ]
+                        ]
+                    }
+                }
+            ]
         });
         config.module.rules.push({
             test: /\.(obj|gltf|mtl)$/,
@@ -27,4 +40,4 @@ module.exports = withCSS({
     }
 });
 
-// module.exports = { experimental: { modern: true } }; wait for general release - this breaks linaria
+// module.exports = { experimental: { modern: true } }; // wait for general release - this breaks linaria

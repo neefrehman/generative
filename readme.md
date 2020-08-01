@@ -2,11 +2,15 @@
 
 ## A digital sketchbook for experimenting with generative art, WebGL, and machine learning
 
-This is the repository for generative.neef.co, a website I made to can experiment with creative applications of code.
+This repo is for [generative.neef.co](https://generative.neef.co/), a playground for experimentation.
 
-More in-depth readme coming in the future.
+It supports multiple libraies for generating sketches, from p5, to THREE, to anythng else. Built ontop of [Next.js](https://nextjs.org/), it uses a combination of Next's [dynamic routes](https://nextjs.org/docs#dynamic-routing) and React's `lazy` and `Suspense` to build and export each sketch as a static page (with code-splitting to ensure library bundles can be shared between sketches).
+
+More documentation coming soon.
 
 ## Resources
+
+Some of my favourite resources that I've learned a lot from:
 
 -   [The Book of Shaders](https://thebookofshaders.com/)
 -   [The Coding Train](https://www.youtube.com/user/shiffman)

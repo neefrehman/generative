@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import type { MutableRefObject } from "react";
 
 import { getMean, Vector } from "Utils/math";
@@ -137,9 +137,8 @@ export const useAnimationFrame = (
         mouseHasEntered,
         mousePosition
     };
-    // TODO: check if its possible to return the `current` value instead of having to call `var.current` on the other side.
-    // as it causes redundancy (e.g. having to call .current in Canvas2dRenderer and ThreeRenderer).
-    // State cases memory leaks, passing refs with their current doesnt work, but passing refs then getting their current on the other
+    // TODO: check if there's a nicer way than having to get the `current` all the time for each property.
+    // State cases memory leaks, passing refs current doesnt update, but passing refs then getting their current on the other
     // side of the return does. Feels way too clunky.
 };
 

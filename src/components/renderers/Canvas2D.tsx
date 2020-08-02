@@ -122,6 +122,8 @@ export interface Canvas2DRendererProps {
     children?: ReactNode | HTMLElement;
 }
 
+export type { RendererSettings as Canvas2DRendererSettings };
+
 /**
  * Props to be recieved by the sketch.
  */

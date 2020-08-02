@@ -112,6 +112,8 @@ interface ThreeRendererProps {
     children?: ReactNode | HTMLElement;
 }
 
+export type { RendererSettings as ThreeRendererSettings };
+
 type ThreeDrawProps = {
     /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
     scene?: THREE.Scene;

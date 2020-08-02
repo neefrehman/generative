@@ -1,7 +1,7 @@
 import React from "react";
 import p5, { Vector } from "p5";
 
-import { P5Wrapper } from "Renderers/P5Wrapper";
+import { P5Renderer } from "Renderers/P5";
 
 const sketch = (p: p5) => {
     const noiseIncrement = 0.05;
@@ -113,6 +113,6 @@ const sketch = (p: p5) => {
     };
 };
 
-const S170619 = () => <P5Wrapper sketch={sketch} />;
+const S170619 = () => <P5Renderer sketch={sketch} />;
 
 export default S170619;

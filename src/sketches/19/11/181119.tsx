@@ -4,7 +4,7 @@
 import React from "react";
 import p5 from "p5";
 
-import { P5Wrapper } from "Renderers/P5Wrapper";
+import { P5Renderer } from "Renderers/P5";
 
 const sketch = (p: p5) => {
     const blobs: Blob[] = [];
@@ -70,6 +70,6 @@ const sketch = (p: p5) => {
     };
 };
 
-const S181119 = () => <P5Wrapper sketch={sketch} />;
+const S181119 = () => <P5Renderer sketch={sketch} />;
 
 export default S181119;

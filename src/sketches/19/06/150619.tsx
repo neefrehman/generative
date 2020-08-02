@@ -1,7 +1,7 @@
 import React from "react";
 import p5 from "p5";
 
-import { P5Wrapper } from "Renderers/P5Wrapper";
+import { P5Renderer } from "Renderers/P5";
 
 const sketch = (p: p5) => {
     const noiseIncrement = 0.01;
@@ -42,6 +42,6 @@ const sketch = (p: p5) => {
     };
 };
 
-const S150619 = () => <P5Wrapper sketch={sketch} autoResizeToWindow={false} />;
+const S150619 = () => <P5Renderer sketch={sketch} autoResizeToWindow={false} />;
 
 export default S150619;

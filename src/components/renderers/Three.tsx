@@ -1,23 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
+import * as THREE from "three";
 import type { CSSProperties } from "linaria/react";
 
-import { useAnimationFrame } from "Utils/useAnimationFrame";
 import type { Vector } from "Utils/math";
+import { useAnimationFrame } from "Utils/useAnimationFrame";
 
 /**
- * A wrapper component for running vanilla 2d canvas sketches. Handles rendering and cleanup.
+ * A wrapper component for running three.js sketches. Handles rendering and cleanup.
  */
-export const Canvas2DRenderer = ({
+export const ThreeRenderer = ({
     sketch: setupSketch,
     settings = {},
     className,
     style,
     children
-}: Canvas2DRendererProps) => {
-    const canvas = useRef<HTMLCanvasElement>(null);
-    const drawProps = useRef<Canvas2DDrawProps>({});
-    const drawFunction = useRef<Canvas2DDrawFn>();
+}: ThreeRendererProps) => {
+    const wrapperElement = useRef<HTMLDivElement>(null);
+    const drawProps = useRef<ThreeDrawProps>({});
+    const drawFunction = useRef<ThreeDrawFn>();
 
     const {
         dimensions = [window.innerWidth, window.innerHeight],
@@ -50,32 +51,22 @@ export const Canvas2DRenderer = ({
                 isPlaying: isPlaying.current,
                 mouseHasEntered: mouseHasEntered.current,
                 mousePosition: mousePosition.current
-                // onMouseMove, // TODO event callback props
-                // onClick
             }),
         fps: throttledFps,
         delay,
         endAfter,
-        domElementRef: canvas
+        domElementRef: wrapperElement
     });
 
     useEffect(() => {
-        const canvasEl = canvas.current;
-        const ctx = canvasEl.getContext("2d");
-
-        // <- Start fix - DPR for retina displays ->
-        const dpr = window?.devicePixelRatio ?? 1;
-        const rect = canvasEl.getBoundingClientRect();
-        canvasEl.width = rect.width * dpr;
-        canvasEl.height = rect.height * dpr;
-        canvasEl.style.width = `${rect.width}px`;
-        canvasEl.style.height = `${rect.height}px`;
-        ctx.scale(2, 2);
-        // <- End fix ->
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+        wrapperElement.current.appendChild(renderer.domElement);
 
         const initialSketchProps = {
-            ctx,
-            canvas: canvasEl,
+            scene,
+            renderer,
             width,
             height,
             mouseHasEntered: false,
@@ -89,41 +80,41 @@ export const Canvas2DRenderer = ({
 
         drawSketch(initialSketchProps);
 
-        return () => ctx.clearRect(0, 0, width, height);
+        return () => {
+            while (scene.children.length > 0) {
+                scene.remove(scene.children[0]);
+            }
+            scene.dispose();
+        };
     }, [setupSketch, settings]);
 
     return (
         <>
-            <canvas
-                ref={canvas}
-                width={width}
-                height={height}
-                className={className}
-                style={style}
-            />
+            <div ref={wrapperElement} className={className} style={style} />
             {children}
         </>
     );
 };
 
 /**
- * React props for the CanvasWrapper2D component
+ * React props for the ThreeRenderer component
  */
-export interface Canvas2DRendererProps {
+interface ThreeRendererProps {
     /** The sketch function to be run */
-    sketch: Canvas2DSetupFn;
+    sketch: ThreeSetupFn;
     /** The setting for the sketch function */
-    settings?: Canvas2DRendererSettings;
+    settings?: ThreeRendererSettings;
 
+    autoResizeToWindow?: boolean;
     className?: string;
     style?: CSSProperties;
     children?: ReactNode | HTMLElement;
 }
 
 /**
- * Settings for the 2d sketch
+ * Settings for the Three sketch
  */
-export interface Canvas2DRendererSettings {
+export interface ThreeRendererSettings {
     /** The dimensions for the sketch, in pixels. Defaults to [windowWidth, windowHeight] */
     dimensions?: [number, number];
 
@@ -140,14 +131,11 @@ export interface Canvas2DRendererSettings {
     };
 }
 
-/**
- * Props to be recieved by the sketch.
- */
-export interface Canvas2DDrawProps {
-    /** the rendering context to call canvas methods on - in this case 2d */
-    ctx?: CanvasRenderingContext2D;
-    /** The DOM canvas element that is rendering the sketch */
-    canvas?: HTMLCanvasElement;
+interface ThreeDrawProps {
+    /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
+    scene?: THREE.Scene;
+    /** The WebGL renderer for the scene */
+    renderer?: THREE.WebGLRenderer;
 
     /** The width of the sketch - maps to dimensions[0] from the sketch settings */
     width?: number;
@@ -179,16 +167,16 @@ export interface Canvas2DDrawProps {
 }
 
 /**
- * The setup function to be passed into the React component, with access to `Canvas2DSketchProps`.
+ * The setup function to be passed into the React component, with access to `ThreeDrawProps`.
  *
  * Use the contents of this function should contain all sketch state, with the drawing happening
  * inside it's return function.
  */
-export type Canvas2DSetupFn = (props?: Canvas2DDrawProps) => Canvas2DDrawFn;
+export type ThreeSetupFn = (props?: ThreeDrawProps) => ThreeDrawFn;
 
 /**
- * The draw function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`.
+ * The draw function returned by `ThreeSetupFn`, with access to `ThreeDrawProps`.
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type Canvas2DDrawFn = (props?: Canvas2DDrawProps) => void;
+export type ThreeDrawFn = (props?: ThreeDrawProps) => void;

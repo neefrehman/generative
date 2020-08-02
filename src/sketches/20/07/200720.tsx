@@ -4,8 +4,8 @@
 import React from "react";
 
 import {
-    CanvasWrapper2D,
-    Canvas2DSettings,
+    Canvas2DRenderer,
+    Canvas2DRendererSettings,
     Canvas2DSetupFn
 } from "Renderers/Canvas2D";
 
@@ -16,7 +16,7 @@ import { lerp } from "Utils/math";
 
 import { getDimensions190720 } from "./190720";
 
-const settings: Canvas2DSettings = {
+const settings: Canvas2DRendererSettings = {
     dimensions: getDimensions190720(),
     isAnimated: true
 };
@@ -129,6 +129,6 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     };
 };
 
-const S200720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S200720 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
 
 export default S200720;

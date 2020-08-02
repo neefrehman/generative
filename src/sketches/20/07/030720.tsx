@@ -1,7 +1,10 @@
 import React from "react";
 
-import { CanvasWrapper2D } from "Renderers/Canvas2D";
-import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
+import { Canvas2DRenderer } from "Renderers/Canvas2D";
+import type {
+    Canvas2DRendererSettings,
+    Canvas2DSetupFn
+} from "Renderers/Canvas2D";
 
 import {
     lerp,
@@ -14,7 +17,7 @@ import { noise2D, noise3D } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
-const settings: Canvas2DSettings = {
+const settings: Canvas2DRendererSettings = {
     dimensions: [shortestDimension, shortestDimension],
     isAnimated: true
 };
@@ -86,6 +89,6 @@ const sketch: Canvas2DSetupFn = () => {
     };
 };
 
-const S030720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S030720 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
 
 export default S030720;

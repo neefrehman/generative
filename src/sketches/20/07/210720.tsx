@@ -4,8 +4,8 @@
 import React from "react";
 
 import {
-    CanvasWrapper2D,
-    Canvas2DSettings,
+    Canvas2DRenderer,
+    Canvas2DRendererSettings,
     Canvas2DSetupFn
 } from "Renderers/Canvas2D";
 
@@ -15,7 +15,7 @@ import { noise3D } from "Utils/random";
 
 import { getDimensions190720 } from "./190720";
 
-const settings: Canvas2DSettings = {
+const settings: Canvas2DRendererSettings = {
     dimensions: getDimensions190720(),
     isAnimated: true
 };
@@ -116,6 +116,6 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     };
 };
 
-const S210720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S210720 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
 
 export default S210720;

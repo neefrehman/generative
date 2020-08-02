@@ -2,23 +2,22 @@
 import React from "react";
 import palettes from "nice-color-palettes";
 
-import { CanvasWrapper2D } from "Renderers/Canvas2D";
-import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
+import { Canvas2DRenderer } from "Renderers/Canvas2D";
+import type {
+    Canvas2DRendererSettings,
+    Canvas2DSetupFn
+} from "Renderers/Canvas2D";
 
 import { NoiseOverlay } from "Utils/NoiseOverlay";
 import { pick, inRange } from "Utils/random";
 
-const settings: Canvas2DSettings = {
-    dimensions: [window.innerWidth, window.innerHeight],
-    isAnimated: true,
+const settings: Canvas2DRendererSettings = {
     animationSettings: {
-        fps: 0.14
+        fps: 0.2
     }
 };
 
-const sketch: Canvas2DSetupFn = () => {
-    const { dimensions } = settings;
-    const [width, height] = dimensions;
+const sketch: Canvas2DSetupFn = ({ width, height }) => {
     const colors = pick(palettes);
 
     const midpoints = [
@@ -169,7 +168,7 @@ const sketch: Canvas2DSetupFn = () => {
 
 const S020720 = () => (
     <>
-        <CanvasWrapper2D sketch={sketch} settings={settings} />
+        <Canvas2DRenderer sketch={sketch} settings={settings} />
         <NoiseOverlay opacity={0.1} />
     </>
 );

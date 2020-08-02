@@ -8,13 +8,13 @@ import type { CSSProperties } from "linaria/react";
 /**
  * A wrapper component for running P5 sketches. Handles rendering and cleanup.
  */
-export const P5Wrapper = ({
+export const P5Renderer = ({
     sketch,
     autoResizeToWindow = true,
     className,
     style,
     children
-}: P5WrapperProps) => {
+}: P5RendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export const P5Wrapper = ({
     );
 };
 
-interface P5WrapperProps {
+interface P5RendererProps {
     /** The p5 sketch function to be run. Must be written in p5's instance mode. */
     sketch: (p: p5) => void;
     /** If true, the canvas will resize to window whenever the window is resized */

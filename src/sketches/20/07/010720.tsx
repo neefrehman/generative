@@ -1,15 +1,18 @@
 import React from "react";
 import palettes from "nice-color-palettes";
 
-import { CanvasWrapper2D } from "Renderers/Canvas2D";
-import type { Canvas2DSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
+import { Canvas2DRenderer } from "Renderers/Canvas2D";
+import type {
+    Canvas2DRendererSettings,
+    Canvas2DSetupFn
+} from "Renderers/Canvas2D";
 
 import { lerp, getShortestViewportDimension } from "Utils/math";
 import { inRange, shuffle, pick } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
-const settings: Canvas2DSettings = {
+const settings: Canvas2DRendererSettings = {
     dimensions: [shortestDimension, shortestDimension]
 };
 
@@ -86,6 +89,6 @@ const sketch: Canvas2DSetupFn = () => {
     };
 };
 
-const S010720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S010720 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
 
 export default S010720;

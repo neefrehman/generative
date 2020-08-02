@@ -100,7 +100,7 @@ const Post = () => (
     </Suspense>
 );
 
-const S270720 = () => (
+const S280720 = () => (
     <Canvas
         shadowMap
         gl={{
@@ -143,4 +143,4 @@ const S270720 = () => (
     </Canvas>
 );
 
-export default S270720;
+export default S280720;

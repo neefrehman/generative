@@ -4,8 +4,8 @@
 import React from "react";
 
 import {
-    CanvasWrapper2D,
-    Canvas2DSettings,
+    Canvas2DRenderer,
+    Canvas2DRendererSettings,
     Canvas2DSetupFn
 } from "Renderers/Canvas2D";
 
@@ -50,7 +50,7 @@ export class Metaball {
     }
 }
 
-const settings: Canvas2DSettings = {
+const settings: Canvas2DRendererSettings = {
     dimensions: getDimensions190720(),
     isAnimated: true
 };
@@ -161,6 +161,6 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     };
 };
 
-const S220720 = () => <CanvasWrapper2D sketch={sketch} settings={settings} />;
+const S220720 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
 
 export default S220720;

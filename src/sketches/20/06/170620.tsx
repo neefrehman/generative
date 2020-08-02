@@ -67,8 +67,8 @@ const S170620 = () => {
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
-                    "--sinFrame": Math.sin(frameCount / 62),
-                    "--cosFrame": Math.cos(frameCount / 45)
+                    "--sinFrame": Math.sin(frameCount.current / 62),
+                    "--cosFrame": Math.cos(frameCount.current / 45)
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />

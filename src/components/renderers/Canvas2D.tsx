@@ -5,6 +5,8 @@ import type { CSSProperties } from "linaria/react";
 import { useAnimationFrame } from "Utils/useAnimationFrame";
 import type { Vector } from "Utils/math";
 
+import type { DrawProps, RendererSettings } from "./utils/types";
+
 /**
  * A wrapper component for running vanilla 2d canvas sketches. Handles rendering and cleanup.
  */
@@ -113,7 +115,7 @@ export interface Canvas2DRendererProps {
     /** The sketch function to be run */
     sketch: Canvas2DSetupFn;
     /** The setting for the sketch function */
-    settings?: Canvas2DRendererSettings;
+    settings?: RendererSettings;
 
     className?: string;
     style?: CSSProperties;
@@ -121,62 +123,14 @@ export interface Canvas2DRendererProps {
 }
 
 /**
- * Settings for the 2d sketch
- */
-export interface Canvas2DRendererSettings {
-    /** The dimensions for the sketch, in pixels. Defaults to [windowWidth, windowHeight] */
-    dimensions?: [number, number];
-
-    /** Used to set if the sketch will be animated, defaults to true */
-    isAnimated?: boolean;
-    /** Animation setting for the sketch */
-    animationSettings?: {
-        /** The desired fps to throttle the sketch to - defaults to 60 */
-        fps?: number;
-        /** A delay (in ms) after which the animation will start */
-        delay?: number;
-        /** A time (in ms) after which the animation will be stopped */
-        endAfter?: number;
-    };
-}
-
-/**
  * Props to be recieved by the sketch.
  */
-export interface Canvas2DDrawProps {
+type Canvas2DDrawProps = {
     /** the rendering context to call canvas methods on - in this case 2d */
     ctx?: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
     canvas?: HTMLCanvasElement;
-
-    /** The width of the sketch - maps to dimensions[0] from the sketch settings */
-    width?: number;
-    /** The width of the sketch - maps to dimensions[1] from the sketch settings */
-    height?: number;
-
-    /** The current frames of the animation */
-    frame?: number;
-    /** The current elapsed time of the animation in ms */
-    time?: number;
-    /** The current fps of the animation (averaged over the last 10 frames) */
-    fps?: number;
-    /** A function that will stop the animation when called */
-    stopAnimation?: () => void;
-    /** A function that will restart the animation when called */
-    startAnimation?: () => void;
-    /** True if the animation is currenty running, otherwise false */
-    isPlaying?: boolean;
-
-    /** A boolean that is true if the mouse has interacted with the animation */
-    mouseHasEntered?: boolean;
-    /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
-    mousePosition?: Vector<2>;
-
-    /** A callback that will be run every time the mouse moves across the canvas */
-    onMouseMove?: () => void;
-    /** A callback that will be run every time the user clicks on the canvas */
-    onClick?: () => void;
-}
+} & DrawProps;
 
 /**
  * The setup function to be passed into the React component, with access to `Canvas2DSketchProps`.

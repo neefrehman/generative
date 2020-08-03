@@ -6,15 +6,16 @@ import { getMean, Vector } from "Utils/math";
 /**
  * A custom hook to use `requestAnimationFrame` in a React component
  *
- * @param options - An optional configuration object for the hook
+ * @param onFrame - A callback to be run on every frame of the animation
+ * @param options - An optional configuration object for the animation
  * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a functions to stop and start the animation
  */
 export const useAnimationFrame = (
+    onFrame?: (props: OnFrameProps) => void,
     options: UseAnimationFrameOptions = {}
 ): UseAnimationFrameResult => {
     const {
         onStart,
-        onFrame,
         onEnd,
         delay,
         endAfter,
@@ -43,7 +44,15 @@ export const useAnimationFrame = (
             const currentFps = Math.round(1 / deltaTime);
 
             const runFrame = () => {
-                onFrame?.();
+                onFrame?.({
+                    elapsedTime: elapsedTime.current,
+                    frameCount: frameCount.current,
+                    fps: averageFps.current,
+                    isPlaying: isPlaying.current,
+                    mouseHasEntered: mouseHasEntered.current,
+                    mousePosition: mousePosition.current
+                });
+
                 frameCount.current += 1;
                 fpsArray.current.shift();
                 fpsArray.current = [...fpsArray.current, currentFps];
@@ -137,9 +146,6 @@ export const useAnimationFrame = (
         mouseHasEntered,
         mousePosition
     };
-    // TODO: check if there's a nicer way than having to get the `current` all the time for each property.
-    // State cases memory leaks, passing refs current doesnt update, but passing refs then getting their current on the other
-    // side of the return does. Feels way too clunky.
 };
 
 /**
@@ -148,8 +154,6 @@ export const useAnimationFrame = (
 interface UseAnimationFrameOptions {
     /** A callback that will be run once when the animation starts */
     onStart?: () => void;
-    /** A callback that will be run on every frame of the animation */
-    onFrame?: () => void;
     /** A callback that will be run on once when the animation ends */
     onEnd?: () => void;
     /** A delay (in ms) after which the animation will start */
@@ -165,23 +169,45 @@ interface UseAnimationFrameOptions {
 }
 
 /**
+ * Props for the callback that will be run on every frame of the animation
+ */
+interface OnFrameProps {
+    /** The current elapsed time of the animation in ms */
+    elapsedTime?: number;
+    /** The current number of elapsed frames */
+    frameCount?: number;
+    /** The current fps of the animation (averaged over the last 10 frames) */
+    fps?: number;
+    /** A function that will stop the animation when called */
+    stopAnimation?: () => void;
+    /** A function that will restart the animation when called */
+    startAnimation?: () => void;
+    /** True if the animation is currenty running, otherwise false */
+    isPlaying?: boolean;
+    /** A boolean that is true if the mouse has interacted with the animation */
+    mouseHasEntered?: boolean;
+    /** The position of the mouse over the DOM element housing the animation */
+    mousePosition?: Vector<2>;
+}
+
+/**
  * The returned object from `useAnimationFrame`
  */
 interface UseAnimationFrameResult {
-    /** The current elapsed time of the animation in ms */
+    /** Reference to the current elapsed time of the animation in ms */
     elapsedTime: MutableRefObject<number>;
-    /** The current number of elapsed frames */
+    /** Reference to the current number of elapsed frames */
     frameCount: MutableRefObject<number>;
-    /** The current fps of the animation (averaged over the last 10 frames) */
+    /** Reference to the current fps of the animation (averaged over the last 10 frames) */
     fps: MutableRefObject<number>;
     /** A function that will stop the animation when called */
     stopAnimation: () => void;
     /** A function that will restart the animation when called */
     startAnimation: () => void;
-    /** True if the animation is currenty running, otherwise false */
+    /** Reference to a boolean that is true if the animation is currenty running, otherwise false */
     isPlaying: MutableRefObject<boolean>;
-    /** A boolean that is true if the mouse has interacted with the animation */
+    /** Reference to a boolean that is true if the mouse has interacted with the animation */
     mouseHasEntered: MutableRefObject<boolean>;
-    /** The position of the mouse over the DOM element housing the animation */
+    /** Reference to the position of the mouse over the DOM element housing the animation */
     mousePosition: MutableRefObject<Vector<2>>;
 }

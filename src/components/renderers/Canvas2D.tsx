@@ -8,7 +8,7 @@ import type { Vector } from "Utils/math";
 import type { DrawProps, RendererSettings } from "./utils/types";
 
 /**
- * A wrapper component for running vanilla 2d canvas sketches. Handles rendering and cleanup.
+ * A wrapper component for running vanilla 2D canvas sketches. Handles rendering and cleanup.
  */
 export const Canvas2DRenderer = ({
     sketch: setupSketch,
@@ -30,36 +30,29 @@ export const Canvas2DRenderer = ({
     const [width, height] = dimensions;
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
-    const {
-        frameCount,
-        elapsedTime,
-        fps,
-        startAnimation,
-        stopAnimation,
-        isPlaying,
-        mouseHasEntered,
-        mousePosition
-    } = useAnimationFrame({
-        willPlay: isAnimated ?? false,
-        onFrame: () =>
+    const { startAnimation, stopAnimation } = useAnimationFrame(
+        animationProps =>
             drawFunction.current?.({
                 ...drawProps.current,
-                frame: frameCount.current,
-                time: elapsedTime.current,
-                fps: fps.current,
+                frame: animationProps.frameCount,
+                time: animationProps.elapsedTime,
+                fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,
-                isPlaying: isPlaying.current,
-                mouseHasEntered: mouseHasEntered.current,
-                mousePosition: mousePosition.current
+                isPlaying: animationProps.isPlaying,
+                mouseHasEntered: animationProps.mouseHasEntered,
+                mousePosition: animationProps.mousePosition
                 // onMouseMove, // TODO event callback props
                 // onClick
             }),
-        fps: throttledFps,
-        delay,
-        endAfter,
-        domElementRef: canvas
-    });
+        {
+            willPlay: isAnimated ?? false,
+            fps: throttledFps,
+            delay,
+            endAfter,
+            domElementRef: canvas
+        }
+    );
 
     useEffect(() => {
         const canvasEl = canvas.current;

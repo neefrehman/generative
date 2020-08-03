@@ -38,8 +38,9 @@ const GradientContainer = styled.div`
 const S190620 = () => {
     const [mouseX, setMouseX] = useState(0.2);
     const [mouseY, setMouseY] = useState(0.2);
+    const [frame, setFrame] = useState(0);
 
-    const { frameCount } = useAnimationFrame();
+    useAnimationFrame(({ frameCount }) => setFrame(frameCount));
 
     const mouseScale = 0.333;
     const updateGradient = (e: MouseEvent<HTMLDivElement>) => {
@@ -59,8 +60,8 @@ const S190620 = () => {
                     // @ts-ignore: https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
-                    "--sinFrame": Math.sin(frameCount.current / 38),
-                    "--cosFrame": Math.cos(frameCount.current / 57)
+                    "--sinFrame": Math.sin(frame / 38),
+                    "--cosFrame": Math.cos(frame / 57)
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />

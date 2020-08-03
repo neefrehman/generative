@@ -23,13 +23,13 @@ const StyledText = styled.p`
 
 interface TextOverlayProps {
     text: string;
+    /** The amount of time in ms to wait before hiding the overlay. If no value is passed a default timeout of 500ms is used */
     timeout?: number | boolean;
 }
 
 const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const [isVisible, setIsVisible] = useState(true);
-    const defaultTimeoutMS = 500;
-    const timeoutMs = typeof timeout === "number" ? timeout : defaultTimeoutMS;
+    const timeoutMs = typeof timeout === "number" ? timeout : 500;
 
     useEffect(() => {
         let visibilityTimeout: NodeJS.Timeout;

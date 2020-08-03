@@ -31,34 +31,29 @@ export const ThreeRenderer = ({
     const [width, height] = dimensions;
 
     const { fps: throttledFps, delay, endAfter } = animationSettings;
-    const {
-        frameCount,
-        elapsedTime,
-        fps,
-        startAnimation,
-        stopAnimation,
-        isPlaying,
-        mouseHasEntered,
-        mousePosition
-    } = useAnimationFrame({
-        willPlay: isAnimated ?? false,
-        onFrame: () =>
+    const { startAnimation, stopAnimation } = useAnimationFrame(
+        animationProps =>
             drawFunction.current?.({
                 ...drawProps.current,
-                frame: frameCount.current,
-                time: elapsedTime.current,
-                fps: fps.current,
+                frame: animationProps.frameCount,
+                time: animationProps.elapsedTime,
+                fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,
-                isPlaying: isPlaying.current,
-                mouseHasEntered: mouseHasEntered.current,
-                mousePosition: mousePosition.current
+                isPlaying: animationProps.isPlaying,
+                mouseHasEntered: animationProps.mouseHasEntered,
+                mousePosition: animationProps.mousePosition
+                // onMouseMove, // TODO event callback props
+                // onClick
             }),
-        fps: throttledFps,
-        delay,
-        endAfter,
-        domElementRef: wrapperElement
-    });
+        {
+            willPlay: isAnimated ?? false,
+            fps: throttledFps,
+            delay,
+            endAfter,
+            domElementRef: wrapperElement
+        }
+    );
 
     useEffect(() => {
         const scene = new THREE.Scene();

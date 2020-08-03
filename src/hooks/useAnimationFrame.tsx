@@ -104,7 +104,7 @@ export const useAnimationFrame = (
     }, [animate, onStart, onEnd, delay, endAfter, willPlay]);
 
     useEffect(() => {
-        const domElement = domElementRef?.current;
+        const element = domElementRef?.current;
 
         const updateMousePosition = (x: number, y: number) => {
             const canvasBounds = domElementRef.current.getBoundingClientRect();
@@ -123,15 +123,15 @@ export const useAnimationFrame = (
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
-        if (domElement) {
-            domElement.addEventListener("mousemove", handleMouseMove);
-            domElement.addEventListener("touchmove", handleTouchMove);
+        if (element) {
+            element.addEventListener("mousemove", handleMouseMove);
+            element.addEventListener("touchmove", handleTouchMove);
         }
 
         return () => {
-            if (domElement) {
-                domElement.removeEventListener("mousemove", handleMouseMove);
-                domElement.removeEventListener("touchmove", handleTouchMove);
+            if (element) {
+                element.removeEventListener("mousemove", handleMouseMove);
+                element.removeEventListener("touchmove", handleTouchMove);
             }
         };
     }, [domElementRef]);
@@ -164,7 +164,7 @@ interface UseAnimationFrameOptions {
     fps?: number;
     /** Determines if the animation will run or not. Used to invoke the hook without starting an animation. Defaults to true */
     willPlay?: boolean;
-    /** A ref to be passed of the dom element that is being animated. USed to get the mouse position over the element */
+    /** A ref to be passed of the dom element that is being animated. Used to get the mouse position over the element */
     domElementRef?: MutableRefObject<HTMLElement>;
 }
 

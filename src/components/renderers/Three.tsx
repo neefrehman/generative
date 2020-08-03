@@ -1,12 +1,17 @@
 import React, { useRef, useEffect } from "react";
-import type { ReactNode } from "react";
 import * as THREE from "three";
-import type { CSSProperties } from "linaria/react";
+
+import { useAnimationFrame } from "hooks/useAnimationFrame";
 
 import type { Vector } from "Utils/math";
-import { useAnimationFrame } from "Utils/useAnimationFrame";
 
-import type { DrawProps, RendererSettings } from "./utils/types";
+import type {
+    RendererProps,
+    RendererSettings,
+    DrawProps,
+    SetupFn,
+    DrawFn
+} from "./types";
 
 /**
  * A wrapper component for running three.js sketches. Handles rendering and cleanup.
@@ -43,8 +48,6 @@ export const ThreeRenderer = ({
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition
-                // onMouseMove, // TODO event callback props
-                // onClick
             }),
         {
             willPlay: isAnimated ?? false,
@@ -93,23 +96,17 @@ export const ThreeRenderer = ({
     );
 };
 
+export type ThreeRendererProps = RendererProps<ThreeSetupFn>;
+
 /**
- * React props for the ThreeRenderer component
+ * Settings for the Three sketch
  */
-interface ThreeRendererProps {
-    /** The sketch function to be run */
-    sketch: ThreeSetupFn;
-    /** The setting for the sketch function */
-    settings?: RendererSettings;
-
-    className?: string;
-    style?: CSSProperties;
-    children?: ReactNode | HTMLElement;
-}
-
 export type { RendererSettings as ThreeRendererSettings };
 
-type ThreeDrawProps = {
+/**
+ * Props to be recieved by the Three sketch.
+ */
+export type ThreeDrawProps = {
     /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
     scene?: THREE.Scene;
     /** The WebGL renderer for the scene */
@@ -119,14 +116,14 @@ type ThreeDrawProps = {
 /**
  * The setup function to be passed into the React component, with access to `ThreeDrawProps`.
  *
- * Use the contents of this function should contain all sketch state, with the drawing happening
- * inside it's return function.
+ * The contents of this function should contain all sketch state, with the drawing happening
+ * inside it's returned draw function.
  */
-export type ThreeSetupFn = (props?: ThreeDrawProps) => ThreeDrawFn;
+export type ThreeSetupFn = SetupFn<ThreeDrawProps, ThreeDrawFn>;
 
 /**
  * The draw function returned by `ThreeSetupFn`, with access to `ThreeDrawProps`.
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type ThreeDrawFn = (props?: ThreeDrawProps) => void;
+export type ThreeDrawFn = DrawFn<ThreeDrawProps>;

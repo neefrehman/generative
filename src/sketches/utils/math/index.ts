@@ -2,6 +2,7 @@ export { createMatrix } from "./createMatrix";
 export { getAngle } from "./getAngle";
 export { getDistance } from "./getDistance";
 export { getMean } from "./getMean";
+export { getSum } from "./getSum";
 export { getShortestViewportDimension } from "./getShortestViewportDimension";
 export { getSign } from "./getSign";
 export { lerp } from "./lerp";

@@ -1,11 +1,16 @@
 import React, { useRef, useEffect } from "react";
-import type { ReactNode } from "react";
-import type { CSSProperties } from "linaria/react";
 
-import { useAnimationFrame } from "Utils/useAnimationFrame";
+import { useAnimationFrame } from "hooks/useAnimationFrame";
+
 import type { Vector } from "Utils/math";
 
-import type { DrawProps, RendererSettings } from "./utils/types";
+import type {
+    RendererProps,
+    RendererSettings,
+    DrawProps,
+    SetupFn,
+    DrawFn
+} from "./types";
 
 /**
  * A wrapper component for running vanilla 2D canvas sketches. Handles rendering and cleanup.
@@ -42,7 +47,7 @@ export const Canvas2DRenderer = ({
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition
-                // onMouseMove, // TODO event callback props
+                // onMouseMove, // TODO event callback props?
                 // onClick
             }),
         {
@@ -101,26 +106,17 @@ export const Canvas2DRenderer = ({
     );
 };
 
+export type Canvas2DRendererProps = RendererProps<Canvas2DSetupFn>;
+
 /**
- * React props for the CanvasWrapper2D component
+ * Settings for the Canvas 2D sketch
  */
-export interface Canvas2DRendererProps {
-    /** The sketch function to be run */
-    sketch: Canvas2DSetupFn;
-    /** The setting for the sketch function */
-    settings?: RendererSettings;
-
-    className?: string;
-    style?: CSSProperties;
-    children?: ReactNode | HTMLElement;
-}
-
 export type { RendererSettings as Canvas2DRendererSettings };
 
 /**
- * Props to be recieved by the sketch.
+ * Props to be recieved by the Canvas 2D sketch.
  */
-type Canvas2DDrawProps = {
+export type Canvas2DDrawProps = {
     /** the rendering context to call canvas methods on - in this case 2d */
     ctx?: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
@@ -128,16 +124,16 @@ type Canvas2DDrawProps = {
 } & DrawProps;
 
 /**
- * The setup function to be passed into the React component, with access to `Canvas2DSketchProps`.
+ * The setup function to be passed into the React component, with access to `Canvas2DDrawProps`.
  *
- * Use the contents of this function should contain all sketch state, with the drawing happening
- * inside it's return function.
+ * The contents of this function should contain all sketch state, with the drawing happening
+ * inside it's returned draw function.
  */
-export type Canvas2DSetupFn = (props?: Canvas2DDrawProps) => Canvas2DDrawFn;
+export type Canvas2DSetupFn = SetupFn<Canvas2DDrawProps, Canvas2DDrawFn>;
 
 /**
  * The draw function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`.
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type Canvas2DDrawFn = (props?: Canvas2DDrawProps) => void;
+export type Canvas2DDrawFn = DrawFn<Canvas2DDrawProps>;

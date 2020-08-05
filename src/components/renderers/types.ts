@@ -43,7 +43,7 @@ export interface DrawProps {
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
     height?: number;
 
-    /** The current frames of the animation */
+    /** The current frame of the animation */
     frame?: number;
     /** The current elapsed time of the animation in ms */
     time?: number;

@@ -71,12 +71,12 @@ export const useAnimationFrame = (
         [onFrame, throttledFps]
     );
 
-    const startAnimation = () => {
+    const startAnimation = useCallback(() => {
         if (!isPlaying.current) {
             requestRef.current = requestAnimationFrame(animate);
             isPlaying.current = true;
         }
-    };
+    }, [animate]);
 
     const stopAnimation = () => {
         if (isPlaying.current) {
@@ -101,7 +101,7 @@ export const useAnimationFrame = (
         }
 
         return () => stopAnimation();
-    }, [animate, onStart, onEnd, delay, endAfter, willPlay]);
+    }, [animate, onStart, onEnd, delay, endAfter, willPlay, startAnimation]);
 
     useEffect(() => {
         const element = domElementRef?.current;
@@ -123,16 +123,12 @@ export const useAnimationFrame = (
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
-        if (element) {
-            element.addEventListener("mousemove", handleMouseMove);
-            element.addEventListener("touchmove", handleTouchMove);
-        }
+        element?.addEventListener("mousemove", handleMouseMove);
+        element?.addEventListener("touchmove", handleTouchMove);
 
         return () => {
-            if (element) {
-                element.removeEventListener("mousemove", handleMouseMove);
-                element.removeEventListener("touchmove", handleTouchMove);
-            }
+            element?.removeEventListener("mousemove", handleMouseMove);
+            element?.removeEventListener("touchmove", handleTouchMove);
         };
     }, [domElementRef]);
 
@@ -172,10 +168,10 @@ interface UseAnimationFrameOptions {
  * Props for the callback that will be run on every frame of the animation
  */
 interface OnFrameProps {
-    /** The current elapsed time of the animation in ms */
-    elapsedTime?: number;
     /** The current number of elapsed frames */
     frameCount?: number;
+    /** The current elapsed time of the animation in ms */
+    elapsedTime?: number;
     /** The current fps of the animation (averaged over the last 10 frames) */
     fps?: number;
     /** A function that will stop the animation when called */

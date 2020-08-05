@@ -33,8 +33,8 @@ export const Canvas2DRenderer = ({
     } = settings;
 
     const [width, height] = dimensions;
-
     const { fps: throttledFps, delay, endAfter } = animationSettings;
+
     const { startAnimation, stopAnimation } = useAnimationFrame(
         animationProps =>
             drawFunction.current?.({
@@ -90,7 +90,7 @@ export const Canvas2DRenderer = ({
         drawSketch(initialSketchProps);
 
         return () => ctx.clearRect(0, 0, width, height);
-    }, [setupSketch, settings]);
+    }, [setupSketch, settings, width, height]);
 
     return (
         <>

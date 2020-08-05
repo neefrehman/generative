@@ -34,8 +34,8 @@ export const ThreeRenderer = ({
     } = settings;
 
     const [width, height] = dimensions;
-
     const { fps: throttledFps, delay, endAfter } = animationSettings;
+
     const { startAnimation, stopAnimation } = useAnimationFrame(
         animationProps =>
             drawFunction.current?.({
@@ -86,7 +86,7 @@ export const ThreeRenderer = ({
             }
             scene.dispose();
         };
-    }, [setupSketch, settings]);
+    }, [setupSketch, settings, width, height]);
 
     return (
         <>

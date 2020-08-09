@@ -10,7 +10,7 @@ import type {
     RendererSettings,
     DrawProps,
     SetupFn,
-    DrawFn
+    DrawFn,
 } from "./types";
 
 /**
@@ -21,7 +21,7 @@ export const ThreeRenderer = ({
     settings = {},
     className,
     style,
-    children
+    children,
 }: ThreeRendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
     const drawProps = useRef<ThreeDrawProps>({});
@@ -30,7 +30,7 @@ export const ThreeRenderer = ({
     const {
         dimensions = [window.innerWidth, window.innerHeight],
         isAnimated = true,
-        animationSettings = {}
+        animationSettings = {},
     } = settings;
 
     const [width, height] = dimensions;
@@ -47,14 +47,14 @@ export const ThreeRenderer = ({
                 stopAnimation,
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
-                mousePosition: animationProps.mousePosition
+                mousePosition: animationProps.mousePosition,
             }),
         {
             willPlay: isAnimated ?? false,
             fps: throttledFps,
             delay,
             endAfter,
-            domElementRef: wrapperElement
+            domElementRef: wrapperElement,
         }
     );
 
@@ -70,7 +70,7 @@ export const ThreeRenderer = ({
             width,
             height,
             mouseHasEntered: false,
-            mousePosition: [0, 0] as Vector<2>
+            mousePosition: [0, 0] as Vector<2>,
         };
 
         const drawSketch = setupSketch(initialSketchProps);
@@ -81,9 +81,7 @@ export const ThreeRenderer = ({
         drawSketch(initialSketchProps);
 
         return () => {
-            while (scene.children.length > 0) {
-                scene.remove(scene.children[0]);
-            }
+            scene.children.forEach(child => scene.remove(child));
             scene.dispose();
         };
     }, [setupSketch, settings, width, height]);

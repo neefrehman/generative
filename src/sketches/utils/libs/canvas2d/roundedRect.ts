@@ -19,7 +19,7 @@ export const roundedRect = (
     radius: number | IndividualCornerRadii = 0,
     options: { fill?: boolean; stroke?: boolean } = {
         fill: true,
-        stroke: false
+        stroke: false,
     }
 ) => {
     const { fill, stroke } = options;

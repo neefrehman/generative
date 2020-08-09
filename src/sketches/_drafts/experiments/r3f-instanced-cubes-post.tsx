@@ -1,9 +1,6 @@
-// Converted from Pauls Henschel's csb to learn react-postprocessing:
-// https://twitter.com/0xca0a/status/1280213481845919746?s=20
-
 import React, { Suspense } from "react";
 import { Canvas, useFrame, useThree } from "react-three-fiber";
-import { Physics, usePlane, useSphere } from "use-cannon";
+import { Physics, usePlane, useSphere, useBox } from "use-cannon";
 import { BlendFunction, KernelSize } from "postprocessing";
 import { EffectComposer, Bloom, SSAO } from "react-postprocessing";
 
@@ -39,7 +36,7 @@ const InvisibleMouseSphere = () => {
     const { viewport } = useThree();
     const [, api] = useSphere(() => ({
         type: "Kinematic",
-        args: window.innerWidth > 600 ? 6 : 4
+        args: window.innerWidth > 600 ? 7 : 4,
     }));
 
     return useFrame(state =>
@@ -51,15 +48,15 @@ const InvisibleMouseSphere = () => {
     );
 };
 
-const InstancedSpheres = () => {
+const InstancedBoxes = () => {
     const { viewport } = useThree();
-    const sphereCount = window.innerWidth > 600 ? 300 : 100;
-    const sphereRadius = 0.8;
+    const boxCount = window.innerWidth > 600 ? 200 : 60;
+    const boxRadius = 1.5;
 
-    const [ref] = useSphere(() => ({
+    const [ref] = useBox(() => ({
         mass: 100,
         position: [4 - Math.random() * 8, viewport.height, 0, 0],
-        args: sphereRadius
+        args: [boxRadius, boxRadius, boxRadius],
     }));
 
     return (
@@ -67,10 +64,10 @@ const InstancedSpheres = () => {
             ref={ref}
             castShadow
             receiveShadow
-            args={[undefined, undefined, sphereCount]}
+            args={[undefined, undefined, boxCount]}
         >
-            <sphereBufferGeometry args={[sphereRadius, 32, 32]} />
-            <meshLambertMaterial color="#5F00BA" />
+            <boxBufferGeometry args={[boxRadius, boxRadius, boxRadius]} />
+            <meshLambertMaterial color="#ff7b00" />
         </instancedMesh>
     );
 };
@@ -97,13 +94,13 @@ const Post = () => (
                 radius={7}
                 intensity={30}
                 luminanceInfluence={0.6}
-                color="#5F0077"
+                color="red"
             />
         </EffectComposer>
     </Suspense>
 );
 
-const S270720 = () => (
+const S280720 = () => (
     <Canvas
         shadowMap
         gl={{
@@ -111,14 +108,14 @@ const S270720 = () => (
             stencil: false,
             depth: false,
             alpha: false,
-            antialias: false
+            antialias: false,
         }}
         camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}
         style={{ height: "100vh", width: "100vw" }}
     >
         <fog attach="fog" args={["red", 25, 40]} />
         {/* @ts-expect-error - https://github.com/react-spring/react-three-fiber/issues/581 */}
-        <color attach="background" args={["#5F00BA"]} />
+        <color attach="background" args={["#ffdd41"]} />
         <ambientLight intensity={2} />
         <directionalLight
             position={[50, 50, 25]}
@@ -133,17 +130,17 @@ const S270720 = () => (
         />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />
         <Physics
-            gravity={[0, -25, 0]}
+            gravity={[0, -30, 0]}
             defaultContactMaterial={{ restitution: 0.5 }}
         >
             <group position={[0, 0, -10]}>
                 <InvisibleBorders />
                 <InvisibleMouseSphere />
-                <InstancedSpheres />
+                <InstancedBoxes />
             </group>
         </Physics>
         <Post />
     </Canvas>
 );
 
-export default S270720;
+export default S280720;

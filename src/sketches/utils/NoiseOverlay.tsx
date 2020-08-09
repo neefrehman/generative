@@ -18,7 +18,7 @@ export const NoiseOverlay = ({
     height = "100vh",
     opacity = 0.15,
     grainSize = 0.62,
-    isAnimated
+    isAnimated,
 }: NoiseProps) => (
     <SVG width={width} height={height}>
         <filter id="noise" x="0" y="0">

@@ -4,11 +4,11 @@ import type { MutableRefObject } from "react";
 import { getMean, Vector } from "Utils/math";
 
 /**
- * A custom hook to use `requestAnimationFrame` in a React component
+ * A custom hook to use `requestAnimationFrame` in a React component, with interactivity
  *
  * @param onFrame - A callback to be run on every frame of the animation
  * @param options - An optional configuration object for the animation
- * @returns An object containing the current elapsedTime, frameCount and fps of the animation, as well as a functions to stop and start the animation
+ * @returns An object containing refs to the animations `OnFrameProps`, as well as a functions to stop and start the animation
  */
 export const useAnimationFrame = (
     onFrame?: (props: OnFrameProps) => void,
@@ -21,7 +21,7 @@ export const useAnimationFrame = (
         endAfter,
         fps: throttledFps,
         willPlay = true,
-        domElementRef
+        domElementRef,
     } = options;
 
     const requestRef = useRef<number>(0);
@@ -50,7 +50,7 @@ export const useAnimationFrame = (
                     fps: averageFps.current,
                     isPlaying: isPlaying.current,
                     mouseHasEntered: mouseHasEntered.current,
-                    mousePosition: mousePosition.current
+                    mousePosition: mousePosition.current,
                 });
 
                 frameCount.current += 1;
@@ -140,7 +140,7 @@ export const useAnimationFrame = (
         startAnimation,
         isPlaying,
         mouseHasEntered,
-        mousePosition
+        mousePosition,
     };
 };
 

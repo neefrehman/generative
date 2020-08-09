@@ -41,7 +41,7 @@ const sketch = (p: p5) => {
             this.direction = p.random([
                 [this.speed, 0, 0],
                 [0, this.speed, 0],
-                [0, 0, this.speed]
+                [0, 0, this.speed],
             ]);
         }
 
@@ -66,14 +66,14 @@ const sketch = (p: p5) => {
             this.direction = p.random([
                 [this.speed, 0, 0],
                 [0, this.speed, 0],
-                [0, 0, this.speed]
+                [0, 0, this.speed],
             ]);
             setTimeout(() => {
                 this.speed = p.random([-1, 1]) * 0.7;
                 this.direction = p.random([
                     [this.speed, 0, 0],
                     [0, this.speed, 0],
-                    [0, 0, this.speed]
+                    [0, 0, this.speed],
                 ]);
             }, 250);
         }

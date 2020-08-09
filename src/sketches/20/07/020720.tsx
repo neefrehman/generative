@@ -5,7 +5,7 @@ import palettes from "nice-color-palettes";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 import type {
     Canvas2DRendererSettings,
-    Canvas2DSetupFn
+    Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
 import { NoiseOverlay } from "Utils/NoiseOverlay";
@@ -13,8 +13,8 @@ import { pick, inRange } from "Utils/random";
 
 const settings: Canvas2DRendererSettings = {
     animationSettings: {
-        fps: 0.2
-    }
+        fps: 0.2,
+    },
 };
 
 const sketch: Canvas2DSetupFn = ({ width, height }) => {
@@ -23,44 +23,44 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     const midpoints = [
         {
             x: width / 2,
-            y: 0
+            y: 0,
         },
         {
             x: width,
-            y: height / 2
+            y: height / 2,
         },
         {
             x: width / 2,
-            y: height
+            y: height,
         },
         {
             x: 0,
-            y: height / 2
-        }
+            y: height / 2,
+        },
     ];
 
     const corners = [
         {
             x: 0,
-            y: 0
+            y: 0,
         },
         {
             x: width,
-            y: 0
+            y: 0,
         },
         {
             x: width,
-            y: height
+            y: height,
         },
         {
             x: 0,
-            y: height
-        }
+            y: height,
+        },
     ];
 
     const center = {
         x: width / 2,
-        y: height / 2
+        y: height / 2,
     };
 
     const gridSpacing = 50;

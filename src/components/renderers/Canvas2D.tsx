@@ -9,7 +9,7 @@ import type {
     RendererSettings,
     DrawProps,
     SetupFn,
-    DrawFn
+    DrawFn,
 } from "./types";
 
 /**
@@ -20,7 +20,7 @@ export const Canvas2DRenderer = ({
     settings = {},
     className,
     style,
-    children
+    children,
 }: Canvas2DRendererProps) => {
     const canvas = useRef<HTMLCanvasElement>(null);
     const drawProps = useRef<Canvas2DDrawProps>({});
@@ -29,7 +29,7 @@ export const Canvas2DRenderer = ({
     const {
         dimensions = [window.innerWidth, window.innerHeight],
         isAnimated = true,
-        animationSettings = {}
+        animationSettings = {},
     } = settings;
 
     const [width, height] = dimensions;
@@ -46,7 +46,7 @@ export const Canvas2DRenderer = ({
                 stopAnimation,
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
-                mousePosition: animationProps.mousePosition
+                mousePosition: animationProps.mousePosition,
                 // onMouseMove, // TODO event callback props?
                 // onClick
             }),
@@ -55,7 +55,7 @@ export const Canvas2DRenderer = ({
             fps: throttledFps,
             delay,
             endAfter,
-            domElementRef: canvas
+            domElementRef: canvas,
         }
     );
 
@@ -79,7 +79,7 @@ export const Canvas2DRenderer = ({
             width,
             height,
             mouseHasEntered: false,
-            mousePosition: [0, 0] as Vector<2>
+            mousePosition: [0, 0] as Vector<2>,
         };
 
         const drawSketch = setupSketch(initialSketchProps);

@@ -50,7 +50,12 @@
             "error",
             {
                 "props": true,
-                "ignorePropertyModificationsForRegex": ["p", "context", "ctx"]
+                "ignorePropertyModificationsForRegex": [
+                    "p",
+                    "context",
+                    "ctx",
+                    "camera"
+                ]
             }
         ],
         "lines-between-class-members": [

@@ -61,10 +61,10 @@ export interface DrawProps {
     /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
     mousePosition?: Vector<2>;
 
-    /** A callback that will be run every time the mouse moves across the canvas */
-    onMouseMove?: () => void;
-    /** A callback that will be run every time the user clicks on the canvas */
-    onClick?: () => void;
+    // /** A callback that will be run every time the mouse moves across the canvas */
+    // onMouseMove?: () => void;
+    // /** A callback that will be run every time the user clicks on the canvas */
+    // onClick?: () => void;
 }
 
 /**

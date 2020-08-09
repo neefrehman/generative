@@ -6,7 +6,7 @@ import React from "react";
 import {
     Canvas2DRenderer,
     Canvas2DRendererSettings,
-    Canvas2DSetupFn
+    Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
 import { lineBetween, rgbaToString } from "LibUtils/canvas2d";
@@ -18,7 +18,7 @@ import { getDimensions190720 } from "./190720";
 
 const settings: Canvas2DRendererSettings = {
     dimensions: getDimensions190720(),
-    isAnimated: true
+    isAnimated: true,
 };
 
 const sketch: Canvas2DSetupFn = ({ width, height }) => {

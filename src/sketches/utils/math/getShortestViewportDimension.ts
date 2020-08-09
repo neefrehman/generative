@@ -5,7 +5,7 @@
  */
 export const getShortestViewportDimension = ({
     withMargin,
-    cap
+    cap,
 }: {
     /** Reduces the size of the dimension, used to create a margin around it. If `true`, a default margin will be set */
     withMargin?: boolean | number;

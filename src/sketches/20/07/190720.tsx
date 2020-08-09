@@ -6,7 +6,7 @@ import React from "react";
 import {
     Canvas2DRenderer,
     Canvas2DRendererSettings,
-    Canvas2DSetupFn
+    Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
 import { noise3D } from "Utils/random";
@@ -15,7 +15,7 @@ import { getShortestViewportDimension } from "Utils/math";
 export const getDimensions190720 = (): [number, number] => {
     const shortestDimension = getShortestViewportDimension({
         cap: 660,
-        withMargin: true
+        withMargin: true,
     });
 
     return shortestDimension > 425
@@ -25,7 +25,7 @@ export const getDimensions190720 = (): [number, number] => {
 
 const settings: Canvas2DRendererSettings = {
     dimensions: getDimensions190720(),
-    isAnimated: true
+    isAnimated: true,
 };
 
 const sketch: Canvas2DSetupFn = ({ width, height }) => {

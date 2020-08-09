@@ -17,18 +17,18 @@ const Controls = () => {
     // Will be deprecated in v9 https://github.com/react-spring/react-three-fiber/discussions/505
     useSpring({
         from: {
-            z: initialCameraZ
+            z: initialCameraZ,
         },
         z: 20,
         config: {
             mass: 5.2,
             tension: 270,
-            friction: 150
+            friction: 150,
         },
         onFrame: ({ z }: { z: number }) => {
             camera.position.z = z;
         },
-        onRest: () => setZoomIsFinished(true)
+        onRest: () => setZoomIsFinished(true),
     });
 
     useFrame(() => {
@@ -56,7 +56,7 @@ const S220620 = () => (
         style={{
             background: "#061923",
             height: "100vh",
-            width: "100vw"
+            width: "100vw",
         }}
         shadowMap
     >

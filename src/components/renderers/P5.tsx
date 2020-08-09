@@ -13,7 +13,7 @@ export const P5Renderer = ({
     autoResizeToWindow = true,
     className,
     style,
-    children
+    children,
 }: P5RendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
 

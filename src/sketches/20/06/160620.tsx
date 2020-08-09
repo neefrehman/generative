@@ -62,7 +62,7 @@ const S160620 = () => {
                     "--mouseX": `${mouseX * 100}%`,
                     "--mouseY": `${mouseY * 100}%`,
                     "--sinFrame": Math.sin(frame / 40),
-                    "--cosFrame": Math.cos(frame / 70)
+                    "--cosFrame": Math.cos(frame / 70),
                     // ^replace with CSS trig functions when they arrive: https://www.zdnet.com/article/css-to-get-support-for-trigonometry-functions/
                 }}
             />

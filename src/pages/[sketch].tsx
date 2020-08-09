@@ -56,7 +56,7 @@ export interface SketchPageProps {
 const SketchPage = ({
     sketchId,
     pathToSketch,
-    gitHubPath
+    gitHubPath,
 }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
@@ -148,8 +148,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         props: {
             sketchId,
             pathToSketch,
-            gitHubPath
-        }
+            gitHubPath,
+        },
     };
 };
 

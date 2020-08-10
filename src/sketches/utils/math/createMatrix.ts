@@ -39,7 +39,8 @@ export const createMatrix = <D extends number, T>(
         needsRecursion = remainingDimensions.length > 0;
     }
 
-    const currentMatrix = Array(currentDimensionLength).fill(initialValues);
+    const flooredDimensionLength = Math.floor(currentDimensionLength);
+    const currentMatrix = Array(flooredDimensionLength).fill(initialValues);
     // TODO: callback logic for mapping values based on Vector position
     // .map((position: Vector<D>) => {
     //     const [x,y,z,...] = position;

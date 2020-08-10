@@ -8,9 +8,9 @@
         "url": "git+https://github.com/neefrehman/Generative.git"
     },
     "dependencies": {
-        "@tensorflow/tfjs": "^2.0.1",
+        "@tensorflow/tfjs": "^2.1.0",
         "@zeit/next-css": "^1.0.1",
-        "drei": "0.0.70",
+        "drei": "0.0.72",
         "glslify": "^7.0.0",
         "glslify-hex": "^2.1.1",
         "linaria": "^1.3.3",
@@ -21,7 +21,7 @@
         "postprocessing": "^6.16.0",
         "react": "16.13.1",
         "react-dom": "16.13.1",
-        "react-postprocessing": "1.1.3",
+        "react-postprocessing": "1.1.4",
         "react-spring": "^8.0.27",
         "react-three-fiber": "5.0.0-beta.11",
         "react-xr": "^1.0.9",
@@ -32,9 +32,9 @@
     "devDependencies": {
         "@types/node": "^14.0.27",
         "@types/p5": "^0.9.1",
-        "@types/react": "^16.9.44",
-        "@typescript-eslint/eslint-plugin": "^3.7.1",
-        "@typescript-eslint/parser": "^3.7.1",
+        "@types/react": "^16.9.45",
+        "@typescript-eslint/eslint-plugin": "^3.8.0",
+        "@typescript-eslint/parser": "^3.8.0",
         "babel-eslint": "^10.1.0",
         "eslint": "^7.6.0",
         "eslint-config-airbnb": "^18.2.0",

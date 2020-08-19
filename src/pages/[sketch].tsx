@@ -97,6 +97,9 @@ const SketchPage = ({
 export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
     const sketchArray: string[] = [];
 
+    const sketchFileRegEx = /^[0-9]{6}(\.(t|j)s(x)?)?$/;
+    const fileExtensionRegEx = /\.[^/.]+$/;
+
     const sketchPath = nodePath.resolve("src/sketches");
     const yearFolders = nodeFs
         .readdirSync(sketchPath)
@@ -112,8 +115,8 @@ export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
             const monthPath = nodePath.resolve(`${yearPath}/${monthFolder}`);
             const sketches = nodeFs
                 .readdirSync(monthPath)
-                .filter(sketchId => RegExp(/^[0-9]{6}(\.tsx)?$/).test(sketchId))
-                .map(sketchId => sketchId.substr(0, 6));
+                .filter(sketchFile => RegExp(sketchFileRegEx).test(sketchFile))
+                .map(sketchFile => sketchFile.replace(fileExtensionRegEx, ""));
 
             sketches.forEach(sketchId => sketchArray.push(sketchId));
         });

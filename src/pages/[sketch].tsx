@@ -119,6 +119,15 @@ export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
         });
     });
 
+    if (process.env.NODE_ENV === "development") {
+        const draftsPath = nodePath.resolve("src/sketches/_drafts");
+        const draftSketches = nodeFs
+            .readdirSync(draftsPath)
+            .map(fileName => fileName.replace(".tsx", ""));
+
+        draftSketches.forEach(draftName => sketchArray.unshift(draftName));
+    }
+
     return sketchArray;
 };
 
@@ -134,7 +143,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
-    const pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+    const pathToSketch =
+        sketchId.length === 6
+            ? `sketches/${year}/${month}/${sketchId}`
+            : `sketches/_drafts/${sketchId}`;
 
     let gitHubPath = `src/${pathToSketch}`;
     try {

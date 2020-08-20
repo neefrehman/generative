@@ -47,7 +47,7 @@ export const StyledSketchPage = styled.div`
     }
 `;
 
-export interface SketchPageProps {
+interface SketchPageProps {
     sketchId: string;
     pathToSketch: string;
     gitHubPath: string;
@@ -119,21 +119,30 @@ export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
         });
     });
 
+    return sketchArray;
+};
+
+export const getDraftsArray = (nodePath: typeof path, nodeFs: typeof fs) => {
+    const draftsArray: string[] = [];
+
     if (process.env.NODE_ENV === "development") {
         const draftsPath = nodePath.resolve("src/sketches/_drafts");
         const draftSketches = nodeFs
             .readdirSync(draftsPath)
             .map(fileName => fileName.replace(".tsx", ""));
 
-        draftSketches.forEach(draftName => sketchArray.unshift(draftName));
+        draftSketches.forEach(draftName => draftsArray.unshift(draftName));
     }
 
-    return sketchArray;
+    return draftsArray;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const sketchArray = getSketchArray(path, fs);
-    const paths = sketchArray.map(sketch => ({ params: { sketch } }));
+    const draftsArray = getDraftsArray(path, fs);
+    const allSketchesArray = [...sketchArray, ...draftsArray];
+
+    const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));
 
     return { paths, fallback: false };
 };
@@ -143,18 +152,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
-    const pathToSketch =
-        sketchId.length === 6
-            ? `sketches/${year}/${month}/${sketchId}`
-            : `sketches/_drafts/${sketchId}`;
+    const pathToSketch = RegExp(/^[0-9]{6}$/).test(sketchId)
+        ? `sketches/${year}/${month}/${sketchId}`
+        : `sketches/_drafts/${sketchId}`;
 
     let gitHubPath = `src/${pathToSketch}`;
     try {
         fs.statSync(path.resolve(gitHubPath));
         gitHubPath += "/index.tsx"; // Folder
     } catch {
-        gitHubPath += ".tsx"; // Single file
-    }
+        gitHubPath += ".tsx";
+    } // Single file
 
     return {
         props: {

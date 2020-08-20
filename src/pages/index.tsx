@@ -7,9 +7,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
-import { getSketchArray } from "./[sketch]";
+import { getSketchArray, getDraftsArray } from "./[sketch]";
 
-const HomePageWrapper = styled.div`
+const StyledHomePage = styled.div`
     margin: 35px 50px;
 
     @media (max-width: 769px) {
@@ -21,13 +21,13 @@ const HomePageWrapper = styled.div`
     }
 `;
 
-const SketchList = styled.ul`
+const StyledSketchList = styled.ul`
     padding: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 150px); // -webkit-fill-available not working
+    max-height: calc(100vh - 150px); /* -webkit-fill-available not working */
     width: max-content;
 
     li {
@@ -50,12 +50,26 @@ const SketchList = styled.ul`
     }
 `;
 
-export interface SketchArrayProps {
+const ColumnBreak = styled.div`
+    height: 100vh;
+    margin-right: 3em;
+`;
+
+const SketchLink = ({ id }: { id: string }) => (
+    <li key={id}>
+        <Link href="/[sketch]" as={`/${id}`}>
+            <a>{id}</a>
+        </Link>
+    </li>
+);
+
+interface HomePageProps {
     sketchArray: string[];
+    draftsArray: string[];
 }
 
-const Home = ({ sketchArray }: SketchArrayProps) => (
-    <HomePageWrapper>
+const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
+    <StyledHomePage>
         <Head>
             <title>Generative — Neef Rehman</title>
         </Head>
@@ -74,23 +88,30 @@ const Home = ({ sketchArray }: SketchArrayProps) => (
         </header>
 
         <main>
-            <SketchList>
+            <StyledSketchList>
                 {sketchArray.map(sketchId => (
-                    <li key={sketchId}>
-                        <Link href="/[sketch]" as={`/${sketchId}`}>
-                            <a>{sketchId}</a>
-                        </Link>
-                    </li>
+                    <SketchLink id={sketchId} />
                 ))}
-            </SketchList>
+
+                {draftsArray.length > 0 && (
+                    <>
+                        <ColumnBreak />
+                        <li>DRAFTS:</li>
+                        {draftsArray.map(draftName => (
+                            <SketchLink id={draftName} />
+                        ))}
+                    </>
+                )}
+            </StyledSketchList>
         </main>
-    </HomePageWrapper>
+    </StyledHomePage>
 );
 
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketchArray(path, fs).reverse();
+    const draftsArray = getDraftsArray(path, fs).reverse();
 
-    return { props: { sketchArray } };
+    return { props: { sketchArray, draftsArray } };
 };
 
 export default Home;

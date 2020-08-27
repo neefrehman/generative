@@ -16,3 +16,4 @@ Some of my favourite resources that I've learned a lot from:
 -   [The Coding Train](https://www.youtube.com/user/shiffman)
 -   [Sebastian Lague](https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ)
 -   [Jamie Wong](http://jamie-wong.com/)
+-   https://threejsfundamentals.org/

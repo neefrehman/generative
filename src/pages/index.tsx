@@ -109,7 +109,7 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
 
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketchArray(path, fs).reverse();
-    const draftsArray = getDraftsArray(path, fs).reverse();
+    const draftsArray = getDraftsArray(path, fs);
 
     return { props: { sketchArray, draftsArray } };
 };

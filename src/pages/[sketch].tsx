@@ -131,7 +131,7 @@ export const getDraftsArray = (nodePath: typeof path, nodeFs: typeof fs) => {
             .readdirSync(draftsPath)
             .map(fileName => fileName.replace(".tsx", ""));
 
-        draftSketches.forEach(draftName => draftsArray.unshift(draftName));
+        draftSketches.forEach(draftName => draftsArray.push(draftName));
     }
 
     return draftsArray;

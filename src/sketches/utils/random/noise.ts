@@ -1,5 +1,6 @@
 import SimplexNoise from "simplex-noise";
 
+/** Instantiate the generator */
 const noiseGenerator = new SimplexNoise();
 
 /** A configuration object to set the frequency and amplitude of the noise */

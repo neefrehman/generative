@@ -56,7 +56,7 @@ const ColumnBreak = styled.div`
 `;
 
 const SketchLink = ({ id }: { id: string }) => (
-    <li key={id}>
+    <li>
         <Link href="/[sketch]" as={`/${id}`}>
             <a>{id}</a>
         </Link>
@@ -90,7 +90,7 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
         <main>
             <StyledSketchList>
                 {sketchArray.map(sketchId => (
-                    <SketchLink id={sketchId} />
+                    <SketchLink key={sketchId} id={sketchId} />
                 ))}
 
                 {draftsArray.length > 0 && (
@@ -98,7 +98,7 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
                         <ColumnBreak />
                         <li>DRAFTS:</li>
                         {draftsArray.map(draftName => (
-                            <SketchLink id={draftName} />
+                            <SketchLink key={draftName} id={draftName} />
                         ))}
                     </>
                 )}

@@ -159,10 +159,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     let gitHubPath = `src/${pathToSketch}`;
     try {
         fs.statSync(path.resolve(gitHubPath));
-        gitHubPath += "/index.tsx"; // Folder
+        gitHubPath += "/index.tsx"; // is flder
     } catch {
-        gitHubPath += ".tsx";
-    } // Single file
+        gitHubPath += ".tsx"; // is single file
+    }
 
     return {
         props: {

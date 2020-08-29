@@ -61,6 +61,7 @@ export const ThreeRenderer = ({
     useEffect(() => {
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
         wrapperElement.current.appendChild(renderer.domElement);
 

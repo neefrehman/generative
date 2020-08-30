@@ -1,5 +1,5 @@
 /**
- * Converts and rgba (and optionally a) value to a string to be used in the canvas context.
+ * Converts an rgba (and optionally a) value to a string to be used in the canvas context.
  * If one argument is provided, it will be used for all rgb values.
  *
  * @param r - The red value

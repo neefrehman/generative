@@ -87,6 +87,11 @@
                 ],
                 "pathGroups": [
                     {
+                        "pattern": "Renderers/**",
+                        "group": "internal",
+                        "position": "before"
+                    },
+                    {
                         "pattern": "LibUtils/**",
                         "group": "internal",
                         "position": "after"

@@ -7,8 +7,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
-import ErrorBoundary from "../components/ErrorBoundary";
-import TextOverlay from "../components/TextOverlay";
+import { ErrorBoundary } from "components/ErrorBoundary";
+import { TextOverlay } from "components/TextOverlay";
 
 export const StyledSketchPage = styled.div`
     margin: 0;

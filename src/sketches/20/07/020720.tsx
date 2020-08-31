@@ -8,7 +8,8 @@ import type {
     Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
-import { NoiseOverlay } from "Utils/NoiseOverlay";
+import { NoiseOverlay } from "components/NoiseOverlay";
+
 import { pick, inRange } from "Utils/random";
 
 const settings: Canvas2DRendererSettings = {

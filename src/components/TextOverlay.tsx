@@ -27,7 +27,7 @@ interface TextOverlayProps {
     timeout?: number | boolean;
 }
 
-const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
+export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const [isVisible, setIsVisible] = useState(true);
     const timeoutMs = typeof timeout === "number" ? timeout : 500;
 
@@ -44,5 +44,3 @@ const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
 
     return <>{isVisible && <StyledText>{text}</StyledText>}</>;
 };
-
-export default TextOverlay;

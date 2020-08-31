@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-import TextOverlay from "../components/TextOverlay";
+import { TextOverlay } from "../components/TextOverlay";
 
 import { StyledSketchPage } from "./[sketch]";
 

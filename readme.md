@@ -18,4 +18,5 @@ Some of my favourite resources that I've learned a lot from:
 -   [Jamie Wong](http://jamie-wong.com/)
 -   https://threejsfundamentals.org/
 <!-- -   https://github.com/lettier/3d-game-shaders-for-beginners
--   https://github.com/stackgl/shader-school -->
+-   https://github.com/stackgl/shader-school 
+-   https://webgl2fundamentals.org/ -->

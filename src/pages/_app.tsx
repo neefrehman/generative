@@ -37,7 +37,8 @@ export const globalStyles = css`
         }
 
         a,
-        a:visited {
+        a:visited,
+        button {
             text-decoration: none;
             display: inline-block;
             color: #fff;

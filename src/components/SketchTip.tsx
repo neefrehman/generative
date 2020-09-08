@@ -9,7 +9,8 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
     text-align: right;
     overflow-x: hidden;
 
-    a {
+    button {
+        border: none;
         font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
         padding: 0.05em 0.5em;
@@ -40,20 +41,27 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
 
 interface SketchTipProps {
     tip: string;
+    timeout?: number;
 }
 
-export const SketchTip = ({ tip }: SketchTipProps) => {
+export const SketchTip = ({ tip, timeout = 2500 }: SketchTipProps) => {
     const [isVisible, setIsVisible] = useState(true);
-    const TIMEOUT_MS = 2500;
 
     useEffect(() => {
-        const shrinkTimeout = setTimeout(() => setIsVisible(false), TIMEOUT_MS);
+        const shrinkTimeout = setTimeout(() => setIsVisible(false), timeout);
         return () => clearTimeout(shrinkTimeout);
-    }, [TIMEOUT_MS]);
+    }, [timeout]);
+
+    const handleClick = () => {
+        setIsVisible(true);
+        setTimeout(() => setIsVisible(false), timeout);
+    };
 
     return (
         <StyledTip isVisible={isVisible}>
-            <a>{tip}</a>
+            <button type="button" onClick={handleClick}>
+                {tip}
+            </button>
         </StyledTip>
     );
 };

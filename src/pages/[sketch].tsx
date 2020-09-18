@@ -124,15 +124,14 @@ export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
 
 export const getDraftsArray = (nodePath: typeof path, nodeFs: typeof fs) => {
     const draftsArray: string[] = [];
+    if (process.env.NODE_ENV !== "development") return draftsArray;
 
-    if (process.env.NODE_ENV === "development") {
-        const draftsPath = nodePath.resolve("src/sketches/_drafts");
-        const draftSketches = nodeFs
-            .readdirSync(draftsPath)
-            .map(fileName => fileName.replace(".tsx", ""));
+    const draftsPath = nodePath.resolve("src/sketches/_drafts");
+    const draftSketches = nodeFs
+        .readdirSync(draftsPath)
+        .map(fileName => fileName.replace(".tsx", ""));
 
-        draftSketches.forEach(draftName => draftsArray.push(draftName));
-    }
+    draftSketches.forEach(draftName => draftsArray.push(draftName));
 
     return draftsArray;
 };

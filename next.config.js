@@ -8,10 +8,10 @@ module.exports = withCSS({
                 {
                     loader: "linaria/loader",
                     options: {
-                        sourceMap: process.env.NODE_ENV !== "production"
-                    }
-                }
-            ]
+                        sourceMap: process.env.NODE_ENV !== "production",
+                    },
+                },
+            ],
         });
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
@@ -24,20 +24,18 @@ module.exports = withCSS({
                         transform: [
                             [
                                 "glslify-hex",
-                                { "option-1": true, "option-2": 42 }
-                            ]
-                        ]
-                    }
-                }
-            ]
+                                { "option-1": true, "option-2": 42 },
+                            ],
+                        ],
+                    },
+                },
+            ],
         });
         config.module.rules.push({
             test: /\.(obj|gltf|mtl)$/,
             exclude: /node_modules/,
-            use: ["url-loader"]
+            use: ["url-loader"],
         });
         return config;
-    }
+    },
 });
-
-// module.exports = { experimental: { modern: true } }; // wait for general release - this breaks linaria

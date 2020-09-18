@@ -69,11 +69,6 @@ export const SketchTip = ({ tip, timeout = 3000 }: SketchTipProps) => {
         return () => clearTimeout(shrinkTimeout);
     }, [timeout]);
 
-    const handleTouch = () => {
-        setIsVisible(true);
-        setTimeout(() => setIsVisible(false), timeout);
-    };
-
     return (
         <StyledTipContainer isVisible={isVisible}>
             <div
@@ -81,7 +76,7 @@ export const SketchTip = ({ tip, timeout = 3000 }: SketchTipProps) => {
                 aria-label="info"
                 aria-expanded={isVisible}
                 tabIndex={0}
-                onTouchStart={handleTouch}
+                onTouchStart={() => setIsVisible(true)}
                 onMouseEnter={() => setIsVisible(true)}
                 onMouseLeave={() => setIsVisible(false)}
                 onFocus={() => setIsVisible(true)}

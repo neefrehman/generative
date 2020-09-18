@@ -8,6 +8,8 @@ import type {
 } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
+import { SketchTip } from "components/SketchTip";
+
 import { rgbaToString } from "Utils/libs/canvas2d";
 import { createMatrix } from "Utils/math";
 import { inRange } from "Utils/random";
@@ -109,8 +111,24 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
+const Tip = () => (
+    <>
+        Conway&apos;s{" "}
+        <a
+            href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+            rel="noopener noreferrer"
+            target="_blank"
+        >
+            Game of Life
+        </a>
+    </>
+);
+
 const DGameOfLife = () => (
-    <Canvas2DRenderer sketch={sketch} settings={settings} />
+    <>
+        <Canvas2DRenderer sketch={sketch} settings={settings} />
+        <SketchTip tip={<Tip />} />
+    </>
 );
 
 export default DGameOfLife;

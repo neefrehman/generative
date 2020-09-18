@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, ReactElement } from "react";
 import { styled } from "linaria/react";
 
 const StyledTip = styled.div<{ isVisible: boolean }>`
@@ -9,7 +9,7 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
     text-align: right;
     overflow-x: hidden;
 
-    button {
+    div {
         border: none;
         font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
@@ -21,6 +21,16 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
         );
         transition: transform 500ms;
 
+        a {
+            text-decoration: underline;
+            color: inherit;
+            background-color: inherit;
+
+            :hover {
+                text-decoration: none;
+            }
+        }
+
         ::before {
             content: "i";
             font-size: 0.9em;
@@ -28,10 +38,21 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
             padding: 0 0.5em 0 0;
         }
 
-        :hover {
+        :hover,
+        :focus,
+        :focus-within {
             transform: translateX(0);
             background-color: #eee;
+            color: #212121;
         }
+
+        /* :focus {
+            outline: none;
+        }
+
+        :focus-visible {
+            outline: initial;
+        } */
     }
 
     @media (max-width: 769px) {
@@ -40,14 +61,15 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
 `;
 
 interface SketchTipProps {
-    tip: string;
+    tip: string | ReactElement;
     timeout?: number;
 }
 
 export const SketchTip = ({ tip, timeout = 2500 }: SketchTipProps) => {
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        setIsVisible(true);
         const shrinkTimeout = setTimeout(() => setIsVisible(false), timeout);
         return () => clearTimeout(shrinkTimeout);
     }, [timeout]);
@@ -59,9 +81,14 @@ export const SketchTip = ({ tip, timeout = 2500 }: SketchTipProps) => {
 
     return (
         <StyledTip isVisible={isVisible}>
-            <button type="button" onClick={handleClick}>
-                {tip}
-            </button>
+            <div
+                role="button"
+                tabIndex={0}
+                onClick={handleClick}
+                onKeyDown={handleClick}
+            >
+                <span role="tooltip">{tip}</span>
+            </div>
         </StyledTip>
     );
 };

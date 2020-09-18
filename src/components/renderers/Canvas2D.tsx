@@ -22,7 +22,7 @@ export const Canvas2DRenderer = ({
     style,
     children,
 }: Canvas2DRendererProps) => {
-    const canvas = useRef<HTMLCanvasElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const drawProps = useRef<Canvas2DDrawProps>({});
     const drawFunction = useRef<Canvas2DDrawFn>();
 
@@ -55,12 +55,12 @@ export const Canvas2DRenderer = ({
             fps: throttledFps,
             delay,
             endAfter,
-            domElementRef: canvas,
+            domElementRef: canvasRef,
         }
     );
 
     useEffect(() => {
-        const canvasEl = canvas.current;
+        const canvasEl = canvasRef.current;
         const ctx = canvasEl.getContext("2d");
 
         // <- Start fix - DPR for retina displays ->
@@ -95,7 +95,7 @@ export const Canvas2DRenderer = ({
     return (
         <>
             <canvas
-                ref={canvas}
+                ref={canvasRef}
                 width={width}
                 height={height}
                 className={className}

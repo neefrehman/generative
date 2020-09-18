@@ -1,3 +1,4 @@
+// Conway's Game of Life, adapted from:
 // https://medium.com/hypersphere-codes/conways-game-of-life-in-typescript-a955aec3bd49
 
 import React from "react";
@@ -16,13 +17,16 @@ import { inRange } from "Utils/random";
 
 const settings: Canvas2DRendererSettings = {
     dimensions: [window.innerWidth - 100, window.innerHeight - 100],
+    animationSettings: {
+        fps: 10,
+    },
 };
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const TILE_SIZE = 20;
     const TILES_X = Math.floor(width / TILE_SIZE);
     const TILES_Y = Math.floor(height / TILE_SIZE);
-    const INITIAL_LIVING_CELLS = 10;
+    const INITIAL_LIVING_CELLS = (TILES_X * TILES_Y) / 5;
 
     let board = createMatrix([TILES_X, TILES_Y], false);
 
@@ -41,6 +45,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
     const getNeighbourCount = (x: number, y: number): number => {
         let count = 0;
+
         [-1, 0, 1].forEach(i => {
             [-1, 0, 1].forEach(j => {
                 if (!(i === 0 && j === 0)) {
@@ -65,7 +70,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
                 }
             }
         }
-        board = newBoard;
+        return newBoard;
     };
 
     ctx.fillStyle = rgbaToString(100, 240, 150);
@@ -107,7 +112,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
         drawBorders();
         drawCells();
-        computeNextGeneration();
+        board = computeNextGeneration();
     };
 };
 

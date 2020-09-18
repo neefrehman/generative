@@ -60,7 +60,7 @@ interface SketchTipProps {
     timeout?: number;
 }
 
-export const SketchTip = ({ tip, timeout = 2500 }: SketchTipProps) => {
+export const SketchTip = ({ tip, timeout = 3000 }: SketchTipProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useLayoutEffect(() => {

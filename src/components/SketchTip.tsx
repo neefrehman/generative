@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, ReactElement } from "react";
 import { styled } from "linaria/react";
 
-const StyledTip = styled.div<{ isVisible: boolean }>`
+const StyledTipContainer = styled.div<{ isVisible: boolean }>`
     --edgeMargin: 40px;
     position: fixed;
     top: var(--edgeMargin);
@@ -21,16 +21,6 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
         );
         transition: transform 500ms;
 
-        a {
-            text-decoration: underline;
-            color: inherit;
-            background-color: inherit;
-
-            :hover {
-                text-decoration: none;
-            }
-        }
-
         ::before {
             content: "i";
             font-size: 0.9em;
@@ -46,13 +36,18 @@ const StyledTip = styled.div<{ isVisible: boolean }>`
             color: #212121;
         }
 
-        /* :focus {
-            outline: none;
-        }
+        /* :focus {outline: none;} */
+        /* :focus-visible {outline: initial;} */
 
-        :focus-visible {
-            outline: initial;
-        } */
+        a {
+            text-decoration: underline;
+            color: inherit;
+            background-color: inherit;
+
+            :hover {
+                text-decoration: none;
+            }
+        }
     }
 
     @media (max-width: 769px) {
@@ -74,21 +69,26 @@ export const SketchTip = ({ tip, timeout = 2500 }: SketchTipProps) => {
         return () => clearTimeout(shrinkTimeout);
     }, [timeout]);
 
-    const handleClick = () => {
+    const handleTouch = () => {
         setIsVisible(true);
         setTimeout(() => setIsVisible(false), timeout);
     };
 
     return (
-        <StyledTip isVisible={isVisible}>
+        <StyledTipContainer isVisible={isVisible}>
             <div
                 role="button"
+                aria-label="info"
+                aria-expanded={isVisible}
                 tabIndex={0}
-                onClick={handleClick}
-                onKeyDown={handleClick}
+                onTouchStart={handleTouch}
+                onMouseEnter={() => setIsVisible(true)}
+                onMouseLeave={() => setIsVisible(false)}
+                onFocus={() => setIsVisible(true)}
+                onBlur={() => setIsVisible(false)}
             >
                 <span role="tooltip">{tip}</span>
             </div>
-        </StyledTip>
+        </StyledTipContainer>
     );
 };

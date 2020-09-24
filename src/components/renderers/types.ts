@@ -73,11 +73,11 @@ export interface DrawProps {
  * The contents of this function should contain all sketch state, with the drawing happening
  * inside it's returned draw function.
  */
-export type SetupFn<DrawProps, DrawFn> = (props?: DrawProps) => DrawFn;
+export type SetupFn<DrawPropsG, DrawFn> = (props?: DrawPropsG) => DrawFn;
 
 /**
  * The draw function returned by `SetupFn`, with access to `DrawProps`.
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type DrawFn<DrawProps> = (props?: DrawProps) => void;
+export type DrawFn<DrawPropsG> = (props?: DrawPropsG) => void;

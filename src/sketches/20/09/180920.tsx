@@ -129,11 +129,11 @@ const Tip = () => (
     </>
 );
 
-const DGameOfLife = () => (
+const S180920 = () => (
     <>
         <Canvas2DRenderer sketch={sketch} settings={settings} />
         <SketchTip tip={<Tip />} />
     </>
 );
 
-export default DGameOfLife;
+export default S180920;

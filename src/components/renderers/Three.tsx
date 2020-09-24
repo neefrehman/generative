@@ -36,6 +36,10 @@ export const ThreeRenderer = ({
     const [width, height] = dimensions;
     const { fps: throttledFps, delay, endAfter } = animationSettings;
 
+    const camera = useRef<THREE.Camera>(
+        new THREE.PerspectiveCamera(50, width / height, 0.1, 1000)
+    );
+
     const { startAnimation, stopAnimation } = useAnimationFrame(
         animationProps =>
             drawFunction.current?.({
@@ -50,7 +54,7 @@ export const ThreeRenderer = ({
                 mousePosition: animationProps.mousePosition,
             }),
         {
-            willPlay: isAnimated ?? false,
+            willPlay: isAnimated,
             fps: throttledFps,
             delay,
             endAfter,
@@ -61,29 +65,34 @@ export const ThreeRenderer = ({
     useEffect(() => {
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer();
+
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
         wrapperElement.current.appendChild(renderer.domElement);
 
-        const initialSketchProps = {
+        const initialSketchProps: ThreeDrawProps = {
             scene,
             renderer,
+            camera, // TODO: see if there's a way to not have to call .current in the sketches?
             width,
             height,
             mouseHasEntered: false,
             mousePosition: [0, 0] as Vector<2>,
         };
 
+        drawProps.current = initialSketchProps;
         const drawSketch = setupSketch(initialSketchProps);
 
-        drawProps.current = initialSketchProps;
-        drawFunction.current = drawSketch;
+        drawFunction.current = sketchProps => {
+            drawSketch(sketchProps);
+            renderer.render(scene, camera.current);
+        };
 
-        drawSketch(initialSketchProps);
+        drawFunction.current(initialSketchProps);
 
         return () => {
             scene.children.forEach(child => scene.remove(child));
-            scene.dispose();
+            // scene.dispose(); // <- has been removed
         };
     }, [setupSketch, settings, width, height]);
 
@@ -110,6 +119,8 @@ export type ThreeDrawProps = {
     scene?: THREE.Scene;
     /** The WebGL renderer for the scene */
     renderer?: THREE.WebGLRenderer;
+    /** The Camera for the scene */
+    camera?: React.MutableRefObject<THREE.Camera>;
 } & DrawProps;
 
 /**

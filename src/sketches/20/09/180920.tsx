@@ -116,23 +116,19 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const Tip = () => (
-    <>
-        Conway&apos;s{" "}
-        <a
-            href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
-            rel="noopener noreferrer"
-            target="_blank"
-        >
-            Game of Life
-        </a>
-    </>
-);
-
 const S180920 = () => (
     <>
         <Canvas2DRenderer sketch={sketch} settings={settings} />
-        <SketchTip tip={<Tip />} />
+        <SketchTip>
+            Conway&apos;s{" "}
+            <a
+                href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+                rel="noopener noreferrer"
+                target="_blank"
+            >
+                Game of Life
+            </a>
+        </SketchTip>
     </>
 );
 

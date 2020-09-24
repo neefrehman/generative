@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
@@ -56,14 +56,14 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
 `;
 
 interface SketchTipProps {
-    tip: string | ReactElement;
+    children: ReactNode;
     timeout?: number;
 }
 
-export const SketchTip = ({ tip, timeout = 3000 }: SketchTipProps) => {
+export const SketchTip = ({ children, timeout = 3000 }: SketchTipProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         setIsVisible(true);
         const shrinkTimeout = setTimeout(() => setIsVisible(false), timeout);
         return () => clearTimeout(shrinkTimeout);
@@ -82,7 +82,7 @@ export const SketchTip = ({ tip, timeout = 3000 }: SketchTipProps) => {
                 onFocus={() => setIsVisible(true)}
                 onBlur={() => setIsVisible(false)}
             >
-                <span role="tooltip">{tip}</span>
+                <span role="tooltip">{children}</span>
             </div>
         </StyledTipContainer>
     );

@@ -55,7 +55,8 @@
                     "context",
                     "ctx",
                     "canvas",
-                    "camera"
+                    "camera",
+                    "current"
                 ]
             }
         ],

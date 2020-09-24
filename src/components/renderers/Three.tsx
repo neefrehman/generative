@@ -73,7 +73,7 @@ export const ThreeRenderer = ({
         const initialSketchProps: ThreeDrawProps = {
             scene,
             renderer,
-            camera, // TODO: see if there's a way to not have to call .current in the sketches?
+            camera, // TODO: see if there's a way to not have to call .current in the sketches? Using camera like this removes three `render()` boilerplate, but adds a react paradigm to the sketch.
             width,
             height,
             mouseHasEntered: false,

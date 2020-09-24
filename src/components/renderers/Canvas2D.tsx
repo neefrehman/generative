@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from "react";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
 
+import { fixDevicePixelRatio } from "LibUtils/canvas2d";
+
 import type { Vector } from "Utils/math";
 
 import type {
@@ -62,18 +64,9 @@ export const Canvas2DRenderer = ({
     useEffect(() => {
         const canvasEl = canvasRef.current;
         const ctx = canvasEl.getContext("2d");
+        fixDevicePixelRatio(canvasEl, ctx);
 
-        // <- Start fix - DPR for retina displays ->
-        const dpr = window?.devicePixelRatio ?? 1;
-        const rect = canvasEl.getBoundingClientRect();
-        canvasEl.width = rect.width * dpr;
-        canvasEl.height = rect.height * dpr;
-        canvasEl.style.width = `${rect.width}px`;
-        canvasEl.style.height = `${rect.height}px`;
-        ctx.scale(2, 2);
-        // <- End fix ->
-
-        const initialSketchProps = {
+        const initialSketchProps: Canvas2DDrawProps = {
             ctx,
             canvas: canvasEl,
             width,

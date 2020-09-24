@@ -25,7 +25,7 @@ export const Canvas2DRenderer = ({
     children,
 }: Canvas2DRendererProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const drawProps = useRef<Canvas2DDrawProps>({});
+    const drawProps = useRef<Canvas2DDrawProps>({} as Canvas2DDrawProps);
     const drawFunction = useRef<Canvas2DDrawFn>();
 
     const {
@@ -111,9 +111,9 @@ export type { RendererSettings as Canvas2DRendererSettings };
  */
 export type Canvas2DDrawProps = {
     /** the rendering context to call canvas methods on - in this case 2d */
-    ctx?: CanvasRenderingContext2D;
+    ctx: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
-    canvas?: HTMLCanvasElement;
+    canvas: HTMLCanvasElement;
 } & DrawProps;
 
 /**

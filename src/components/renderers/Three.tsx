@@ -24,7 +24,7 @@ export const ThreeRenderer = ({
     children,
 }: ThreeRendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
-    const drawProps = useRef<ThreeDrawProps>({});
+    const drawProps = useRef<ThreeDrawProps>({} as ThreeDrawProps);
     const drawFunction = useRef<ThreeDrawFn>();
 
     const {
@@ -116,11 +116,11 @@ export type { RendererSettings as ThreeRendererSettings };
  */
 export type ThreeDrawProps = {
     /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
-    scene?: THREE.Scene;
+    scene: THREE.Scene;
     /** The WebGL renderer for the scene */
-    renderer?: THREE.WebGLRenderer;
+    renderer: THREE.WebGLRenderer;
     /** The Camera for the scene */
-    camera?: React.MutableRefObject<THREE.Camera>;
+    camera: React.MutableRefObject<THREE.Camera>;
 } & DrawProps;
 
 /**

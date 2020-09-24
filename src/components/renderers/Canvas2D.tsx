@@ -4,8 +4,6 @@ import { useAnimationFrame } from "hooks/useAnimationFrame";
 
 import { fixDevicePixelRatio } from "LibUtils/canvas2d";
 
-import type { Vector } from "Utils/math";
-
 import type {
     RendererProps,
     RendererSettings,
@@ -72,7 +70,7 @@ export const Canvas2DRenderer = ({
             width,
             height,
             mouseHasEntered: false,
-            mousePosition: [0, 0] as Vector<2>,
+            mousePosition: [0, 0],
         };
 
         const drawSketch = setupSketch(initialSketchProps);

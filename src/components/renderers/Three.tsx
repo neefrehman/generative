@@ -36,6 +36,8 @@ export const ThreeRenderer = ({
     const [width, height] = dimensions;
     const { fps: throttledFps, delay, endAfter } = animationSettings;
 
+    // TODO: see if there's a way to not have to call .current inside the sketches?
+    // Using camera like this removes three `render()` boilerplate, but adds a react paradigm to the sketch function.
     const camera = useRef<THREE.Camera>(
         new THREE.PerspectiveCamera(50, width / height, 0.1, 1000)
     );
@@ -73,7 +75,7 @@ export const ThreeRenderer = ({
         const initialSketchProps: ThreeDrawProps = {
             scene,
             renderer,
-            camera, // TODO: see if there's a way to not have to call .current in the sketches? Using camera like this removes three `render()` boilerplate, but adds a react paradigm to the sketch.
+            camera,
             width,
             height,
             mouseHasEntered: false,

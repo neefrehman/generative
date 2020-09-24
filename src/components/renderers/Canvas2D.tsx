@@ -53,7 +53,7 @@ export const Canvas2DRenderer = ({
                 // onClick
             }),
         {
-            willPlay: isAnimated ?? false,
+            willPlay: isAnimated,
             fps: throttledFps,
             delay,
             endAfter,

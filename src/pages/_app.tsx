@@ -34,6 +34,8 @@ export const globalStyles = css`
             margin: 0;
             padding: 0;
             overflow-y: hidden;
+
+            --edgeButtonMargin: 40px;
         }
 
         a,
@@ -84,6 +86,8 @@ export const globalStyles = css`
     @media (max-width: 769px) {
         body {
             font-size: 15px;
+
+            --edgeButtonMargin: 30px;
         }
 
         header {

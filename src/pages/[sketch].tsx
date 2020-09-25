@@ -26,23 +26,18 @@ export const StyledSketchPage = styled.div`
         font-size: 0.95em;
         padding: 0.05em 0.2em;
         background-color: rgb(85, 85, 85, 0.7);
-        --edgeMargin: 40px;
-        bottom: var(--edgeMargin);
+        bottom: var(--edgeButtonMargin);
 
         :hover {
             background-color: #eee;
         }
 
         :first-child {
-            left: var(--edgeMargin);
+            left: var(--edgeButtonMargin);
         }
 
         :nth-child(2) {
-            right: var(--edgeMargin);
-        }
-
-        @media (max-width: 769px) {
-            --edgeMargin: 33px;
+            right: var(--edgeButtonMargin);
         }
     }
 `;

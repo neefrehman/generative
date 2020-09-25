@@ -2,10 +2,9 @@ import React, { useState, useEffect, ReactNode } from "react";
 import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
-    --edgeMargin: 40px;
     position: fixed;
-    top: var(--edgeMargin);
-    right: var(--edgeMargin);
+    top: var(--edgeButtonMargin);
+    right: var(--edgeButtonMargin);
     text-align: right;
     overflow-x: hidden;
 
@@ -48,10 +47,6 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
                 text-decoration: none;
             }
         }
-    }
-
-    @media (max-width: 769px) {
-        --edgeMargin: 33px;
     }
 `;
 

@@ -53,49 +53,12 @@ export const globalStyles = css`
                 background-color: #eee;
             }
         }
-
-        header {
-            margin-bottom: 35px;
-            width: max-content;
-            transform: scale(1.02, 1);
-            transform-origin: left;
-
-            h1 {
-                margin-block-end: 0.5em;
-                white-space: nowrap;
-                font-size: 3.4em;
-                font-weight: 400;
-                margin-right: 1em;
-
-                a {
-                    text-decoration: underline;
-                    background-color: initial;
-
-                    :hover {
-                        background-color: #eee;
-                    }
-                }
-            }
-        }
-
-        canvas:focus {
-            outline: none;
-        }
     }
 
     @media (max-width: 769px) {
         body {
             font-size: 15px;
-
             --edgeButtonMargin: 30px;
-        }
-
-        header {
-            margin-bottom: 30px;
-
-            h1 {
-                font-size: 2.36em;
-            }
         }
     }
 `;

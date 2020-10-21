@@ -3,8 +3,6 @@ import * as THREE from "three";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
 
-import type { Vector } from "Utils/math";
-
 import type {
     RendererProps,
     RendererSettings,
@@ -35,13 +33,6 @@ export const ThreeRenderer = ({
 
     const [width, height] = dimensions;
     const { fps: throttledFps, delay, endAfter } = animationSettings;
-
-    // TODO: see if there's a way to not have to call .current inside the sketches?
-    // Using camera like this removes the three `render()` boilerplate, but adds a
-    // react paradigm to the sketches and therefore context switching 😰
-    const camera = useRef<THREE.Camera>(
-        new THREE.PerspectiveCamera(50, width / height, 0.1, 1000)
-    );
 
     const { startAnimation, stopAnimation } = useAnimationFrame(
         animationProps =>
@@ -76,22 +67,18 @@ export const ThreeRenderer = ({
         const initialSketchProps: ThreeDrawProps = {
             scene,
             renderer,
-            camera,
             width,
             height,
             mouseHasEntered: false,
             mousePosition: [0, 0],
         };
 
-        drawProps.current = initialSketchProps;
         const drawSketch = setupSketch(initialSketchProps);
 
-        drawFunction.current = sketchProps => {
-            drawSketch(sketchProps);
-            renderer.render(scene, camera.current);
-        };
+        drawProps.current = initialSketchProps;
+        drawFunction.current = drawSketch;
 
-        drawFunction.current(initialSketchProps);
+        drawSketch(initialSketchProps);
 
         return () => {
             scene.children.forEach(child => scene.remove(child));
@@ -122,8 +109,6 @@ export type ThreeDrawProps = {
     scene: THREE.Scene;
     /** The WebGL renderer for the scene */
     renderer: THREE.WebGLRenderer;
-    /** The Camera for the scene */
-    camera: React.MutableRefObject<THREE.Camera>;
 } & DrawProps;
 
 /**

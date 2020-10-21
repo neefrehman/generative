@@ -19,7 +19,6 @@ const StyledHomePage = styled.div`
         transform-origin: left;
 
         h1 {
-            margin-block-end: 0.5em;
             white-space: nowrap;
             font-size: 3.4em;
             font-weight: 400;

@@ -40,7 +40,7 @@ export const createMatrix = <D extends number, T>(
     }
 
     if (!Number.isInteger(currentDimensionLength)) {
-        throw new TypeError(`The dimensions parameter must contain integers`);
+        throw new TypeError(`Dimensions can only be integers`);
     }
 
     const currentMatrix = Array(currentDimensionLength).fill(initialValues);
@@ -76,3 +76,28 @@ export type Matrix<D extends number, T> = D extends 1
     : D extends 5
     ? T[][][][][]
     : any[][][][][][]; // TODO: Full type safety?
+
+//
+
+// const getVectorValue = <D extends number, T>(
+//     matrix: Matrix<D, T>,
+//     vector: Vector<D>
+// ): T => {
+//     const returnValue: T = getVectorValue(matrix[vector[0]], vector.slice(1));
+
+//     return returnValue;
+// };
+
+// const setVectorValue = <D extends number, T>(
+//     matrix: Matrix<D, T>,
+//     vector: Vector<D>,
+//     value: T
+// ): void => {
+//     if (vector.length === 1) {
+//         matrix[vector[0]] = value;
+//     } else {
+//         setVectorValue(matrix[vector[0]], vector.slice(1), value);
+//     }
+// };
+
+// setVectorValue([0, 0], [0], 1);

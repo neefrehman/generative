@@ -13,10 +13,10 @@ const StyledHomePage = styled.div`
     padding: 35px 50px;
     box-sizing: border-box;
     height: 100vh;
+    width: max-content;
 
     header {
         margin-bottom: clamp(30px, 4vh, 35px);
-        width: max-content;
         transform: scale(1.02, 1);
         transform-origin: left;
 
@@ -51,8 +51,8 @@ const StyledSketchList = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    height: calc(100% - 60px);
     width: max-content;
+    height: calc(100% - 70px);
 
     li {
         margin: 0 1em 1em 0; /* TODO: replace with gap: 1em on parent once safari support hits: https://caniuse.com/flexbox-gap */

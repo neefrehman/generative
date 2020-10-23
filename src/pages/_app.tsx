@@ -37,8 +37,8 @@ export const globalStyles = css`
             max-width: max-content;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
+            height: 100vh;
+            height: -webkit-fill-available;
             overflow-y: hidden;
             --edgeButtonMargin: clamp(28px, 3vw, 40px);
         }

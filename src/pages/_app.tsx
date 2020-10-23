@@ -23,7 +23,7 @@ export const globalStyles = css`
         }
 
         html {
-            /* height: -webkit-fill-available; */
+            height: -webkit-fill-available;
         }
 
         body {
@@ -37,8 +37,8 @@ export const globalStyles = css`
             max-width: max-content;
             margin: 0;
             padding: 0;
-            height: 100vh;
-            /* min-height: -webkit-fill-available; */
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
             overflow-y: hidden;
             --edgeButtonMargin: clamp(28px, 3vw, 40px);
         }

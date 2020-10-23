@@ -11,3 +11,4 @@ export interface Vector<D extends number = any> extends Array<number> {
     0?: number;
     length: D;
 }
+// Follow: https://github.com/microsoft/TypeScript/issues/26223

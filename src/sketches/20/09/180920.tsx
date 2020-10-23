@@ -13,7 +13,7 @@ import { SketchTip } from "components/SketchTip";
 
 import { rgbaToString } from "Utils/libs/canvas2d";
 import { createMatrix } from "Utils/math";
-import { inRange } from "Utils/random";
+import { createChance } from "Utils/random";
 
 const settings: Canvas2DRendererSettings = {
     dimensions: [window.innerWidth - 100, window.innerHeight - 100],
@@ -26,15 +26,12 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const TILE_SIZE = 20;
     const TILES_X = Math.floor(width / TILE_SIZE);
     const TILES_Y = Math.floor(height / TILE_SIZE);
-    const INITIAL_LIVING_CELLS = (TILES_X * TILES_Y) / 5;
+    const TOTAL_CELLS = TILES_X * TILES_Y;
+    const INITIAL_LIVING_CELLS = TOTAL_CELLS / 5;
 
-    let board = createMatrix([TILES_X, TILES_Y], false);
-
-    for (let i = 0; i < INITIAL_LIVING_CELLS; i++) {
-        const x = inRange(0, TILES_X, { isInteger: true });
-        const y = inRange(0, TILES_Y, { isInteger: true });
-        board[x][y] = true;
-    }
+    let board = createMatrix([TILES_X, TILES_Y], () =>
+        createChance(INITIAL_LIVING_CELLS / TOTAL_CELLS)
+    );
 
     const isAlive = (x: number, y: number): number => {
         if (x < 0 || x >= TILES_X || y < 0 || y >= TILES_Y) {

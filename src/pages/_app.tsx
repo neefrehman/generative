@@ -28,7 +28,7 @@ export const globalStyles = css`
 
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
-            font-size: clamp(15px, 2.8vw, 16px);
+            font-size: clamp(15.6px, 2.8vw, 16px);
             line-height: 1.2;
             color: #ffffff;
             background-color: #212121;
@@ -41,6 +41,11 @@ export const globalStyles = css`
             min-height: -webkit-fill-available;
             overflow-y: hidden;
             --edgeButtonMargin: clamp(28px, 3vw, 40px);
+        }
+
+        h1 {
+            font-size: clamp(2.56em, 4vw, 3.4em);
+            font-weight: 400;
         }
 
         a,

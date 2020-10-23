@@ -22,8 +22,6 @@ const StyledHomePage = styled.div`
 
         h1 {
             white-space: nowrap;
-            font-size: clamp(2.42em, 4vw, 3.4em);
-            font-weight: 400;
             margin-right: 1em;
 
             a {
@@ -36,10 +34,6 @@ const StyledHomePage = styled.div`
                 }
             }
         }
-    }
-
-    main {
-        height: calc(100% - 60px);
     }
 
     @media (max-width: 769px) {
@@ -57,7 +51,7 @@ const StyledSketchList = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 100%;
+    height: calc(100% - 60px);
     width: max-content;
 
     li {
@@ -111,23 +105,21 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
             </h1>
         </header>
 
-        <main>
-            <StyledSketchList>
-                {sketchArray.map(sketchId => (
-                    <SketchLink key={sketchId} id={sketchId} />
-                ))}
+        <StyledSketchList>
+            {sketchArray.map(sketchId => (
+                <SketchLink key={sketchId} id={sketchId} />
+            ))}
 
-                {draftsArray.length > 0 && (
-                    <>
-                        <ColumnBreak aria-label="separator" />
-                        <li>DRAFTS:</li>
-                        {draftsArray.map(draftName => (
-                            <SketchLink key={draftName} id={draftName} />
-                        ))}
-                    </>
-                )}
-            </StyledSketchList>
-        </main>
+            {draftsArray.length > 0 && (
+                <>
+                    <ColumnBreak aria-label="separator" />
+                    <li>DRAFTS:</li>
+                    {draftsArray.map(draftName => (
+                        <SketchLink key={draftName} id={draftName} />
+                    ))}
+                </>
+            )}
+        </StyledSketchList>
     </StyledHomePage>
 );
 

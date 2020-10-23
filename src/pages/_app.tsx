@@ -22,9 +22,9 @@ export const globalStyles = css`
             margin: 0;
         }
 
-        html {
+        /* html {
             height: -webkit-fill-available;
-        }
+        } */
 
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
@@ -37,8 +37,8 @@ export const globalStyles = css`
             max-width: max-content;
             margin: 0;
             padding: 0;
-            height: 100vh;
-            height: -webkit-fill-available;
+            /* height: 100vh;
+            height: -webkit-fill-available; */
             overflow-y: hidden;
             --edgeButtonMargin: clamp(28px, 3vw, 40px);
         }

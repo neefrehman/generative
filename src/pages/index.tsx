@@ -16,13 +16,13 @@ const StyledHomePage = styled.div`
     width: max-content;
 
     header {
-        margin-bottom: clamp(30px, 4vh, 35px);
+        padding-bottom: clamp(30px, 4vh, 35px);
         transform: scale(1.02, 1);
         transform-origin: left;
 
         h1 {
             white-space: nowrap;
-            margin-right: 1em;
+            padding-right: 1em;
 
             a {
                 font-family: inherit;

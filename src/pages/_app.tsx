@@ -44,7 +44,7 @@ export const globalStyles = css`
         }
 
         h1 {
-            font-size: clamp(2.7em, 4vw, 3.4em);
+            font-size: clamp(3em, 4vw, 3.4em);
             font-weight: 400;
         }
 

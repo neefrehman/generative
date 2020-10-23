@@ -23,12 +23,12 @@ export const globalStyles = css`
         }
 
         html {
-            height: -webkit-fill-available;
+            /* height: -webkit-fill-available; */
         }
 
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
-            font-size: clamp(15.6px, 2.8vw, 16px);
+            font-size: 16px;
             line-height: 1.2;
             color: #ffffff;
             background-color: #212121;
@@ -37,14 +37,14 @@ export const globalStyles = css`
             max-width: max-content;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
+            height: 100vh;
+            /* min-height: -webkit-fill-available; */
             overflow-y: hidden;
             --edgeButtonMargin: clamp(28px, 3vw, 40px);
         }
 
         h1 {
-            font-size: clamp(2.56em, 4vw, 3.4em);
+            font-size: clamp(2.7em, 4vw, 3.4em);
             font-weight: 400;
         }
 

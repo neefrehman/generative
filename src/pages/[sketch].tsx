@@ -11,8 +11,6 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 
 export const StyledSketchPage = styled.div`
-    margin: 0;
-
     canvas {
         position: fixed;
         top: 50%;

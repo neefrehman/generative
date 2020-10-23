@@ -10,7 +10,9 @@ import { styled } from "linaria/react";
 import { getSketchArray, getDraftsArray } from "./[sketch]";
 
 const StyledHomePage = styled.div`
-    margin: 35px 50px;
+    padding: 35px 50px;
+    box-sizing: border-box;
+    height: 100vh;
 
     header {
         margin-bottom: clamp(30px, 4vh, 35px);
@@ -37,15 +39,15 @@ const StyledHomePage = styled.div`
     }
 
     main {
-        height: calc(100vh - 120px);
+        height: calc(100% - 60px);
     }
 
     @media (max-width: 769px) {
-        margin: 25px 30px;
+        padding: 25px 30px;
     }
 
     @media (max-width: 425px) {
-        margin: 25px;
+        padding: 25px;
     }
 `;
 

@@ -28,7 +28,7 @@ export const globalStyles = css`
 
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
-            font-size: 16px;
+            font-size: clamp(15px, 2.8vw, 16px);
             line-height: 1.2;
             color: #ffffff;
             background-color: #212121;

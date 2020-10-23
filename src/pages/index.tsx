@@ -20,7 +20,7 @@ const StyledHomePage = styled.div`
 
         h1 {
             white-space: nowrap;
-            font-size: clamp(2.36em, 4vw, 3.4em);
+            font-size: clamp(2.42em, 4vw, 3.4em);
             font-weight: 400;
             margin-right: 1em;
 
@@ -37,7 +37,7 @@ const StyledHomePage = styled.div`
     }
 
     main {
-        height: calc(100vh - 130px);
+        height: calc(100vh - 120px);
     }
 
     @media (max-width: 769px) {

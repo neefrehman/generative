@@ -26,7 +26,6 @@ export const StyledSketchPage = styled.div`
 
     footer a {
         position: fixed;
-        font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
         padding: 0.05em 0.2em;
         background-color: rgb(85, 85, 85, 0.7);

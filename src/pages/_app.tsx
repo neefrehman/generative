@@ -22,9 +22,13 @@ export const globalStyles = css`
             margin: 0;
         }
 
+        html {
+            height: -webkit-fill-available;
+        }
+
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
-            font-size: 16px;
+            font-size: clamp(15px, 2.8vw, 16px);
             line-height: 1.2;
             color: #ffffff;
             background-color: #212121;
@@ -33,14 +37,16 @@ export const globalStyles = css`
             max-width: max-content;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
             overflow-y: hidden;
-
-            --edgeButtonMargin: 40px;
+            --edgeButtonMargin: clamp(28px, 3vw, 40px);
         }
 
         a,
         a:visited,
         button {
+            font-family: helvetica neue, helvetica, arial, sans-serif;
             text-decoration: none;
             display: inline-block;
             color: #fff;
@@ -52,13 +58,6 @@ export const globalStyles = css`
                 color: #212121;
                 background-color: #eee;
             }
-        }
-    }
-
-    @media (max-width: 769px) {
-        body {
-            font-size: 15px;
-            --edgeButtonMargin: 30px;
         }
     }
 `;

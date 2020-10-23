@@ -13,18 +13,19 @@ const StyledHomePage = styled.div`
     margin: 35px 50px;
 
     header {
-        margin-bottom: 35px;
+        margin-bottom: clamp(30px, 4vh, 35px);
         width: max-content;
         transform: scale(1.02, 1);
         transform-origin: left;
 
         h1 {
             white-space: nowrap;
-            font-size: 3.4em;
+            font-size: clamp(2.36em, 4vw, 3.4em);
             font-weight: 400;
             margin-right: 1em;
 
             a {
+                font-family: inherit;
                 text-decoration: underline;
                 background-color: initial;
 
@@ -35,16 +36,12 @@ const StyledHomePage = styled.div`
         }
     }
 
+    main {
+        height: calc(100vh - 130px);
+    }
+
     @media (max-width: 769px) {
         margin: 25px 30px;
-
-        header {
-            margin-bottom: 30px;
-
-            h1 {
-                font-size: 2.36em;
-            }
-        }
     }
 
     @media (max-width: 425px) {
@@ -58,13 +55,11 @@ const StyledSketchList = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: calc(100vh - 150px); /* -webkit-fill-available not working */
+    height: 100%;
     width: max-content;
 
     li {
-        font-family: helvetica neue, helvetica, arial, sans-serif;
-        margin: 0 1em 1em 0;
-        font-variant-numeric: tabular-nums;
+        margin: 0 1em 1em 0; /* TODO: replace with gap: 1em on parent once safari support hits: https://caniuse.com/flexbox-gap */
 
         a:visited {
             color: #212121;
@@ -75,20 +70,16 @@ const StyledSketchList = styled.ul`
             }
         }
     }
-
-    @media (max-width: 769px) {
-        max-height: calc(100vh - 190px);
-    }
 `;
 
-const ColumnBreak = styled.div`
-    height: 100vh;
-    margin-right: 3em;
+const ColumnBreak = styled.li`
+    height: 100%;
+    width: 50px;
 `;
 
 const SketchLink = ({ id }: { id: string }) => (
     <li>
-        <Link href="/[sketch]" as={`/${id}`}>
+        <Link href={`/${id}`}>
             <a>{id}</a>
         </Link>
     </li>
@@ -126,7 +117,7 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
 
                 {draftsArray.length > 0 && (
                     <>
-                        <ColumnBreak />
+                        <ColumnBreak aria-label="separator" />
                         <li>DRAFTS:</li>
                         {draftsArray.map(draftName => (
                             <SketchLink key={draftName} id={draftName} />

@@ -99,11 +99,7 @@ const sketch = (p: p5) => {
             );
         };
 
-        target = p.createVector(
-            p.width / 2,
-            p.height / 2,
-            shortestDimension / 2
-        );
+        target = p.createVector(p.width / 2, p.height / 2, shortestDimension / 2);
         resetMouseLocation();
     };
 

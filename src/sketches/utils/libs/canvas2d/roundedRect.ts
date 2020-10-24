@@ -34,12 +34,7 @@ export const roundedRect = (
     ctx.lineTo(x + width - radii.tr, y);
     ctx.quadraticCurveTo(x + width, y, x + width, y + radii.tr);
     ctx.lineTo(x + width, y + height - radii.br);
-    ctx.quadraticCurveTo(
-        x + width,
-        y + height,
-        x + width - radii.br,
-        y + height
-    );
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radii.br, y + height);
     ctx.lineTo(x + radii.bl, y + height);
     ctx.quadraticCurveTo(x, y + height, x, y + height - radii.bl);
     ctx.lineTo(x, y + radii.tl);

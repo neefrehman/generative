@@ -3,10 +3,7 @@
 
 import React from "react";
 
-import type {
-    Canvas2DRendererSettings,
-    Canvas2DSetupFn,
-} from "Renderers/Canvas2D";
+import type { Canvas2DRendererSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
 import { SketchTip } from "components/SketchTip";
@@ -93,12 +90,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         for (let i = 0; i < TILES_X; i++) {
             for (let j = 0; j < TILES_Y; j++) {
                 if (isAlive(i, j)) {
-                    ctx.fillRect(
-                        i * TILE_SIZE,
-                        j * TILE_SIZE,
-                        TILE_SIZE,
-                        TILE_SIZE
-                    );
+                    ctx.fillRect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }

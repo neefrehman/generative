@@ -1,10 +1,7 @@
 import React from "react";
 
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
-import type {
-    Canvas2DRendererSettings,
-    Canvas2DSetupFn,
-} from "Renderers/Canvas2D";
+import type { Canvas2DRendererSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
 
 import {
     lerp,
@@ -62,21 +59,12 @@ const sketch: Canvas2DSetupFn = () => {
             const y = lerp(margin, height - margin, v);
 
             const distanceFromMouse = getDistance([x, y], mousePosition);
-            const mappedDistance = mapRange(
-                distanceFromMouse,
-                0,
-                1000,
-                0,
-                0.005,
-                {
-                    clamp: true,
-                }
-            );
+            const mappedDistance = mapRange(distanceFromMouse, 0, 1000, 0, 0.005, {
+                clamp: true,
+            });
 
             const r =
-                radius +
-                Math.abs(0.02 * noise3D(u, v, noiseZ)) +
-                mappedDistance;
+                radius + Math.abs(0.02 * noise3D(u, v, noiseZ)) + mappedDistance;
 
             noiseZ += noiseZVel;
 

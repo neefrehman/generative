@@ -19,10 +19,7 @@ const sketch = (p: p5) => {
         maxSpeed: number;
 
         constructor() {
-            this.position = p.createVector(
-                p.random(p.width),
-                p.random(p.height)
-            );
+            this.position = p.createVector(p.random(p.width), p.random(p.height));
             this.velocity = p5.Vector.random2D();
             this.velocity.setMag(p.random(2, 4));
             this.acceleration = p.createVector();

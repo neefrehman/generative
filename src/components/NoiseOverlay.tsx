@@ -38,12 +38,7 @@ export const NoiseOverlay = ({
                 )}
             </feTurbulence>
         </filter>
-        <rect
-            width="100%"
-            height="100%"
-            filter="url(#noise)"
-            opacity={opacity}
-        />
+        <rect width="100%" height="100%" filter="url(#noise)" opacity={opacity} />
     </SVG>
 );
 

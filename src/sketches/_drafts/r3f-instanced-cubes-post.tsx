@@ -129,10 +129,7 @@ const S280720 = () => (
             shadow-camera-bottom={-10}
         />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />
-        <Physics
-            gravity={[0, -30, 0]}
-            defaultContactMaterial={{ restitution: 0.5 }}
-        >
+        <Physics gravity={[0, -30, 0]} defaultContactMaterial={{ restitution: 0.5 }}>
             <group position={[0, 0, -10]}>
                 <InvisibleBorders />
                 <InvisibleMouseSphere />

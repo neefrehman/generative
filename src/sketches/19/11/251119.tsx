@@ -31,13 +31,7 @@ const sketch = (p: p5) => {
             for (let a = 0; a < p.TWO_PI; a += p.TWO_PI / 100) {
                 const xOff = p.map(p.cos(a), -1, 1, 0, this.noiseTurbulence);
                 const yOff = p.map(p.sin(a), -1, 1, 0, this.noiseTurbulence);
-                const offset = p.map(
-                    p.noise(xOff, yOff, this.zOff),
-                    0,
-                    1,
-                    0,
-                    50
-                );
+                const offset = p.map(p.noise(xOff, yOff, this.zOff), 0, 1, 0, 50);
                 const r = p.cos(a) * this.r + offset;
                 const x = r * p.cos(a);
                 const y = r * p.sin(a);

@@ -94,12 +94,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
             ctx.beginPath();
             ctx.translate(x, y);
             ctx.rotate(rotation);
-            ctx.fillRect(
-                -lineWidth / 2,
-                -lineHeight / 2,
-                lineWidth,
-                lineHeight
-            );
+            ctx.fillRect(-lineWidth / 2, -lineHeight / 2, lineWidth, lineHeight);
             ctx.restore();
         });
     };

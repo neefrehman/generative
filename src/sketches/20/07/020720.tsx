@@ -3,10 +3,7 @@ import React from "react";
 import palettes from "nice-color-palettes";
 
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
-import type {
-    Canvas2DRendererSettings,
-    Canvas2DSetupFn,
-} from "Renderers/Canvas2D";
+import type { Canvas2DRendererSettings, Canvas2DSetupFn } from "Renderers/Canvas2D";
 
 import { NoiseOverlay } from "components/NoiseOverlay";
 

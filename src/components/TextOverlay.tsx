@@ -34,10 +34,7 @@ export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     useEffect(() => {
         let visibilityTimeout: NodeJS.Timeout;
         if (timeout) {
-            visibilityTimeout = setTimeout(
-                () => setIsVisible(false),
-                timeoutMs
-            );
+            visibilityTimeout = setTimeout(() => setIsVisible(false), timeoutMs);
         }
         return () => clearTimeout(visibilityTimeout);
     }, [timeout, timeoutMs]);

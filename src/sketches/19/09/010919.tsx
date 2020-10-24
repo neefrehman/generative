@@ -42,14 +42,7 @@ const sketch = (p: p5) => {
             p.stroke(p.random(80, 240));
             p.beginShape();
             p.vertex(this.x, this.y);
-            p.bezierVertex(
-                this.x2,
-                this.y2,
-                this.x3,
-                this.y3,
-                this.x4,
-                this.y4
-            );
+            p.bezierVertex(this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
             p.endShape();
         }
     }
@@ -74,9 +67,7 @@ const sketch = (p: p5) => {
         });
 
         if (p.frameCount % 40 === 0) {
-            vertexLines.push(
-                new VertexLine(p.random(p.width), p.random(p.height))
-            );
+            vertexLines.push(new VertexLine(p.random(p.width), p.random(p.height)));
         }
     };
 

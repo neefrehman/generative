@@ -54,8 +54,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
                 metaballs.forEach(ball => {
                     sum +=
                         (ball.r * ball.r) /
-                        ((x - ball.x) * (x - ball.x) +
-                            (y - ball.y) * (y - ball.y));
+                        ((x - ball.x) * (x - ball.x) + (y - ball.y) * (y - ball.y));
                 });
 
                 field[i][j] = sum;
@@ -66,12 +65,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
             for (let j = 0; j < rows; j++) {
                 ctx.fillStyle = rgbaToString(field[i][j] * 100);
                 ctx.strokeStyle = null;
-                ctx.fillRect(
-                    i * resolution,
-                    j * resolution,
-                    resolution,
-                    resolution
-                );
+                ctx.fillRect(i * resolution, j * resolution, resolution, resolution);
             }
         }
 

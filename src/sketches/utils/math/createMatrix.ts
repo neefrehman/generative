@@ -3,7 +3,7 @@ import type { Vector } from "./types";
 /**
  * Returns a matrix (multi-dimensional array) with your desired dimensions and
  * values.
- * 
+ *
  * If a number is passed as the `dimensions` parameter, the smallest array with
  * that number of dimensions is returned. If an array of numbers is passed, the returned
  * matrix will be of those exact dimensions.
@@ -20,7 +20,7 @@ import type { Vector } from "./types";
  * const twoDNumberArray = createMatrix([3, 5], 0); // A 3x5 array, each point set to 0
  *
  * const threeDStringArray = createMatrix([2, 6, 5], "hi"); // A 2x6x5 array, each point set to "hi"
- * 
+ *
  * const twoDRandomNumberArray = makeMatrix([1, 4], () => Math.random()); // A 1x4 array initialised with random numbers
  */
 export const createMatrix = <D extends number, T>(
@@ -45,26 +45,24 @@ export const createMatrix = <D extends number, T>(
         throw new TypeError(`Dimensions must be integers`);
     }
 
-    const currentMatrix = [...Array(currentDimensionLength)].map(() => {
-        return typeof initialValues === "function"
-            ? initialValues()
-            : initialValues;
-    });
+    const currentMatrix = [...Array(currentDimensionLength)];
 
     const finalMatrix = needsRecursion
-        ? currentMatrix.map(() =>
-              createMatrix(remainingDimensions, initialValues)
-          )
-        : currentMatrix;
+        ? currentMatrix.map(() => createMatrix(remainingDimensions, initialValues))
+        : currentMatrix.map(() => {
+              return typeof initialValues === "function"
+                  ? initialValues()
+                  : initialValues;
+          });
 
     return finalMatrix as Matrix<D, T>;
 };
 
-// 
-// 
+//
+//
 // -----
 // TYPES
-// 
+//
 //
 
 /**

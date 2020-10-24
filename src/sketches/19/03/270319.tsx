@@ -30,12 +30,7 @@ const sketch = (p: p5) => {
                 this.history.splice(0, 1);
             }
 
-            if (
-                this.x > p.width ||
-                this.x < 0 ||
-                this.y > p.height ||
-                this.y < 0
-            ) {
+            if (this.x > p.width || this.x < 0 || this.y > p.height || this.y < 0) {
                 this.x = p.width / 2;
                 this.y = p.height / 2;
             }
@@ -67,9 +62,7 @@ const sketch = (p: p5) => {
         p.createCanvas(p.windowWidth, p.windowHeight);
 
         for (let i = 0; i < 5; i++) {
-            vibrations.push(
-                new Particle(p.random(p.width), p.random(p.height))
-            );
+            vibrations.push(new Particle(p.random(p.width), p.random(p.height)));
         }
     };
 

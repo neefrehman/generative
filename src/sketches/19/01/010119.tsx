@@ -23,12 +23,7 @@ const sketch = (p: p5) => {
             p.fill(255, 0);
         }
         if (p.windowWidth < 550) {
-            p.ellipse(
-                p.mouseX,
-                p.mouseY,
-                Math.random() * 70,
-                Math.random() * 70
-            );
+            p.ellipse(p.mouseX, p.mouseY, Math.random() * 70, Math.random() * 70);
             p.frameRate(20);
         }
     };

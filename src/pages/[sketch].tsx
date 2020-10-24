@@ -49,11 +49,7 @@ interface SketchPageProps {
     gitHubPath: string;
 }
 
-const SketchPage = ({
-    sketchId,
-    pathToSketch,
-    gitHubPath,
-}: SketchPageProps) => {
+const SketchPage = ({ sketchId, pathToSketch, gitHubPath }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 

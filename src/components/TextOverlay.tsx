@@ -32,7 +32,7 @@ export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const timeoutMs = typeof timeout === "number" ? timeout : 500;
 
     useEffect(() => {
-        let visibilityTimeout: NodeJS.Timeout;
+        let visibilityTimeout: ReturnType<typeof setTimeout>;
         if (timeout) {
             visibilityTimeout = setTimeout(() => setIsVisible(false), timeoutMs);
         }

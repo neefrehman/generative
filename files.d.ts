@@ -4,3 +4,8 @@ declare module "*.glsl";
 declare module "*.svg";
 declare module "*.png";
 declare module "postprocessing";
+
+declare module "glslify" {
+    function glsl(shader?: TemplateStringsArray): string;
+    export = glsl;
+}

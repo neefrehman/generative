@@ -68,7 +68,12 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
                 const rgbVal = field[i][j] * 310;
                 ctx.fillStyle = `rgb(${rgbVal}, ${rgbVal}, ${rgbVal})`;
                 ctx.strokeStyle = null;
-                ctx.fillRect(i * resolution, j * resolution, resolution, resolution);
+                ctx.fillRect(
+                    i * resolution,
+                    j * resolution,
+                    resolution,
+                    resolution
+                );
             }
         }
     };

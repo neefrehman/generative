@@ -67,7 +67,9 @@ const sketch = (p: p5) => {
         });
 
         if (p.frameCount % 40 === 0) {
-            vertexLines.push(new VertexLine(p.random(p.width), p.random(p.height)));
+            vertexLines.push(
+                new VertexLine(p.random(p.width), p.random(p.height))
+            );
         }
     };
 

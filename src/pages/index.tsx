@@ -95,7 +95,11 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
         <header>
             <h1>
                 Generative—A digital sketchbook by{" "}
-                <a href="https://neef.co" target="_blank" rel="noopener noreferrer">
+                <a
+                    href="https://neef.co"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     Neef Rehman
                 </a>
             </h1>

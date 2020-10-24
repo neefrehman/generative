@@ -92,7 +92,8 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
                 metaballs.forEach(ball => {
                     sum +=
                         (ball.r * ball.r) /
-                        ((x - ball.x) * (x - ball.x) + (y - ball.y) * (y - ball.y));
+                        ((x - ball.x) * (x - ball.x) +
+                            (y - ball.y) * (y - ball.y));
                 });
 
                 field[i][j] = sum;

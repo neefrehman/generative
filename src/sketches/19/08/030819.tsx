@@ -42,16 +42,23 @@ const sketch = (p: p5) => {
                 x += p.random(1, -1);
                 y += p.random(1, -1);
 
-                x2 = p.map(p.noise(xOff + 0), 0, 1, 0, p.width) + p.random(-10, 10);
+                x2 =
+                    p.map(p.noise(xOff + 0), 0, 1, 0, p.width) + p.random(-10, 10);
                 y2 =
-                    p.map(p.noise(yOff + 500), 0, 1, 0, p.width) + p.random(-10, 10);
-                x3 = p.map(p.noise(xOff + 80), 0, 1, 0, p.width) + p.random(-10, 10);
+                    p.map(p.noise(yOff + 500), 0, 1, 0, p.width) +
+                    p.random(-10, 10);
+                x3 =
+                    p.map(p.noise(xOff + 80), 0, 1, 0, p.width) +
+                    p.random(-10, 10);
                 y3 =
-                    p.map(p.noise(yOff + 300), 0, 1, 0, p.width) + p.random(-10, 10);
+                    p.map(p.noise(yOff + 300), 0, 1, 0, p.width) +
+                    p.random(-10, 10);
                 x4 =
-                    p.map(p.noise(xOff + 800), 0, 1, 0, p.width) + p.random(-10, 10);
+                    p.map(p.noise(xOff + 800), 0, 1, 0, p.width) +
+                    p.random(-10, 10);
                 y4 =
-                    p.map(p.noise(yOff + 999), 0, 1, 0, p.width) + p.random(-10, 10);
+                    p.map(p.noise(yOff + 999), 0, 1, 0, p.width) +
+                    p.random(-10, 10);
 
                 p.beginShape();
                 p.vertex(x, y);

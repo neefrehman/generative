@@ -23,7 +23,7 @@ const StyledText = styled.p`
 
 interface TextOverlayProps {
     text: string;
-    /** The amount of time in ms to wait before hiding the overlay. If no value is passed a default timeout of 500ms is used */
+    /** The amount of time in ms to wait before hiding the overlay. Defaults to 500ms */
     timeout?: number | boolean;
 }
 

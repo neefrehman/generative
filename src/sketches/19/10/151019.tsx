@@ -41,7 +41,13 @@ const sketch = (p: p5) => {
         for (let y = 0; y < rows - 1; y++) {
             p.beginShape(p.TRIANGLE_STRIP);
             for (let x = 0; x < cols; x++) {
-                terrain[y][x] = p.map(p.noise(xOff, yOff), 0, 1, -maxZOff, maxZOff);
+                terrain[y][x] = p.map(
+                    p.noise(xOff, yOff),
+                    0,
+                    1,
+                    -maxZOff,
+                    maxZOff
+                );
                 p.vertex(x * scale, y * scale, terrain[y][x]);
                 xOff += 0.01;
             }

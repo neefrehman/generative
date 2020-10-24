@@ -12,13 +12,16 @@ const Stars = ({ count = 1000, xOff = 0, yOff = 0, zOff = 50 }) => {
         const positions = [];
         for (let i = 0; i < count; i++) {
             positions.push(
-                (xOff + Math.random() * 1000) * (Math.round(Math.random()) ? -1 : 1)
+                (xOff + Math.random() * 1000) *
+                    (Math.round(Math.random()) ? -1 : 1)
             );
             positions.push(
-                (yOff + Math.random() * 1000) * (Math.round(Math.random()) ? -1 : 1)
+                (yOff + Math.random() * 1000) *
+                    (Math.round(Math.random()) ? -1 : 1)
             );
             positions.push(
-                (zOff + Math.random() * 1000) * (Math.round(Math.random()) ? -1 : 1)
+                (zOff + Math.random() * 1000) *
+                    (Math.round(Math.random()) ? -1 : 1)
             );
         }
         return new Float32Array(positions);

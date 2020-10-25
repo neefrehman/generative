@@ -1,19 +1,9 @@
 import React from "react";
 import { MeshDistortMaterial, OrbitControls } from "drei";
 import { Canvas } from "react-three-fiber";
-// import glsl from "glslify";
 
 const DPlanetNoise = () => {
     const POLY_AMOUNT = 6;
-
-    // console.log(glsl`
-    //     #pragma glslify: noise = require(glsl-noise/simplex/2d)
-
-    //     void main () {
-    //         float brightness = noise(gl_FragCoord.xy);
-    //         gl_FragColor = vec4(vec3(brightness), 1.);
-    //     }
-    // `);
 
     return (
         <Canvas

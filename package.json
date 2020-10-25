@@ -37,7 +37,7 @@
         "@typescript-eslint/eslint-plugin": "^4.5.0",
         "@typescript-eslint/parser": "^4.5.0",
         "babel-eslint": "^10.1.0",
-        "babel-plugin-glslify": "^2.0.0",
+        "babel-plugin-glsl": "^1.0.0",
         "clang-format": "^1.4.0",
         "eslint": "^7.11.0",
         "eslint-config-airbnb": "^18.2.0",

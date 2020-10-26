@@ -71,7 +71,7 @@ export const createMatrix = <D extends number, T>(
  * https://github.com/microsoft/TypeScript/issues/37663
  */
 type ValueOrFunction<T> = T extends boolean
-    ? boolean | (() => boolean) // To solve boolean expanding: https://github.com/microsoft/TypeScript/issues/30029
+    ? boolean | (() => boolean) // To solve boolean expansion: https://github.com/microsoft/TypeScript/issues/30029
     : T extends any // from: https://github.com/microsoft/TypeScript/issues/37663
     ? T | (() => T)
     : never;

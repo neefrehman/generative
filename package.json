@@ -8,9 +8,11 @@
         "url": "git+https://github.com/neefrehman/Generative.git"
     },
     "dependencies": {
+        "@babel/core": "^7.12.3",
         "@tensorflow/tfjs": "^2.6.0",
         "@zeit/next-css": "^1.0.1",
         "drei": "^1.5.7",
+        "glsl-noise": "0.0.0",
         "glslify": "^7.1.1",
         "glslify-hex": "^2.1.1",
         "linaria": "^2.0.0",

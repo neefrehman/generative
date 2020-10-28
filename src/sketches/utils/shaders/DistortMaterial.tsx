@@ -55,6 +55,7 @@ const DistortMaterial = ({ speed }: { speed: number }) => {
         ref.current.time += 0.00025 * frames * speed;
     });
 
+    // @ts-expect-error: extended things DO exist!
     return <distortShaderMaterial ref={ref} />;
 };
 

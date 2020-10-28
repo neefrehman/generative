@@ -1,4 +1,27 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import type { Vector } from "./types";
+
+/**
+ * Provides type safety for values as well as functions that return values
+ * for `createMatrix`'s `initialValues` parameter.
+ */
+type ValueOrFunction<D extends number, T> = T | ((vector: Vector<D>) => T) | null;
+
+/**
+ * A multidimensional array returned by `createMatrix`. Provides type-safety up
+ * to 5 dimensions. Above 5 dimensions, it's reccomended to annotate variables for more safety.
+ */
+export type Matrix<D extends number, T> = D extends 1
+    ? T[]
+    : D extends 2
+    ? T[][]
+    : D extends 3
+    ? T[][][]
+    : D extends 4
+    ? T[][][][]
+    : D extends 5
+    ? T[][][][][]
+    : any[][][][][][]; // TODO: Full type safety?
 
 /**
  * Returns a matrix (multi-dimensional array) with your desired dimensions and
@@ -17,27 +40,47 @@ import type { Vector } from "./types";
  *
  * const threeXThreeXTwoArray = createMatrix([3, 3, 2]); // An array of size 3x3x2
  *
- * const twoDNumberArray = createMatrix([3, 5], 0); // A 3x5 array, each point set to 0
+ * const twoDNumberArray = createMatrix([3, 5], 0); // A 3x5 array initialised to 0
  *
- * const threeDStringArray = createMatrix([2, 6, 5], "hi"); // A 2x6x5 array, each point set to "hi"
+ * const twoDRandomNumberArray = createMatrix([1, 4], () => Math.random()); // A 1x4 array initialised with random numbers
  *
- * const twoDRandomNumberArray = makeMatrix([1, 4], () => Math.random()); // A 1x4 array initialised with random numbers
+ * const twoDVectorArray = createMatrix([3, 3], vector => vector.join()); // A 3x3 array initialised with each point's co-ordinate as a string
  */
 export const createMatrix = <D extends number, T>(
-    dimensions: D | Vector<D>,
-    initialValues: ValueOrFunction<T> = null
+    dimensions: number | Vector<D>,
+    initialValues: ValueOrFunction<D, T> = null
 ): Matrix<D, T> => {
+    const dimensionCount =
+        typeof dimensions === "number" ? dimensions : dimensions.length;
+    const intialPosition = Array(dimensionCount).fill(0) as Vector<D>;
+
+    return _createMatrix(dimensions, initialValues, intialPosition);
+};
+
+/**
+ * Recursively creates the matrix to be returned to createMatrix
+ * and populates the initialValues callback with the current vector co-ordinate
+ */
+// eslint-disable-next-line no-underscore-dangle
+function _createMatrix<D extends number, T>(
+    dimensions: number | Vector<D>,
+    initialValues: ValueOrFunction<D, T> = null,
+    currentPosition: Vector<D>
+): Matrix<D, T> {
     let currentDimensionLength: number;
-    let remainingDimensions: number | number[];
+    let remainingDimensions: number | Vector;
+    let remainingDimensionCount: number;
     let needsRecursion: boolean;
 
     if (typeof dimensions === "number") {
         currentDimensionLength = dimensions;
         remainingDimensions = dimensions - 1;
+        remainingDimensionCount = remainingDimensions;
         needsRecursion = remainingDimensions > 0;
     } else {
         currentDimensionLength = dimensions[0];
         remainingDimensions = dimensions.slice(1);
+        remainingDimensionCount = remainingDimensions.length;
         needsRecursion = remainingDimensions.length > 0;
     }
 
@@ -45,50 +88,19 @@ export const createMatrix = <D extends number, T>(
         throw new TypeError(`Dimensions must be integers`);
     }
 
-    const currentMatrix = [...Array(currentDimensionLength)];
+    const currentDimension = currentPosition.length - 1 - remainingDimensionCount;
 
-    const finalMatrix = needsRecursion
-        ? currentMatrix.map(() => createMatrix(remainingDimensions, initialValues))
-        : currentMatrix.map(() => {
-              return typeof initialValues === "function"
-                  ? initialValues()
-                  : initialValues;
-          });
+    const finalMatrix = [...Array(currentDimensionLength)].map((_, i) => {
+        currentPosition[currentDimension] = i;
+        // eslint-disable-next-line no-nested-ternary
+        return needsRecursion
+            ? _createMatrix(remainingDimensions, initialValues, currentPosition)
+            : typeof initialValues === "function" // @ts-expect-error: "expression is not callable" https://github.com/microsoft/TypeScript/issues/37663
+            ? initialValues(currentPosition.slice())
+            : initialValues;
+    });
 
     return finalMatrix as Matrix<D, T>;
-};
+}
 
-//
-//
-// -----
-// TYPES
-//
-//
-
-/**
- * Provides type safety for values as well as functions that return values
- * for `createMatrix`'s `initialValues` parameter.
- * https://github.com/microsoft/TypeScript/issues/37663
- */
-type ValueOrFunction<T> = T extends boolean
-    ? boolean | (() => boolean) // To solve boolean expansion: https://github.com/microsoft/TypeScript/issues/30029
-    : T extends any // from: https://github.com/microsoft/TypeScript/issues/37663
-    ? T | (() => T)
-    : never;
-
-/**
- * A multidimensional array returned by `createMatrix`. Provides type-safety up
- * to 5 dimensions. Above 5 dimensions, it's reccomended you annotate your
- * variables for more safety.
- */
-export type Matrix<D extends number, T> = D extends 1
-    ? T[]
-    : D extends 2
-    ? T[][]
-    : D extends 3
-    ? T[][][]
-    : D extends 4
-    ? T[][][][]
-    : D extends 5
-    ? T[][][][][]
-    : any[][][][][][]; // TODO: Full type safety?
+// const m1: number[][] = createMatrix([1, 1]); // FIXME: https://github.com/microsoft/TypeScript/issues/40081

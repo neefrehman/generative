@@ -26,7 +26,7 @@
         "react-postprocessing": "1.4.0",
         "react-spring": "^8.0.27",
         "react-three-fiber": "5.1.4",
-        "react-use-gesture": "^7.0.16",
+        "react-use-gesture": "^8.0.0",
         "react-xr": "^1.1.0",
         "simplex-noise": "^2.4.0",
         "three": "^0.122.0",
@@ -34,10 +34,10 @@
         "use-tweaks": "^0.1.0"
     },
     "devDependencies": {
-        "@types/node": "^14.14.5",
+        "@types/node": "^14.14.6",
         "@types/p5": "^0.9.1",
-        "@types/react": "^16.9.54",
-        "@typescript-eslint/eslint-plugin": "^4.5.0",
+        "@types/react": "^16.9.55",
+        "@typescript-eslint/eslint-plugin": "^4.6.0",
         "@typescript-eslint/parser": "^4.6.0",
         "babel-eslint": "^10.1.0",
         "babel-plugin-glsl": "^1.0.0",

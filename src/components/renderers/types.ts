@@ -42,6 +42,8 @@ export interface DrawProps {
     width?: number;
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
     height?: number;
+    /** The aspect ratio of the sketch */
+    aspect?: number;
 
     /** The current frame of the animation */
     frame?: number;

@@ -58,7 +58,7 @@ export const ThreeRenderer = ({
 
     useEffect(() => {
         const scene = new THREE.Scene();
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
@@ -69,6 +69,7 @@ export const ThreeRenderer = ({
             renderer,
             width,
             height,
+            aspect: width / height,
             mouseHasEntered: false,
             mousePosition: [0, 0],
         };
@@ -82,7 +83,7 @@ export const ThreeRenderer = ({
 
         return () => {
             scene.children.forEach(child => scene.remove(child));
-            // scene.dispose(); // <- has been removed
+            renderer.dispose();
         };
     }, [setupSketch, settings, width, height]);
 

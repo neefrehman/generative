@@ -69,6 +69,7 @@ export const Canvas2DRenderer = ({
             canvas: canvasEl,
             width,
             height,
+            aspect: width / height,
             mouseHasEntered: false,
             mousePosition: [0, 0],
         };

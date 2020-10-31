@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useFrame } from "react-three-fiber";
 
-const Stars = ({ count = 1000, xOff = 0, yOff = 0, zOff = 50 }) => {
+export const Stars = ({ count = 1000, xOff = 0, yOff = 0, zOff = 50 }) => {
     const [starOpacity, setStarOpacity] = useState(0);
 
     useFrame(() => {
@@ -50,5 +50,3 @@ const Stars = ({ count = 1000, xOff = 0, yOff = 0, zOff = 50 }) => {
         </points>
     );
 };
-
-export default Stars;

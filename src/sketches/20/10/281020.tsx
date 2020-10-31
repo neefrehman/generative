@@ -18,7 +18,9 @@ const S281020 = () => {
         {
             detail: { value: 4, min: 1, max: 10, step: 1 },
             rotating: true,
-            ...makeFolder("Land", { peakHeight: { value: 0.45, min: 0, max: 1 } }),
+            ...makeFolder("Land", {
+                peakHeight: { value: 0.45, min: 0, max: 1 },
+            }),
             ...makeFolder("Sea", {
                 speed: { value: 1.25, min: 0, max: 10 },
                 turbulence: { value: 0.25, min: 0, max: 1 },

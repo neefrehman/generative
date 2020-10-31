@@ -11,7 +11,9 @@
         "@babel/core": "^7.12.3",
         "@tensorflow/tfjs": "^2.7.0",
         "@zeit/next-css": "^1.0.1",
+        "bezier-easing": "^2.1.0",
         "drei": "^1.5.7",
+        "glsl-hsl2rgb": "^1.1.0",
         "glsl-noise": "0.0.0",
         "glslify": "^7.1.1",
         "glslify-hex": "^2.1.1",
@@ -61,15 +63,15 @@
         "url-loader": "^4.1.1"
     },
     "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "export": "next export",
+        "start": "next start",
         "format": "prettier \"src/**/*.{js,ts,tsx}\"",
         "format:fix": "prettier \"src/**/*.{js,ts,tsx}\" --write",
         "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
         "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --fix",
-        "typecheck": "tsc",
-        "dev": "next dev",
-        "build": "next build",
-        "export": "next export",
-        "start": "next start"
+        "typecheck": "tsc"
     },
     "lint-staged": {
         "*.(js|ts|tsx)": [

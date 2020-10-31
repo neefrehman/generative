@@ -56,7 +56,10 @@
                     "ctx",
                     "canvas",
                     "camera",
-                    "current"
+                    "current",
+                    "scene",
+                    "t",
+                    "mesh"
                 ]
             }
         ],

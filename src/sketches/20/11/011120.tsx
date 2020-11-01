@@ -6,11 +6,13 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { createShaderQuad } from "LibUtils/three";
 
+import { inRange } from "Utils/random";
+
 const sketch: ThreeSetupFn = ({ scene, aspect }) => {
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
     const quad = createShaderQuad({
-        uniforms: { aspect, time: 0 },
+        uniforms: { aspect, time: inRange(100) },
         frag: glsl`       
                 precision highp float;
 
@@ -33,10 +35,10 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
 
     scene.add(quad);
 
-    return ({ renderer, time }) => {
+    return ({ renderer }) => {
         renderer.render(scene, camera);
 
-        quad.material.uniforms.time.value = time / 800;
+        quad.material.uniforms.time.value += 0.015;
     };
 };
 

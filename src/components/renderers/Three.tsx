@@ -83,6 +83,10 @@ export const ThreeRenderer = ({
 
         return () => {
             scene.children.forEach(child => scene.remove(child));
+            scene.clear();
+            scene.remove();
+            renderer.clear();
+            renderer.domElement.remove();
             renderer.dispose();
         };
     }, [setupSketch, settings, width, height]);

@@ -4,7 +4,7 @@ import { UniformDict } from "./types";
  * Takes a simple uniform structure of { key: value } and translates it
  * to a structure of { key: { value } } to help structure.
  */
-export const createUniformSchema = (simpleUniforms: {
+export const createUniformDict = (simpleUniforms: {
     [value: string]: any;
 }): UniformDict => {
     const entries = Object.entries(simpleUniforms);

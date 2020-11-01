@@ -13,7 +13,7 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
 
     const quad = createShaderQuad({
         uniforms: { aspect, time: inRange(100) },
-        frag: glsl`       
+        frag: glsl`
                 precision highp float;
 
                 #pragma glslify: noise = require("glsl-noise/simplex/3d");

@@ -1,5 +1,3 @@
-// Adapted from Jamie Wong's post on glsl metaballs: http://jamie-wong.com/2016/07/06/metaballs-and-webgl/
-
 import React, { useRef, useEffect } from "react";
 import glsl from "glslify";
 
@@ -70,7 +68,7 @@ export const ShaderRenderer = ({
         attribute vec2 uv;
         varying vec2 vUv;
         void main() {
-            vUv = position;
+            vUv = uv;
             gl_Position = vec4(position, 0.0, 1.0);    
         }
     `;
@@ -83,7 +81,7 @@ export const ShaderRenderer = ({
 
     useEffect(() => {
         const canvas = canvasElement.current;
-        const gl = canvas.getContext("webgl");
+        const gl = canvas.getContext("webgl2");
 
         const initialSketchProps: ShaderDrawProps = {
             gl,
@@ -115,7 +113,7 @@ export const ShaderRenderer = ({
             (acc, [key, { value, type }]) => {
                 const uniformHandle = getUniformLocation(key, program, gl);
                 setUniform(uniformHandle, value, type, gl);
-                // Return an array that we can use later to update uniforms
+                // Return an array that we can use later to update the uniforms
                 return [...acc, { key, uniformHandle, type }];
             },
             []
@@ -132,15 +130,24 @@ export const ShaderRenderer = ({
         const vertexDataBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexDataBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
-
         const positionHandle = getAttributeLocation("position", program, gl);
         gl.enableVertexAttribArray(positionHandle);
         gl.vertexAttribPointer(positionHandle, 2, gl.FLOAT, false, 2 * 4, 0);
 
-        // TODO: uv attributes
-        // const uvHandle = getAttributeLocation(program, gl, "uv");
-        // gl.enableVertexAttribArray(uvHandle);
-        // gl.vertexAttribPointer(uvHandle, 2, gl.FLOAT, false, 2 * 4, 0);
+        // prettier-ignore
+        const uvData = new Float32Array([
+            0.0,  0.0,
+            0.0,  1.0,
+            1.0,  0.0,
+            1.0,  1.0,
+        ]);
+
+        const uvDataBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, uvDataBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, uvData, gl.STATIC_DRAW);
+        const uvHandle = getAttributeLocation("uv", program, gl);
+        gl.vertexAttribPointer(uvHandle, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(uvHandle);
 
         drawProps.current = initialSketchProps;
         uniformsRef.current = uniforms;

@@ -1,7 +1,3 @@
-export interface SimpleUniforms {
-    [uniform: string]: any;
-}
-
 export type UniformType =
     | "1f"
     | "2f"
@@ -20,11 +16,23 @@ export type UniformType =
     | "3iv"
     | "4iv";
 
+export type UniformValue =
+    | number
+    | { x: number; y: number }
+    | { x: number; y: number; z: number }
+    | { x: number; y: number; Z: number; w: number }
+    | Float32List
+    | Int32List;
+
+export interface SimpleUniforms {
+    [uniform: string]: any;
+}
+
 /**
  * A uniform value to interface with shaders
  */
-export interface Uniform<T> {
-    value: T;
+export interface Uniform {
+    value: any;
     type?: UniformType;
 }
 
@@ -32,7 +40,7 @@ export interface Uniform<T> {
  * A dictionary of uniforms
  */
 export interface UniformDict {
-    [uniform: string]: Uniform<any>;
+    [uniform: string]: Uniform;
 }
 
-export type GL = WebGLRenderingContext | WebGL2RenderingContext;
+export type GLContext = WebGLRenderingContext | WebGL2RenderingContext;

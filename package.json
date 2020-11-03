@@ -32,6 +32,7 @@
         "react-xr": "^1.1.0",
         "simplex-noise": "^2.4.0",
         "three": "^0.122.0",
+        "tweakpane": "^1.5.6",
         "use-cannon": "^0.5.3",
         "use-tweaks": "^0.2.0"
     },

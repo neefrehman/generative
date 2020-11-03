@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { GL, SimpleUniforms, UniformDict, UniformType } from "./types";
+import { GLContext, SimpleUniforms, UniformDict, UniformType } from "./types";
 
 /**
  * Takes a simple uniform structure of { key: value } and translates it
@@ -23,8 +23,8 @@ export const createUniformDict = (uniforms: SimpleUniforms): UniformDict => {
  */
 export const compileShader = (
     shaderSource: string,
-    shaderType: GL["VERTEX_SHADER"] | GL["FRAGMENT_SHADER"],
-    gl: GL
+    shaderType: GLContext["VERTEX_SHADER"] | GLContext["FRAGMENT_SHADER"],
+    gl: GLContext
 ): WebGLShader => {
     const shader = gl.createShader(shaderType);
     gl.shaderSource(shader, shaderSource);
@@ -45,7 +45,7 @@ export const compileShader = (
 export const getAttributeLocation = (
     name: string,
     program: WebGLProgram,
-    gl: GL
+    gl: GLContext
 ): number => {
     const attributeLocation = gl.getAttribLocation(program, name);
 
@@ -62,7 +62,7 @@ export const getAttributeLocation = (
 export const getUniformLocation = (
     name: string,
     program: WebGLProgram,
-    gl: GL
+    gl: GLContext
 ): WebGLUniformLocation => {
     const uniformLocation = gl.getUniformLocation(program, name);
 
@@ -78,7 +78,7 @@ export const setUniform = (
     location: WebGLUniformLocation,
     value: any,
     type: UniformType,
-    gl: GL
+    gl: GLContext
 ) => {
     if (type === "1f") gl.uniform1f(location, value);
     if (type === "2f") gl.uniform2f(location, value.x, value.y);

@@ -7,7 +7,7 @@ import {
     compileShader,
     getAttributeLocation,
     getUniformLocation,
-    GL,
+    GLContext,
     setUniform,
     UniformDict,
 } from "Utils/shaders";
@@ -196,7 +196,7 @@ export type { RendererSettings as ShaderRendererSettings };
  * Props to be recieved by the sketch.
  */
 export type ShaderDrawProps = {
-    gl: GL;
+    gl: GLContext;
     uniforms?: UniformDict;
 } & DrawProps;
 

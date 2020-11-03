@@ -50,7 +50,7 @@ const S281020 = () => {
                     distort={peakHeight}
                     radius={1}
                     speed={0}
-                    color="#34722A"
+                    color="#3d7d2A"
                 />
             </mesh>
             <mesh>
@@ -64,6 +64,6 @@ const S281020 = () => {
             </mesh>
         </Canvas>
     );
-};;
+};
 
 export default S281020;

@@ -59,7 +59,8 @@
                     "current",
                     "scene",
                     "t",
-                    "mesh"
+                    "mesh",
+                    "uniforms"
                 ]
             }
         ],

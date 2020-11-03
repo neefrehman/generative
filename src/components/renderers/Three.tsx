@@ -21,7 +21,7 @@ export const ThreeRenderer = ({
     style,
     children,
 }: ThreeRendererProps) => {
-    const wrapperElement = useRef<HTMLDivElement>(null);
+    const canvasEl = useRef<HTMLCanvasElement>(null);
     const drawProps = useRef<ThreeDrawProps>({} as ThreeDrawProps);
     const drawFunction = useRef<ThreeDrawFn>();
 
@@ -52,17 +52,19 @@ export const ThreeRenderer = ({
             fps: throttledFps,
             delay,
             endAfter,
-            domElementRef: wrapperElement,
+            domElementRef: canvasEl,
         }
     );
 
     useEffect(() => {
         const scene = new THREE.Scene();
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            canvas: canvasEl.current,
+        });
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
-        wrapperElement.current.appendChild(renderer.domElement);
 
         const initialSketchProps: ThreeDrawProps = {
             scene,
@@ -79,8 +81,6 @@ export const ThreeRenderer = ({
         drawProps.current = initialSketchProps;
         drawFunction.current = drawSketch;
 
-        drawSketch(initialSketchProps);
-
         return () => {
             scene.children.forEach(child => scene.remove(child));
             scene.clear();
@@ -93,11 +93,13 @@ export const ThreeRenderer = ({
 
     return (
         <>
-            <div ref={wrapperElement} className={className} style={style} />
+            <canvas ref={canvasEl} className={className} style={style} />
             {children}
         </>
     );
 };
+
+// <- TYPES ->
 
 export type ThreeRendererProps = RendererProps<ThreeSetupFn>;
 

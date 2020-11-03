@@ -14,23 +14,23 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
     const quad = createShaderQuad({
         uniforms: { aspect, time: inRange(100) },
         frag: glsl`
-                precision highp float;
+            precision highp float;
 
-                #pragma glslify: noise = require("glsl-noise/simplex/3d");
+            #pragma glslify: noise = require("glsl-noise/simplex/3d");
 
-                uniform float time;
-                uniform float aspect;
-                varying vec2 vUv;
+            uniform float time;
+            uniform float aspect;
+            varying vec2 vUv;
 
-                void main() {
-                    vec2 center = vUv - 0.5;
-                    center.x *= aspect;
+            void main() {
+                vec2 center = vUv - 0.5;
+                center.x *= aspect;
 
-                    float n = noise(vec3(center, time));
+                float n = noise(vec3(center, time));
 
-                    gl_FragColor = vec4(vec3(n), 1.0);
-                }
-            `,
+                gl_FragColor = vec4(vec3(n), 1.0);
+            }
+        `,
     });
 
     scene.add(quad);

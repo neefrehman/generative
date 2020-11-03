@@ -1,31 +1,30 @@
-import { UniformDict } from "./types";
+/* eslint-disable no-nested-ternary */
+import { GL, SimpleUniforms, UniformDict, UniformType } from "./types";
 
 /**
  * Takes a simple uniform structure of { key: value } and translates it
  * to a structure of { key: { value } } to help structure.
  */
-export const createUniformDict = (simpleUniforms: {
-    [value: string]: any;
-}): UniformDict => {
-    const entries = Object.entries(simpleUniforms);
+export const createUniformDict = (uniforms: SimpleUniforms): UniformDict => {
+    const entries = Object.entries(uniforms);
 
-    const uniforms = entries.reduce((acc, [key, value]) => {
+    const uniformDict = entries.reduce((acc, [key, value]) => {
         const currentUniform: UniformDict = {};
         currentUniform[key] = { value };
 
         return { ...acc, ...currentUniform };
     }, {});
 
-    return uniforms;
+    return uniformDict;
 };
 
 /**
  * Utility to throw error on shader compilation failure
  */
 export const compileShader = (
-    gl: WebGLRenderingContext | WebGL2RenderingContext,
     shaderSource: string,
-    shaderType: typeof gl.VERTEX_SHADER | typeof gl.FRAGMENT_SHADER
+    shaderType: GL["VERTEX_SHADER"] | GL["FRAGMENT_SHADER"],
+    gl: GL
 ): WebGLShader => {
     const shader = gl.createShader(shaderType);
     gl.shaderSource(shader, shaderSource);
@@ -44,9 +43,9 @@ export const compileShader = (
  * Utility to throw error if it fails to find the attribute
  */
 export const getAttributeLocation = (
-    gl: WebGLRenderingContext | WebGL2RenderingContext,
+    name: string,
     program: WebGLProgram,
-    name: string
+    gl: GL
 ): number => {
     const attributeLocation = gl.getAttribLocation(program, name);
 
@@ -61,9 +60,9 @@ export const getAttributeLocation = (
  * Utility to throw error if it fails to find the uniform
  */
 export const getUniformLocation = (
-    gl: WebGLRenderingContext | WebGL2RenderingContext,
+    name: string,
     program: WebGLProgram,
-    name: string
+    gl: GL
 ): WebGLUniformLocation => {
     const uniformLocation = gl.getUniformLocation(program, name);
 
@@ -73,4 +72,28 @@ export const getUniformLocation = (
     }
 
     return uniformLocation;
+};
+
+export const setUniform = (
+    location: WebGLUniformLocation,
+    value: any,
+    type: UniformType,
+    gl: GL
+) => {
+    if (type === "1f") gl.uniform1f(location, value);
+    if (type === "2f") gl.uniform2f(location, value.x, value.y);
+    if (type === "3f") gl.uniform3f(location, value.x, value.y, value.z);
+    if (type === "4f") gl.uniform4f(location, value.x, value.y, value.z, value.w);
+    if (type === "1i") gl.uniform1i(location, value);
+    if (type === "2i") gl.uniform2i(location, value.x, value.y);
+    if (type === "3f") gl.uniform3f(location, value.x, value.y, value.z);
+    if (type === "4f") gl.uniform4f(location, value.x, value.y, value.z, value.w);
+    if (type === "1fv") gl.uniform1fv(location, value);
+    if (type === "2fv") gl.uniform2fv(location, value);
+    if (type === "3fv") gl.uniform3fv(location, value);
+    if (type === "4fv") gl.uniform4fv(location, value);
+    if (type === "1iv") gl.uniform1iv(location, value);
+    if (type === "2iv") gl.uniform2iv(location, value);
+    if (type === "3iv") gl.uniform3iv(location, value);
+    if (type === "4iv") gl.uniform4iv(location, value);
 };

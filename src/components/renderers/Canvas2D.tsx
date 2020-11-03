@@ -79,8 +79,6 @@ export const Canvas2DRenderer = ({
         drawProps.current = initialSketchProps;
         drawFunction.current = drawSketch;
 
-        drawSketch(initialSketchProps);
-
         return () => ctx.clearRect(0, 0, width, height);
     }, [setupSketch, settings, width, height]);
 
@@ -97,6 +95,8 @@ export const Canvas2DRenderer = ({
         </>
     );
 };
+
+// <- TYPES ->
 
 export type Canvas2DRendererProps = RendererProps<Canvas2DSetupFn>;
 

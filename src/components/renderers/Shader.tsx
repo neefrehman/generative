@@ -81,7 +81,7 @@ export const ShaderRenderer = ({
 
     useEffect(() => {
         const canvas = canvasElement.current;
-        const gl = canvas.getContext("webgl2");
+        const gl = canvas.getContext("webgl");
 
         const initialSketchProps: ShaderDrawProps = {
             gl,

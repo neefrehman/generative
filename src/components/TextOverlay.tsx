@@ -9,16 +9,12 @@ const StyledText = styled.p`
     transform-origin: center;
     margin-block-start: 0;
 
-    font-size: 6.4em;
+    font-size: clamp(4em, 10vw, 6.4em);
     letter-spacing: -1px;
     color: #616161;
     opacity: 0.75;
     text-transform: uppercase;
     text-align: center;
-
-    @media (max-width: 769px) {
-        font-size: 4em;
-    }
 `;
 
 interface TextOverlayProps {

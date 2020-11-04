@@ -1,4 +1,4 @@
-import { UniformType } from "Utils/shaders/types";
+import { UniformType, UniformValue, UniformVec } from "Utils/shaders/types";
 
 export type GLContext = WebGLRenderingContext | WebGL2RenderingContext;
 
@@ -79,12 +79,51 @@ export const createAttribute = (
 };
 
 /**
+ * Utility to get the type of a uniform from it's value
+ */
+const getUniformTypeFromValue = (value: UniformValue): UniformType => {
+    let type: UniformType;
+
+    const isInt = (num: number) => num.toString().indexOf(".") === -1;
+    const isFloat = (num: number) => num.toString().indexOf(".") !== -1;
+
+    const isVec = (vec: UniformValue) => typeof vec === "object";
+    const isVec2 = (vec: UniformVec) => vec.x && vec.y && !vec.z && !vec.w;
+    const isVec3 = (vec: UniformVec) => vec.x && vec.y && vec.z && !vec.w;
+    const isVec4 = (vec: UniformVec) => vec.x && vec.y && vec.z && vec.w;
+
+    const areInts = (vec: UniformVec) => Object.values(vec).every(v => isInt(v));
+    const areFloats = (vec: UniformVec) =>
+        Object.values(vec).every(v => isFloat(v));
+
+    if (typeof value === "number") {
+        if (isFloat(value)) type = "1f";
+        else if (isInt(value)) type = "1i";
+    } else if (isVec(value)) {
+        if (isVec2(value)) {
+            if (areFloats(value)) type = "2f";
+            else if (areInts) type = "2i";
+        }
+        if (isVec3(value)) {
+            if (areFloats(value)) type = "3f";
+            else if (areInts) type = "3i";
+        }
+        if (isVec4(value)) {
+            if (areFloats(value)) type = "4f";
+            else if (areInts) type = "4i";
+        }
+    }
+
+    return type;
+};
+
+/**
  * Utility to set already created uniforms
  */
 export const setUniform = (
     location: WebGLUniformLocation,
     value: any,
-    type: UniformType,
+    type = getUniformTypeFromValue(value),
     gl: GLContext
 ) => {
     if (type === "1f") gl.uniform1f(location, value);

@@ -20,9 +20,11 @@ export type UniformValue =
     | number
     | { x: number; y: number }
     | { x: number; y: number; z: number }
-    | { x: number; y: number; Z: number; w: number }
-    | Float32List
-    | Int32List;
+    | { x: number; y: number; z: number; w: number };
+// | Float32List
+// | Int32List;
+
+export type UniformVec = { x: number; y: number; z?: number; w?: number };
 
 export interface SimpleUniforms {
     [uniform: string]: any;

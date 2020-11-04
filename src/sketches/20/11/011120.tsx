@@ -7,8 +7,8 @@ import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ aspect }) => ({
     uniforms: {
-        aspect: { value: aspect, type: "1f" },
-        time: { value: inRange(100), type: "1f" },
+        aspect: { value: aspect },
+        time: { value: inRange(100) },
     },
     frag: glsl`
         precision highp float;

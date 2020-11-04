@@ -12,7 +12,7 @@ import {
     UniformDict,
 } from "Utils/shaders";
 
-import type { RendererProps, RendererSettings, DrawProps } from "./types";
+import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "./types";
 
 /**
  * A canvas component for running fragment shaders. Handles rendering and cleanup.
@@ -165,6 +165,7 @@ export const ShaderRenderer = ({
 
         return () => {
             gl.deleteBuffer(vertexDataBuffer);
+            gl.deleteBuffer(uvDataBuffer);
             gl.disableVertexAttribArray(positionHandle);
         };
     }, [setupSketch, settings, width, height]);
@@ -220,4 +221,4 @@ export type ShaderSetupFn = (
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type ShaderDrawFn = (props?: ShaderDrawProps) => void;
+export type ShaderDrawFn = DrawFn<ShaderDrawProps>;

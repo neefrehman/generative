@@ -112,10 +112,14 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
             if (areFloats(value)) type = "4f";
             else if (areInts) type = "4i";
         }
-    }
+    } /* TODO: if/vf? else if (value.constructor === Float32Array) {
+
+    } else if (value.constructor === Int32Array) {
+
+    } */
 
     return type;
-};
+};;
 
 /**
  * Utility to set already created uniforms

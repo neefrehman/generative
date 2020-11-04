@@ -120,7 +120,7 @@ export const ShaderRenderer = ({
             []
         );
 
-        // prettier-ignore
+        /* prettier-ignore */
         const vertexData = new Float32Array([
             -1.0,  1.0,
             -1.0, -1.0,
@@ -129,7 +129,7 @@ export const ShaderRenderer = ({
         ]);
         const positionAttr = createAttribute("position", vertexData, program, gl);
 
-        // prettier-ignore
+        /* prettier-ignore */
         const uvData = new Float32Array([
             0.0,  0.0,
             0.0,  1.0,

@@ -1,7 +1,7 @@
 import glsl from "glslify";
 import React from "react";
 
-import { ShaderRenderer, ShaderSetupFn } from "Renderers/Shader";
+import { ShaderRenderer, ShaderSetupFn } from "Renderers/WebGL";
 
 import { inRange } from "Utils/random";
 

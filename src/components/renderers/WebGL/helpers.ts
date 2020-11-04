@@ -41,6 +41,24 @@ export const getAttributeLocation = (
 };
 
 /**
+ * Utility to throw error if it fails to find the uniform
+ */
+export const getUniformLocation = (
+    name: string,
+    program: WebGLProgram,
+    gl: GLContext
+): WebGLUniformLocation => {
+    const uniformLocation = gl.getUniformLocation(program, name);
+
+    // @ts-expect-error: this can happen!
+    if (uniformLocation === -1) {
+        throw new Error(`Can not find uniform ${name}`);
+    }
+
+    return uniformLocation;
+};
+
+/**
  * Utility to create an attribute to be consumed by the shaders
  */
 export const createAttribute = (
@@ -61,23 +79,8 @@ export const createAttribute = (
 };
 
 /**
- * Utility to throw error if it fails to find the uniform
+ * Utility to set already created uniforms
  */
-export const getUniformLocation = (
-    name: string,
-    program: WebGLProgram,
-    gl: GLContext
-): WebGLUniformLocation => {
-    const uniformLocation = gl.getUniformLocation(program, name);
-
-    // @ts-expect-error: this can happen!
-    if (uniformLocation === -1) {
-        throw new Error(`Can not find uniform ${name}`);
-    }
-
-    return uniformLocation;
-};
-
 export const setUniform = (
     location: WebGLUniformLocation,
     value: any,

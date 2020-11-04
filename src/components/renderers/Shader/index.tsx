@@ -3,16 +3,17 @@ import glsl from "glslify";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
 
+import { UniformDict } from "Utils/shaders";
+
+import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "../types";
+
 import {
     compileShader,
-    getAttributeLocation,
+    createAttribute,
     getUniformLocation,
     GLContext,
     setUniform,
-    UniformDict,
-} from "Utils/shaders";
-
-import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "./types";
+} from "./helpers";
 
 /**
  * A canvas component for running fragment shaders. Handles rendering and cleanup.
@@ -126,13 +127,7 @@ export const ShaderRenderer = ({
              1.0,  1.0,
              1.0, -1.0,
         ]);
-
-        const vertexDataBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexDataBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
-        const positionHandle = getAttributeLocation("position", program, gl);
-        gl.enableVertexAttribArray(positionHandle);
-        gl.vertexAttribPointer(positionHandle, 2, gl.FLOAT, false, 2 * 4, 0);
+        const positionAttr = createAttribute("position", vertexData, program, gl);
 
         // prettier-ignore
         const uvData = new Float32Array([
@@ -141,13 +136,7 @@ export const ShaderRenderer = ({
             1.0,  0.0,
             1.0,  1.0,
         ]);
-
-        const uvDataBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, uvDataBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, uvData, gl.STATIC_DRAW);
-        const uvHandle = getAttributeLocation("uv", program, gl);
-        gl.vertexAttribPointer(uvHandle, 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(uvHandle);
+        const uvAttr = createAttribute("uv", uvData, program, gl);
 
         drawProps.current = initialSketchProps;
         uniformsRef.current = uniforms;
@@ -164,9 +153,10 @@ export const ShaderRenderer = ({
         };
 
         return () => {
-            gl.deleteBuffer(vertexDataBuffer);
-            gl.deleteBuffer(uvDataBuffer);
-            gl.disableVertexAttribArray(positionHandle);
+            gl.deleteBuffer(positionAttr.buffer);
+            gl.disableVertexAttribArray(positionAttr.handle);
+            gl.deleteBuffer(uvAttr.buffer);
+            gl.disableVertexAttribArray(uvAttr.handle);
         };
     }, [setupSketch, settings, width, height]);
 

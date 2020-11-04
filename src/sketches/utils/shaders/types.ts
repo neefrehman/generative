@@ -42,5 +42,3 @@ export interface Uniform {
 export interface UniformDict {
     [uniform: string]: Uniform;
 }
-
-export type GLContext = WebGLRenderingContext | WebGL2RenderingContext;

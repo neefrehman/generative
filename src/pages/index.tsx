@@ -10,7 +10,7 @@ import { styled } from "linaria/react";
 import { getSketchArray, getDraftsArray } from "./[sketch]";
 
 const StyledHomePage = styled.div`
-    padding: clamp(24px, 5vw, 40px) clamp(24px, 4vw, 48px);
+    padding: clamp(26px, 5vw, 40px) clamp(26px, 4vw, 48px);
     box-sizing: border-box;
     height: 100vh;
     width: max-content;

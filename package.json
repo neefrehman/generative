@@ -13,6 +13,7 @@
         "@zeit/next-css": "^1.0.1",
         "bezier-easing": "^2.1.0",
         "drei": "^1.5.7",
+        "glsl-easings": "^1.0.0",
         "glsl-hsl2rgb": "^1.1.0",
         "glsl-noise": "0.0.0",
         "glslify": "^7.1.1",

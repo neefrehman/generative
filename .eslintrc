@@ -44,6 +44,9 @@
                 "allowForLoopAfterthoughts": true
             }
         ],
+        "no-bitwise": ["error", {
+            "allow": ["~"]
+        }],
         "no-unused-expressions": "off",
         "no-undef": "error",
         "no-param-reassign": [

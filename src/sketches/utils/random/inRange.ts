@@ -20,5 +20,5 @@ export const inRange = (
 
     const generatedNumber = Math.random() * (upperBound - lowerBound) + min;
 
-    return isInteger ? Math.floor(generatedNumber) : generatedNumber;
+    return isInteger ? ~~generatedNumber : generatedNumber;
 };

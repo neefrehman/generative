@@ -87,6 +87,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     const isInt = (num: number) => num.toString().indexOf(".") === -1;
     const isFloat = (num: number) => num.toString().indexOf(".") !== -1;
 
+    // TODO: type guards?
     const isVec = (vec: UniformValue) => typeof vec === "object";
     const isVec2 = (vec: UniformVec) => vec.x && vec.y && !vec.z && !vec.w;
     const isVec3 = (vec: UniformVec) => vec.x && vec.y && vec.z && !vec.w;
@@ -112,11 +113,11 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
             if (areFloats(value)) type = "4f";
             else if (areInts) type = "4i";
         }
-    } /* TODO: if/vf? else if (value.constructor === Float32Array) {
+    } /* TODO: if/vf? else if (value instanceof Float32Array) {
 
-    } else if (value.constructor === Int32Array) {
+    } else if (value instanceof Int32Array) {
 
-    } */
+    // } */
 
     return type;
 };;
@@ -138,12 +139,12 @@ export const setUniform = (
     if (type === "2i") gl.uniform2i(location, value.x, value.y);
     if (type === "3f") gl.uniform3f(location, value.x, value.y, value.z);
     if (type === "4f") gl.uniform4f(location, value.x, value.y, value.z, value.w);
-    if (type === "1fv") gl.uniform1fv(location, value);
-    if (type === "2fv") gl.uniform2fv(location, value);
-    if (type === "3fv") gl.uniform3fv(location, value);
-    if (type === "4fv") gl.uniform4fv(location, value);
-    if (type === "1iv") gl.uniform1iv(location, value);
-    if (type === "2iv") gl.uniform2iv(location, value);
-    if (type === "3iv") gl.uniform3iv(location, value);
-    if (type === "4iv") gl.uniform4iv(location, value);
+    // if (type === "1fv") gl.uniform1fv(location, value);
+    // if (type === "2fv") gl.uniform2fv(location, value);
+    // if (type === "3fv") gl.uniform3fv(location, value);
+    // if (type === "4fv") gl.uniform4fv(location, value);
+    // if (type === "1iv") gl.uniform1iv(location, value);
+    // if (type === "2iv") gl.uniform2iv(location, value);
+    // if (type === "3iv") gl.uniform3iv(location, value);
+    // if (type === "4iv") gl.uniform4iv(location, value);
 };

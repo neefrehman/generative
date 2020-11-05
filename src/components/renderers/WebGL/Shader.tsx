@@ -114,8 +114,7 @@ export const ShaderRenderer = ({
             (acc, [key, { value, type }]) => {
                 const uniformHandle = getUniformLocation(key, program, gl);
                 setUniform(uniformHandle, value, type, gl);
-                // Return an array that we can use later to update the uniforms
-                return [...acc, { key, uniformHandle, type }];
+                return [...acc, { key, uniformHandle, type }]; // an array we can use later to update the uniforms;
             },
             []
         );

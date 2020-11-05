@@ -1,7 +1,9 @@
 export { createMatrix } from "./createMatrix";
 export { getAngle } from "./getAngle";
+export { getDifference } from "./getDifference";
 export { getDistance } from "./getDistance";
 export { getMean } from "./getMean";
+export { getModularDistance } from "./getModularDistance";
 export { getSum } from "./getSum";
 export { getShortestViewportDimension } from "./getShortestViewportDimension";
 export { getSign } from "./getSign";

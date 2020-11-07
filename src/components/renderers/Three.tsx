@@ -69,6 +69,7 @@ export const ThreeRenderer = ({
         const initialSketchProps: ThreeDrawProps = {
             scene,
             renderer,
+            canvas: canvasEl.current,
             width,
             height,
             aspect: width / height,
@@ -86,7 +87,6 @@ export const ThreeRenderer = ({
             scene.clear();
             scene.remove();
             renderer.clear();
-            renderer.domElement.remove();
             renderer.dispose();
         };
     }, [setupSketch, settings, width, height]);
@@ -116,6 +116,8 @@ export type ThreeDrawProps = {
     scene: THREE.Scene;
     /** The WebGL renderer for the scene */
     renderer: THREE.WebGLRenderer;
+    /** The `canvas` DOM element */
+    canvas: HTMLCanvasElement;
 } & DrawProps;
 
 /**

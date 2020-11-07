@@ -1,11 +1,5 @@
-import {
-    UniformType,
-    UniformValue,
-    Vec,
-    Vec2,
-    Vec3,
-    Vec4,
-} from "Utils/shaders/types";
+import { Vector } from "Utils/math/types";
+import { UniformType, UniformValue } from "Utils/shaders/types";
 
 export type GLContext = WebGLRenderingContext | WebGL2RenderingContext;
 
@@ -94,40 +88,29 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     const isInt = (num: number) => num.toString().indexOf(".") === -1;
     const isFloat = (num: number) => num.toString().indexOf(".") !== -1;
 
-    const isVec = (vec: UniformValue): vec is Vec => typeof vec === "object";
-    const isVec2 = (vec: Vec): vec is Vec2 => vec.x && vec.y && !vec.z && !vec.w;
-    const isVec3 = (vec: Vec): vec is Vec3 => vec.x && vec.y && vec.z && !vec.w;
-    const isVec4 = (vec: Vec): vec is Vec4 => vec.x && vec.y && vec.z && !!vec.w;
+    const isVec2 = (vec: Vector): vec is Vector<2> => vec.length === 2;
+    const isVec3 = (vec: Vector): vec is Vector<3> => vec.length === 3;
+    const isVec4 = (vec: Vector): vec is Vector<4> => vec.length === 4;
 
-    const areInts = (vec: Vec) => Object.values(vec).every(v => isInt(v));
-    const areFloats = (vec: Vec) => Object.values(vec).every(v => isFloat(v));
+    const areInts = (vec: Vector) => vec.every(v => isInt(v));
+    const areFloats = (vec: Vector) => vec.every(v => isFloat(v));
 
     if (typeof value === "number") {
         if (isFloat(value)) type = "1f";
         if (isInt(value)) type = "1i";
-    } else if (isVec(value)) {
+    } else if (Array.isArray(value)) {
         if (isVec2(value)) {
             if (areFloats(value)) type = "2f";
-            if (areInts) type = "2i";
+            if (areInts(value)) type = "2i";
         }
         if (isVec3(value)) {
             if (areFloats(value)) type = "3f";
-            if (areInts) type = "3i";
+            if (areInts(value)) type = "3i";
         }
         if (isVec4(value)) {
             if (areFloats(value)) type = "4f";
-            if (areInts) type = "4i";
+            if (areInts(value)) type = "4i";
         }
-    } else if (value instanceof Float32Array) {
-        if (value.length === 1) type = "1fv";
-        if (value.length === 2) type = "2fv";
-        if (value.length === 3) type = "3fv";
-        if (value.length === 4) type = "4fv";
-    } else if (value instanceof Int32Array) {
-        if (value.length === 1) type = "1iv";
-        if (value.length === 2) type = "2iv";
-        if (value.length === 3) type = "3iv";
-        if (value.length === 4) type = "4iv";
     }
 
     return type;
@@ -143,19 +126,13 @@ export const setUniform = (
     gl: GLContext
 ) => {
     if (type === "1f") gl.uniform1f(location, value);
-    if (type === "2f") gl.uniform2f(location, value.x, value.y);
-    if (type === "3f") gl.uniform3f(location, value.x, value.y, value.z);
-    if (type === "4f") gl.uniform4f(location, value.x, value.y, value.z, value.w);
+    if (type === "2f") gl.uniform2f(location, value[0], value[1]);
+    if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);
+    if (type === "4f")
+        gl.uniform4f(location, value[0], value[1], value[2], value[3]);
     if (type === "1i") gl.uniform1i(location, value);
-    if (type === "2i") gl.uniform2i(location, value.x, value.y);
-    if (type === "3f") gl.uniform3f(location, value.x, value.y, value.z);
-    if (type === "4f") gl.uniform4f(location, value.x, value.y, value.z, value.w);
-    if (type === "1fv") gl.uniform1fv(location, value);
-    if (type === "2fv") gl.uniform2fv(location, value);
-    if (type === "3fv") gl.uniform3fv(location, value);
-    if (type === "4fv") gl.uniform4fv(location, value);
-    if (type === "1iv") gl.uniform1iv(location, value);
-    if (type === "2iv") gl.uniform2iv(location, value);
-    if (type === "3iv") gl.uniform3iv(location, value);
-    if (type === "4iv") gl.uniform4iv(location, value);
+    if (type === "2i") gl.uniform2i(location, value[0], value[1]);
+    if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);
+    if (type === "4f")
+        gl.uniform4f(location, value[0], value[1], value[2], value[3]);
 };

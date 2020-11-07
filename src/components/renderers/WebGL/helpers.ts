@@ -57,7 +57,7 @@ export const getUniformLocation = (
 ): WebGLUniformLocation => {
     const uniformLocation = gl.getUniformLocation(program, name);
 
-    // @ts-expect-error: this can happen!
+    // @ts-expect-error: this can happen i promise!
     if (uniformLocation === -1) {
         throw new Error(`Can not find uniform ${name}`);
     }
@@ -138,7 +138,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
  */
 export const setUniform = (
     location: WebGLUniformLocation,
-    value: any, // UniformValue // TODO: use type guards
+    value: any, // TODO: UniformValue - use same type guards as above, or is there a better way?
     type = getUniformTypeFromValue(value),
     gl: GLContext
 ) => {

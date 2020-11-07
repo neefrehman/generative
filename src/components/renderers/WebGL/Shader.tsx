@@ -3,7 +3,7 @@ import glsl from "glslify";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
 
-import { UniformDict } from "Utils/shaders";
+import { UniformDict, UniformType } from "Utils/shaders";
 
 import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "../types";
 
@@ -86,7 +86,7 @@ export const ShaderRenderer = ({
 
         const initialSketchProps: ShaderDrawProps = {
             gl,
-            uniforms: uniformsRef.current,
+            uniforms: uniformsRef.current, // TODO: find way to extract types of uniform input and add safety to props output?
             width,
             height,
             aspect: width / height,
@@ -110,14 +110,15 @@ export const ShaderRenderer = ({
         gl.linkProgram(program);
         gl.useProgram(program);
 
-        const createdUniforms = Object.entries(uniforms).reduce(
-            (acc, [key, { value, type }]) => {
-                const uniformHandle = getUniformLocation(key, program, gl);
-                setUniform(uniformHandle, value, type, gl);
-                return [...acc, { key, uniformHandle, type }]; // an array we can use later to update the uniforms;
-            },
-            []
-        );
+        const createdUniforms: {
+            key: string;
+            handle: WebGLUniformLocation;
+            type: UniformType;
+        }[] = Object.entries(uniforms).reduce((acc, [key, { value, type }]) => {
+            const handle = getUniformLocation(key, program, gl);
+            setUniform(handle, value, type, gl);
+            return [...acc, { key, handle, type }]; // an array we can use later to update the uniforms
+        }, []);
 
         /* prettier-ignore */
         const vertexData = new Float32Array([
@@ -143,9 +144,9 @@ export const ShaderRenderer = ({
         drawFunction.current = currentDrawProps => {
             onFrame?.(currentDrawProps);
 
-            createdUniforms.forEach(({ key, uniformHandle, type }) => {
+            createdUniforms.forEach(({ key, handle, type }) => {
                 const newValue = uniformsRef.current[key].value;
-                setUniform(uniformHandle, newValue, type, gl);
+                setUniform(handle, newValue, type, gl);
             });
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -186,7 +187,9 @@ export type { RendererSettings as ShaderRendererSettings };
  * Props to be recieved by the sketch.
  */
 export type ShaderDrawProps = {
+    /** The WebGL context of the sketch */
     gl: GLContext;
+    /** The shader uniforms that you created in the sketches retiurn object. Update these by changing their `value` property */
     uniforms?: UniformDict;
 } & DrawProps;
 
@@ -199,9 +202,16 @@ export type ShaderDrawProps = {
 export type ShaderSetupFn = (
     props?: ShaderDrawProps
 ) => {
-    vert?: string;
-    frag?: string;
+    /**
+     * The uniforms to interface with the shaders. The renderer will autmatically detect their gl type (floats must contain a decimal)
+     * If auto-detection doesn't work, add `type: "1f"` to the uniform, alongside `value`
+     */
     uniforms?: UniformDict;
+    /** The vertex shader as a glsl string */
+    vert?: string;
+    /** The fragment shader as a glsl string */
+    frag?: string;
+    /** A callback to be run on every frame of the sketch. Here you can update vairables, state, and uniforms */
     onFrame?: ShaderDrawFn;
 };
 

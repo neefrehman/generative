@@ -124,7 +124,7 @@ export const setUniform = (
     value: any, // TODO: UniformValue - use same type guards as above, or is there a better way?
     type = getUniformTypeFromValue(value),
     gl: GLContext
-) => {
+): void => {
     if (type === "1f") gl.uniform1f(location, value);
     if (type === "2f") gl.uniform2f(location, value[0], value[1]);
     if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);

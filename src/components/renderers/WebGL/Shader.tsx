@@ -96,9 +96,10 @@ export const ShaderRenderer = ({
 
         const sketchObject = setupSketch(initialSketchProps);
 
+        // TODO: defines?
+        const uniforms = sketchObject.uniforms;
         const vert = sketchObject.vert ?? defaultVert;
         const frag = sketchObject.frag ?? defaultFrag;
-        const uniforms = sketchObject.uniforms;
         const onFrame = sketchObject.onFrame;
 
         const vertexShader = compileShader(vert, gl.VERTEX_SHADER, gl);
@@ -159,6 +160,15 @@ export const ShaderRenderer = ({
             gl.disableVertexAttribArray(uvAttr.handle);
         };
     }, [setupSketch, settings, width, height]);
+
+    useEffect(() => {
+        return () => {
+            const gl = drawProps.current.gl;
+            gl.canvas.width = 1;
+            gl.canvas.height = 1;
+            gl.getExtension("WEBGL_lose_context").loseContext();
+        };
+    }, []);
 
     return (
         <>

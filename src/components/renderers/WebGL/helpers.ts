@@ -86,7 +86,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     let type: UniformType;
 
     const isInt = (num: number) => num.toString().indexOf(".") === -1;
-    const isFloat = (num: number) => num.toString().indexOf(".") !== -1;
+    const isFloat = (num: number) => num.toString().indexOf(".") !== -1; // FIXME: doesn't work for x.0
 
     const isVec2 = (vec: Vector): vec is Vector<2> => vec.length === 2;
     const isVec3 = (vec: Vector): vec is Vector<3> => vec.length === 3;
@@ -114,7 +114,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     }
 
     return type;
-};
+};;
 
 /**
  * Utility to set already created uniforms

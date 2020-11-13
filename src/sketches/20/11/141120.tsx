@@ -72,7 +72,7 @@ const sketch: Canvas2DSetupFn = ({ ctx, width, height }) => {
 
         for (let i = 0; i < LAYERS; i++) {
             ctx.translate(LAYER_DEPTH, LAYER_DEPTH);
-            ctx.fillStyle = `hsl(${hue}, ${(i / LAYERS) * 100 + 10}%, 40%)`;
+            ctx.fillStyle = `hsl(${hue}, ${(i / LAYERS) * 100}%, 40%)`;
             ctx.strokeStyle = `hsl(${hue}, 100%, 40%)`;
             drawPlane(i / LAYERS + zOffset);
         }

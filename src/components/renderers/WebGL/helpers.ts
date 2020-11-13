@@ -114,7 +114,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     }
 
     return type;
-};;
+};
 
 /**
  * Utility to set already created uniforms

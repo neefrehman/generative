@@ -18,7 +18,8 @@ export const inRange = (
     const upperBound = max ?? min;
     const lowerBound = max ? min : 0;
 
-    const generatedNumber = Math.random() * (upperBound - lowerBound) + min;
+    const generatedNumber =
+        Math.random() * (upperBound - lowerBound) + (max ? min : 0);
 
-    return isInteger ? ~~generatedNumber : generatedNumber;
+    return isInteger ? Math.floor(generatedNumber) : generatedNumber;
 };

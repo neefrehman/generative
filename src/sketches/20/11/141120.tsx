@@ -26,13 +26,11 @@ const settings: Canvas2DRendererSettings = {
 const sketch: Canvas2DSetupFn = ({ ctx, width, height }) => {
     const COLUMNS = 30;
     const ROWS = 30;
-    const LAYERS = Math.floor(shortestDimension / 52);
+    const LAYER_COUNT = Math.floor(shortestDimension / 52);
     const LAYER_DEPTH = 32;
 
     const xSize = width / COLUMNS;
     const ySize = height / ROWS;
-
-    const noiseThreshold = 0;
 
     const niceHues = [150, 301, 165, 67, 53, 108, 57];
     const hue = pick(niceHues);
@@ -49,7 +47,7 @@ const sketch: Canvas2DSetupFn = ({ ctx, width, height }) => {
             for (let y = 0; y < ROWS; y++) {
                 const pointNoise = noise3D(x / 10, y / 10, z);
 
-                if (pointNoise > noiseThreshold) {
+                if (pointNoise > 0) {
                     drawPoint(x * xSize, y * ySize);
                 }
             }
@@ -66,15 +64,15 @@ const sketch: Canvas2DSetupFn = ({ ctx, width, height }) => {
 
         ctx.transform(0.5, -0.1, 0, 0.5, width / 2, width / 2);
         ctx.translate(
-            -(width / 2 + (LAYERS * LAYER_DEPTH) / 2),
-            -(height / 2 + (LAYERS * LAYER_DEPTH) / 2)
+            -(width / 2 + (LAYER_COUNT * LAYER_DEPTH) / 2),
+            -(height / 2 + (LAYER_COUNT * LAYER_DEPTH) / 2)
         );
 
-        for (let i = 0; i < LAYERS; i++) {
+        for (let i = 0; i < LAYER_COUNT; i++) {
             ctx.translate(LAYER_DEPTH, LAYER_DEPTH);
-            ctx.fillStyle = `hsl(${hue}, ${(i / LAYERS) * 100}%, 40%)`;
+            ctx.fillStyle = `hsl(${hue}, ${(i / LAYER_COUNT) * 100}%, 40%)`;
             ctx.strokeStyle = `hsl(${hue}, 100%, 40%)`;
-            drawPlane(i / LAYERS + zOffset);
+            drawPlane(i / LAYER_COUNT + zOffset);
         }
 
         zOffset += 0.008;

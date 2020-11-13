@@ -11,7 +11,7 @@ export const getShortestViewportDimension = ({
     withMargin?: boolean | number;
     /** Gives a ceiling to the dimension. Useful to not create massive canvases on large screens */
     cap?: number;
-}): number => {
+} = {}): number => {
     const shortestViewportDimension = Math.min(
         window.innerWidth,
         window.innerHeight

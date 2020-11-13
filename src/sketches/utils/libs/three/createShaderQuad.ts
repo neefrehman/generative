@@ -1,5 +1,5 @@
 import glsl from "glslify";
-import { Mesh, PlaneGeometry, ShaderMaterial } from "three";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial } from "three";
 
 import { createUniformDict } from "Utils/shaders";
 
@@ -38,9 +38,9 @@ export const createShaderQuad = ({
     };
     vert?: string;
     frag?: string;
-}): Mesh<PlaneGeometry, ShaderMaterial> => {
+}): Mesh<PlaneBufferGeometry, ShaderMaterial> => {
     const quad = new Mesh(
-        new PlaneGeometry(2, 2),
+        new PlaneBufferGeometry(2, 2),
         new ShaderMaterial({
             uniforms: uniforms[0]?.value ? uniforms : createUniformDict(uniforms),
             vertexShader:

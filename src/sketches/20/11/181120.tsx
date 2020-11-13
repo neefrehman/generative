@@ -18,9 +18,13 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const PLANE_COUNT = Math.floor(shortestDimension / 45);
     const PLANE_OFFSET = 0.05;
 
-    const geometry = new THREE.PlaneBufferGeometry(1.1, 1.1);
+    const geometry = new THREE.PlaneBufferGeometry();
     const material = new THREE.ShaderMaterial({
-        uniforms: { time: { value: inRange(100) } },
+        uniforms: {
+            time: { value: inRange(100) },
+            alpha: { value: 1 },
+            u_color: { value: new THREE.Color("#f32d94") },
+        },
         side: THREE.DoubleSide,
         transparent: true,
         vertexShader: glsl`
@@ -31,15 +35,33 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             }
         `,
         fragmentShader: glsl`
-            #pragma glslify: noise = require("glsl-noise/simplex/3d");
+            #pragma glslify: noise = require("glsl-noise/simplex/2d");
+            #define PI 3.1415;
 
             uniform float time;
+            uniform float alpha;
+            uniform vec3 u_color;
             varying vec2 vUv;
 
             void main () {
-                vec2 center = vUv - 0.5;
-                float n = noise(vec3(center, time));
-                gl_FragColor = vec4(vec3(n), 0.65 - n);
+                vec3 color = vec3(0.0);
+                vec2 pos = vec2(vUv * 3.0);
+
+                float DF = 0.0;
+
+                float a = 0.0;
+                vec2 vel = vec2(time * 0.1);
+                DF -= noise(pos + vel) * 0.25 + 0.25;
+
+                a = noise(pos * vec2(cos(time * 0.15), sin(time * 0.1)) * 0.1) * PI;
+                vel = vec2(cos(a), sin(a));
+                DF += noise(pos + vel) * 0.25 + 0.25;
+
+                color = vec3(1.0 - smoothstep(0.7, 0.75, fract(DF)));
+
+                vec3 fragColor = mix(u_color, vec3(1.0), alpha);
+
+                gl_FragColor = vec4(vec3(1.02 - fragColor / alpha), 1.0 - smoothstep(0.7, 0.71, fract(DF)));
             }
         `,
     });
@@ -51,14 +73,23 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         const materialInstance = material.clone();
         const meshInstance = new THREE.Mesh(geometry, materialInstance);
 
+        meshInstance.position.x = i * PLANE_OFFSET;
+        meshInstance.position.y = i * PLANE_OFFSET;
         meshInstance.position.z = i * PLANE_OFFSET;
-        meshInstance.material.uniforms.time.value += i / 4;
+        meshInstance.material.uniforms.time.value += i / 2;
+        meshInstance.material.uniforms.alpha.value += i / PLANE_COUNT;
 
         planes.push(meshInstance);
         group.add(meshInstance);
     }
 
+    group.position.x = (PLANE_COUNT / 2) * PLANE_OFFSET;
+    group.position.y = (PLANE_COUNT / 2) * PLANE_OFFSET;
     group.position.z = (-PLANE_COUNT / 2) * PLANE_OFFSET;
+
+    group.rotation.x = Math.PI;
+    group.rotation.y = Math.PI * 1.15;
+
     scene.add(group);
 
     camera.position.z = 2.3;
@@ -66,13 +97,13 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     return ({ renderer }) => {
         planes.forEach(plane => {
-            plane.material.uniforms.time.value += 0.0018;
+            plane.material.uniforms.time.value += 0.02;
         });
 
         renderer.render(scene, camera);
     };
 };
 
-const S151120 = () => <ThreeRenderer sketch={sketch} />;
+const S091120 = () => <ThreeRenderer sketch={sketch} />;
 
-export default S151120;
+export default S091120;

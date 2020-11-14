@@ -15,8 +15,8 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
-    const PLANE_COUNT = Math.floor(shortestDimension / 45);
-    const PLANE_OFFSET = 0.05;
+    const PLANE_COUNT = Math.min(16, Math.floor(shortestDimension / 45));
+    const PLANE_OFFSET = 0.04;
 
     const geometry = new THREE.PlaneBufferGeometry(1.1, 1.1);
     const material = new THREE.ShaderMaterial({
@@ -39,7 +39,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             void main () {
                 vec2 center = vUv - 0.5;
                 float n = noise(vec3(center, time));
-                gl_FragColor = vec4(vec3(n), 0.65 - n);
+                gl_FragColor = vec4(vec3(n), 0.7 - n);
             }
         `,
     });
@@ -52,7 +52,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         const meshInstance = new THREE.Mesh(geometry, materialInstance);
 
         meshInstance.position.z = i * PLANE_OFFSET;
-        meshInstance.material.uniforms.time.value += i / 4;
+        meshInstance.material.uniforms.time.value += i / 6;
 
         planes.push(meshInstance);
         group.add(meshInstance);

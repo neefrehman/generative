@@ -15,8 +15,8 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
-    const PLANE_COUNT = Math.floor(shortestDimension / 45);
-    const PLANE_OFFSET = 0.05;
+    const PLANE_COUNT = Math.min(16, Math.floor(shortestDimension / 45));
+    const PLANE_OFFSET = 0.04;
 
     const geometry = new THREE.PlaneBufferGeometry();
     const material = new THREE.ShaderMaterial({
@@ -66,7 +66,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         const meshInstance = new THREE.Mesh(geometry, materialInstance);
 
         meshInstance.position.z = i * PLANE_OFFSET;
-        meshInstance.material.uniforms.time.value += i / 2;
+        meshInstance.material.uniforms.time.value += i / 3;
 
         planes.push(meshInstance);
         group.add(meshInstance);
@@ -88,6 +88,6 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     };
 };
 
-const S091120 = () => <ThreeRenderer sketch={sketch} />;
+const S161120 = () => <ThreeRenderer sketch={sketch} />;
 
-export default S091120;
+export default S161120;

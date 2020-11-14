@@ -1,1 +1,0 @@
-export { createShaderQuad } from "./createShaderQuad";

@@ -19,7 +19,7 @@ const sketch: ThreeSetupFn = ({ scene }) => {
     const material = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: inRange(100) },
-            alpha: { value: 1 },
+            layerNumber: { value: 1 },
             u_color: { value: undefined },
         },
         side: THREE.DoubleSide,
@@ -37,11 +37,10 @@ const sketch: ThreeSetupFn = ({ scene }) => {
 
             varying vec2 vUv;
             uniform float time;
-            uniform float alpha;
+            uniform float layerNumber;
             uniform vec3 u_color;
 
             void main () {
-                vec3 color = vec3(0.0);
                 vec2 pos = vec2(vUv * 2.0);
 
                 float DF = 0.0;
@@ -54,11 +53,10 @@ const sketch: ThreeSetupFn = ({ scene }) => {
                 vel = vec2(cos(a), sin(a));
                 DF += noise(pos + vel) * 0.35 + 0.35;
 
-                float blurriness = 0.005 * alpha;
+                float blurriness = 0.005 * layerNumber;
+                float alpha = 1.0 - smoothstep(0.7, 0.7 + blurriness, fract(DF));
 
-                color = vec3(1.0 - smoothstep(0.7, 0.7 + blurriness, fract(DF)));
-
-                gl_FragColor = vec4(u_color / alpha, color);
+                gl_FragColor = vec4(u_color, alpha);
             }
         `,
     });
@@ -73,7 +71,7 @@ const sketch: ThreeSetupFn = ({ scene }) => {
         meshInstance.position.z = -i * PLANE_OFFSET;
 
         meshInstance.material.uniforms.time.value += i / 2.3;
-        meshInstance.material.uniforms.alpha.value += i / PLANE_COUNT;
+        meshInstance.material.uniforms.layerNumber.value += i / PLANE_COUNT;
         meshInstance.material.uniforms.u_color.value = new THREE.Color(
             palette[i <= 5 ? i : i - 5]
         );

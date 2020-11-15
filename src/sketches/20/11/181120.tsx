@@ -6,7 +6,7 @@ import glsl from "glslify";
 import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { getShortestViewportDimension } from "Utils/math";
-import { inRange } from "Utils/random";
+import { createSign, inRange } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ cap: 900 });
 
@@ -45,7 +45,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
             void main () {
                 vec3 color = vec3(0.0);
-                vec2 pos = vec2(vUv * 3.0);
+                vec2 pos = vec2(vUv * 2.0);
 
                 float DF = 0.0;
 
@@ -59,7 +59,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
                 vec3 fragColor = mix(u_color, vec3(1.0), alpha);
 
-                gl_FragColor = vec4(vec3(1.02 - fragColor / alpha), 1.0 - smoothstep(0.7, 0.71, fract(DF)));
+                gl_FragColor = vec4(vec3(1.02 - fragColor / alpha), 1.0 - step(0.7, fract(DF)));
             }
         `,
     });
@@ -90,12 +90,14 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     scene.add(group);
 
-    camera.position.z = 2.3;
+    camera.position.z = 2;
     scene.background = new THREE.Color(0x000);
+
+    const direction = createSign();
 
     return ({ renderer }) => {
         planes.forEach(plane => {
-            plane.material.uniforms.time.value += 0.025;
+            plane.material.uniforms.time.value += 0.025 * direction;
         });
 
         renderer.render(scene, camera);

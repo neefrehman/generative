@@ -76,7 +76,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     scene.add(group);
 
-    camera.position.z = 2.3;
+    camera.position.z = 1.8;
     scene.background = new THREE.Color(0x000);
 
     return ({ renderer }) => {

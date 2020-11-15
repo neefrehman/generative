@@ -57,7 +57,7 @@ const sketch: ThreeSetupFn = ({ scene, canvas }) => {
                 vel = vec2(cos(a), sin(a));
                 DF += noise(pos + vel) * 0.35 + 0.35;
 
-                float blurriness = 0.008 * alpha;
+                float blurriness = 0.005 * alpha;
 
                 color = vec3(1.0 - smoothstep(0.7, 0.7 + blurriness, fract(DF)));
 
@@ -75,7 +75,7 @@ const sketch: ThreeSetupFn = ({ scene, canvas }) => {
 
         meshInstance.position.z = -i * PLANE_OFFSET;
 
-        meshInstance.material.uniforms.time.value += i / 2.2;
+        meshInstance.material.uniforms.time.value += i / 2.3;
         meshInstance.material.uniforms.alpha.value += i / PLANE_COUNT;
         meshInstance.material.uniforms.u_color.value = new THREE.Color(
             palette[i <= 5 ? i : i - 5]
@@ -93,7 +93,7 @@ const sketch: ThreeSetupFn = ({ scene, canvas }) => {
 
     return ({ renderer }) => {
         planes.forEach(plane => {
-            plane.material.uniforms.time.value += 0.018;
+            plane.material.uniforms.time.value -= 0.018;
         });
 
         renderer.render(scene, camera);

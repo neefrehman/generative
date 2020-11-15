@@ -1,6 +1,5 @@
 import React from "react";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import glsl from "glslify";
 import palettes from "nice-color-palettes";
 
@@ -8,10 +7,8 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { inRange, pick } from "Utils/random";
 
-const sketch: ThreeSetupFn = ({ scene, canvas }) => {
+const sketch: ThreeSetupFn = ({ scene }) => {
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
 
     const PLANE_COUNT = 5; // max 10
     const PLANE_OFFSET = 0.02;

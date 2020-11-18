@@ -13,8 +13,7 @@ import type { Vector } from "./types";
  * // Choose a random point within a 3D range
  * const start = [0, 0, 0];
  * const end = [25, 50, 25];
- * const alpha = Math.random();
- * const point = lerpArray(start, end, alpha);
+ * const point = lerpArray(start, end, Math.random());
  */
 export const lerpVector = <D extends number>(
     startVector: Vector<D>,

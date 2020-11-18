@@ -24,7 +24,7 @@ export const lerpVector = <D extends number>(
     if (startVector.length !== endVector.length)
         throw new TypeError("start & end vectors should have the same length");
 
-    const lerpedVector: Vector = new Array(startVector.length).map((_, i) => {
+    const lerpedVector: Vector = startVector.slice().map((_, i) => {
         return lerp(startVector[i], endVector[i], alpha);
     });
 

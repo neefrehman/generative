@@ -3,6 +3,7 @@ import React from "react";
 
 import { ShaderRenderer, ShaderSetupFn } from "Renderers/WebGL";
 
+import { lerpVector } from "Utils/math";
 import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height }) => ({
@@ -51,7 +52,11 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
     `,
     onFrame: ({ uniforms, mousePosition }) => {
         uniforms.time.value += 0.01;
-        uniforms.mousePosition.value = mousePosition;
+        uniforms.mousePosition.value = lerpVector(
+            uniforms.mousePosition.value,
+            mousePosition,
+            0.15
+        );
     },
 });
 

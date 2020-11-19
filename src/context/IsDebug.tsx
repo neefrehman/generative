@@ -7,13 +7,11 @@ export const IsDebugContext = createContext(false);
 /** Global context provider for debug mode */
 export const IsDebugProvider = ({ children }: { children: ReactNode }) => {
     const router = useRouter();
-    const [isDebug, setIsDebug] = useState(
-        process.env.NODE_ENV === "development" || router.query.debug !== undefined
-    );
+    const [isDebug, setIsDebug] = useState(Boolean(router.query.debug));
 
     useEffect(() => {
         if (isDebug === true) return; // Early return persists state for duration of session
-        setIsDebug(router.query.debug !== undefined);
+        setIsDebug(Boolean(router.query.debug));
     }, [isDebug, router.query.debug]);
 
     return (

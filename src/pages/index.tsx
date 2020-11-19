@@ -7,6 +7,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
+import { useIsDebug } from "hooks/useIsDebug";
+
 import { getSketchArray, getDraftsArray } from "./[sketch]";
 
 const StyledHomePage = styled.div`
@@ -78,42 +80,46 @@ interface HomePageProps {
     draftsArray: string[];
 }
 
-const Home = ({ sketchArray, draftsArray }: HomePageProps) => (
-    <StyledHomePage>
-        <Head>
-            <title>Generative — Neef Rehman</title>
-        </Head>
+const Home = ({ sketchArray, draftsArray }: HomePageProps) => {
+    const showDrafts = useIsDebug();
 
-        <header>
-            <h1>
-                Generative—A digital sketchbook by{" "}
-                <a
-                    href="https://neef.co"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Neef Rehman
-                </a>
-            </h1>
-        </header>
+    return (
+        <StyledHomePage>
+            <Head>
+                <title>Generative — Neef Rehman</title>
+            </Head>
 
-        <StyledSketchList>
-            {sketchArray.map(sketchId => (
-                <SketchLink key={sketchId} id={sketchId} />
-            ))}
+            <header>
+                <h1>
+                    Generative—A digital sketchbook by{" "}
+                    <a
+                        href="https://neef.co"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Neef Rehman
+                    </a>
+                </h1>
+            </header>
 
-            {draftsArray.length > 0 && (
-                <>
-                    <ColumnBreak aria-label="separator" />
-                    <li>DRAFTS:</li>
-                    {draftsArray.map(draftName => (
-                        <SketchLink key={draftName} id={draftName} />
-                    ))}
-                </>
-            )}
-        </StyledSketchList>
-    </StyledHomePage>
-);
+            <StyledSketchList>
+                {sketchArray.map(sketchId => (
+                    <SketchLink key={sketchId} id={sketchId} />
+                ))}
+
+                {showDrafts && draftsArray.length > 0 && (
+                    <>
+                        <ColumnBreak aria-label="separator" />
+                        <li>DRAFTS:</li>
+                        {draftsArray.map(draftName => (
+                            <SketchLink key={draftName} id={draftName} />
+                        ))}
+                    </>
+                )}
+            </StyledSketchList>
+        </StyledHomePage>
+    );
+};
 
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketchArray(path, fs).reverse();

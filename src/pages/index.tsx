@@ -1,13 +1,13 @@
 import path from "path";
 import fs from "fs";
 
-import React from "react";
+import React, { useContext } from "react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { styled } from "linaria/react";
 
-import { useIsDebug } from "hooks/useIsDebug";
+import { IsDebugContext } from "context/IsDebug";
 
 import { getSketchArray, getDraftsArray } from "./[sketch]";
 
@@ -25,16 +25,6 @@ const StyledHomePage = styled.div`
         h1 {
             white-space: nowrap;
             padding-right: 1em;
-
-            a {
-                font-family: inherit;
-                text-decoration: underline;
-                background-color: initial;
-
-                :hover {
-                    background-color: #eee;
-                }
-            }
         }
     }
 `;
@@ -81,7 +71,7 @@ interface HomePageProps {
 }
 
 const Home = ({ sketchArray, draftsArray }: HomePageProps) => {
-    const showDrafts = useIsDebug();
+    const showDrafts = useContext(IsDebugContext);
 
     return (
         <StyledHomePage>

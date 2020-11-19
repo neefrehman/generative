@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define, no-underscore-dangle, no-nested-ternary */
 import type { Vector } from "./types";
 
 /**
@@ -61,7 +61,6 @@ export const createMatrix = <D extends number, T>(
  * Recursively creates the matrix to be returned to createMatrix
  * and populates the initialValues callback with the current vector co-ordinate
  */
-// eslint-disable-next-line no-underscore-dangle
 function _createMatrix<D extends number, T>(
     dimensions: number | Vector<D>,
     initialValues: ValueOrFunction<D, T> = null,
@@ -92,7 +91,6 @@ function _createMatrix<D extends number, T>(
 
     const finalMatrix = [...Array(currentDimensionLength)].map((_, i) => {
         currentPosition[currentDimension] = i;
-        // eslint-disable-next-line no-nested-ternary
         return needsRecursion
             ? _createMatrix(remainingDimensions, initialValues, currentPosition)
             : typeof initialValues === "function" // @ts-expect-error: "expression is not callable" https://github.com/microsoft/TypeScript/issues/37663

@@ -2,9 +2,13 @@ import React from "react";
 import type { AppProps } from "next/app";
 import { css } from "linaria";
 
+import { IsDebugProvider } from "context/IsDebug";
+
 const App = ({ Component, pageProps }: AppProps) => (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Component {...pageProps} />
+    <IsDebugProvider>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <Component {...pageProps} />
+    </IsDebugProvider>
 );
 
 export default App;
@@ -46,6 +50,16 @@ export const globalStyles = css`
         h1 {
             font-size: clamp(3em, 4vw, 3.4em);
             font-weight: 400;
+
+            a {
+                font-family: inherit;
+                text-decoration: underline;
+                background-color: initial;
+
+                :hover {
+                    background-color: #eee;
+                }
+            }
         }
 
         a,

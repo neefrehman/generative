@@ -21,7 +21,7 @@ export type Matrix<D extends number, T> = D extends 1
     ? T[][][][]
     : D extends 5
     ? T[][][][][]
-    : any[][][][][][]; // TODO: Full type safety?
+    : unknown[][][][][][]; // TODO: Full type safety?
 
 /**
  * Returns a matrix (multi-dimensional array) with your desired dimensions and

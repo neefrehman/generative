@@ -1,27 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define, no-underscore-dangle, no-nested-ternary */
-import type { Vector } from "./types";
+import type { Vector, Matrix } from "./types";
 
 /**
  * Provides type safety for values as well as functions that return values
  * for `createMatrix`'s `initialValues` parameter.
  */
 type ValueOrFunction<D extends number, T> = T | ((vector: Vector<D>) => T) | null;
-
-/**
- * A multidimensional array returned by `createMatrix`. Provides type-safety up
- * to 5 dimensions. Above 5 dimensions, it's reccomended to annotate variables for more safety.
- */
-export type Matrix<D extends number, T> = D extends 1
-    ? T[]
-    : D extends 2
-    ? T[][]
-    : D extends 3
-    ? T[][][]
-    : D extends 4
-    ? T[][][][]
-    : D extends 5
-    ? T[][][][][]
-    : unknown[][][][][][]; // TODO: Full type safety?
 
 /**
  * Returns a matrix (multi-dimensional array) with your desired dimensions and

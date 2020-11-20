@@ -12,3 +12,19 @@ export interface Vector<D extends number = any> extends Array<number> {
     length: D;
 }
 // Follow: https://github.com/microsoft/TypeScript/issues/26223
+
+/**
+ * A multidimensional array. Provides type-safety up to 5 dimensions.
+ * Above 5 dimensions, it's reccomended to annotate variables for more safety.
+ */
+export type Matrix<D extends number, T> = D extends 1
+    ? T[]
+    : D extends 2
+    ? T[][]
+    : D extends 3
+    ? T[][][]
+    : D extends 4
+    ? T[][][][]
+    : D extends 5
+    ? T[][][][][]
+    : unknown[][][][][][]; // TODO: Full type safety?

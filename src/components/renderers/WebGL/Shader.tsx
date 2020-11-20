@@ -159,7 +159,7 @@ export const ShaderRenderer = ({
             gl.deleteBuffer(uvAttr.buffer);
             gl.disableVertexAttribArray(uvAttr.handle);
         };
-    }, [setupSketch, settings, width, height]);
+    }, [setupSketch, settings, width, height, defaultVert, defaultFrag]);
 
     useEffect(() => {
         return () => {

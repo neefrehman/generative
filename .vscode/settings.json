@@ -1,13 +1,19 @@
 {
-    "eslint.enable": true,
     "eslint.run": "onType",
     "eslint.codeActionsOnSave.mode": "all",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "glsllint.glslangValidatorPath": "/Users/neef/.glslang-master-osx-Release/bin/glslangValidator",
+    "glsllint.glslifyAutoOpenOnError": false,
+    "clang-format.language.javascript.enable": false,
+    "clang-format.language.typescript.enable": false,
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "[glsl]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    },
 }

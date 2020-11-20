@@ -11,7 +11,7 @@
         "slevesque.shader",
         "cadenas.vscode-glsllint",
         "xaver.clang-format",
-        "circledev.glsl-canvas"
+        "raczzalan.webgl-glsl-editor"
     ],
     "unwantedRecommendations": []
 }

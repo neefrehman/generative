@@ -1,20 +1,24 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { createContext, ReactNode, useState } from "react";
+
+import useIsomorphicLayoutEffect from "hooks/useIsomorphicLayouteffect";
 
 /** Global context for debug mode */
 export const IsDebugContext = createContext(false);
 
 /** Global context provider for debug mode */
 export const IsDebugProvider = ({ children }: { children: ReactNode }) => {
-    const router = useRouter();
-    const [isDebug, setIsDebug] = useState(
-        process.env.NODE_ENV === "development" || router.query.debug === "true"
-    );
+    const [isDebug, setIsDebug] = useState(process.env.NODE_ENV === "development");
 
-    useEffect(() => {
-        if (isDebug === true) return; // Early return persists state for duration of session
-        setIsDebug(router.query.debug === "true");
-    }, [isDebug, router.query.debug]);
+    useIsomorphicLayoutEffect(() => {
+        if (isDebug === true) return;
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const debugQuery = searchParams.get("debug");
+        const acceptedQueryValues = ["", "true"]; // `/?debug` || `/?debug=true`
+        const debugInParams = acceptedQueryValues.includes(debugQuery);
+
+        setIsDebug(debugInParams);
+    }, [isDebug]);
 
     return (
         <IsDebugContext.Provider value={isDebug}>

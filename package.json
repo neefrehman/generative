@@ -73,6 +73,8 @@
         "format:fix": "prettier \"src/**/*.{js,ts,tsx}\" --write",
         "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
         "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --fix",
+        "format-glsl": "clang-format -style=file **/*.frag **/*.vert **/*.glsl",
+        "format-glsl:fix": "clang-format -i -style=file **/*.frag **/*.vert **/*.glsl",
         "typecheck": "tsc"
     },
     "lint-staged": {

@@ -8,7 +8,7 @@ import type {
 } from "Renderers/Canvas2D";
 
 import { lerp, getShortestViewportDimension } from "Utils/math";
-import { shuffle, pick, inRange, noise3D } from "Utils/random";
+import { shuffle, pick, inRange, simplex3D } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
@@ -57,7 +57,7 @@ const sketch: Canvas2DSetupFn = () => {
 
             const x = lerp(margin, width - margin, u);
             const y = lerp(margin, height - margin, v);
-            const r = Math.abs(0.12 * noise3D(u, v, noiseZ));
+            const r = Math.abs(0.12 * simplex3D(u, v, noiseZ));
 
             noiseZ += noiseZVel;
 

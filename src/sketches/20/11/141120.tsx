@@ -12,7 +12,7 @@ import type {
 import { SketchBackground } from "components/SketchBackground";
 
 import { getShortestViewportDimension } from "Utils/math";
-import { noise3D, pick } from "Utils/random";
+import { pick, perlin3D } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({
     withMargin: true,
@@ -45,7 +45,7 @@ const sketch: Canvas2DSetupFn = ({ ctx, width, height }) => {
     const drawPlane = (z: number) => {
         for (let x = 0; x < COLUMNS; x++) {
             for (let y = 0; y < ROWS; y++) {
-                const pointNoise = noise3D(x / 10, y / 10, z);
+                const pointNoise = perlin3D(x / 10, y / 10, z);
 
                 if (pointNoise > 0) {
                     drawPoint(x * xSize, y * ySize);

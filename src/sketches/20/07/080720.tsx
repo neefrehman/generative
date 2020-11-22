@@ -6,7 +6,7 @@ import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
 import { lerp, getAngle } from "Utils/math";
 import type { Vector } from "Utils/math";
-import { shuffle, pick, inRange, noise3D } from "Utils/random";
+import { shuffle, pick, inRange, simplex3D } from "Utils/random";
 
 const sketch: Canvas2DSetupFn = ({ width, height }) => {
     const colorCount = inRange(2, 6, { isInteger: true });
@@ -86,7 +86,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
                 ? getAngle(mousePosition, [x, y])
                 : 0;
 
-            const rotation = angleToMouse + 0.75 * noise3D(u, v, noiseZ);
+            const rotation = angleToMouse + 0.75 * simplex3D(u, v, noiseZ);
 
             noiseZ += noiseZVel;
 

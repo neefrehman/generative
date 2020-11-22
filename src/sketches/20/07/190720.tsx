@@ -9,7 +9,7 @@ import {
     Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
-import { noise3D } from "Utils/random";
+import { simplex3D } from "Utils/random";
 import { getShortestViewportDimension } from "Utils/math";
 
 export const getDimensions190720 = (): [number, number] => {
@@ -56,7 +56,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
             let yoff = 0;
 
             for (let j = 0; j < rows; j++) {
-                field[i][j] = noise3D(xoff, yoff, zoff);
+                field[i][j] = simplex3D(xoff, yoff, zoff);
                 yoff += increment;
             }
         }

@@ -30,6 +30,7 @@
         "react-dom": "17.0.1",
         "react-postprocessing": "1.4.0",
         "react-spring": "^8.0.27",
+        "react-three-editable": "^0.7.1",
         "react-three-fiber": "5.3.1",
         "react-use-gesture": "^8.0.1",
         "react-xr": "^1.1.0",

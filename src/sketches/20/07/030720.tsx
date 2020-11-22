@@ -13,7 +13,7 @@ import {
     mapRange,
     Vector,
 } from "Utils/math";
-import { noise2D, noise3D } from "Utils/random";
+import { simplex2D, simplex3D } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ withMargin: true });
 
@@ -34,7 +34,7 @@ const sketch: Canvas2DSetupFn = () => {
             for (let y = 0; y < count; y++) {
                 const u = x / (count - 1);
                 const v = y / (count - 1);
-                const radius = Math.abs(noise2D(u, v)) * 0.05;
+                const radius = Math.abs(simplex2D(u, v)) * 0.05;
 
                 points.push({
                     position: [u, v],
@@ -67,7 +67,7 @@ const sketch: Canvas2DSetupFn = () => {
             });
 
             const r =
-                radius + Math.abs(0.02 * noise3D(u, v, noiseZ)) + mappedDistance;
+                radius + Math.abs(0.02 * simplex3D(u, v, noiseZ)) + mappedDistance;
 
             noiseZ += noiseZVel;
 

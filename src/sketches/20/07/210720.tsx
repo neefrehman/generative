@@ -11,7 +11,7 @@ import {
 
 import { lineBetween, rgbaToString } from "LibUtils/canvas2d";
 
-import { noise3D } from "Utils/random";
+import { simplex3D } from "Utils/random";
 
 import { getDimensions190720 } from "./190720";
 
@@ -51,7 +51,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
             let yoff = 0;
 
             for (let j = 0; j < rows; j++) {
-                field[i][j] = noise3D(xoff, yoff, zoff);
+                field[i][j] = simplex3D(xoff, yoff, zoff);
                 yoff += increment;
             }
         }

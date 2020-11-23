@@ -59,8 +59,17 @@ export const SketchTip = ({ children, timeout = 3000 }: SketchTipProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        setIsVisible(true);
-        const shrinkTimeout = setTimeout(() => setIsVisible(false), timeout);
+        let shrinkTimeout: ReturnType<typeof setTimeout>;
+        const userHasVisitedSketch = localStorage.getItem(
+            `${window.location.pathname}.visited`
+        );
+
+        if (!userHasVisitedSketch) {
+            setIsVisible(true);
+            shrinkTimeout = setTimeout(() => setIsVisible(false), timeout);
+            localStorage.setItem(`${window.location.pathname}.visited`, "true");
+        }
+
         return () => clearTimeout(shrinkTimeout);
     }, [timeout]);
 

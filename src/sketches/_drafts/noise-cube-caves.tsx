@@ -5,6 +5,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
+import { isWebGL2Supported } from "helpers/isWebGL2Supported";
+import { TextOverlay } from "components/TextOverlay";
+
 import { inRange, perlin3D } from "Utils/random";
 
 const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
@@ -13,23 +16,23 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
-    const size = 256;
+    const size = 128;
     const data = new Uint8Array(size * size * size);
     const vector = new THREE.Vector3();
-    const frequency = inRange(4);
-    let i = 0;
+    const frequency = inRange(0.8, 4);
 
+    let i = 0;
     for (let z = 0; z < size; z++) {
         for (let y = 0; y < size; y++) {
             for (let x = 0; x < size; x++) {
                 vector.set(x, y, z).divideScalar(size).subScalar(0.5);
 
-                const d1 = perlin3D(vector.x, vector.y, vector.z, {
+                const cavernosity = perlin3D(vector.x, vector.y, vector.z, {
                     frequency,
                 });
-                const d2 = Math.random() * 0.06;
+                const addedNoise = Math.random() * 0.06;
 
-                data[(i += 1)] = (d1 + d2) * 128 + 128;
+                data[(i += 1)] = (cavernosity + addedNoise) * 128 + 128;
             }
         }
     }
@@ -163,6 +166,11 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     };
 };
 
-const S191120 = () => <ThreeRenderer sketch={sketch} />;
+const S191120 = () =>
+    isWebGL2Supported() ? (
+        <ThreeRenderer sketch={sketch} />
+    ) : (
+        <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
+    );
 
 export default S191120;

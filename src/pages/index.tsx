@@ -8,8 +8,11 @@ import Link from "next/link";
 import { styled } from "linaria/react";
 
 import { IsDebugContext } from "context/IsDebug";
-
-import { getSketchArray, getDraftsArray } from "./[sketch]";
+import {
+    getSketchArray,
+    getDraftsArray,
+    getArchivedArray,
+} from "helpers/getSketches";
 
 const StyledHomePage = styled.div`
     padding: clamp(26px, 5vw, 40px) clamp(26px, 4vw, 48px);
@@ -55,6 +58,10 @@ const StyledSketchList = styled.ul`
 const ColumnBreak = styled.li`
     height: 100%;
     width: 50px;
+
+    &[aria-label="separator-archive"] {
+        width: 150px;
+    }
 `;
 
 const SketchLink = ({ id }: { id: string }) => (
@@ -68,10 +75,11 @@ const SketchLink = ({ id }: { id: string }) => (
 interface HomePageProps {
     sketchArray: string[];
     draftsArray: string[];
+    archiveArray: string[];
 }
 
-const Home = ({ sketchArray, draftsArray }: HomePageProps) => {
-    const showDrafts = useContext(IsDebugContext);
+const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
+    const isDebug = useContext(IsDebugContext);
 
     return (
         <StyledHomePage>
@@ -97,12 +105,22 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => {
                     <SketchLink key={sketchId} id={sketchId} />
                 ))}
 
-                {showDrafts && draftsArray.length > 0 && (
+                {isDebug && draftsArray.length > 0 && (
                     <>
-                        <ColumnBreak aria-label="separator" />
+                        <ColumnBreak aria-label="separator-drafts" />
                         <li>DRAFTS:</li>
                         {draftsArray.map(draftName => (
                             <SketchLink key={draftName} id={draftName} />
+                        ))}
+                    </>
+                )}
+
+                {isDebug && archiveArray.length > 0 && (
+                    <>
+                        <ColumnBreak aria-label="separator-archive" />
+                        <li>ARCHIVE:</li>
+                        {archiveArray.map(archivedName => (
+                            <SketchLink key={archivedName} id={archivedName} />
                         ))}
                     </>
                 )}
@@ -114,8 +132,9 @@ const Home = ({ sketchArray, draftsArray }: HomePageProps) => {
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketchArray(path, fs).reverse();
     const draftsArray = getDraftsArray(path, fs);
+    const archiveArray = getArchivedArray(path, fs);
 
-    return { props: { sketchArray, draftsArray } };
+    return { props: { sketchArray, draftsArray, archiveArray } };
 };
 
 export default Home;

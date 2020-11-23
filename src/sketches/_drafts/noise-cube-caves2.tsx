@@ -5,6 +5,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
+import { isWebGL2Supported } from "helpers/isWebGL2Supported";
+import { TextOverlay } from "components/TextOverlay";
+
 import { perlin3D } from "Utils/random";
 
 export const generateTexture = (
@@ -161,6 +164,11 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     };
 };
 
-const S191120 = () => <ThreeRenderer sketch={sketch} />;
+const S191120 = () =>
+    isWebGL2Supported() ? (
+        <ThreeRenderer sketch={sketch} />
+    ) : (
+        <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
+    );
 
 export default S191120;

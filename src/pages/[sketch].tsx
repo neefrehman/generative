@@ -9,6 +9,11 @@ import { styled } from "linaria/react";
 
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
+import {
+    getArchivedArray,
+    getDraftsArray,
+    getSketchArray,
+} from "helpers/getSketches";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -86,47 +91,11 @@ const SketchPage = ({ sketchId, pathToSketch, gitHubPath }: SketchPageProps) => 
     );
 };
 
-export const getSketchArray = (nodePath: typeof path, nodeFs: typeof fs) => {
-    const sketchArray: string[] = [];
-
-    const sketchPath = nodePath.resolve("src/sketches");
-    const yearFolders = nodeFs
-        .readdirSync(sketchPath)
-        .filter(folderName => folderName.length === 2);
-
-    yearFolders.forEach(yearFolder => {
-        const yearPath = nodePath.resolve(`${sketchPath}/${yearFolder}`);
-        const monthFolders = nodeFs
-            .readdirSync(yearPath)
-            .filter(folderName => folderName.length === 2);
-
-        monthFolders.forEach(monthFolder => {
-            const monthPath = nodePath.resolve(`${yearPath}/${monthFolder}`);
-            const sketches = nodeFs
-                .readdirSync(monthPath)
-                .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)$/).test(fileName))
-                .map(fileName => fileName.replace(".tsx", ""));
-
-            sketches.forEach(sketchId => sketchArray.push(sketchId));
-        });
-    });
-
-    return sketchArray;
-};
-
-export const getDraftsArray = (nodePath: typeof path, nodeFs: typeof fs) => {
-    const draftsPath = nodePath.resolve("src/sketches/_drafts");
-    const draftsArray = nodeFs
-        .readdirSync(draftsPath)
-        .map(fileName => fileName.replace(".tsx", ""));
-
-    return draftsArray;
-};
-
 export const getStaticPaths: GetStaticPaths = async () => {
     const sketchArray = getSketchArray(path, fs);
     const draftsArray = getDraftsArray(path, fs);
-    const allSketchesArray = [...sketchArray, ...draftsArray];
+    const archiveArray = getArchivedArray(path, fs);
+    const allSketchesArray = [...sketchArray, ...draftsArray, ...archiveArray];
 
     const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));
 
@@ -135,17 +104,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sketchId = typeof params.sketch === "string" ? params.sketch : "";
+    const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
 
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
-    const pathToSketch = RegExp(/^[0-9]{6}$/).test(sketchId)
+    let pathToSketch = isPublished
         ? `sketches/${year}/${month}/${sketchId}`
         : `sketches/_drafts/${sketchId}`;
+
+    const isArchived = !isPublished && !fs.existsSync(`src/${pathToSketch}.tsx`); // TODO: folder support?
+    if (isArchived) {
+        pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
+    }
 
     let gitHubPath = `src/${pathToSketch}`;
     try {
         fs.statSync(path.resolve(gitHubPath));
-        gitHubPath += "/index.tsx"; // is flder
+        gitHubPath += "/index.tsx"; // is folder
     } catch {
         gitHubPath += ".tsx"; // is single file
     }

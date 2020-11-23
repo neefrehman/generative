@@ -7,43 +7,45 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
-import { SketchTip } from "components/SketchTip";
 
-import { inRange, perlin3D, pick } from "Utils/random";
+import { perlin3D, pick } from "Utils/random";
 
-export const S231120NiceBlendedColors = [
-    "#40d6ff",
-    "#40ff43",
-    "#f32d94",
-    "#feed35",
-];
+import { S231120NiceBlendedColors } from "./221120";
 
-const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
-    camera.position.set(0, 0, 2);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
-
-    const size = 212;
-    const data = new Uint8Array(size * size * size);
-    const vector = new THREE.Vector3();
-    const frequency = inRange(0.8, 4);
-
+export const S241120GenerateTexture = (
+    size: number,
+    data: Uint8Array,
+    vector: THREE.Vector3,
+    texture: THREE.DataTexture3D,
+    time: number
+) => {
     let i = 0;
     for (let z = 0; z < size; z++) {
         for (let y = 0; y < size; y++) {
             for (let x = 0; x < size; x++) {
-                vector.set(x, y, z).divideScalar(size).subScalar(0.5);
+                vector.set(x, y, z).divideScalar(size).addScalar(time);
 
-                const cavernosity = perlin3D(vector.x, vector.y, vector.z, {
-                    frequency,
+                const d = perlin3D(vector.x, vector.y, vector.z, {
+                    frequency: 3,
                 });
-                const addedNoise = Math.random() * 0.04;
 
-                data[(i += 1)] = (cavernosity + addedNoise) * 128 + 128;
+                data[(i += 1)] = d * 128 + 128;
             }
         }
     }
+
+    texture.needsUpdate = true;
+};
+
+const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
+    camera.position.set(1.2, -0.9, -1.5);
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableZoom = false;
+
+    const size = 64;
+    const data = new Uint8Array(size * size * size);
+    const vector = new THREE.Vector3();
 
     const texture = new THREE.DataTexture3D(data, size, size, size);
     texture.format = THREE.RedFormat;
@@ -128,8 +130,8 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             for (float t = bounds.x; t < bounds.y; t += delta) {
                 float d = sample1(p + 0.5);
 
-                if (d > threshold) {
-                    color.rgb = mix(blendedColor, normal(p + 0.5) * 0.25 + (p * 1.5 + 0.25), 0.5);
+                if (sin(d * 33.3) > threshold) {
+                    color.rgb = mix(blendedColor, normal(p + 0.5) * 0.25 + (p * 1.5 + 0.25), 0.4);
                     color.a = 1.0;
                     break;
                 }
@@ -146,8 +148,8 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         uniforms: {
             map: { value: texture },
             cameraPos: { value: new THREE.Vector3() },
-            threshold: { value: 0.45 },
-            steps: { value: 180 },
+            threshold: { value: 0.5 },
+            steps: { value: 200 },
             blendedColor: {
                 value: new THREE.Color(pick(S231120NiceBlendedColors)),
             },
@@ -158,21 +160,11 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     });
 
     const mesh = new THREE.Mesh(geometry, material);
-    mesh.rotation.y = Math.random() * 10;
     scene.add(mesh);
 
-    let thresholdDirection = +1;
-
-    return ({ renderer }) => {
-        const currentThreshold = material.uniforms.threshold.value;
-        if (currentThreshold > 0.91) thresholdDirection = -1;
-        if (currentThreshold < 0.15) thresholdDirection = +1;
-
+    return ({ renderer, time }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
-        material.uniforms.threshold.value =
-            currentThreshold + 0.0005 * thresholdDirection;
-
-        mesh.rotation.y += 0.0008;
+        S241120GenerateTexture(size, data, vector, texture, time / 20000);
 
         renderer.render(scene, camera);
     };
@@ -180,10 +172,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
 const S231120 = () =>
     isWebGL2Supported() ? (
-        <>
-            <ThreeRenderer sketch={sketch} />
-            <SketchTip>New cavern properties on each load</SketchTip>
-        </>
+        <ThreeRenderer sketch={sketch} />
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );

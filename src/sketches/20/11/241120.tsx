@@ -7,39 +7,16 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
+import { SketchTip } from "components/SketchTip";
 
-import { perlin3D, pick } from "Utils/random";
+import { inRange, pick } from "Utils/random";
 
-import { S231120NiceBlendedColors } from "./231120";
-
-export const S241120GenerateTexture = (
-    size: number,
-    data: Uint8Array,
-    vector: THREE.Vector3,
-    texture: THREE.DataTexture3D,
-    time: number
-) => {
-    let i = 0;
-    for (let z = 0; z < size; z++) {
-        for (let y = 0; y < size; y++) {
-            for (let x = 0; x < size; x++) {
-                vector.set(x, y, z).divideScalar(size).addScalar(time);
-
-                const d = perlin3D(vector.x, vector.y, vector.z, {
-                    frequency: 3,
-                });
-
-                data[(i += 1)] = d * 128 + 128;
-            }
-        }
-    }
-
-    texture.needsUpdate = true;
-};
+import { S231120NiceBlendedColors } from "./221120";
+import { S241120GenerateTexture } from "./231120";
 
 const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
-    camera.position.set(1.2, -0.9, -1.5);
+    camera.position.set(1.2, 0, -1.5);
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
@@ -78,6 +55,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         uniform sampler3D map;
         uniform float threshold;
         uniform float steps;
+        uniform float noiseFrequency;
         uniform vec3 blendedColor;
 
         vec2 hitBox(vec3 orig, vec3 dir) {
@@ -130,7 +108,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             for (float t = bounds.x; t < bounds.y; t += delta) {
                 float d = sample1(p + 0.5);
 
-                if (sin(d * 33.3) > threshold) {
+                if (sin(d * noiseFrequency) > threshold) {
                     color.rgb = mix(blendedColor, normal(p + 0.5) * 0.25 + (p * 1.5 + 0.25), 0.4);
                     color.a = 1.0;
                     break;
@@ -150,6 +128,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             cameraPos: { value: new THREE.Vector3() },
             threshold: { value: 0.5 },
             steps: { value: 200 },
+            noiseFrequency: { value: inRange(1, 12) },
             blendedColor: {
                 value: new THREE.Color(pick(S231120NiceBlendedColors)),
             },
@@ -172,7 +151,10 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
 const S241120 = () =>
     isWebGL2Supported() ? (
-        <ThreeRenderer sketch={sketch} />
+        <>
+            <ThreeRenderer sketch={sketch} />
+            <SketchTip>Random fill amount on each load</SketchTip>
+        </>
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );

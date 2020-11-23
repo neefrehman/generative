@@ -16,7 +16,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
-    const size = 128;
+    const size = 212;
     const data = new Uint8Array(size * size * size);
     const vector = new THREE.Vector3();
     const frequency = inRange(0.8, 4);
@@ -30,7 +30,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
                 const cavernosity = perlin3D(vector.x, vector.y, vector.z, {
                     frequency,
                 });
-                const addedNoise = Math.random() * 0.06;
+                const addedNoise = Math.random() * 0.04;
 
                 data[(i += 1)] = (cavernosity + addedNoise) * 128 + 128;
             }

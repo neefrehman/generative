@@ -113,9 +113,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         : `sketches/_drafts/${sketchId}`;
 
     const isArchived = !isPublished && !fs.existsSync(`src/${pathToSketch}.tsx`); // TODO: folder support?
-    if (isArchived) {
-        pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
-    }
+    if (isArchived) pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
 
     let gitHubPath = `src/${pathToSketch}`;
     try {

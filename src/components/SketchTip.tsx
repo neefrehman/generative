@@ -60,6 +60,7 @@ export const SketchTip = ({ children, timeout = 3000 }: SketchTipProps) => {
 
     useEffect(() => {
         let shrinkTimeout: ReturnType<typeof setTimeout>;
+
         const userHasVisitedSketch = localStorage.getItem(
             `${window.location.pathname}.visited`
         );

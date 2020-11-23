@@ -23,6 +23,7 @@ module.exports = withCSS({
                     options: {
                         transform: [
                             [
+                                // Transfroms must also go into package.json for when babel is handling inline glsl
                                 "glslify-hex",
                                 { "option-1": true, "option-2": 42 },
                             ],

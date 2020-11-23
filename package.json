@@ -80,6 +80,11 @@
         "format-glsl:fix": "clang-format -i -style=file **/*.frag **/*.vert **/*.glsl",
         "typecheck": "tsc"
     },
+    "glslify": {
+        "transform": [
+            "glslify-hex"
+        ]
+    },
     "lint-staged": {
         "*.(js|ts|tsx)": [
             "eslint --fix",

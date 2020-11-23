@@ -8,9 +8,11 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
 
-import { perlin3D } from "Utils/random";
+import { perlin3D, pick } from "Utils/random";
 
-export const generateTexture = (
+import { S231120NiceBlendedColors } from "./231120";
+
+export const S241120GenerateTexture = (
     size: number,
     data: Uint8Array,
     vector: THREE.Vector3,
@@ -76,6 +78,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
         uniform sampler3D map;
         uniform float threshold;
         uniform float steps;
+        uniform vec3 blendedColor;
 
         vec2 hitBox(vec3 orig, vec3 dir) {
             const vec3 box_min = vec3(-0.5);
@@ -128,7 +131,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
                 float d = sample1(p + 0.5);
 
                 if (sin(d * 33.3) > threshold) {
-                    color.rgb = normal(p + 0.5) * 0.25 + (p * 1.5 + 0.25);
+                    color.rgb = mix(blendedColor, normal(p + 0.5) * 0.25 + (p * 1.5 + 0.25), 0.4);
                     color.a = 1.0;
                     break;
                 }
@@ -147,6 +150,9 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             cameraPos: { value: new THREE.Vector3() },
             threshold: { value: 0.5 },
             steps: { value: 200 },
+            blendedColor: {
+                value: new THREE.Color(pick(S231120NiceBlendedColors)),
+            },
         },
         vertexShader,
         fragmentShader,
@@ -158,17 +164,17 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     return ({ renderer, time }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
-        generateTexture(size, data, vector, texture, time / 20000);
+        S241120GenerateTexture(size, data, vector, texture, time / 20000);
 
         renderer.render(scene, camera);
     };
 };
 
-const S191120 = () =>
+const S241120 = () =>
     isWebGL2Supported() ? (
         <ThreeRenderer sketch={sketch} />
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );
 
-export default S191120;
+export default S241120;

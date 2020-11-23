@@ -51,10 +51,10 @@ export const StyledSketchPage = styled.div`
 interface SketchPageProps {
     sketchId: string;
     pathToSketch: string;
-    gitHubPath: string;
+    gitHubUrl: string;
 }
 
-const SketchPage = ({ sketchId, pathToSketch, gitHubPath }: SketchPageProps) => {
+const SketchPage = ({ sketchId, pathToSketch, gitHubUrl }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
@@ -79,11 +79,7 @@ const SketchPage = ({ sketchId, pathToSketch, gitHubPath }: SketchPageProps) => 
                     <a>← Home</a>
                 </Link>
 
-                <a
-                    href={`https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a href={gitHubUrl} target="_blank" rel="noopener noreferrer">
                     {sketchId}
                 </a>
             </footer>
@@ -105,32 +101,29 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sketchId = typeof params.sketch === "string" ? params.sketch : "";
     const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
+    let pathToSketch: string;
 
-    const year = sketchId.substr(4, 2);
-    const month = sketchId.substr(2, 2);
-    let pathToSketch = isPublished
-        ? `sketches/${year}/${month}/${sketchId}`
-        : `sketches/_drafts/${sketchId}`;
-
-    const isArchived =
-        !isPublished &&
-        !fs.existsSync(`src/${pathToSketch}.tsx`) &&
-        !fs.existsSync(`src/${pathToSketch}`);
-    if (isArchived) pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
+    if (isPublished) {
+        const year = sketchId.substr(4, 2);
+        const month = sketchId.substr(2, 2);
+        pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+    } else {
+        pathToSketch = `sketches/_drafts/${sketchId}`;
+        const isArchived =
+            !fs.existsSync(`src/${pathToSketch}`) && // folder
+            !fs.existsSync(`src/${pathToSketch}.tsx`); // file
+        if (isArchived) pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
+    }
 
     let gitHubPath = `src/${pathToSketch}`;
-    try {
-        fs.statSync(path.resolve(gitHubPath));
-        gitHubPath += "/index.tsx"; // is folder
-    } catch {
-        gitHubPath += ".tsx"; // is single file
-    }
+    gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
+    const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
     return {
         props: {
             sketchId,
             pathToSketch,
-            gitHubPath,
+            gitHubUrl,
         },
     };
 };

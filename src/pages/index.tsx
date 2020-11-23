@@ -57,7 +57,7 @@ const StyledSketchList = styled.ul`
 
 const ColumnBreak = styled.li`
     height: 100%;
-    width: 100px;
+    width: clamp(60px, 10vw, 100px);
 `;
 
 const SketchLink = ({ id }: { id: string }) => (

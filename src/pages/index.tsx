@@ -57,11 +57,7 @@ const StyledSketchList = styled.ul`
 
 const ColumnBreak = styled.li`
     height: 100%;
-    width: 50px;
-
-    &[aria-label="separator-archive"] {
-        width: 150px;
-    }
+    width: 100px;
 `;
 
 const SketchLink = ({ id }: { id: string }) => (

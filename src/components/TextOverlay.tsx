@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "linaria/react";
 
+import useTimeout from "hooks/useTimeout";
+
 const StyledText = styled.p`
     position: fixed;
     top: 50%;
@@ -25,15 +27,9 @@ interface TextOverlayProps {
 
 export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const [isVisible, setIsVisible] = useState(true);
-    const timeoutMs = typeof timeout === "number" ? timeout : 500;
 
-    useEffect(() => {
-        let visibilityTimeout: ReturnType<typeof setTimeout>;
-        if (timeout) {
-            visibilityTimeout = setTimeout(() => setIsVisible(false), timeoutMs);
-        }
-        return () => clearTimeout(visibilityTimeout);
-    }, [timeout, timeoutMs]);
+    const timeoutMs = typeof timeout === "number" ? timeout : 1500;
+    useTimeout(() => timeout && setIsVisible(false), timeoutMs);
 
     return <>{isVisible && <StyledText>{text}</StyledText>}</>;
 };

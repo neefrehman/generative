@@ -69,7 +69,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             }
 
             float noiseDirection = resolution.x > resolution.y ? vUv.x : vUv.y;
-            float grainAmount = filmGrain(vec2(noiseDirection, time)) * 0.025;
+            float grainAmount = filmGrain(vec2(noiseDirection, time)) * 0.02;
 
             cellColor -= min_dist - grainAmount;
 

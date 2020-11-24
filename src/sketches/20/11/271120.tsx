@@ -55,7 +55,7 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
                 min_dist = min(min_dist, dist);
             }
 
-            float grainAmount = filmGrain(vUv * time) * 0.1;
+            float grainAmount = filmGrain(vUv * time) * 0.085;
             cellColor -= min_dist * 2.0 - grainAmount;
 
             gl_FragColor = vec4(cellColor - noise(vUv + (time * 1.5)) * 0.8, 1.0);

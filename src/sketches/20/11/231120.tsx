@@ -12,7 +12,7 @@ import { perlin3D, pick } from "Utils/random";
 
 import { s221120NiceBlendedColors, s221120vertexShader } from "./221120";
 
-export const s231120GenerateTexture = (
+export const s231120GeneratePerlinCubeMap = (
     size: number,
     data: Uint8Array,
     vector: THREE.Vector3,
@@ -150,7 +150,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     return ({ renderer, time }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
-        s231120GenerateTexture(size, data, vector, texture, time / 20000);
+        s231120GeneratePerlinCubeMap(size, data, vector, texture, time / 20000);
 
         renderer.render(scene, camera);
     };

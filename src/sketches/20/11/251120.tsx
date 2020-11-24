@@ -7,7 +7,14 @@ import { lerpVector } from "Utils/math";
 import { inRange, pick } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-export const s251120NiceColors = ["#40d6ff", "#40ff43", "#f32d94", "#feed35"];
+export const s251120NiceColors = [
+    "#4700fb",
+    "#ff7925",
+    "#40d6ff",
+    "#40ff43",
+    "#f32d94",
+    "#feed35",
+];
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
     uniforms: {
@@ -21,6 +28,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
+        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
 
         varying vec2 vUv;
 
@@ -60,7 +68,10 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
                 min_dist = min(min_dist, dist);
             }
 
-            cellColor -= min_dist;
+            float noiseDirection = resolution.x > resolution.y ? vUv.x : vUv.y;
+            float grainAmount = filmGrain(vec2(noiseDirection, time)) * 0.03;
+
+            cellColor -= min_dist - grainAmount;
 
             gl_FragColor = vec4(cellColor, 1.0);
         }

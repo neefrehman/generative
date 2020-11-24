@@ -20,6 +20,7 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
+        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
 
         varying vec2 vUv;
 
@@ -56,7 +57,9 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
                 if (i == CELL_COUNT - 1) min_dist *= 1.1;
             }
 
-            cellColor -= min_dist * 2.0;
+            float grainAmount = filmGrain(vUv * time) * 0.07;
+
+            cellColor -= min_dist * 2.0 - grainAmount;
 
             gl_FragColor = vec4(cellColor, 1.0);
         }

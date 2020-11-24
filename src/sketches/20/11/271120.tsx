@@ -20,6 +20,7 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
+        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
 
         varying vec2 vUv;
 
@@ -54,7 +55,8 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
                 min_dist = min(min_dist, dist);
             }
 
-            cellColor -= min_dist * 2.0;
+            float grainAmount = filmGrain(vUv * time) * 0.1;
+            cellColor -= min_dist * 2.0 - grainAmount;
 
             gl_FragColor = vec4(cellColor - noise(vUv + (time * 1.5)) * 0.8, 1.0);
         }
@@ -62,7 +64,7 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
     onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
         uniforms.time.value += 0.004;
         uniforms.mousePosition.value = mouseHasEntered
-            ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.15)
+            ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.2)
             : uniforms.mousePosition.value;
     },
 });

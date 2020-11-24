@@ -11,12 +11,26 @@ import { SketchTip } from "components/SketchTip";
 
 import { inRange, perlin3D, pick } from "Utils/random";
 
-export const S231120NiceBlendedColors = [
+export const s221120NiceBlendedColors = [
     "#40d6ff",
     "#40ff43",
     "#f32d94",
     "#feed35",
 ];
+
+export const s221120vertexShader = glsl`
+    varying vec3 vOrigin;
+    varying vec3 vDirection;
+    uniform vec3 cameraPos;
+
+    void main() {
+        vOrigin = vec3(inverse(modelMatrix) * vec4(cameraPos, 1.0)).xyz;
+        vDirection = position - vOrigin;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+
+        gl_Position = projectionMatrix * mvPosition;
+    }
+`;
 
 const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
@@ -50,20 +64,6 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
     texture.unpackAlignment = 1;
-
-    const vertexShader = glsl`
-        varying vec3 vOrigin;
-        varying vec3 vDirection;
-        uniform vec3 cameraPos;
-
-        void main() {
-            vOrigin = vec3(inverse(modelMatrix) * vec4(cameraPos, 1.0)).xyz;
-            vDirection = position - vOrigin;
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-
-            gl_Position = projectionMatrix * mvPosition;
-        }
-    `;
 
     const fragmentShader = glsl`
         precision highp sampler3D;
@@ -149,10 +149,10 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             threshold: { value: 0.45 },
             steps: { value: 180 },
             blendedColor: {
-                value: new THREE.Color(pick(S231120NiceBlendedColors)),
+                value: new THREE.Color(pick(s221120NiceBlendedColors)),
             },
         },
-        vertexShader,
+        vertexShader: s221120vertexShader,
         fragmentShader,
         side: THREE.BackSide,
     });

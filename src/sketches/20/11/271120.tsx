@@ -4,13 +4,17 @@ import React from "react";
 import { ShaderRenderer, ShaderSetupFn } from "Renderers/WebGL";
 
 import { lerpVector } from "Utils/math";
-import { inRange } from "Utils/random";
+import { inRange, pick } from "Utils/random";
+import { hexToVec3 } from "Utils/shaders";
+
+import { s251120NiceColors } from "./251120";
 
 const sketch: ShaderSetupFn = ({ width, height }) => ({
     uniforms: {
         time: { value: inRange(10000), type: "1f" },
         resolution: { value: [width, height], type: "2f" },
         mousePosition: { value: [width / 2, height / 2], type: "2f" },
+        color: { value: hexToVec3(pick(s251120NiceColors)), type: "3f" },
     },
     frag: glsl`
         precision highp float;
@@ -22,38 +26,37 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
         uniform float time;
         uniform vec2 resolution;
         uniform vec2 mousePosition;
+        uniform vec3 color;
 
         void main () {
+            const int CELL_COUNT = 5;
+            const float ZOOM_OUT = 1.1;
+
             vec2 center = vUv - 0.5;
-            vec3 color = vec3(0.0);
+            center *= ZOOM_OUT;
 
             float xStart = resolution.x > resolution.y ? 0.5 : center.x;
             float yStart = resolution.x > resolution.y ? center.y : 0.5;
 
-            vec2 voronoiCells[6];
+            vec3 cellColor = color;
+
+            vec2 voronoiCells[CELL_COUNT];
             voronoiCells[0] = vec2(xStart + noise(vec2(time / 1.2)), yStart + noise(vec2(time / 1.0)));
             voronoiCells[1] = vec2(xStart + noise(vec2(time / 1.7)), yStart + noise(vec2(time / 1.3)));
             voronoiCells[2] = vec2(xStart + noise(vec2(time / 2.1)), yStart + noise(vec2(time / 1.7)));
             voronoiCells[3] = vec2(xStart + noise(vec2(time / 1.0)), yStart + noise(vec2(time / 1.1)));
-            voronoiCells[4] = vec2(xStart + noise(vec2(time / 0.8)), yStart + noise(vec2(time / 1.9)));
-            voronoiCells[5] = mousePosition / resolution;
+            voronoiCells[CELL_COUNT - 1] = mousePosition / resolution;
 
             float min_dist = 1.0;
 
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < CELL_COUNT; i++) {
                 float dist = distance(vUv, voronoiCells[i]);
-
-                // Keep the closer distance
                 min_dist = min(min_dist, dist);
             }
 
-            // Draw the min distance (distance field)
-            color += min_dist;
+            cellColor -= min_dist * 2.0;
 
-            // Show isolines
-            // color -= step(0.7, abs(sin(50.0 * min_dist))) * 0.3;
-
-            gl_FragColor = vec4(color, 1.0);
+            gl_FragColor = vec4(cellColor - noise(vUv + (time * 1.5)) * 0.8, 1.0);
         }
     `,
     onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
@@ -64,6 +67,6 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
     },
 });
 
-const S121120 = () => <ShaderRenderer sketch={sketch} />;
+const S271120 = () => <ShaderRenderer sketch={sketch} />;
 
-export default S121120;
+export default S271120;

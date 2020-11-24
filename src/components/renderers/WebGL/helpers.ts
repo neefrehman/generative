@@ -130,6 +130,7 @@ export const setUniform = (
     if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);
     if (type === "4f")
         gl.uniform4f(location, value[0], value[1], value[2], value[3]);
+
     if (type === "1i") gl.uniform1i(location, value);
     if (type === "2i") gl.uniform2i(location, value[0], value[1]);
     if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);

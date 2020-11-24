@@ -10,9 +10,9 @@ import { TextOverlay } from "components/TextOverlay";
 
 import { perlin3D, pick } from "Utils/random";
 
-import { S231120NiceBlendedColors } from "./221120";
+import { s221120NiceBlendedColors, s221120vertexShader } from "./221120";
 
-export const S241120GenerateTexture = (
+export const s231120GenerateTexture = (
     size: number,
     data: Uint8Array,
     vector: THREE.Vector3,
@@ -52,20 +52,6 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
     texture.unpackAlignment = 1;
-
-    const vertexShader = glsl`
-        varying vec3 vOrigin;
-        varying vec3 vDirection;
-        uniform vec3 cameraPos;
-
-        void main() {
-            vOrigin = vec3(inverse(modelMatrix) * vec4(cameraPos, 1.0)).xyz;
-            vDirection = position - vOrigin;
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-
-            gl_Position = projectionMatrix * mvPosition;
-        }
-    `;
 
     const fragmentShader = glsl`
         precision highp sampler3D;
@@ -151,10 +137,10 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             threshold: { value: 0.5 },
             steps: { value: 200 },
             blendedColor: {
-                value: new THREE.Color(pick(S231120NiceBlendedColors)),
+                value: new THREE.Color(pick(s221120NiceBlendedColors)),
             },
         },
-        vertexShader,
+        vertexShader: s221120vertexShader,
         fragmentShader,
         side: THREE.BackSide,
     });
@@ -164,7 +150,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     return ({ renderer, time }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
-        S241120GenerateTexture(size, data, vector, texture, time / 20000);
+        s231120GenerateTexture(size, data, vector, texture, time / 20000);
 
         renderer.render(scene, camera);
     };

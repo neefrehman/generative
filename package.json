@@ -9,7 +9,7 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@babel/core": "^7.12.8",
+        "@babel/core": "^7.12.9",
         "@tensorflow/tfjs": "^2.7.0",
         "@zeit/next-css": "^1.0.1",
         "bezier-easing": "^2.1.0",
@@ -35,13 +35,13 @@
         "react-use-gesture": "^8.0.1",
         "react-xr": "^1.1.0",
         "simplex-noise": "^2.4.0",
-        "three": "^0.122.0",
+        "three": "^0.123.0",
         "tweakpane": "^1.5.6",
         "use-cannon": "^0.5.3",
         "use-tweaks": "^0.3.0"
     },
     "devDependencies": {
-        "@types/node": "^14.14.9",
+        "@types/node": "^14.14.10",
         "@types/p5": "^0.9.1",
         "@types/react": "^17.0.0",
         "@typescript-eslint/eslint-plugin": "^4.8.2",

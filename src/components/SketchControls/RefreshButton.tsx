@@ -15,5 +15,7 @@ interface RefreshButtonProps {
 export const RefreshButton = ({ children }: RefreshButtonProps) => {
     const refresh = useRefresh();
 
-    return <StyledButton onClick={refresh}>{children}</StyledButton>;
+    return (
+        <StyledButton onClick={refresh}>{children ?? "Regenerate"}</StyledButton>
+    );
 };

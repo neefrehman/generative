@@ -34,7 +34,7 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
         /* :focus {outline: none;} */
         /* :focus-visible {outline: initial;} */
 
-        > a {
+        a {
             text-decoration: underline;
             color: inherit;
             background-color: inherit;

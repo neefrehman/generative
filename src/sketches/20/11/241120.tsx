@@ -148,7 +148,7 @@ const S241120 = () => {
         <>
             <ThreeRenderer sketch={sketch} />
             <ControlsContainer>
-                <RefreshButton>Regenerate volume</RefreshButton>
+                <RefreshButton>Re-seed volume</RefreshButton>
             </ControlsContainer>
         </>
     ) : (

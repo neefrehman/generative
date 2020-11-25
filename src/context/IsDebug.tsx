@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 
-import useIsomorphicLayoutEffect from "hooks/useIsomorphicLayouteffect";
+import { useIsomorphicLayoutEffect } from "hooks/useIsomorphicLayouteffect";
 
 /** Global context for debug mode */
 export const IsDebugContext = createContext(false);

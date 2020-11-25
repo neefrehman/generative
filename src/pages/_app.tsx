@@ -70,6 +70,7 @@ export const globalStyles = css`
             display: inline-block;
             color: #fff;
             background-color: #4a4a4a;
+            border: none;
             padding: 0 0.1em;
             line-height: normal;
 
@@ -77,6 +78,11 @@ export const globalStyles = css`
                 color: #212121;
                 background-color: #eee;
             }
+        }
+
+        button {
+            padding: 0.14em 0.3em;
+            cursor: pointer;
         }
     }
 `;

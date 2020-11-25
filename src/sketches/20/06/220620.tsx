@@ -60,7 +60,7 @@ const S220620 = () => (
         }}
         shadowMap
     >
-        <Stars count={1000} />
+        <Stars count={1500} />
         <Controls />
     </Canvas>
 );

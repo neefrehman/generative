@@ -9,7 +9,8 @@ import type {
 } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { SketchTip } from "components/SketchTip";
+import { SketchTip } from "components/SketchControls/SketchTip";
+import { ControlsContainer } from "components/SketchControls";
 
 import { rgbaToString } from "Utils/libs/canvas2d";
 import { createMatrix } from "Utils/math";
@@ -116,16 +117,18 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 const S180920 = () => (
     <>
         <Canvas2DRenderer sketch={sketch} settings={settings} />
-        <SketchTip>
-            Conway&apos;s{" "}
-            <a
-                href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
-                rel="noopener noreferrer"
-                target="_blank"
-            >
-                Game of Life
-            </a>
-        </SketchTip>
+        <ControlsContainer>
+            <SketchTip>
+                Conway&apos;s{" "}
+                <a
+                    href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    Game of Life
+                </a>
+            </SketchTip>
+        </ControlsContainer>
     </>
 );
 

@@ -7,7 +7,7 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
-import { SketchTip } from "components/SketchTip";
+import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { inRange, pick } from "Utils/random";
 
@@ -135,14 +135,17 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     };
 };
 
-const S241120 = () =>
-    isWebGL2Supported() ? (
+const S241120 = () => {
+    return isWebGL2Supported() ? (
         <>
             <ThreeRenderer sketch={sketch} />
-            <SketchTip>Random fill amount on each load</SketchTip>
+            <ControlsContainer>
+                <RefreshButton>Regenerate volume</RefreshButton>
+            </ControlsContainer>
         </>
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );
+};
 
 export default S241120;

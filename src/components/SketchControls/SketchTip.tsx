@@ -2,13 +2,9 @@ import React, { useState, useEffect, ReactNode } from "react";
 import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
-    position: fixed;
-    top: var(--edgeButtonMargin);
-    right: var(--edgeButtonMargin);
-    text-align: right;
     overflow-x: hidden;
 
-    div {
+    > div {
         border: none;
         font-family: helvetica neue, helvetica, arial, sans-serif;
         font-size: 0.95em;
@@ -38,7 +34,7 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
         /* :focus {outline: none;} */
         /* :focus-visible {outline: initial;} */
 
-        a {
+        > a {
             text-decoration: underline;
             color: inherit;
             background-color: inherit;

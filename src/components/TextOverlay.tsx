@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "linaria/react";
 
-import useTimeout from "hooks/useTimeout";
+import { useTimeout } from "hooks/useTimeout";
 
 const StyledText = styled.p`
     position: fixed;

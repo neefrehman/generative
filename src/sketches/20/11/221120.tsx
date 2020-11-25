@@ -7,7 +7,7 @@ import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
-import { SketchTip } from "components/SketchTip";
+import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { inRange, perlin3D, pick } from "Utils/random";
 
@@ -182,7 +182,9 @@ const S221120 = () =>
     isWebGL2Supported() ? (
         <>
             <ThreeRenderer sketch={sketch} />
-            <SketchTip>New cavern properties on each load</SketchTip>
+            <ControlsContainer>
+                <RefreshButton>Regenerate volume</RefreshButton>
+            </ControlsContainer>
         </>
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />

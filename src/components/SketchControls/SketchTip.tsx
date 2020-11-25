@@ -3,11 +3,11 @@ import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
     overflow-x: hidden;
+    padding: 0;
 
     > div {
         border: none;
         font-family: helvetica neue, helvetica, arial, sans-serif;
-        font-size: 0.95em;
         padding: 0.05em 0.5em;
         background-color: rgb(85, 85, 85, 0.7);
 

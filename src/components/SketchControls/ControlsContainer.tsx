@@ -5,13 +5,15 @@ const StyledControlsContainer = styled.div`
     position: fixed;
     top: var(--edgeButtonMargin);
     right: var(--edgeButtonMargin);
-    text-align: right;
     display: flex;
     flex-direction: column;
+    text-align: right;
+    font-size: 0.95em;
 
     > * {
         margin-right: 0;
         margin-left: auto;
+        padding: 0.05em 0.2em;
     }
 
     > *:not(:last-child) {

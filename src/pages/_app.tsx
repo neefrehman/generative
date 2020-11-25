@@ -66,6 +66,7 @@ export const globalStyles = css`
         a:visited,
         button {
             font-family: helvetica neue, helvetica, arial, sans-serif;
+            font-size: inherit;
             text-decoration: none;
             display: inline-block;
             color: #fff;

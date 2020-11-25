@@ -127,9 +127,17 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
+    const timeStart = inRange(1000);
+
     return ({ renderer, time }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
-        s231120GeneratePerlinCubeMap(size, data, vector, texture, time / 20000);
+        s231120GeneratePerlinCubeMap(
+            size,
+            data,
+            vector,
+            texture,
+            timeStart + time / 20000
+        );
 
         renderer.render(scene, camera);
     };

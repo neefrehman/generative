@@ -5,7 +5,7 @@
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
-        "strictNullChecks": false, // Nightmare with useRef()
+        "strictNullChecks": false, // Nightmare with useRef() — maybe try this at some point: https://twitter.com/steveruizok/status/1333359432298864640
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "esModuleInterop": true,

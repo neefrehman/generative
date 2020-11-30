@@ -7,11 +7,7 @@ import { useRouter } from "next/router";
  */
 export const useRefresh = () => {
     const router = useRouter();
-
-    const refresh = () =>
-        router.push(window.location.pathname, window.location.pathname, {
-            shallow: true,
-        });
+    const refresh = () => router.replace(router.asPath);
 
     return refresh;
 };

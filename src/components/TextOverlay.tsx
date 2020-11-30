@@ -26,7 +26,9 @@ interface TextOverlayProps {
 }
 
 export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useTimeout(() => setIsVisible(true), 5); // Delay appearance to avoid flash for fast page loads
 
     const timeoutMs = typeof timeout === "number" ? timeout : 1500;
     useTimeout(() => timeout && setIsVisible(false), timeoutMs);

@@ -9,9 +9,9 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@emotion/react": "^11.1.1",
-        "@emotion/styled": "^11.0.0",
+        "@babel/core": "^7.12.9",
         "@tensorflow/tfjs": "^2.7.0",
+        "@zeit/next-css": "^1.0.1",
         "bezier-easing": "^2.1.0",
         "drei": "^1.5.7",
         "glsl-easings": "^1.0.0",
@@ -20,6 +20,7 @@
         "glsl-worley": "^1.0.2",
         "glslify": "^7.1.1",
         "glslify-hex": "^2.1.1",
+        "linaria": "^2.0.2",
         "ml5": "^0.6.0",
         "next": "^10.0.3",
         "nice-color-palettes": "^3.0.0",
@@ -40,9 +41,6 @@
         "use-tweaks": "^0.3.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.9",
-        "@emotion/babel-plugin": "^11.0.0",
-        "@emotion/eslint-plugin": "^11.0.0",
         "@types/node": "^14.14.10",
         "@types/p5": "^0.9.1",
         "@types/react": "^17.0.0",

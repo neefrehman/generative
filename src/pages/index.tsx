@@ -5,7 +5,7 @@ import React, { useContext } from "react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import styled from "@emotion/styled";
+import { styled } from "linaria/react";
 
 import { IsDebugContext } from "context/IsDebug";
 import {
@@ -45,11 +45,11 @@ const StyledSketchList = styled.ul`
         margin: 0 1em 1em 0; /* TODO: replace with gap: 1em on parent once safari support hits: https://caniuse.com/flexbox-gap */
 
         a:visited {
-            color: ${({ theme }) => theme.colors.offBlack};
-            background-color: ${({ theme }) => theme.colors.offWhite};
+            color: #212121;
+            background-color: #eee;
 
             :hover {
-                background-color: ${({ theme }) => theme.colors.offWhiteHover};
+                background-color: #cacaca;
             }
         }
     }

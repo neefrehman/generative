@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactNode } from "react";
-import styled from "@emotion/styled";
+import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
     overflow-x: hidden;

@@ -4,7 +4,7 @@ import palettes from "nice-color-palettes";
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { lerp, getAngle, getDistance, mapRange } from "Utils/math";
+import { lerp, getAngle, getDistance, mapRange, createMatrix } from "Utils/math";
 import type { Vector } from "Utils/math";
 import { shuffle, pick, inRange } from "Utils/random";
 import { roundedRect } from "Utils/libs/canvas2d";
@@ -14,33 +14,24 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     const randomPalette = shuffle(pick(palettes).slice(0, colorCount));
     const lineColor = pick(randomPalette);
 
-    const createGrid = () => {
-        const lines: Vector<2>[] = [];
+    const SCALE = 56;
+    const lines = createMatrix(
+        [Math.floor(width / SCALE) - 1, Math.floor(height / SCALE) - 1],
+        ([x, y]) => [x * SCALE, y * SCALE] as Vector<2>
+    ).flat(1);
 
-        for (let x = 0; x < width; x += 56) {
-            for (let y = 0; y < height; y += 56) {
-                const u = x / (width - 1);
-                const v = y / (height - 1);
-                lines.push([u, v]);
-            }
-        }
-        return lines;
-    };
-
-    const lines = createGrid();
-    const lineWidth = 5;
+    let lineWidth = 0;
     const lineHeight = 28;
-    const margin = 52;
 
     return ({ ctx, mousePosition, mouseHasEntered }) => {
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = lineColor;
 
-        lines.forEach(position => {
-            const [u, v] = position;
+        lineWidth = lerp(lineWidth, 5.4, 0.2);
 
-            const x = lerp(margin, width - margin, u);
-            const y = lerp(margin, height - margin, v);
+        lines.forEach(([u, v]) => {
+            const x = u + SCALE;
+            const y = v + SCALE;
 
             const angleToMouse = mouseHasEntered
                 ? getAngle(mousePosition, [x, y])

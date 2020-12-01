@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-/** Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
+/**
+ * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
  *
  * @param nodePath An instance of nodes `path` library
  * @param nodeFs An instance of nodes `fs` library
@@ -37,7 +38,8 @@ export const getSketchArray = (
     return sketchArray;
 };
 
-/** Gets all draft sketches from the `_drafts` folder
+/**
+ * Gets all draft sketches from the `_drafts` folder
  *
  * @param nodePath An instance of nodes `path` library
  * @param nodeFs An instance of nodes `fs` library
@@ -54,7 +56,8 @@ export const getDraftsArray = (
     return draftsArray.filter(name => name !== "_archive");
 };
 
-/** Gets all archived drafts sketches from the `_drafts/_archive` folder
+/**
+ * Gets all archived drafts sketches from the `_drafts/_archive` folder
  *
  * @param nodePath An instance of nodes `path` library
  * @param nodeFs An instance of nodes `fs` library

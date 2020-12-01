@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { useTimeout } from "hooks/useTimeout";
 

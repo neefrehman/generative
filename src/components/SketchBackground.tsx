@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 const StyledDiv = styled.div`
     position: fixed;

@@ -1,9 +1,8 @@
 /* eslint-disable no-new */ /* <- p5 constructor required */
 /* eslint-disable new-cap */ /* <- p5 constructor used with lowercase p */
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, CSSProperties } from "react";
 import type { ReactNode } from "react";
 import p5 from "p5";
-import type { CSSProperties } from "linaria/react";
 
 /**
  * A wrapper component for running P5 sketches. Handles rendering and cleanup.

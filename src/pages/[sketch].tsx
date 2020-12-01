@@ -5,7 +5,7 @@ import React, { lazy, Suspense, useState, useEffect } from "react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
@@ -35,7 +35,7 @@ export const StyledSketchPage = styled.div`
         bottom: var(--edgeButtonMargin);
 
         :hover {
-            background-color: #eee;
+            background-color: ${({ theme }) => theme.colors.offWhite};
         }
 
         :first-child {

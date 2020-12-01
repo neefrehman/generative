@@ -1,5 +1,4 @@
-import type { CSSProperties } from "linaria/react";
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 
 import type { Vector } from "Utils/math";
 

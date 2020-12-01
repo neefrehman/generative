@@ -1,4 +1,4 @@
 {
-    "presets": ["next/babel", "linaria/babel"],
-    "plugins": ["glsl"]
+    "presets": ["next/babel"],
+    "plugins": ["glsl", "@emotion"]
 }

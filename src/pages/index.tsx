@@ -13,6 +13,7 @@ import {
     getDraftsArray,
     getArchivedArray,
 } from "helpers/getSketches";
+import { generateSitemap } from "helpers/generateSitemap";
 
 const StyledHomePage = styled.div`
     padding: clamp(26px, 5vw, 40px) clamp(26px, 4vw, 48px);
@@ -103,7 +104,7 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
 
                 {isDebug && draftsArray.length > 0 && (
                     <>
-                        <ColumnBreak aria-label="separator-drafts" />
+                        <ColumnBreak aria-label="separator" />
                         <li>DRAFTS:</li>
                         {draftsArray.map(draftName => (
                             <SketchLink key={draftName} id={draftName} />
@@ -113,7 +114,7 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
 
                 {isDebug && archiveArray.length > 0 && (
                     <>
-                        <ColumnBreak aria-label="separator-archive" />
+                        <ColumnBreak aria-label="separator" />
                         <li>ARCHIVE:</li>
                         {archiveArray.map(archivedName => (
                             <SketchLink key={archivedName} id={archivedName} />
@@ -129,6 +130,10 @@ export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketchArray(path, fs).reverse();
     const draftsArray = getDraftsArray(path, fs);
     const archiveArray = getArchivedArray(path, fs);
+
+    if (process.env.NODE_ENV === "production") {
+        generateSitemap(path, fs);
+    }
 
     return { props: { sketchArray, draftsArray, archiveArray } };
 };

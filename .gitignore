@@ -5,7 +5,8 @@
 
 # builds
 .next/
-.linaria-cache/
+.linaria-cache
+public/sitemap.xml
 .netlify/
 out/
 build

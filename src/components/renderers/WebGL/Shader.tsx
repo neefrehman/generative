@@ -44,14 +44,15 @@ export const ShaderRenderer = ({
             drawFunction.current?.({
                 ...drawProps.current,
                 uniforms: uniformsRef.current,
-                frame: animationProps.frameCount,
-                time: animationProps.elapsedTime,
+                frame: animationProps.frame,
+                time: animationProps.time,
                 fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition,
+                mouseIsDown: animationProps.mouseIsDown,
             });
         },
         {

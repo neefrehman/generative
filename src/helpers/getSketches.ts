@@ -3,30 +3,27 @@ import path from "path";
 
 /**
  * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
- *
- * @param nodePath An instance of nodes `path` library
- * @param nodeFs An instance of nodes `fs` library
  */
 export const getSketchArray = (
-    nodePath: typeof path,
-    nodeFs: typeof fs
+    pathInstance: typeof path,
+    fsInstance: typeof fs
 ): string[] => {
     const sketchArray: string[] = [];
 
-    const sketchPath = nodePath.resolve("src/sketches");
-    const yearFolders = nodeFs
+    const sketchPath = pathInstance.resolve("src/sketches");
+    const yearFolders = fsInstance
         .readdirSync(sketchPath)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearPath = nodePath.resolve(`${sketchPath}/${yearFolder}`);
-        const monthFolders = nodeFs
+        const yearPath = pathInstance.resolve(`${sketchPath}/${yearFolder}`);
+        const monthFolders = fsInstance
             .readdirSync(yearPath)
             .filter(folderName => folderName.length === 2);
 
         monthFolders.forEach(monthFolder => {
-            const monthPath = nodePath.resolve(`${yearPath}/${monthFolder}`);
-            const sketches = nodeFs
+            const monthPath = pathInstance.resolve(`${yearPath}/${monthFolder}`);
+            const sketches = fsInstance
                 .readdirSync(monthPath)
                 .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)$/).test(fileName))
                 .map(fileName => fileName.replace(".tsx", ""));
@@ -40,16 +37,13 @@ export const getSketchArray = (
 
 /**
  * Gets all draft sketches from the `_drafts` folder
- *
- * @param nodePath An instance of nodes `path` library
- * @param nodeFs An instance of nodes `fs` library
  */
 export const getDraftsArray = (
-    nodePath: typeof path,
-    nodeFs: typeof fs
+    pathInstance: typeof path,
+    fsInstance: typeof fs
 ): string[] => {
-    const draftsPath = nodePath.resolve("src/sketches/_drafts");
-    const draftsArray = nodeFs
+    const draftsPath = pathInstance.resolve("src/sketches/_drafts");
+    const draftsArray = fsInstance
         .readdirSync(draftsPath)
         .map(fileName => fileName.replace(".tsx", ""));
 
@@ -58,16 +52,13 @@ export const getDraftsArray = (
 
 /**
  * Gets all archived drafts sketches from the `_drafts/_archive` folder
- *
- * @param nodePath An instance of nodes `path` library
- * @param nodeFs An instance of nodes `fs` library
  */
 export const getArchivedArray = (
-    nodePath: typeof path,
-    nodeFs: typeof fs
+    pathInstance: typeof path,
+    fsInstance: typeof fs
 ): string[] => {
-    const archivePath = nodePath.resolve("src/sketches/_drafts/_archive");
-    const archiveArray = nodeFs
+    const archivePath = pathInstance.resolve("src/sketches/_drafts/_archive");
+    const archiveArray = fsInstance
         .readdirSync(archivePath)
         .map(fileName => fileName.replace(".tsx", ""));
 

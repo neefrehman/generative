@@ -1,7 +1,7 @@
 import type { CSSProperties } from "linaria/react";
 import type { ReactNode } from "react";
 
-import type { Vector } from "Utils/math";
+import type { OnFrameProps } from "hooks/useAnimationFrame";
 
 export interface RendererProps<SketchFunction> {
     /** The sketch function to be run */
@@ -37,37 +37,14 @@ export interface RendererSettings {
 /**
  * Props to be recieved by the sketch.
  */
-export interface DrawProps {
+export type DrawProps = {
     /** The width of the sketch - maps to dimensions[0] from the sketch settings */
     width?: number;
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
     height?: number;
     /** The aspect ratio of the sketch */
     aspect?: number;
-
-    /** The current frame of the animation */
-    frame?: number;
-    /** The current elapsed time of the animation in ms */
-    time?: number;
-    /** The current fps of the animation (averaged over the last 10 frames) */
-    fps?: number;
-    /** A function that will stop the animation when called */
-    stopAnimation?: () => void;
-    /** A function that will restart the animation when called */
-    startAnimation?: () => void;
-    /** True if the animation is currenty running, otherwise false */
-    isPlaying?: boolean;
-
-    /** A boolean that is true if the mouse has interacted with the animation */
-    mouseHasEntered?: boolean;
-    /** A vector of current position of the mouse over the canvas - [mouseX, mouseY] */
-    mousePosition?: Vector<2>;
-
-    // /** A callback that will be run every time the mouse moves across the canvas */
-    // onMouseMove?: () => void;
-    // /** A callback that will be run every time the user clicks on the canvas */
-    // onClick?: () => void;
-}
+} & OnFrameProps;
 
 /**
  * The setup function to be passed into the React component, with access to `DrawProps`.

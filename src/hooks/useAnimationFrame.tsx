@@ -36,6 +36,7 @@ export const useAnimationFrame = (
 
     const mouseHasEntered = useRef(false);
     const mousePosition = useRef<Vector<2>>([0, 0]);
+    const mouseIsDown = useRef(false);
 
     const animate = useCallback(
         (timestamp: DOMHighResTimeStamp) => {
@@ -45,12 +46,13 @@ export const useAnimationFrame = (
 
             const runFrame = () => {
                 onFrame?.({
-                    elapsedTime: elapsedTime.current,
-                    frameCount: frameCount.current,
+                    time: elapsedTime.current,
+                    frame: frameCount.current,
                     fps: averageFps.current,
                     isPlaying: isPlaying.current,
                     mouseHasEntered: mouseHasEntered.current,
                     mousePosition: mousePosition.current,
+                    mouseIsDown: mouseIsDown.current,
                 });
 
                 frameCount.current += 1;
@@ -123,12 +125,23 @@ export const useAnimationFrame = (
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
+        const handleMouseDown = () => { mouseIsDown.current = true; }; // prettier-ignore
+        const handleMouseUp = () => { mouseIsDown.current = false }; // prettier-ignore
+
         element?.addEventListener("mousemove", handleMouseMove);
         element?.addEventListener("touchmove", handleTouchMove);
+        element?.addEventListener("mousedown", handleMouseDown);
+        element?.addEventListener("mouseup", handleMouseUp);
+        element?.addEventListener("touchstart", handleMouseDown);
+        element?.addEventListener("touchend", handleMouseUp);
 
         return () => {
             element?.removeEventListener("mousemove", handleMouseMove);
             element?.removeEventListener("touchmove", handleTouchMove);
+            element?.removeEventListener("mousedown", handleMouseDown);
+            element?.removeEventListener("mouseup", handleMouseUp);
+            element?.removeEventListener("touchstart", handleMouseDown);
+            element?.removeEventListener("touchend", handleMouseUp);
         };
     }, [domElementRef]);
 
@@ -141,6 +154,7 @@ export const useAnimationFrame = (
         isPlaying,
         mouseHasEntered,
         mousePosition,
+        mouseIsDown,
     };
 };
 
@@ -167,11 +181,11 @@ interface UseAnimationFrameOptions {
 /**
  * Props for the callback that will be run on every frame of the animation
  */
-interface OnFrameProps {
+export interface OnFrameProps {
     /** The current number of elapsed frames */
-    frameCount?: number;
+    frame?: number;
     /** The current elapsed time of the animation in ms */
-    elapsedTime?: number;
+    time?: number;
     /** The current fps of the animation (averaged over the last 10 frames) */
     fps?: number;
     /** A function that will stop the animation when called */
@@ -184,6 +198,8 @@ interface OnFrameProps {
     mouseHasEntered?: boolean;
     /** The position of the mouse over the DOM element housing the animation */
     mousePosition?: Vector<2>;
+    /** Whether the mouse is currently pressed */
+    mouseIsDown?: boolean;
 }
 
 /**
@@ -206,4 +222,6 @@ interface UseAnimationFrameResult {
     mouseHasEntered: MutableRefObject<boolean>;
     /** Reference to the position of the mouse over the DOM element housing the animation */
     mousePosition: MutableRefObject<Vector<2>>;
+    /** Reference to whether the mouse is currently pressed */
+    mouseIsDown?: MutableRefObject<boolean>;
 }

@@ -38,14 +38,15 @@ export const ThreeRenderer = ({
         animationProps =>
             drawFunction.current?.({
                 ...drawProps.current,
-                frame: animationProps.frameCount,
-                time: animationProps.elapsedTime,
+                frame: animationProps.frame,
+                time: animationProps.time,
                 fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,
                 isPlaying: animationProps.isPlaying,
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition,
+                mouseIsDown: animationProps.mouseIsDown,
             }),
         {
             willPlay: isAnimated,

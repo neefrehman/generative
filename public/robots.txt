@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://generative.neef.co/sitemap.xml

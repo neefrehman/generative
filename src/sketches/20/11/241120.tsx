@@ -129,14 +129,14 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     const timeStart = inRange(1000);
 
-    return ({ renderer, time }) => {
+    return ({ renderer, elapsedTime }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
         s231120GeneratePerlinCubeMap(
             size,
             data,
             vector,
             texture,
-            timeStart + time / 20000
+            timeStart + elapsedTime / 20000
         );
 
         renderer.render(scene, camera);

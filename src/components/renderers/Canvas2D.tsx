@@ -39,8 +39,8 @@ export const Canvas2DRenderer = ({
         animationProps =>
             drawFunction.current?.({
                 ...drawProps.current,
-                frame: animationProps.frame,
-                time: animationProps.time,
+                frameCount: animationProps.frameCount,
+                elapsedTime: animationProps.elapsedTime,
                 fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,

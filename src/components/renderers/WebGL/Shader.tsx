@@ -44,8 +44,8 @@ export const ShaderRenderer = ({
             drawFunction.current?.({
                 ...drawProps.current,
                 uniforms: uniformsRef.current,
-                frame: animationProps.frame,
-                time: animationProps.time,
+                frameCount: animationProps.frameCount,
+                elapsedTime: animationProps.elapsedTime,
                 fps: animationProps.fps,
                 startAnimation,
                 stopAnimation,

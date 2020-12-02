@@ -40,8 +40,8 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
     const ambientLight = new THREE.AmbientLight("white", 0.5);
     scene.add(ambientLight);
 
-    return ({ renderer, time }) => {
-        const t = Math.sin(time * 0.00055 * Math.PI);
+    return ({ renderer, elapsedTime }) => {
+        const t = Math.sin(elapsedTime * 0.00055 * Math.PI);
         scene.rotation.x = expoInOut(t);
         scene.rotation.y = expoInOut(t);
 

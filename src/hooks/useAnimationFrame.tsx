@@ -46,8 +46,8 @@ export const useAnimationFrame = (
 
             const runFrame = () => {
                 onFrame?.({
-                    time: elapsedTime.current,
-                    frame: frameCount.current,
+                    elapsedTime: elapsedTime.current,
+                    frameCount: frameCount.current,
                     fps: averageFps.current,
                     isPlaying: isPlaying.current,
                     mouseHasEntered: mouseHasEntered.current,
@@ -183,9 +183,9 @@ interface UseAnimationFrameOptions {
  */
 export interface OnFrameProps {
     /** The current number of elapsed frames */
-    frame?: number;
+    frameCount?: number;
     /** The current elapsed time of the animation in ms */
-    time?: number;
+    elapsedTime?: number;
     /** The current fps of the animation (averaged over the last 10 frames) */
     fps?: number;
     /** A function that will stop the animation when called */

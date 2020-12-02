@@ -39,10 +39,10 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     camera.position.z = 2.3;
 
-    return ({ renderer, time }) => {
+    return ({ renderer, elapsedTime }) => {
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
-        material.uniforms.time.value = time;
+        material.uniforms.time.value = elapsedTime;
 
         renderer.render(scene, camera);
     };

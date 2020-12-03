@@ -9,13 +9,7 @@ export const FontFaceWorkaround = () => (
     <style
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
-            __html: `
-            @font-face {
-                font-family: "Fleuron";
-                font-weight: normal;
-                font-display: block;
-                src: url("/static/fonts/fleuronregular.woff2");
-            }`,
+            __html: `@font-face{font-family:"Fleuron";font-weight:normal;font-display:block;src:url("/static/fonts/fleuronregular.woff2");}`,
         }}
     />
 );
@@ -24,6 +18,13 @@ export const GlobalStyles = () => {
     const { colors } = useTheme();
 
     const globalStyles = css`
+        /* @font-face {
+            font-family: "Fleuron";
+            font-weight: normal;
+            font-display: block;
+            src: url("/static/fonts/fleuronregular.woff2");
+        } */
+
         * {
             margin: 0;
         }

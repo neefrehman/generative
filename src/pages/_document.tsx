@@ -1,5 +1,12 @@
 import React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+    Html,
+    Head,
+    Main,
+    NextScript,
+    DocumentContext,
+} from "next/document";
+import { extractCritical } from "@emotion/server";
 
 import { FontFaceWorkaround } from "styles/GlobalStyles";
 
@@ -10,6 +17,24 @@ const url = "https://generative.neef.co";
 const imageUrl = "https://generative.neef.co/static/meta-image.png";
 
 class MyDocument extends Document {
+    static async getInitialProps(ctx: DocumentContext) {
+        const initialProps = await Document.getInitialProps(ctx);
+        const styles = extractCritical(initialProps.html);
+        return {
+            ...initialProps,
+            styles: (
+                <>
+                    {initialProps.styles}
+                    <style
+                        data-emotion-css={styles.ids.join(" ")}
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{ __html: styles.css }}
+                    />
+                </>
+            ),
+        };
+    }
+
     render() {
         return (
             <Html lang="en">
@@ -31,7 +56,7 @@ class MyDocument extends Document {
                     <meta property="twitter:description" content={description} />
                     <meta property="twitter:image" content={imageUrl} />
 
-                    <FontFaceWorkaround />
+                    {/* <FontFaceWorkaround /> */}
                 </Head>
 
                 <body>

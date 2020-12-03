@@ -11,7 +11,7 @@ const StyledText = styled.p`
     transform-origin: center;
     margin-block-start: 0;
 
-    font-size: clamp(4em, 10vw, 6.4em);
+    font-size: clamp(4rem, 10vw, 6.4rem);
     letter-spacing: -1px;
     color: #616161;
     opacity: 0.75;

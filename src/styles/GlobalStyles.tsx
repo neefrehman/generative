@@ -30,7 +30,6 @@ export const GlobalStyles = () => {
 
         body {
             font-family: "Fleuron", helvetica neue, helvetica, arial, sans-serif;
-            font-size: 16px;
             line-height: 1.2;
             color: ${colors.white};
             background-color: ${colors.offBlack};
@@ -46,7 +45,7 @@ export const GlobalStyles = () => {
         }
 
         h1 {
-            font-size: clamp(3em, 4vw, 3.4em);
+            font-size: clamp(3rem, 4vw, 3.4rem);
             font-weight: 400;
 
             a {

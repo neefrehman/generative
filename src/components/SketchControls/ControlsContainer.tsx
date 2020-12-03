@@ -8,7 +8,7 @@ const StyledControlsContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: right;
-    font-size: 0.95em;
+    font-size: 0.95rem;
 
     > * {
         margin-right: 0;

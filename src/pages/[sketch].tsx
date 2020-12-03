@@ -25,7 +25,7 @@ export const StyledSketchPage = styled.div`
 
     footer a {
         position: fixed;
-        font-size: 0.95em;
+        font-size: 0.95rem;
         padding: 0.05em 0.2em;
         background-color: rgb(85, 85, 85, 0.7);
         bottom: var(--edgeButtonMargin);

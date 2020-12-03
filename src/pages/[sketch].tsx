@@ -5,15 +5,11 @@ import React, { lazy, Suspense, useState, useEffect } from "react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
-import {
-    getArchivedArray,
-    getDraftsArray,
-    getSketchArray,
-} from "helpers/getSketches";
+import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -88,9 +84,9 @@ const SketchPage = ({ sketchId, pathToSketch, gitHubUrl }: SketchPageProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const sketchArray = getSketchArray(path, fs);
-    const draftsArray = getDraftsArray(path, fs);
-    const archiveArray = getArchivedArray(path, fs);
+    const sketchArray = getSketches(path, fs);
+    const draftsArray = getDrafts(path, fs);
+    const archiveArray = getArchived(path, fs);
     const allSketchesArray = [...sketchArray, ...draftsArray, ...archiveArray];
 
     const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));

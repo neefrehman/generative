@@ -1,19 +1,6 @@
 /* eslint-disable */
-const withCSS = require("@zeit/next-css");
-
-module.exports = withCSS({
+module.exports = {
     webpack(config) {
-        config.module.rules.push({
-            test: /\.(js|ts|tsx)$/,
-            use: [
-                {
-                    loader: "linaria/loader",
-                    options: {
-                        sourceMap: process.env.NODE_ENV !== "production",
-                    },
-                },
-            ],
-        });
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
@@ -23,8 +10,8 @@ module.exports = withCSS({
                     loader: "glslify-loader",
                     options: {
                         transform: [
-                            // Transforms must also go into package.json for when babel is handling inline glsl strings
                             [
+                                // Transfroms must also go into package.json for when babel is handling inline glsl
                                 "glslify-hex",
                                 { "option-1": true, "option-2": 42 },
                             ],
@@ -38,7 +25,7 @@ module.exports = withCSS({
             exclude: /node_modules/,
             use: ["url-loader"],
         });
-
+        
         return config;
     },
-});
+};

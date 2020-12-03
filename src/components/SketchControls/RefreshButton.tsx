@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { useRefresh } from "hooks/useRefresh";
 

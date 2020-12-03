@@ -1,6 +1,8 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
+import { FontFaceWorkaround } from "styles/GlobalStyles";
+
 const title = "Generative — a digital sketchbook by Neef Rehman";
 const description =
     "A playground for experimenting with generative art, WebGL, and machine learning.";
@@ -31,6 +33,8 @@ class MyDocument extends Document {
                     <meta property="twitter:title" content={title} />
                     <meta property="twitter:description" content={description} />
                     <meta property="twitter:image" content={imageUrl} />
+
+                    <FontFaceWorkaround />
                 </Head>
 
                 <body>

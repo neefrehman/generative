@@ -4,7 +4,7 @@ import fs from "fs";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import prettier from "prettier";
 
-import { getSketchArray } from "./getSketches";
+import { getSketches } from "./getSketches";
 
 /**
  * Generates a sitemap of all pages and published skethes. To be used in index.tsx's getStaticProps
@@ -21,7 +21,7 @@ export const generateSitemap = async (
         .filter(name => name[0] !== "_" && name[0] !== "[" && name !== "404.tsx") // Ignore Next specific files, dynamic route templates, 404. We don't want these indexed.
         .map(name => name.replace(".tsx", "").replace("index", "")); // Index becomes homepage
 
-    const sketchArray = getSketchArray(pathInstance, fsInstance);
+    const sketchArray = getSketches(pathInstance, fsInstance);
 
     const allRoutes = [...staticPageArray, ...sketchArray];
     const urlPaths = allRoutes.map(route => (route !== "" ? `/${route}` : route));

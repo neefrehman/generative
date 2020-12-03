@@ -18,7 +18,6 @@ export const ThreeRenderer = ({
     sketch: setupSketch,
     settings = {},
     className,
-    style,
     children,
 }: ThreeRendererProps) => {
     const canvasEl = useRef<HTMLCanvasElement>(null);
@@ -94,7 +93,7 @@ export const ThreeRenderer = ({
 
     return (
         <>
-            <canvas ref={canvasEl} className={className} style={style} />
+            <canvas ref={canvasEl} className={className} />
             {children}
         </>
     );

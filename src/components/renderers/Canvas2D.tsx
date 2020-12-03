@@ -19,7 +19,6 @@ export const Canvas2DRenderer = ({
     sketch: setupSketch,
     settings = {},
     className,
-    style,
     children,
 }: Canvas2DRendererProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -88,7 +87,6 @@ export const Canvas2DRenderer = ({
                 width={width}
                 height={height}
                 className={className}
-                style={style}
             />
             {children}
         </>

@@ -22,7 +22,6 @@ export const ShaderRenderer = ({
     sketch: setupSketch,
     settings = {},
     className,
-    style,
     children,
 }: ShaderRendererProps) => {
     const canvasElement = useRef<HTMLCanvasElement>(null);
@@ -178,7 +177,6 @@ export const ShaderRenderer = ({
                 width={width}
                 height={height}
                 className={className}
-                style={style}
             />
             {children}
         </>

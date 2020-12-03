@@ -4,7 +4,7 @@ import path from "path";
 /**
  * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
  */
-export const getSketchArray = (
+export const getSketches = (
     pathInstance: typeof path,
     fsInstance: typeof fs
 ): string[] => {
@@ -38,7 +38,7 @@ export const getSketchArray = (
 /**
  * Gets all draft sketches from the `_drafts` folder
  */
-export const getDraftsArray = (
+export const getDrafts = (
     pathInstance: typeof path,
     fsInstance: typeof fs
 ): string[] => {
@@ -53,7 +53,7 @@ export const getDraftsArray = (
 /**
  * Gets all archived drafts sketches from the `_drafts/_archive` folder
  */
-export const getArchivedArray = (
+export const getArchived = (
     pathInstance: typeof path,
     fsInstance: typeof fs
 ): string[] => {

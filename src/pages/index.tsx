@@ -5,14 +5,10 @@ import React, { useContext } from "react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { IsDebugContext } from "context/IsDebug";
-import {
-    getSketchArray,
-    getDraftsArray,
-    getArchivedArray,
-} from "helpers/getSketches";
+import { getSketches, getDrafts, getArchived } from "helpers/getSketches";
 import { generateSitemap } from "helpers/generateSitemap";
 
 const StyledHomePage = styled.div`
@@ -127,9 +123,9 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const sketchArray = getSketchArray(path, fs).reverse();
-    const draftsArray = getDraftsArray(path, fs);
-    const archiveArray = getArchivedArray(path, fs);
+    const sketchArray = getSketches(path, fs).reverse();
+    const draftsArray = getDrafts(path, fs);
+    const archiveArray = getArchived(path, fs);
 
     if (process.env.NODE_ENV === "production") {
         generateSitemap(path, fs);

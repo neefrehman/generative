@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import p5 from "p5";
-import type { CSSProperties } from "linaria/react";
 
 /**
  * A wrapper component for running P5 sketches. Handles rendering and cleanup.
@@ -12,7 +11,6 @@ export const P5Renderer = ({
     sketch,
     autoResizeToWindow = true,
     className,
-    style,
     children,
 }: P5RendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
@@ -31,7 +29,7 @@ export const P5Renderer = ({
 
     return (
         <>
-            <div ref={wrapperElement} className={className} style={style} />
+            <div ref={wrapperElement} className={className} />
             {children}
         </>
     );
@@ -43,6 +41,5 @@ interface P5RendererProps {
     /** If true, the canvas will resize to window whenever the window is resized */
     autoResizeToWindow?: boolean;
     className?: string;
-    style?: CSSProperties;
     children?: ReactNode | HTMLElement;
 }

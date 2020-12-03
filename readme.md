@@ -17,6 +17,6 @@ Some of my favourite resources that I've learned a lot from:
 -   [Sebastian Lague](https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ)
 -   [Jamie Wong](http://jamie-wong.com/)
 -   [Three.js Fundamentals](https://threejsfundamentals.org/)
--   [WebGL Fundamentals](https://webglfundamentals.org/) / [[WebGL2 Fundamentals](https://webgl2fundamentals.org/)]
+-   [WebGL Fundamentals](https://webglfundamentals.org/) / [WebGL2 Fundamentals](https://webgl2fundamentals.org/)
 <!-- -   https://github.com/lettier/3d-game-shaders-for-beginners
 -   https://github.com/stackgl/shader-school -->

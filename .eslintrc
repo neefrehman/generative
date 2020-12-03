@@ -16,7 +16,8 @@
         "jsx-a11y",
         "prettier",
         "import",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "@emotion"
     ],
     "extends": [
         "plugin:react/recommended",

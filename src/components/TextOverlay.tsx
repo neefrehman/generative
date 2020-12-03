@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 import { useTimeout } from "hooks/useTimeout";
 
@@ -33,5 +33,5 @@ export const TextOverlay = ({ text, timeout }: TextOverlayProps) => {
     const timeoutMs = typeof timeout === "number" ? timeout : 1500;
     useTimeout(() => timeout && setIsVisible(false), timeoutMs);
 
-    return <>{isVisible && <StyledText>{text}</StyledText>}</>;
+    return isVisible && <StyledText>{text}</StyledText>;
 };

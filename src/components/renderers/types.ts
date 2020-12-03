@@ -1,4 +1,3 @@
-import type { CSSProperties } from "linaria/react";
 import type { ReactNode } from "react";
 
 import type { OnFrameProps } from "hooks/useAnimationFrame";
@@ -10,7 +9,6 @@ export interface RendererProps<SketchFunction> {
     settings?: RendererSettings;
 
     className?: string;
-    style?: CSSProperties;
     children?: ReactNode | HTMLElement;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactNode } from "react";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
     overflow-x: hidden;
@@ -12,7 +12,7 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
         background-color: rgb(85, 85, 85, 0.7);
 
         transform: translateX(
-            ${props => (props.isVisible ? 0 : "calc(100% - 1.5em)")}
+            ${({ isVisible }) => (isVisible ? 0 : "calc(100% - 1.5em)")}
         );
         transition: transform 500ms;
 

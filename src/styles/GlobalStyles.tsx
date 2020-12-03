@@ -18,12 +18,12 @@ export const GlobalStyles = () => {
     const { colors } = useTheme();
 
     const globalStyles = css`
-        /* @font-face {
+        @font-face {
             font-family: "Fleuron";
             font-weight: normal;
             font-display: block;
             src: url("/static/fonts/fleuronregular.woff2");
-        } */
+        }
 
         * {
             margin: 0;

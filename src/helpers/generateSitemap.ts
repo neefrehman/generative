@@ -7,22 +7,6 @@ import prettier from "prettier";
 import { getSketchArray } from "./getSketches";
 
 /**
- * Gets all static pages. Ignores Next specific files and dynamic route templates (e.g. _app, [sketch])
- */
-export const getStaticPages = (
-    pathInstance: typeof path,
-    fsInstance: typeof fs
-): string[] => {
-    const staticPagesPath = pathInstance.resolve("src/pages");
-    const pages = fsInstance.readdirSync(staticPagesPath);
-    const staticPageArray = pages
-        .filter(name => name[0] !== "[" && name[0] !== "_" && name !== "404.tsx")
-        .map(name => name.replace(".tsx", "").replace("index", ""));
-
-    return staticPageArray;
-};
-
-/**
  * Generates a sitemap of all pages and published skethes. To be used in index.tsx's getStaticProps
  */
 export const generateSitemap = async (
@@ -31,15 +15,21 @@ export const generateSitemap = async (
 ) => {
     const prettierConfig = await prettier.resolveConfig("./.prettierrc");
 
-    const allRoutes = [
-        ...getStaticPages(pathInstance, fsInstance),
-        ...getSketchArray(pathInstance, fsInstance),
-    ].map(route => (route !== "" ? `/${route}` : route));
+    const staticPagesPath = pathInstance.resolve("src/pages");
+    const pages = fsInstance.readdirSync(staticPagesPath); // Get all pages from `/pages`.
+    const staticPageArray = pages
+        .filter(name => name[0] !== "_" && name[0] !== "[" && name !== "404.tsx") // Ignore Next specific files, dynamic route templates, 404. We don't want these indexed.
+        .map(name => name.replace(".tsx", "").replace("index", "")); // Index becomes homepage
+
+    const sketchArray = getSketchArray(pathInstance, fsInstance);
+
+    const allRoutes = [...staticPageArray, ...sketchArray];
+    const urlPaths = allRoutes.map(route => (route !== "" ? `/${route}` : route));
 
     const sitemap = `
         <?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            ${allRoutes
+            ${urlPaths
                 .map(
                     route =>
                         `

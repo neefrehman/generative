@@ -223,5 +223,5 @@ interface UseAnimationFrameResult {
     /** Reference to the position of the mouse over the DOM element housing the animation */
     mousePosition: MutableRefObject<Vector<2>>;
     /** Reference to whether the mouse is currently pressed */
-    mouseIsDown?: MutableRefObject<boolean>;
+    mouseIsDown: MutableRefObject<boolean>;
 }

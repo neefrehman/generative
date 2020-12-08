@@ -34,7 +34,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             float jitter = mouseXDec * 2.0;
 
             float mouseYDec = mousePosition.y / resolution.y;
-            float blurriness = mouseYDec / 4.0;
+            float blurriness = (mouseYDec / 4.0) + 0.01;
 
             vec2 F = worley2x2x2(vec3(pos, time), jitter, false);
             float n = smoothstep(0.4, 0.4 + blurriness, F.x);
@@ -43,6 +43,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
     `,
     onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
         uniforms.time.value += 0.02;
+
         uniforms.mousePosition.value = mouseHasEntered
             ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.2)
             : uniforms.mousePosition.value;

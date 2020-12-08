@@ -14,6 +14,8 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
+                    <FontFaceWorkaround />
+
                     <meta name="author" content="Neef Rehman" />
                     <link rel="icon" href="/static/favicon.ico" />
                     <meta name="title" content={title} />
@@ -30,8 +32,6 @@ class MyDocument extends Document {
                     <meta property="twitter:title" content={title} />
                     <meta property="twitter:description" content={description} />
                     <meta property="twitter:image" content={imageUrl} />
-
-                    <FontFaceWorkaround />
                 </Head>
 
                 <body>

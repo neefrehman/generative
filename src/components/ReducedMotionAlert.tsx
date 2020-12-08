@@ -79,7 +79,7 @@ export const ReducedMotionAlert = () => {
         localStorage.setItem("reducedMotionAlert.dismissed", "true");
     };
 
-    return !prefersReducedMotion && !isDismissed ? (
+    return prefersReducedMotion && !isDismissed ? (
         <AlertModal>
             <AlertModalInner>
                 <h1>Reduced motion preference detected</h1>

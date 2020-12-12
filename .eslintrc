@@ -84,6 +84,7 @@
         "import/order": [
             "warn",
             {
+                "newlines-between": "always",
                 "groups": [
                     "builtin",
                     "external",
@@ -108,8 +109,7 @@
                         "group": "internal",
                         "position": "after"
                     }
-                ],
-                "newlines-between": "always"
+                ]
             }
         ],
         "import/extensions": [

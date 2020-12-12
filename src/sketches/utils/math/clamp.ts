@@ -7,10 +7,6 @@
  *
  * @return the clamped number
  */
-export const mapRange = (
-    minimum: number,
-    value: number,
-    maximum: number
-): number => {
+export const clamp = (minimum: number, value: number, maximum: number): number => {
     return Math.min(Math.max(value, minimum), maximum);
 };

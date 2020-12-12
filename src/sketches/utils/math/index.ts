@@ -1,3 +1,4 @@
+export { clamp } from "./clamp";
 export { createMatrix } from "./createMatrix";
 export { getAngle } from "./getAngle";
 export { getDifference } from "./getDifference";

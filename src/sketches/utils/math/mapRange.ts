@@ -1,3 +1,4 @@
+import { clamp } from "./clamp";
 /**
  * Re-maps a number from one range to another.
  *
@@ -25,23 +26,11 @@ export const mapRange = (
 ) => {
     if (Math.abs(inputMin - inputMax) < Number.EPSILON) return outputMin;
 
-    let outVal =
+    let outputValue =
         ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) +
         outputMin;
 
-    if (options?.clamp) {
-        if (outputMax < outputMin) {
-            if (outVal < outputMax) {
-                outVal = outputMax;
-            } else if (outVal > outputMin) {
-                outVal = outputMin;
-            }
-        } else if (outVal > outputMax) {
-            outVal = outputMax;
-        } else if (outVal < outputMin) {
-            outVal = outputMin;
-        }
-    }
+    if (options?.clamp) outputValue = clamp(outputMin, outputValue, outputMax);
 
-    return outVal;
+    return outputValue;
 };

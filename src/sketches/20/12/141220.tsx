@@ -9,6 +9,7 @@ import {
 import {
     createMatrix,
     getShortestViewportDimension,
+    lerp,
     mapToRange,
 } from "Utils/math";
 import { simplex3D } from "Utils/random";
@@ -23,7 +24,7 @@ const settings: Canvas2DRendererSettings = {
 };
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const SCALE = 20;
+    const SCALE = shortestDimension < 600 ? 18 : 20;
     const WORD =
         "GENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVE";
 
@@ -37,12 +38,15 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     let zxOff = 0;
     let zyOff = 1000;
 
-    return ({ mouseHasEntered, mousePosition }) => {
+    return ({ mouseHasEntered, mousePosition: [mouseX, mouseY] }) => {
         ctx.clearRect(0, 0, width, height);
 
-        const noiseVel = mouseHasEntered
-            ? mapToRange(mousePosition[0], 0, width, 0.002, 0.1)
-            : 0.05;
+        const mappedCos = (n: number) =>
+            mouseHasEntered ? lerp(n, Math.cos(n), mouseY / height) : n;
+        const mappedSin = (n: number) =>
+            mouseHasEntered ? lerp(n, Math.sin(n), mouseY / height) : n;
+
+        const mappedPI = lerp(1, Math.PI, mouseX / width);
 
         letterGrid.forEach(([x, y]) => {
             const u = x / 130;
@@ -50,15 +54,17 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
             const LETTER = WORD[x / SCALE];
 
-            const xOffset = simplex3D(u, v, zxOff) * 10;
-            const yOffset = simplex3D(u, v, zyOff) * 10;
+            const xOffset =
+                simplex3D(mappedCos(u), mappedSin(v), zxOff) * 10 * mappedPI;
+            const yOffset =
+                simplex3D(mappedCos(u), mappedSin(v), zyOff) * 10 * mappedPI;
 
             ctx.fillStyle = "white";
             ctx.fillText(LETTER, x + xOffset, y + yOffset);
         });
 
-        zxOff += noiseVel;
-        zyOff += noiseVel;
+        zxOff += 0.04;
+        zyOff += 0.04;
     };
 };
 

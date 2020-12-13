@@ -1,73 +1,96 @@
 import React from "react";
 
-import {
-    Canvas2DRenderer,
-    Canvas2DRendererSettings,
-    Canvas2DSetupFn,
-} from "Renderers/Canvas2D";
+import { Canvas2DRenderer, Canvas2DSetupFn } from "Renderers/Canvas2D";
 
+import { generateTextPath, lineBetween } from "Utils/libs/canvas2d";
 import {
-    createMatrix,
+    getDistance,
     getShortestViewportDimension,
-    lerp,
     mapToRange,
+    Vector,
 } from "Utils/math";
-import { simplex3D } from "Utils/random";
+import { inRange, simplex1D } from "Utils/random";
 
-const shortestDimension = getShortestViewportDimension({
-    withMargin: true,
-    cap: 1200,
-});
+class S151220NoisePoint {
+    xOff: number;
+    yOff: number;
+    r: number;
+    x: number;
+    y: number;
 
-const settings: Canvas2DRendererSettings = {
-    dimensions: [shortestDimension, shortestDimension],
-};
+    constructor(r?: number) {
+        this.xOff = inRange(200);
+        this.yOff = inRange(400, 600);
+        this.r = r || 2;
+    }
+
+    update(ctx: CanvasRenderingContext2D) {
+        this.xOff += 0.004;
+        this.yOff += 0.004;
+
+        this.x = mapToRange(simplex1D(this.xOff), -1, 1, 0, ctx.canvas.width / 2);
+        this.y = mapToRange(simplex1D(this.yOff), -1, 1, 0, ctx.canvas.height / 2);
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgb(255, 255, 255)";
+        ctx.stroke();
+    }
+
+    getNearestPoints(pointArray: Vector<2>[], pointsToSave: number) {
+        const sortedPointArray = pointArray.sort(
+            (a, b) =>
+                getDistance(a, [this.x, this.y]) - getDistance(b, [this.x, this.y])
+        );
+        const NearestPoints = sortedPointArray.slice(0, pointsToSave);
+        return NearestPoints;
+    }
+}
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const SCALE = shortestDimension < 600 ? 18 : 20;
-    const WORD =
-        "GENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVEGENERATIVE";
+    const SCALE = getShortestViewportDimension();
+    const WORD = "GENERATIVE";
+    const LETTER = WORD[inRange(0, WORD.length, { isInteger: true })];
 
     ctx.font = `${SCALE}px Fleuron`;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.strokeStyle = "rgb(255, 255, 255)";
 
-    const letterGrid = createMatrix(
-        [Math.ceil(width / SCALE), Math.ceil(height / SCALE)],
-        ([x, y]) => [x * SCALE, y * SCALE] as [number, number]
-    ).flat(1);
+    const points = generateTextPath(ctx, LETTER, width / 2, height / 2, {
+        decimation: inRange(35, 50, { isInteger: true }),
+    });
 
-    let zxOff = 0;
-    let zyOff = 1000;
+    const BALL_COUNT = 12;
+    const NEAREST_POINTS = 45;
+    const balls: S151220NoisePoint[] = Array.from({ length: BALL_COUNT }).map(
+        () => new S151220NoisePoint()
+    );
 
-    return ({ mouseHasEntered, mousePosition: [mouseX, mouseY] }) => {
+    return () => {
         ctx.clearRect(0, 0, width, height);
 
-        const mappedCos = (n: number) =>
-            mouseHasEntered ? lerp(n, Math.cos(n), mouseY / height) : n;
-        const mappedSin = (n: number) =>
-            mouseHasEntered ? lerp(n, Math.sin(n), mouseY / height) : n;
+        // ctx.strokeStyle = `rgba(255, 255, 255, 0.05)`;
+        // ctx.strokeText(LETTER, width / 2, height / 2);
 
-        const mappedPI = lerp(1, Math.PI, mouseX / width);
+        balls.forEach(ball => {
+            ball.update(ctx);
 
-        letterGrid.forEach(([x, y]) => {
-            const u = x / 130;
-            const v = y / 130;
-
-            const LETTER = WORD[x / SCALE];
-
-            const xOffset =
-                simplex3D(mappedCos(u), mappedSin(v), zxOff) * 10 * mappedPI;
-            const yOffset =
-                simplex3D(mappedCos(u), mappedSin(v), zyOff) * 10 * mappedPI;
-
-            ctx.fillStyle = "white";
-            ctx.fillText(LETTER, x + xOffset, y + yOffset);
+            const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
+            nearestPoints.forEach(([x, y], i) => {
+                ctx.beginPath();
+                ctx.arc(x, y, 1, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${
+                    inRange(0.2, 1) - i * (1 / NEAREST_POINTS)
+                })`;
+                ctx.stroke();
+                lineBetween(ctx, [ball.x, ball.y], [x, y]);
+            });
         });
-
-        zxOff += 0.04;
-        zyOff += 0.04;
     };
 };
 
-const S141220 = () => <Canvas2DRenderer sketch={sketch} settings={settings} />;
+const S141220 = () => <Canvas2DRenderer sketch={sketch} />;
 
 export default S141220;

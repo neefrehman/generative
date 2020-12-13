@@ -124,8 +124,8 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
 
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketches(path, fs).reverse();
-    const draftsArray = getDrafts(path, fs);
-    const archiveArray = getArchived(path, fs);
+    const draftsArray = getDrafts(path, fs).reverse();
+    const archiveArray = getArchived(path, fs).reverse();
 
     if (process.env.NODE_ENV === "production") {
         generateSitemap(path, fs);

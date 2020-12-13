@@ -1,7 +1,7 @@
 /**
  * Returns the shortest screen dimension (width or height)
  *
- * @param options.withMargin - Creates a margin to reduce the size of the dimension. Used to give the canvas some room.
+ * @param options
  */
 export const getShortestViewportDimension = ({
     withMargin,

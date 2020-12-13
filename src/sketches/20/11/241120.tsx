@@ -143,8 +143,8 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     };
 };
 
-const S241120 = () => {
-    return isWebGL2Supported() ? (
+const S241120 = () =>
+    isWebGL2Supported() ? (
         <>
             <ThreeRenderer sketch={sketch} />
             <ControlsContainer>
@@ -154,6 +154,5 @@ const S241120 = () => {
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );
-};
 
 export default S241120;

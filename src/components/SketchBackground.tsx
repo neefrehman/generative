@@ -16,6 +16,6 @@ interface SketchBackgroundProps {
 }
 
 /** A background div to override the default page background colour */
-export const SketchBackground = ({ color }: SketchBackgroundProps) => {
-    return <StyledDiv style={{ backgroundColor: color }} />;
-};
+export const SketchBackground = ({ color }: SketchBackgroundProps) => (
+    <StyledDiv style={{ backgroundColor: color }} />
+);

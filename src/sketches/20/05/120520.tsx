@@ -22,9 +22,7 @@ const sketch = (p: p5) => {
     let camXoffTarget = 0;
     let camYoffTarget = 0;
 
-    const forceOdd = (number: number) => {
-        return number % 2 !== 0 ? number : number - 1;
-    };
+    const forceOdd = (number: number) => (number % 2 !== 0 ? number : number - 1);
 
     p.setup = () => {
         p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);

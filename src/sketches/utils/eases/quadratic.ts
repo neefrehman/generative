@@ -1,13 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 
-export const quadraticIn = (t: number): number => {
-    return t * t;
-};
+export const quadraticIn = (t: number): number => t * t;
 
-export const quadraticOut = (t: number): number => {
-    return -t * (t - 2.0);
-};
+export const quadraticOut = (t: number): number => -t * (t - 2.0);
 
 export const quadraticInOut = (t: number): number => {
     t /= 0.5;

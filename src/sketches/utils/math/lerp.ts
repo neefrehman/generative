@@ -7,6 +7,5 @@
  *
  * @returns The interpolated value
  */
-export const lerp = (start: number, end: number, alpha: number): number => {
-    return start * (1 - alpha) + end * alpha;
-};
+export const lerp = (start: number, end: number, alpha: number): number =>
+    start * (1 - alpha) + end * alpha;

@@ -4,10 +4,6 @@ export const sineIn = (t: number): number => {
     return 1 - v;
 };
 
-export const sineOut = (t: number): number => {
-    return Math.sin((t * Math.PI) / 2);
-};
+export const sineOut = (t: number): number => Math.sin((t * Math.PI) / 2);
 
-export const sineInOut = (t: number): number => {
-    return -0.5 * (Math.cos(Math.PI * t) - 1);
-};
+export const sineInOut = (t: number): number => -0.5 * (Math.cos(Math.PI * t) - 1);

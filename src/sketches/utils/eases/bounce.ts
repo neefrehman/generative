@@ -20,12 +20,9 @@ export const bounceOut = (t: number): number => {
         : 10.8 * t * t - 20.52 * t + 10.72;
 };
 
-export const bounceIn = (t: number): number => {
-    return 1.0 - bounceOut(1.0 - t);
-};
+export const bounceIn = (t: number): number => 1.0 - bounceOut(1.0 - t);
 
-export const bounceInOut = (t: number): number => {
-    return t < 0.5
+export const bounceInOut = (t: number): number =>
+    t < 0.5
         ? 0.5 * (1.0 - bounceOut(1.0 - t * 2.0))
         : 0.5 * bounceOut(t * 2.0 - 1.0) + 0.5;
-};

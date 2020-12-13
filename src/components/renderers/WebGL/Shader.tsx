@@ -161,14 +161,15 @@ export const ShaderRenderer = ({
         };
     }, [setupSketch, settings, width, height, defaultVert, defaultFrag]);
 
-    useEffect(() => {
-        return () => {
+    useEffect(
+        () => () => {
             const gl = drawProps.current.gl;
             gl.canvas.width = 1;
             gl.canvas.height = 1;
             gl.getExtension("WEBGL_lose_context").loseContext();
-        };
-    }, []);
+        },
+        []
+    );
 
     return (
         <>

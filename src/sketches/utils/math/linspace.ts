@@ -22,7 +22,7 @@ export const linspace = (
 ) => {
     const { includeEnd = false, offset = 0 } = options ?? {};
 
-    return Array.from({ length: n }, (_, i) => {
-        return includeEnd ? (i + offset) / (n - 1) : (i + offset) / n;
-    });
+    return Array.from({ length: n }, (_, i) =>
+        includeEnd ? (i + offset) / (n - 1) : (i + offset) / n
+    );
 };

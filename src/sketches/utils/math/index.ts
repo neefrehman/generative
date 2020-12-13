@@ -12,6 +12,6 @@ export { lerp } from "./lerp";
 export { lerpAngle } from "./lerpAngle";
 export { lerpVector } from "./lerpVector";
 export { linspace } from "./linspace";
-export { mapRange } from "./mapRange";
+export { mapToRange } from "./mapToRange";
 
 export * from "./types";

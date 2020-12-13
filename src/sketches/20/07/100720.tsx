@@ -4,7 +4,7 @@ import palettes from "nice-color-palettes";
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { lerp, getAngle, getDistance, mapRange, createMatrix } from "Utils/math";
+import { lerp, getAngle, getDistance, mapToRange, createMatrix } from "Utils/math";
 import type { Vector } from "Utils/math";
 import { shuffle, pick, inRange } from "Utils/random";
 import { roundedRect } from "Utils/libs/canvas2d";
@@ -43,7 +43,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
                 ? getDistance(mousePosition, [x, y])
                 : width;
 
-            const mappedLineLength = mapRange(
+            const mappedLineLength = mapToRange(
                 distanceFromMouse,
                 width / 2,
                 0,

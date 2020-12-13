@@ -1,4 +1,4 @@
-import { mapRange } from "Utils/math";
+import { mapToRange } from "Utils/math";
 /**
  * Converts a hex code to a `vec3`, to be passed to a shader uniform
  *
@@ -12,7 +12,7 @@ export const hexToVec3 = (hex: string) => {
     const b = parseInt(hex.slice(5, 7), 16);
 
     const normalisedColor = [r, g, b].map(color =>
-        mapRange(color, 0, 255, 0, 1, { clamp: true })
+        mapToRange(color, 0, 255, 0, 1, { clamp: true })
     );
 
     return normalisedColor;

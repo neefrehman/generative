@@ -14,9 +14,9 @@ import { clamp } from "./clamp";
  * @example
  * // Converts normalized -1..1 coordinate to screen coordinate
  * const x = -1;
- * const pixel = mapRange(x, -1, 1, 0, width, true);
+ * const pixel = mapToRange(x, -1, 1, 0, width, true);
  */
-export const mapRange = (
+export const mapToRange = (
     value: number,
     inputMin: number,
     inputMax: number,

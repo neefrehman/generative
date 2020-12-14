@@ -11,7 +11,7 @@ import {
 } from "Utils/math";
 import { inRange, simplex1D } from "Utils/random";
 
-class S151220NoisePoint {
+export class S151220NoisePoint {
     xOff: number;
     yOff: number;
     r: number;
@@ -25,8 +25,8 @@ class S151220NoisePoint {
     }
 
     update(ctx: CanvasRenderingContext2D) {
-        this.xOff += 0.004;
-        this.yOff += 0.004;
+        this.xOff += 0.0038;
+        this.yOff += 0.0038;
 
         this.x = mapToRange(simplex1D(this.xOff), -1, 1, 0, ctx.canvas.width / 2);
         this.y = mapToRange(simplex1D(this.yOff), -1, 1, 0, ctx.canvas.height / 2);
@@ -64,7 +64,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
     const BALL_COUNT = inRange(9, 14, { isInteger: true });
     const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
-    const balls: S151220NoisePoint[] = Array.from({ length: BALL_COUNT }).map(
+    const balls: S151220NoisePoint[] = [...Array(BALL_COUNT)].map(
         () => new S151220NoisePoint()
     );
 

@@ -49,6 +49,6 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S141220 = () => <Canvas2DRenderer sketch={sketch} />;
+const S151220 = () => <Canvas2DRenderer sketch={sketch} />;
 
-export default S141220;
+export default S151220;

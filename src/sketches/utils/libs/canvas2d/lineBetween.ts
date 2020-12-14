@@ -9,8 +9,8 @@ import type { Vector } from "Utils/math";
  */
 export const lineBetween = (
     ctx: CanvasRenderingContext2D,
-    a: Vector<2>,
-    b: Vector<2>
+    a: Vector,
+    b: Vector
 ) => {
     const [ax, ay] = a;
     const [bx, by] = b;

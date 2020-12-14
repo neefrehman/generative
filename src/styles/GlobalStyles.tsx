@@ -83,6 +83,10 @@ export const GlobalStyles = () => {
                 background-color: ${colors.offWhite};
             }
         }
+
+        #p5_loading {
+            display: none;
+        }
     `;
 
     return <Global styles={globalStyles} />;

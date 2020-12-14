@@ -7,7 +7,6 @@ export interface RendererProps<SketchFunction> {
     sketch: SketchFunction;
     /** The setting for the sketch */
     settings?: RendererSettings;
-
     className?: string;
     children?: ReactNode | HTMLElement;
 }
@@ -18,7 +17,6 @@ export interface RendererProps<SketchFunction> {
 export interface RendererSettings {
     /** The dimensions for the sketch, in pixels. Defaults to [windowWidth, windowHeight] */
     dimensions?: [number, number];
-
     /** Used to set if the sketch will be animated, defaults to true */
     isAnimated?: boolean;
     /** Animation setting for the sketch */

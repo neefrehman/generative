@@ -36,12 +36,12 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     return ({ mouseHasEntered, mousePosition: [mouseX, mouseY] }) => {
         ctx.clearRect(0, 0, width, height);
 
-        const mappedCos = (n: number) =>
+        const lerpedCos = (n: number) =>
             mouseHasEntered ? lerp(n, Math.cos(n), mouseY / height) : n;
-        const mappedSin = (n: number) =>
+        const lerpedSin = (n: number) =>
             mouseHasEntered ? lerp(n, Math.sin(n), mouseY / height) : n;
 
-        const mappedPI = lerp(1, Math.PI, mouseX / width);
+        const lerpedPI = lerp(1, Math.PI, mouseX / width);
 
         letterGrid.forEach(([x, y]) => {
             const u = x / 130;
@@ -50,9 +50,9 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
             const LETTER = WORD[x / SCALE];
 
             const xOffset =
-                simplex3D(mappedCos(u), mappedSin(v), zxOff) * 10 * mappedPI;
+                simplex3D(lerpedCos(u), lerpedSin(v), zxOff) * 10 * lerpedPI;
             const yOffset =
-                simplex3D(mappedCos(u), mappedSin(v), zyOff) * 10 * mappedPI;
+                simplex3D(lerpedCos(u), lerpedSin(v), zyOff) * 10 * lerpedPI;
 
             ctx.fillStyle = "white";
             ctx.fillText(LETTER, x + xOffset, y + yOffset);

@@ -1,5 +1,5 @@
-import path from "path";
-import fs from "fs";
+import type path from "path";
+import type fs from "fs";
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import prettier from "prettier";

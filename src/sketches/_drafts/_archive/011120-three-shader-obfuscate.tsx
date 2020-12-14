@@ -2,7 +2,8 @@ import React from "react";
 import * as THREE from "three";
 import glsl from "glslify";
 
-import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
+import type { ThreeSetupFn } from "Renderers/Three";
+import { ThreeRenderer } from "Renderers/Three";
 
 import { inRange } from "Utils/random";
 

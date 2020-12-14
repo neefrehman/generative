@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Canvas2DRenderer, Canvas2DSetupFn } from "Renderers/Canvas2D";
+import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
+import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
 import { generateTextPath, lineBetween } from "Utils/libs/canvas2d";
 import { getShortestViewportDimension } from "Utils/math";

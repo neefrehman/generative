@@ -1,4 +1,4 @@
-import p5 from "p5";
+import type p5 from "p5";
 
 /**
  * Moves one vector towards another, with velocity related to the distance between them

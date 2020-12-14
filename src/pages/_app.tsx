@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "@emotion/react";
-import { AppProps } from "next/app";
+import type { AppProps } from "next/app";
 
 import { GlobalStyles } from "styles/GlobalStyles";
 import { theme } from "styles/theme";

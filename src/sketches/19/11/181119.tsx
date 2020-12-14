@@ -2,7 +2,7 @@
 // https://www.youtube.com/watch?v=ZI1dmHv3MeM&list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH&index=195
 
 import React from "react";
-import p5 from "p5";
+import type p5 from "p5";
 
 import { P5Renderer } from "Renderers/P5";
 

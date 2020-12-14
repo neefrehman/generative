@@ -3,7 +3,7 @@ import glsl from "glslify";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
 
-import { UniformDict, UniformType } from "Utils/shaders";
+import type { UniformDict, UniformType } from "Utils/shaders";
 
 import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "../types";
 
@@ -11,9 +11,9 @@ import {
     compileShader,
     createAttribute,
     getUniformLocation,
-    GLContext,
     setUniform,
 } from "./helpers";
+import type { GLContext } from "./helpers";
 
 /**
  * A canvas component for running fragment shaders. Handles rendering and cleanup.

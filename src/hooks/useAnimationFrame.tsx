@@ -1,7 +1,8 @@
 import { useEffect, useRef, useCallback } from "react";
 import type { MutableRefObject } from "react";
 
-import { getMean, Vector } from "Utils/math";
+import { getMean } from "Utils/math";
+import type { Vector } from "Utils/math";
 
 /**
  * A custom hook to use `requestAnimationFrame` in a React component, with interactivity

@@ -1,5 +1,5 @@
-import { Vector } from "Utils/math/types";
-import { UniformType, UniformValue } from "Utils/shaders/types";
+import type { Vector } from "Utils/math/types";
+import type { UniformType, UniformValue } from "Utils/shaders/types";
 
 export type GLContext = WebGLRenderingContext | WebGL2RenderingContext;
 

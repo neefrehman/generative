@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import type fs from "fs";
+import type path from "path";
 
 /**
  * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders

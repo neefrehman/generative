@@ -1,5 +1,6 @@
 import React from "react";
-import p5, { Vector } from "p5";
+import { Vector } from "p5";
+import type p5 from "p5";
 
 import { P5Renderer } from "Renderers/P5";
 
@@ -15,9 +16,9 @@ const sketch = (p: p5) => {
 
     const particles: Particle[] = [];
     class Particle {
-        pos: p5.Vector;
-        vel: p5.Vector;
-        acc: p5.Vector;
+        pos: Vector;
+        vel: Vector;
+        acc: Vector;
         maxSpeed: number;
 
         constructor() {
@@ -34,7 +35,7 @@ const sketch = (p: p5) => {
             this.acc.mult(0);
         }
 
-        follow(vectors: p5.Vector[]) {
+        follow(vectors: Vector[]) {
             const x = p.floor(this.pos.x / scale);
             const y = p.floor(this.pos.y / scale);
             const index = x + y * columns;
@@ -42,7 +43,7 @@ const sketch = (p: p5) => {
             this.applyForce(force);
         }
 
-        applyForce(force: p5.Vector) {
+        applyForce(force: Vector) {
             this.acc.add(force);
         }
 
@@ -85,7 +86,7 @@ const sketch = (p: p5) => {
             for (let x = 0; x < columns; x++) {
                 const index = x + y * columns;
                 const angle = p.noise(xOff, yOff, tOff) * p.TWO_PI;
-                const v = p5.Vector.fromAngle(angle);
+                const v = Vector.fromAngle(angle);
                 v.setMag(0.1);
                 flowField[index] = v;
 

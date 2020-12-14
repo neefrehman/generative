@@ -1,4 +1,4 @@
-import { Vector } from "Utils/math";
+import type { Vector } from "Utils/math";
 
 /**
  * Draws a line between 2 points

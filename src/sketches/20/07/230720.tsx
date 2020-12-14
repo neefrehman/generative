@@ -3,11 +3,11 @@
 
 import React from "react";
 
-import {
-    Canvas2DRenderer,
+import type {
     Canvas2DRendererSettings,
     Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
+import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
 import { lineBetween, rgbaToString } from "LibUtils/canvas2d";
 

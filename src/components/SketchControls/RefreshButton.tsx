@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import type { ReactNode } from "react";
 import styled from "@emotion/styled";
 
 import { useRefresh } from "hooks/useRefresh";

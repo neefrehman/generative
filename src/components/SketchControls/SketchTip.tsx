@@ -1,4 +1,5 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import styled from "@emotion/styled";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`

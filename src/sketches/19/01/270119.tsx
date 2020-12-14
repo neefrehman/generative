@@ -1,5 +1,5 @@
 import React from "react";
-import p5 from "p5";
+import type p5 from "p5";
 
 import { P5Renderer } from "Renderers/P5";
 

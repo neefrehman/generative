@@ -2,7 +2,8 @@ import React from "react";
 import * as THREE from "three";
 import palettes from "nice-color-palettes";
 
-import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
+import { ThreeRenderer } from "Renderers/Three";
+import type { ThreeSetupFn } from "Renderers/Three";
 
 import { gaussian, pick } from "Utils/random";
 import { expoInOut } from "Utils/eases";

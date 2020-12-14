@@ -1,6 +1,6 @@
 // Forked, refactored anp.d edited from Yasai on OpenProcessing: https://www.openprocessing.org/sketch/494102
 import React from "react";
-import p5 from "p5";
+import type p5 from "p5";
 
 import { P5Renderer } from "Renderers/P5";
 

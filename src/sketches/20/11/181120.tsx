@@ -3,7 +3,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import glsl from "glslify";
 
-import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
+import type { ThreeSetupFn } from "Renderers/Three";
+import { ThreeRenderer } from "Renderers/Three";
 
 import { getShortestViewportDimension } from "Utils/math";
 import { createSign, inRange } from "Utils/random";

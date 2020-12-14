@@ -2,7 +2,8 @@ import React from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import { ThreeRenderer, ThreeSetupFn } from "Renderers/Three";
+import type { ThreeSetupFn } from "Renderers/Three";
+import { ThreeRenderer } from "Renderers/Three";
 
 const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);

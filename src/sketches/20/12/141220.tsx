@@ -21,9 +21,9 @@ export class S151220NoisePoint {
         this.r = r || 2;
     }
 
-    update(ctx: CanvasRenderingContext2D) {
-        this.xOff += 0.0038;
-        this.yOff += 0.0038;
+    update(ctx: CanvasRenderingContext2D, speed = 0.0038) {
+        this.xOff += speed;
+        this.yOff += speed;
 
         this.x = mapToRange(simplex1D(this.xOff), -1, 1, 0, ctx.canvas.width / 2);
         this.y = mapToRange(simplex1D(this.yOff), -1, 1, 0, ctx.canvas.height / 2);

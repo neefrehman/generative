@@ -10,7 +10,7 @@ import { inRange, pick, simplex1D } from "Utils/random";
 import { S151220NoisePoint } from "./141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["HELLO", "LOVE", "SCARY", "CURVED"]);
+    const WORD = pick(["HELLO", "LOVE", "SLOW", "CURVED"]);
     const SCALE = getShortestViewportDimension({ cap: 900 }) / (WORD.length / 1.3);
 
     ctx.font = `${SCALE}px Fleuron`;
@@ -33,7 +33,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         ctx.clearRect(0, 0, width, height);
 
         balls.forEach(ball => {
-            ball.update(ctx);
+            ball.update(ctx, 0.006);
 
             const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
             nearestPoints.forEach(([x, y], i) => {
@@ -67,6 +67,11 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S161220 = () => <Canvas2DRenderer sketch={sketch} />;
+const S161220 = () => (
+    <Canvas2DRenderer
+        sketch={sketch}
+        settings={{ animationSettings: { fps: 12 } }}
+    />
+);
 
 export default S161220;

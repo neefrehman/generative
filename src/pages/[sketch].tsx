@@ -60,6 +60,14 @@ const SketchPage = ({ sketchId, pathToSketch, gitHubUrl }: SketchPageProps) => {
         <StyledSketchPage>
             <Head>
                 <title>{sketchId} — Generative</title>
+                <meta
+                    property="og:title"
+                    content={`${sketchId} — Generative — a digital sketchbook by Neef Rehman`}
+                />
+                <meta
+                    property="twitter:title"
+                    content={`${sketchId} — Generative — a digital sketchbook by Neef Rehman`}
+                />
             </Head>
 
             {hasMounted && (

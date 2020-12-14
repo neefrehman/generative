@@ -48,7 +48,7 @@ class S151220NoisePoint {
 }
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const SCALE = getShortestViewportDimension();
+    const SCALE = getShortestViewportDimension({ cap: 900 });
     const WORD = "GENERATIVE";
     const LETTER = WORD[inRange(0, WORD.length, { isInteger: true })];
 
@@ -62,8 +62,8 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         decimation: inRange(35, 50, { isInteger: true }),
     });
 
-    const BALL_COUNT = 12;
-    const NEAREST_POINTS = 45;
+    const BALL_COUNT = inRange(9, 14, { isInteger: true });
+    const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
     const balls: S151220NoisePoint[] = Array.from({ length: BALL_COUNT }).map(
         () => new S151220NoisePoint()
     );

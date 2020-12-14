@@ -1,3 +1,4 @@
+export { bezierCurveBetween } from "./bezierCurveBetween";
 export { fixDevicePixelRatio } from "./fixDevicePixelRatio";
 export { generateTextPath } from "./generateTextPath";
 export { roundedRect } from "./roundedRect";

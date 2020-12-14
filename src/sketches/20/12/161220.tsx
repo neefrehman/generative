@@ -3,9 +3,9 @@ import React from "react";
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { generateTextPath, lineBetween } from "Utils/libs/canvas2d";
-import { getShortestViewportDimension } from "Utils/math";
-import { inRange, pick } from "Utils/random";
+import { bezierCurveBetween, generateTextPath } from "Utils/libs/canvas2d";
+import { getShortestViewportDimension, lerpVector } from "Utils/math";
+import { inRange, pick, simplex1D } from "Utils/random";
 
 import { S151220NoisePoint } from "./141220";
 
@@ -23,7 +23,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         decimation: inRange(40, 60, { isInteger: true }),
     });
 
-    const BALL_COUNT = inRange(12, 20, { isInteger: true });
+    const BALL_COUNT = inRange(10, 18, { isInteger: true });
     const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
     const balls: S151220NoisePoint[] = [...Array(BALL_COUNT)].map(
         () => new S151220NoisePoint()
@@ -43,7 +43,25 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
                     inRange(0.2, 1) - i * (1 / NEAREST_POINTS)
                 })`;
                 ctx.stroke();
-                lineBetween(ctx, [ball.x, ball.y], [x, y]);
+                ctx.closePath();
+
+                const cp1 = lerpVector(
+                    [
+                        ball.x + simplex1D(ball.x) * 5,
+                        ball.y + simplex1D(ball.x) * 5,
+                    ],
+                    [x + simplex1D(x) * 50, y + simplex1D(y) * 50],
+                    0.33
+                );
+                const cp2 = lerpVector(
+                    [
+                        ball.x + simplex1D(ball.x) * 5,
+                        ball.y + simplex1D(ball.x) * 5,
+                    ],
+                    [x + simplex1D(x) * 50, y + simplex1D(y) * 50],
+                    0.66
+                );
+                bezierCurveBetween(ctx, [ball.x, ball.y], cp1, cp2, [x, y]);
             });
         });
     };

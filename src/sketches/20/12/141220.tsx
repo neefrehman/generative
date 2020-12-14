@@ -5,8 +5,8 @@ import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 
 import { generateTextPath, lineBetween } from "Utils/libs/canvas2d";
 import { getDistance, getShortestViewportDimension, mapToRange } from "Utils/math";
-import type { Vector } from "Utils/math";
 import { inRange, simplex1D } from "Utils/random";
+import type { Vector } from "Utils/math";
 
 export class S151220NoisePoint {
     xOff: number;

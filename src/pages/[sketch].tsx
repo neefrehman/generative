@@ -48,21 +48,21 @@ export const StyledSketchPage = styled.div`
 
 interface SketchPageProps {
     sketchId: string;
-    pathToSketch: string;
+    importPath: string;
     gitHubUrl: string;
-    sketchMetaImage: string;
+    metaImagePath: string;
 }
 
 const SketchPage = ({
     sketchId,
-    pathToSketch,
+    importPath,
     gitHubUrl,
-    sketchMetaImage,
+    metaImagePath,
 }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
-    const Sketch = lazy(() => import(`../${pathToSketch}`));
+    const Sketch = lazy(() => import(`../${importPath}`));
 
     return (
         <StyledSketchPage>
@@ -73,10 +73,10 @@ const SketchPage = ({
                     property="twitter:title"
                     content={`${sketchId} — ${SEOTitle}`}
                 />
-                {sketchMetaImage && (
+                {metaImagePath && (
                     <>
-                        <meta property="og:image" content={sketchMetaImage} />
-                        <meta property="twitter:image" content={sketchMetaImage} />
+                        <meta property="og:image" content={metaImagePath} />
+                        <meta property="twitter:image" content={metaImagePath} />
                     </>
                 )}
             </Head>
@@ -116,34 +116,34 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sketchId = typeof params.sketch === "string" ? params.sketch : "";
     const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
-    let pathToSketch: string;
+    let importPath: string;
 
     if (isPublished) {
         const year = sketchId.substr(4, 2);
         const month = sketchId.substr(2, 2);
-        pathToSketch = `sketches/${year}/${month}/${sketchId}`;
+        importPath = `sketches/${year}/${month}/${sketchId}`;
     } else {
-        pathToSketch = `sketches/_drafts/${sketchId}`;
+        importPath = `sketches/_drafts/${sketchId}`;
         const isArchived =
-            !fs.existsSync(`src/${pathToSketch}`) && // folder
-            !fs.existsSync(`src/${pathToSketch}.tsx`); // file
-        if (isArchived) pathToSketch = `sketches/_drafts/_archive/${sketchId}`;
+            !fs.existsSync(`src/${importPath}`) && // folder
+            !fs.existsSync(`src/${importPath}.tsx`); // file
+        if (isArchived) importPath = `sketches/_drafts/_archive/${sketchId}`;
     }
 
-    let gitHubPath = `src/${pathToSketch}`;
+    let gitHubPath = `src/${importPath}`;
     gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
-    const sketchMetaImage: string = await import(`../${pathToSketch}`)
+    const metaImagePath: string = await import(`../${importPath}`)
         .then(module => module.metaImage ?? null)
         .catch(() => null);
 
     return {
         props: {
             sketchId,
-            pathToSketch,
+            importPath,
             gitHubUrl,
-            sketchMetaImage,
+            metaImagePath,
         },
     };
 };

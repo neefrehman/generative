@@ -33,9 +33,8 @@ module.exports = {
                 options: {
                     name: path => {
                         const sketchId = path.match(/([0-9]{6})/)[0];
-                        return `${sketchId}.[ext]`;
+                        return `static/meta-images/${sketchId}.[ext]`;
                     },
-                    publicPath: "static/meta-images",
                 },
             },
         });

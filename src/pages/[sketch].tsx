@@ -11,8 +11,6 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 
-import { SEOTitle, SEOUrl } from "./_document";
-
 export const StyledSketchPage = styled.div`
     canvas {
         position: fixed;
@@ -50,6 +48,7 @@ interface SketchPageProps {
     sketchId: string;
     importPath: string;
     gitHubUrl: string;
+    SEOTitle: string;
     metaImagePath: string;
 }
 
@@ -57,6 +56,7 @@ const SketchPage = ({
     sketchId,
     importPath,
     gitHubUrl,
+    SEOTitle,
     metaImagePath,
 }: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
@@ -68,21 +68,12 @@ const SketchPage = ({
         <StyledSketchPage>
             <Head>
                 <title>{sketchId} — Generative</title>
-                <meta property="og:title" content={`${sketchId} — ${SEOTitle}`} />
-                <meta
-                    property="twitter:title"
-                    content={`${sketchId} — ${SEOTitle}`}
-                />
+                <meta property="og:title" content={SEOTitle} />
+                <meta property="twitter:title" content={SEOTitle} />
                 {metaImagePath && (
                     <>
-                        <meta
-                            property="og:image"
-                            content={`${SEOUrl}/${metaImagePath}`}
-                        />
-                        <meta
-                            property="twitter:image"
-                            content={`${SEOUrl}/${metaImagePath}`}
-                        />
+                        <meta property="og:image" content={metaImagePath} />
+                        <meta property="twitter:image" content={metaImagePath} />
                     </>
                 )}
             </Head>
@@ -140,8 +131,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
+    const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
+    const baseUrl = "https://generative.neef.co";
     const metaImagePath: string = await import(`../${importPath}`)
-        .then(module => module.metaImage ?? null)
+        .then(mod => (mod.metaImage ? `${baseUrl}/${mod.metaImage}` : null))
         .catch(() => null);
 
     return {
@@ -149,6 +142,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             sketchId,
             importPath,
             gitHubUrl,
+            SEOTitle,
             metaImagePath,
         },
     };

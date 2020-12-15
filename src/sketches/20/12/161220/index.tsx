@@ -70,7 +70,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 const S161220 = () => (
     <Canvas2DRenderer
         sketch={sketch}
-        settings={{ animationSettings: { fps: 12 } }}
+        settings={{ animationSettings: { fps: 14 } }}
     />
 );
 

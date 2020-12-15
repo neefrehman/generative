@@ -33,7 +33,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         ctx.clearRect(0, 0, width, height);
 
         balls.forEach(ball => {
-            ball.update(ctx, 0.006);
+            ball.update(ctx, 0.0058);
 
             const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
             nearestPoints.forEach(([x, y], i) => {
@@ -70,7 +70,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 const S161220 = () => (
     <Canvas2DRenderer
         sketch={sketch}
-        settings={{ animationSettings: { fps: 14 } }}
+        settings={{ animationSettings: { fps: 1 } }}
     />
 );
 

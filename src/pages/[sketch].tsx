@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import React, { lazy, Suspense, useState, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
+import { useHasMounted } from "hooks/useHasMounted";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -59,8 +60,7 @@ const SketchPage = ({
     SEOTitle,
     metaImagePath,
 }: SketchPageProps) => {
-    const [hasMounted, setHasMounted] = useState(false);
-    useEffect(() => setHasMounted(true), []);
+    const hasMounted = useHasMounted();
 
     const Sketch = lazy(() => import(`../${importPath}`));
 

@@ -23,8 +23,8 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         decimation: inRange(40, 60, { isInteger: true }),
     });
 
-    const BALL_COUNT = inRange(10, 18, { isInteger: true });
-    const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
+    const BALL_COUNT = inRange(12, 18, { isInteger: true });
+    const NEAREST_POINTS = inRange(35, 48, { isInteger: true });
     const balls: S151220NoisePoint[] = [...Array(BALL_COUNT)].map(
         () => new S151220NoisePoint()
     );

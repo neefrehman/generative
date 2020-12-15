@@ -11,7 +11,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 
-import { SEOTitle } from "./_document";
+import { SEOTitle, SEOUrl } from "./_document";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -75,8 +75,14 @@ const SketchPage = ({
                 />
                 {metaImagePath && (
                     <>
-                        <meta property="og:image" content={metaImagePath} />
-                        <meta property="twitter:image" content={metaImagePath} />
+                        <meta
+                            property="og:image"
+                            content={`${SEOUrl}/${metaImagePath}`}
+                        />
+                        <meta
+                            property="twitter:image"
+                            content={`${SEOUrl}/${metaImagePath}`}
+                        />
                     </>
                 )}
             </Head>

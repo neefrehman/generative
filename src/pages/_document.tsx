@@ -45,4 +45,4 @@ class MyDocument extends Document {
 
 export default MyDocument;
 
-export { title as SEOTitle };
+export { title as SEOTitle, url as SEOUrl };

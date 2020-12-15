@@ -28,7 +28,16 @@ module.exports = {
         config.module.rules.push({
             test: /\.(png|jpeg|jpg)$/,
             exclude: /node_modules/,
-            use: ["file-loader"],
+            use: {
+                loader: "file-loader",
+                options: {
+                    name: path => {
+                        const sketchId = path.match(/([0-9]{6})/)[0];
+                        return `${sketchId}.[ext]`;
+                    },
+                    publicPath: "static/meta-images",
+                },
+            },
         });
         
         return config;

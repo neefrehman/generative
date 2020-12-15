@@ -7,7 +7,7 @@ import { bezierCurveBetween, generateTextPath } from "Utils/libs/canvas2d";
 import { getShortestViewportDimension, lerpVector } from "Utils/math";
 import { inRange, pick, simplex1D } from "Utils/random";
 
-import { S151220NoisePoint } from "./141220";
+import { S151220NoisePoint } from "../141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const WORD = pick(["HELLO", "LOVE", "SLOW", "CURVED"]);
@@ -75,3 +75,4 @@ const S161220 = () => (
 );
 
 export default S161220;
+export { default as metaImage } from "./meta-image.png";

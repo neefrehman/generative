@@ -11,6 +11,8 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 
+import { SEOTitle } from "./_document";
+
 export const StyledSketchPage = styled.div`
     canvas {
         position: fixed;
@@ -48,9 +50,15 @@ interface SketchPageProps {
     sketchId: string;
     pathToSketch: string;
     gitHubUrl: string;
+    sketchMetaImage: string;
 }
 
-const SketchPage = ({ sketchId, pathToSketch, gitHubUrl }: SketchPageProps) => {
+const SketchPage = ({
+    sketchId,
+    pathToSketch,
+    gitHubUrl,
+    sketchMetaImage,
+}: SketchPageProps) => {
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => setHasMounted(true), []);
 
@@ -60,14 +68,17 @@ const SketchPage = ({ sketchId, pathToSketch, gitHubUrl }: SketchPageProps) => {
         <StyledSketchPage>
             <Head>
                 <title>{sketchId} — Generative</title>
-                <meta
-                    property="og:title"
-                    content={`${sketchId} — Generative — a digital sketchbook by Neef Rehman`}
-                />
+                <meta property="og:title" content={`${sketchId} — ${SEOTitle}`} />
                 <meta
                     property="twitter:title"
-                    content={`${sketchId} — Generative — a digital sketchbook by Neef Rehman`}
+                    content={`${sketchId} — ${SEOTitle}`}
                 />
+                {sketchMetaImage && (
+                    <>
+                        <meta property="og:image" content={sketchMetaImage} />
+                        <meta property="twitter:image" content={sketchMetaImage} />
+                    </>
+                )}
             </Head>
 
             {hasMounted && (
@@ -123,11 +134,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
+    const sketchMetaImage: string = await import(`../${pathToSketch}`)
+        .then(module => module.metaImage ?? null)
+        .catch(() => null);
+
     return {
         props: {
             sketchId,
             pathToSketch,
             gitHubUrl,
+            sketchMetaImage,
         },
     };
 };

@@ -44,3 +44,5 @@ class MyDocument extends Document {
 }
 
 export default MyDocument;
+
+export { title as SEOTitle };

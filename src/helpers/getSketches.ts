@@ -25,7 +25,7 @@ export const getSketches = (
             const monthPath = pathInstance.resolve(`${yearPath}/${monthFolder}`);
             const sketches = fsInstance
                 .readdirSync(monthPath)
-                .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)$/).test(fileName))
+                .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)?$/).test(fileName))
                 .map(fileName => fileName.replace(".tsx", ""));
 
             sketches.forEach(sketchId => sketchArray.push(sketchId));

@@ -25,6 +25,11 @@ module.exports = {
             exclude: /node_modules/,
             use: ["url-loader"],
         });
+        config.module.rules.push({
+            test: /\.(png|jpeg|jpg)$/,
+            exclude: /node_modules/,
+            use: ["url-loader"],
+        });
         
         return config;
     },

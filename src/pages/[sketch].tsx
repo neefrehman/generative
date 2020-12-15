@@ -132,9 +132,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
     const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
-    const baseImageUrl = "https://generative.neef.co/_next/";
+    const baseImageUrl = "https://generative.neef.co/_next";
     const metaImagePath: string = await import(`../${importPath}`)
-        .then(mod => (mod.metaImage ? baseImageUrl + mod.metaImage : null))
+        .then(mod => (mod.metaImage ? `${baseImageUrl}/${mod.metaImage}` : null))
         .catch(() => null);
 
     return {

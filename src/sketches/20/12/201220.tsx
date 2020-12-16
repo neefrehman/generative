@@ -76,7 +76,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
                 const nY = y + Math.random() * 2;
 
                 ctx.beginPath();
-                ctx.arc(nX, nY, 0.5, 0, Math.PI * 2);
+                ctx.arc(nX, nY, 1, 0, Math.PI * 2);
                 ctx.strokeStyle = pick(pallette);
                 ctx.stroke();
                 ctx.closePath();

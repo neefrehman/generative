@@ -1,16 +1,23 @@
 import React from "react";
+import pallettes from "nice-color-palettes";
 
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { bezierCurveBetween, generateTextPath } from "Utils/libs/canvas2d";
+import { ControlsContainer, RefreshButton } from "components/SketchControls";
+
+import {
+    bezierCurveBetween,
+    clearBackgroundWithColor,
+    generateTextPath,
+} from "Utils/libs/canvas2d";
 import { getShortestViewportDimension, lerpVector } from "Utils/math";
 import { inRange, pick, simplex1D } from "Utils/random";
 
 import { S141220NoisePoint } from "../141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["HELLO", "LOVE", "SLOW", "CURVED"]);
+    const WORD = pick(["HI", "?", "COLOUR", "YES", ":—)", "8", "5", "4", "1"]);
     const SCALE = getShortestViewportDimension({ cap: 900 }) / (WORD.length / 1.3);
 
     ctx.font = `${SCALE}px Fleuron`;
@@ -23,29 +30,30 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         decimation: inRange(40, 60, { isInteger: true }),
     });
 
-    const BALL_COUNT = inRange(14, 20, { isInteger: true });
-    const NEAREST_POINTS = inRange(36, 48, { isInteger: true });
+    const BALL_COUNT = inRange(16, 24, { isInteger: true });
+    const NEAREST_POINTS = inRange(36, 50, { isInteger: true });
 
     const balls: S141220NoisePoint[] = [...Array(BALL_COUNT)].map(
         () => new S141220NoisePoint()
     );
 
+    const pallette = pick(pallettes);
+    const backgroundColor = pick(pallette);
+
     return () => {
-        ctx.clearRect(0, 0, width, height);
+        clearBackgroundWithColor(ctx, backgroundColor);
 
         balls.forEach(ball => {
             ball.update(ctx, 0.0058);
 
             const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
-            nearestPoints.forEach(([x, y], i) => {
-                const nX = x + Math.random() * 3;
-                const nY = y + Math.random() * 3;
+            nearestPoints.forEach(([x, y]) => {
+                const nX = x + Math.random() * 2;
+                const nY = y + Math.random() * 2;
 
                 ctx.beginPath();
-                ctx.arc(nX, nY, 1, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${
-                    inRange(0.2, 1) - i * (1 / NEAREST_POINTS)
-                })`;
+                ctx.arc(nX, nY, 0.5, 0, Math.PI * 2);
+                ctx.strokeStyle = pick(pallette);
                 ctx.stroke();
                 ctx.closePath();
 
@@ -71,13 +79,18 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S161220 = () => (
-    <Canvas2DRenderer
-        sketch={sketch}
-        settings={{ animationSettings: { fps: 14 } }}
-    />
+const S181220 = () => (
+    <>
+        <Canvas2DRenderer
+            sketch={sketch}
+            settings={{ animationSettings: { fps: 14 } }}
+        />
+        <ControlsContainer>
+            <RefreshButton>Change text</RefreshButton>
+        </ControlsContainer>
+    </>
 );
 
-export default S161220;
+export default S181220;
 
 export { default as metaImage } from "./meta-image.png";

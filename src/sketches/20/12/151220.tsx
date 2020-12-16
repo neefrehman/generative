@@ -7,7 +7,7 @@ import { generateTextPath, lineBetween } from "Utils/libs/canvas2d";
 import { getShortestViewportDimension } from "Utils/math";
 import { inRange, pick } from "Utils/random";
 
-import { S151220NoisePoint } from "./141220";
+import { S141220NoisePoint } from "./141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const WORD = pick(["HELLO", "LOVE", "BLUE", "HAPPY", "YAWN"]);
@@ -25,8 +25,8 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
     const BALL_COUNT = inRange(12, 20, { isInteger: true });
     const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
-    const balls: S151220NoisePoint[] = [...Array(BALL_COUNT)].map(
-        () => new S151220NoisePoint()
+    const balls: S141220NoisePoint[] = [...Array(BALL_COUNT)].map(
+        () => new S141220NoisePoint()
     );
 
     return () => {

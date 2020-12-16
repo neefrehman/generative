@@ -9,9 +9,9 @@
  */
 export const decimateArray = <T>(array: T[], fidelity = 2, passes = 1): T[] => {
     const filteredArray = array.filter((_, index) => index % fidelity === 0);
-    const needRecursion = passes > 1;
+    const needsRecursion = passes > 1;
 
-    return needRecursion
+    return needsRecursion
         ? decimateArray(filteredArray, passes - 1, fidelity)
         : filteredArray;
 };

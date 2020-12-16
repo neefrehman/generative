@@ -125,12 +125,24 @@ export const useAnimationFrame = (
             const posX = x - canvasBounds.left;
             const posY = y - canvasBounds.top;
             mousePosition.current = [posX, posY];
+
+            mouseHasEntered.current = true;
             handleIdleChange();
+        };
+
+        const handleMouseDown = (e: MouseEvent) => {
+            updateMousePosition(e.clientX, e.clientY);
+            mouseIsDown.current = true;
         };
 
         const handleMouseMove = (e: MouseEvent) => {
             updateMousePosition(e.clientX, e.clientY);
-            mouseHasEntered.current = true;
+        };
+
+        const handleTouchStart = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            updateMousePosition(touch.clientX, touch.clientY);
+            mouseIsDown.current = true;
         };
 
         const handleTouchMove = (e: TouchEvent) => {
@@ -138,30 +150,24 @@ export const useAnimationFrame = (
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
-        const handleMouseDown = () => {
-            mouseHasEntered.current = true;
-            mouseIsDown.current = true;
-            handleIdleChange();
-        };
-
-        const handleMouseUp = () => {
+        const handleMouseAndTouchUp = () => {
             mouseIsDown.current = false;
         };
 
         element?.addEventListener("mousedown", handleMouseDown);
         element?.addEventListener("mousemove", handleMouseMove);
-        element?.addEventListener("mouseup", handleMouseUp);
-        element?.addEventListener("touchstart", handleMouseDown);
+        element?.addEventListener("mouseup", handleMouseAndTouchUp);
+        element?.addEventListener("touchstart", handleTouchStart);
         element?.addEventListener("touchmove", handleTouchMove);
-        element?.addEventListener("touchend", handleMouseUp);
+        element?.addEventListener("touchend", handleMouseAndTouchUp);
 
         return () => {
             element?.removeEventListener("mousedown", handleMouseDown);
             element?.removeEventListener("mousemove", handleMouseMove);
-            element?.removeEventListener("mouseup", handleMouseUp);
-            element?.removeEventListener("touchstart", handleMouseDown);
+            element?.removeEventListener("mouseup", handleMouseAndTouchUp);
+            element?.removeEventListener("touchstart", handleTouchStart);
             element?.removeEventListener("touchmove", handleTouchMove);
-            element?.removeEventListener("touchend", handleMouseUp);
+            element?.removeEventListener("touchend", handleMouseAndTouchUp);
         };
     }, [domElementRef]);
 

@@ -92,3 +92,5 @@ const S171220 = () => (
 );
 
 export default S171220;
+
+export { default as metaImage } from "./meta-image.png";

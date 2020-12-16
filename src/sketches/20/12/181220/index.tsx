@@ -17,7 +17,8 @@ import { inRange, pick, simplex1D } from "Utils/random";
 import { S141220NoisePoint } from "../141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["HI", "?", "COLOUR", "YES", ":—)", "8", "5", "4", "1"]);
+    // prettier-ignore
+    const WORD = pick(["HI", "?", "COLOUR", "YES", ":—)", "8", "5", "4", "1", "NO", "!", "MAYBE"]);
     const SCALE = getShortestViewportDimension({ cap: 900 }) / (WORD.length / 1.3);
 
     ctx.font = `${SCALE}px Fleuron`;

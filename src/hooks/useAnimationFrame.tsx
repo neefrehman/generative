@@ -35,8 +35,9 @@ export const useAnimationFrame = (
     const fpsArray = useRef<number[]>(new Array(10).fill(throttledFps ?? 60));
     const averageFps = useRef(throttledFps ?? 60);
 
-    const mouseHasEntered = useRef(false);
     const mousePosition = useRef<Vector<2>>([0, 0]);
+    const mouseHasEntered = useRef(false);
+    const mouseIsIdle = useRef(true);
     const mouseIsDown = useRef(false);
 
     const animate = useCallback(
@@ -54,6 +55,7 @@ export const useAnimationFrame = (
                     mouseHasEntered: mouseHasEntered.current,
                     mousePosition: mousePosition.current,
                     mouseIsDown: mouseIsDown.current,
+                    mouseIsIdle: mouseIsIdle.current,
                 });
 
                 frameCount.current += 1;
@@ -116,9 +118,17 @@ export const useAnimationFrame = (
             mousePosition.current = [posX, posY];
         };
 
+        let idleTimeout: ReturnType<typeof setTimeout>;
+
         const handleMouseMove = (e: MouseEvent) => {
-            mouseHasEntered.current = true;
             updateMousePosition(e.clientX, e.clientY);
+            mouseHasEntered.current = true;
+
+            mouseIsIdle.current = false;
+            clearTimeout(idleTimeout);
+            idleTimeout = setTimeout(() => {
+                mouseIsIdle.current = true;
+            }, 3000);
         };
 
         const handleTouchMove = (e: TouchEvent) => {
@@ -156,6 +166,7 @@ export const useAnimationFrame = (
         mouseHasEntered,
         mousePosition,
         mouseIsDown,
+        mouseIsIdle,
     };
 };
 
@@ -201,6 +212,8 @@ export interface OnFrameProps {
     mousePosition?: Vector<2>;
     /** Whether the mouse is currently pressed */
     mouseIsDown?: boolean;
+    /** Whether the mouse has been idle for three seconds */
+    mouseIsIdle?: boolean;
 }
 
 /**
@@ -225,4 +238,6 @@ interface UseAnimationFrameResult {
     mousePosition: MutableRefObject<Vector<2>>;
     /** Reference to whether the mouse is currently pressed */
     mouseIsDown: MutableRefObject<boolean>;
+    /** Reference to whether the mouse has been idle for three seconds */
+    mouseIsIdle: MutableRefObject<boolean>;
 }

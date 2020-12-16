@@ -33,7 +33,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     );
 
     const BALL_COUNT = inRange(18, 22, { isInteger: true });
-    const NEAREST_POINTS = inRange(35, 45, { isInteger: true });
+    const NEAREST_POINTS = inRange(32, 40, { isInteger: true });
     const CIRCLE_NOISE = inRange(35);
     const BEZIER_NOISE = inRange(3, 10);
     const BEZIER_POINT_1 = inRange(0, 1);
@@ -46,13 +46,19 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const pallette = pick(pallettes);
     const backgroundColor = pick(pallette);
 
-    return () => {
+    return ({ mousePosition, mouseIsDown, mouseIsIdle }) => {
         clearBackgroundWithColor(ctx, backgroundColor);
 
-        balls.forEach(ball => {
-            ball.update(ctx, 0.0058);
+        balls.forEach((ball, i) => {
+            ball.update(ctx, {
+                speed: 0.0058,
+                mousePosition: !mouseIsIdle && i === 0 ? mousePosition : null,
+            });
 
-            const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
+            const nearestPoints = ball.getNearestPoints(
+                points,
+                i === 0 && mouseIsDown ? NEAREST_POINTS * 1.8 : NEAREST_POINTS
+            );
             nearestPoints.forEach(([x, y]) => {
                 const nX = x + Math.random() * CIRCLE_NOISE;
                 const nY = y + Math.random() * CIRCLE_NOISE;

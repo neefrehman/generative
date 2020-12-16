@@ -47,6 +47,7 @@ export const Canvas2DRenderer = ({
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition,
                 mouseIsDown: animationProps.mouseIsDown,
+                mouseIsIdle: animationProps.mouseIsIdle,
             }),
         {
             willPlay: isAnimated,

@@ -52,6 +52,7 @@ export const ShaderRenderer = ({
                 mouseHasEntered: animationProps.mouseHasEntered,
                 mousePosition: animationProps.mousePosition,
                 mouseIsDown: animationProps.mouseIsDown,
+                mouseIsIdle: animationProps.mouseIsIdle,
             });
         },
         {

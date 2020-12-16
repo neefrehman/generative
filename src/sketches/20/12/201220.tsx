@@ -4,21 +4,29 @@ import pallettes from "nice-color-palettes";
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { ControlsContainer, RefreshButton } from "components/SketchControls";
+import {
+    ControlsContainer,
+    RefreshButton,
+    SketchTip,
+} from "components/SketchControls";
 
 import {
     bezierCurveBetween,
     clearBackgroundWithColor,
     generateTextPath,
 } from "Utils/libs/canvas2d";
+import type { Vector } from "Utils/math";
 import { getShortestViewportDimension, lerpVector } from "Utils/math";
 import { inRange, pick, simplex1D } from "Utils/random";
 
-import { S141220NoisePoint } from "../141220";
+import { S141220NoisePoint } from "./141220";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     // prettier-ignore
-    const WORD = pick(["HI", "?", "COLOUR", "YES", ":—)", "8", "5", "4", "1", "NO", "!", "MAYBE"]);
+    const WORD = pick([
+        "HI", "?", "COLOUR", "YES", ":—)", "MOVE", "@",
+        "8", "5", "4", "1", "NO", "!", "MAYBE", "HOLD",
+    ]);
     const SCALE = getShortestViewportDimension({ cap: 900 }) / (WORD.length / 1.3);
 
     ctx.font = `${SCALE}px Fleuron`;
@@ -31,8 +39,8 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         decimation: inRange(40, 60, { isInteger: true }),
     });
 
-    const BALL_COUNT = inRange(16, 24, { isInteger: true });
-    const NEAREST_POINTS = inRange(36, 50, { isInteger: true });
+    const BALL_COUNT = inRange(16, 22, { isInteger: true });
+    let NEAREST_POINTS = 36;
 
     const balls: S141220NoisePoint[] = [...Array(BALL_COUNT)].map(
         () => new S141220NoisePoint()
@@ -41,11 +49,26 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const pallette = pick(pallettes);
     const backgroundColor = pick(pallette);
 
-    return () => {
+    let swarmCenter = [width / 2, height / 2] as Vector<2>;
+
+    return ({ mouseIsIdle, mousePosition, mouseIsDown }) => {
         clearBackgroundWithColor(ctx, backgroundColor);
 
+        if (mouseIsDown) NEAREST_POINTS += NEAREST_POINTS < 64 ? 2 : 0;
+        else NEAREST_POINTS = 36;
+
+        swarmCenter = lerpVector(
+            swarmCenter,
+            !mouseIsIdle ? mousePosition : [width / 2, height / 2],
+            0.33
+        );
+
         balls.forEach(ball => {
-            ball.update(ctx, { speed: 0.0058 });
+            ball.update(ctx, {
+                speed: 0.0058,
+                mousePosition: swarmCenter,
+                mouseOffset: 160,
+            });
 
             const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
             nearestPoints.forEach(([x, y]) => {
@@ -88,10 +111,11 @@ const S181220 = () => (
         />
         <ControlsContainer>
             <RefreshButton>Change text</RefreshButton>
+            <SketchTip>Move and click</SketchTip>
         </ControlsContainer>
     </>
 );
 
 export default S181220;
 
-export { default as metaImage } from "./meta-image.png";
+export { default as metaImage } from "./181220/meta-image.png";

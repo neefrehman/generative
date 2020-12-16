@@ -15,18 +15,29 @@ export class S141220NoisePoint {
     x: number;
     y: number;
 
-    constructor(r?: number) {
+    constructor() {
         this.xOff = inRange(200);
         this.yOff = inRange(400, 600);
-        this.r = r || 2;
+        this.r = 2;
     }
 
-    update(ctx: CanvasRenderingContext2D, speed = 0.0038) {
+    update(
+        ctx: CanvasRenderingContext2D,
+        {
+            speed = 0.0038,
+            mousePosition,
+            mouseOffset = 20,
+        }: { speed?: number; mousePosition?: Vector<2>; mouseOffset?: number } = {}
+    ) {
         this.xOff += speed;
         this.yOff += speed;
 
-        this.x = mapToRange(simplex1D(this.xOff), -1, 1, 0, ctx.canvas.width / 2);
-        this.y = mapToRange(simplex1D(this.yOff), -1, 1, 0, ctx.canvas.height / 2);
+        this.x = mousePosition
+            ? mousePosition[0] + simplex1D(this.xOff * 4) * mouseOffset
+            : mapToRange(simplex1D(this.xOff), -1, 1, 0, ctx.canvas.width / 2);
+        this.y = mousePosition
+            ? mousePosition[1] + simplex1D(this.yOff * 4) * mouseOffset
+            : mapToRange(simplex1D(this.yOff), -1, 1, 0, ctx.canvas.height / 2);
 
         ctx.beginPath();
         ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);

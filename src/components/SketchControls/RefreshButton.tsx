@@ -6,6 +6,7 @@ import { useRefresh } from "hooks/useRefresh";
 
 const StyledButton = styled.button`
     max-width: max-content;
+    background-color: rgb(85, 85, 85, 0.7);
 `;
 
 interface RefreshButtonProps {

@@ -42,7 +42,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         ctx.clearRect(0, 0, width, height);
 
         balls.forEach(ball => {
-            ball.update(ctx, 0.0058);
+            ball.update(ctx, { speed: 0.0058 });
 
             const nearestPoints = ball.getNearestPoints(points, NEAREST_POINTS);
             nearestPoints.forEach(([x, y], i) => {

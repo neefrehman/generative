@@ -54,8 +54,11 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     return ({ mouseIsIdle, mousePosition, mouseIsDown }) => {
         clearBackgroundWithColor(ctx, backgroundColor);
 
-        if (mouseIsDown) NEAREST_POINTS += NEAREST_POINTS < 64 ? 2 : 0;
-        else NEAREST_POINTS = 36;
+        if (mouseIsDown) {
+            NEAREST_POINTS += NEAREST_POINTS < 64 ? 2 : 0;
+        } else {
+            NEAREST_POINTS -= NEAREST_POINTS > 36 ? 2 : 0;
+        }
 
         swarmCenter = lerpVector(
             swarmCenter,

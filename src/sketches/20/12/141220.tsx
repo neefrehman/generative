@@ -1,3 +1,5 @@
+// Inspired by some work from sennep: https://www.instagram.com/p/CHq6I1XBxuy/
+
 import React from "react";
 
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
@@ -50,8 +52,8 @@ export class S141220NoisePoint {
             (a, b) =>
                 getDistance(a, [this.x, this.y]) - getDistance(b, [this.x, this.y])
         );
-        const NearestPoints = sortedPointArray.slice(0, pointsToSave);
-        return NearestPoints;
+        const nearestPoints = sortedPointArray.slice(0, pointsToSave);
+        return nearestPoints;
     }
 }
 

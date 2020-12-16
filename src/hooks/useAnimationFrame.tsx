@@ -111,19 +111,8 @@ export const useAnimationFrame = (
     useEffect(() => {
         const element = domElementRef?.current;
 
-        const updateMousePosition = (x: number, y: number) => {
-            const canvasBounds = domElementRef.current.getBoundingClientRect();
-            const posX = x - canvasBounds.left;
-            const posY = y - canvasBounds.top;
-            mousePosition.current = [posX, posY];
-        };
-
         let idleTimeout: ReturnType<typeof setTimeout>;
-
-        const handleMouseMove = (e: MouseEvent) => {
-            updateMousePosition(e.clientX, e.clientY);
-            mouseHasEntered.current = true;
-
+        const handleIdleChange = () => {
             mouseIsIdle.current = false;
             clearTimeout(idleTimeout);
             idleTimeout = setTimeout(() => {
@@ -131,27 +120,47 @@ export const useAnimationFrame = (
             }, 3000);
         };
 
+        const updateMousePosition = (x: number, y: number) => {
+            const canvasBounds = domElementRef.current.getBoundingClientRect();
+            const posX = x - canvasBounds.left;
+            const posY = y - canvasBounds.top;
+            mousePosition.current = [posX, posY];
+            handleIdleChange();
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            updateMousePosition(e.clientX, e.clientY);
+            mouseHasEntered.current = true;
+        };
+
         const handleTouchMove = (e: TouchEvent) => {
             const touch = e.touches[0];
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
-        const handleMouseDown = () => { mouseIsDown.current = true; }; // prettier-ignore
-        const handleMouseUp = () => { mouseIsDown.current = false }; // prettier-ignore
+        const handleMouseDown = () => {
+            mouseHasEntered.current = true;
+            mouseIsDown.current = true;
+            handleIdleChange();
+        };
 
-        element?.addEventListener("mousemove", handleMouseMove);
-        element?.addEventListener("touchmove", handleTouchMove);
+        const handleMouseUp = () => {
+            mouseIsDown.current = false;
+        };
+
         element?.addEventListener("mousedown", handleMouseDown);
+        element?.addEventListener("mousemove", handleMouseMove);
         element?.addEventListener("mouseup", handleMouseUp);
         element?.addEventListener("touchstart", handleMouseDown);
+        element?.addEventListener("touchmove", handleTouchMove);
         element?.addEventListener("touchend", handleMouseUp);
 
         return () => {
-            element?.removeEventListener("mousemove", handleMouseMove);
-            element?.removeEventListener("touchmove", handleTouchMove);
             element?.removeEventListener("mousedown", handleMouseDown);
+            element?.removeEventListener("mousemove", handleMouseMove);
             element?.removeEventListener("mouseup", handleMouseUp);
             element?.removeEventListener("touchstart", handleMouseDown);
+            element?.removeEventListener("touchmove", handleTouchMove);
             element?.removeEventListener("touchend", handleMouseUp);
         };
     }, [domElementRef]);

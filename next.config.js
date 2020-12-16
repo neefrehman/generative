@@ -1,6 +1,6 @@
 /* eslint-disable */
 module.exports = {
-    webpack(config, { isServer }) {
+    webpack(config) {
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
@@ -33,9 +33,9 @@ module.exports = {
                 options: {
                     name: path => {
                         const sketchId = path.match(/([0-9]{6})/)[0];
-                        return `${sketchId}.[ext]`;
+                        return `${sketchId ? `${sketchId}-meta` : "[name]"}.[ext]`;
                     },
-                    outputPath: `static/meta-images`,
+                    outputPath: `static/images`,
                 },
             },
         });

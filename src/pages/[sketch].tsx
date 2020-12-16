@@ -50,7 +50,7 @@ interface SketchPageProps {
     importPath: string;
     gitHubUrl: string;
     SEOTitle: string;
-    metaImagePath: string;
+    metaImageUrl: string;
 }
 
 const SketchPage = ({
@@ -58,7 +58,7 @@ const SketchPage = ({
     importPath,
     gitHubUrl,
     SEOTitle,
-    metaImagePath,
+    metaImageUrl,
 }: SketchPageProps) => {
     const hasMounted = useHasMounted();
 
@@ -70,10 +70,10 @@ const SketchPage = ({
                 <title>{sketchId} — Generative</title>
                 <meta property="og:title" content={SEOTitle} />
                 <meta property="twitter:title" content={SEOTitle} />
-                {metaImagePath && (
+                {metaImageUrl && (
                     <>
-                        <meta property="og:image" content={metaImagePath} />
-                        <meta property="twitter:image" content={metaImagePath} />
+                        <meta property="og:image" content={metaImageUrl} />
+                        <meta property="twitter:image" content={metaImageUrl} />
                     </>
                 )}
             </Head>
@@ -132,9 +132,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
     const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
-    const baseImageUrl = "https://generative.neef.co/_next";
-    const metaImagePath: string = await import(`../${importPath}`)
-        .then(mod => (mod.metaImage ? `${baseImageUrl}/${mod.metaImage}` : null))
+    const baseUrl = "https://generative.neef.co/_next/";
+    const metaImageUrl: string = await import(`../${importPath}`)
+        .then(module => (module.metaImage ? baseUrl + module.metaImage : null))
         .catch(() => null);
 
     return {
@@ -143,7 +143,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             importPath,
             gitHubUrl,
             SEOTitle,
-            metaImagePath,
+            metaImageUrl,
         },
     };
 };

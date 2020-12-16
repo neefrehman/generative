@@ -14,5 +14,6 @@ export { lerpAngle } from "./lerpAngle";
 export { lerpVector } from "./lerpVector";
 export { linspace } from "./linspace";
 export { mapToRange } from "./mapToRange";
+export { multiplyScalar } from "./multiplyScalar";
 
 export * from "./types";

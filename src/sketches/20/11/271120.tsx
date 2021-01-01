@@ -21,7 +21,7 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
-        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
+        #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
         varying vec2 vUv;
 

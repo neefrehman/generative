@@ -21,7 +21,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
 
         #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
         #pragma glslify: smin = require("../../utils/shaders/smin/poly.glsl");
-        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
+        #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
         #define PI 3.1415;
 

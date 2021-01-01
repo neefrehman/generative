@@ -21,13 +21,14 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             type: "3f",
         },
         mixAmount: { value: inRange(0.45, 0.75), type: "1f" },
+        baseOffset: { value: inRange(3, 300), type: "1f" },
     },
     frag: glsl`
         precision highp float;
 
         #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
         #pragma glslify: smin = require("../../utils/shaders/smin/poly.glsl");
-        #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
+        #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
         #define PI 3.1415
 
@@ -39,6 +40,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
         uniform vec2 mousePosition;
         uniform vec3 colorToMix;
         uniform float mixAmount;
+        uniform float baseOffset;
 
         float sdSphere(vec3 pos, float r) {
             return length(pos) - r;
@@ -54,20 +56,22 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
         }
 
         float sdf(vec3 pos) {
-            vec3 p1 = rotate(pos, vec3(1.0), time);
+            vec3 p1 = rotate(pos, vec3(1.0), time * 1.5);
             float box = smin(sdBox(p1, vec3(0.3 - sin(time * 3.0) * 0.04)), sdSphere(p1, 0.35 - sin(time * 3.0) * 0.04), 0.3 + sin(time * 4.0) * 0.05);
             float realSphere = sdSphere(p1, 0.45);
             float final = mix(box, realSphere, 0.0);
 
-            for (float i = 0.0; i < 12.0; i++) {
-                float randomOffset = rand(vec2(i, 0.0)) * 10.0;
-                float progress = 1.0 - fract(time * 0.15 * i + randomOffset);
+            for (float i = 0.0; i < 10.0; i++) {
+                float randomOffset = rand(vec2(i, 0.0)) * baseOffset;
+                float progress = 1.0 - fract((time * 0.18 * i) + randomOffset);
+
                 vec3 spherePos = vec3(
                     sin(randomOffset * 2.0 * PI),
                     cos(randomOffset * 2.0 * PI), 
                     0.0
                 ) * 2.0 * progress;
-                float goToCenter = sdSphere(pos - spherePos, 0.1);
+
+                float goToCenter = sdSphere(pos - spherePos, 0.12);
                 final = smin(final, goToCenter, 0.3);
             } 
 
@@ -104,7 +108,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             float t = 0.0;
             float tMax = 5.0;
 
-            for (int i = 0; i < 256; ++i) {
+            for (int i = 0; i < 128; ++i) {
                 vec3 currentPos = camPos + (t * ray);
                 float h = sdf(currentPos);
                 if (h < 0.0001 || t > tMax) break;
@@ -136,7 +140,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
         uniforms.mousePosition.value = lerpVector(
             uniforms.mousePosition.value,
             !mouseIsIdle ? mousePosition : [width / 2, height / 2],
-            0.05
+            0.15
         );
     },
 });

@@ -7,8 +7,7 @@ import type { ShaderSetupFn } from "Renderers/WebGL";
 import { ShaderRenderer } from "Renderers/WebGL";
 
 import { lerpVector } from "Utils/math";
-import { inRange, pick } from "Utils/random";
-import { hexToVec3 } from "Utils/shaders";
+import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
     uniforms: {

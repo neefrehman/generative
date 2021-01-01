@@ -16,7 +16,8 @@ export type UniformType =
     | "1iv"
     | "2iv"
     | "3iv"
-    | "4iv";
+    | "4iv"
+    | "s2d";
 
 export type UniformValue = number | Vector | Float32List | Int32List;
 

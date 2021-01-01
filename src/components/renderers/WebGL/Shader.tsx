@@ -71,7 +71,7 @@ export const ShaderRenderer = ({
         varying vec2 vUv;
         void main() {
             vUv = uv;
-            gl_Position = vec4(position, 0.0, 1.0);    
+            gl_Position = vec4(position, 0.0, 1.0);
         }
     `;
 
@@ -83,10 +83,12 @@ export const ShaderRenderer = ({
 
     useEffect(() => {
         const canvas = canvasElement.current;
-        const gl = canvas.getContext("webgl");
+        const gl = canvas.getContext("webgl", { antialias: true });
+        const program = gl.createProgram();
 
         const initialSketchProps: ShaderDrawProps = {
             gl,
+            program,
             uniforms: uniformsRef.current, // TODO: find way to extract types of uniform input and add safety to props output?
             width,
             height,
@@ -106,7 +108,6 @@ export const ShaderRenderer = ({
         const vertexShader = compileShader(vert, gl.VERTEX_SHADER, gl);
         const fragmentShader = compileShader(frag, gl.FRAGMENT_SHADER, gl);
 
-        const program = gl.createProgram();
         gl.attachShader(program, vertexShader);
         gl.attachShader(program, fragmentShader);
         gl.linkProgram(program);
@@ -202,6 +203,8 @@ export type ShaderDrawProps = {
     gl: GLContext;
     /** The shader uniforms that you created in the sketches retiurn object. Update these by changing their `value` property */
     uniforms?: UniformDict;
+    /** The WebGl program */
+    program?: WebGLProgram;
 } & DrawProps;
 
 /**

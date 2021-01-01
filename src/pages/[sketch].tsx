@@ -47,7 +47,7 @@ export const StyledSketchPage = styled.div`
 
 interface SketchPageProps {
     sketchId: string;
-    importPath: string;
+    sketchImportPath: string;
     gitHubUrl: string;
     SEOTitle: string;
     metaImageUrl: string;
@@ -55,14 +55,14 @@ interface SketchPageProps {
 
 const SketchPage = ({
     sketchId,
-    importPath,
+    sketchImportPath,
     gitHubUrl,
     SEOTitle,
     metaImageUrl,
 }: SketchPageProps) => {
     const hasMounted = useHasMounted();
 
-    const Sketch = lazy(() => import(`../${importPath}`));
+    const Sketch = lazy(() => import(`../${sketchImportPath}`));
 
     return (
         <StyledSketchPage>
@@ -99,6 +99,8 @@ const SketchPage = ({
     );
 };
 
+export default SketchPage;
+
 export const getStaticPaths: GetStaticPaths = async () => {
     const sketchArray = getSketches(path, fs);
     const draftsArray = getDrafts(path, fs);
@@ -113,39 +115,37 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sketchId = typeof params.sketch === "string" ? params.sketch : "";
     const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
-    let importPath: string;
+    let sketchImportPath: string;
 
     if (isPublished) {
         const year = sketchId.substr(4, 2);
         const month = sketchId.substr(2, 2);
-        importPath = `sketches/${year}/${month}/${sketchId}`;
+        sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
     } else {
-        importPath = `sketches/_drafts/${sketchId}`;
+        sketchImportPath = `sketches/_drafts/${sketchId}`;
         const isArchived =
-            !fs.existsSync(`src/${importPath}`) && // folder
-            !fs.existsSync(`src/${importPath}.tsx`); // file
-        if (isArchived) importPath = `sketches/_drafts/_archive/${sketchId}`;
+            !fs.existsSync(`src/${sketchImportPath}`) && // folder
+            !fs.existsSync(`src/${sketchImportPath}.tsx`); // file
+        if (isArchived) sketchImportPath = `sketches/_drafts/_archive/${sketchId}`;
     }
 
-    let gitHubPath = `src/${importPath}`;
+    let gitHubPath = `src/${sketchImportPath}`;
     gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
     const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
 
     const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
     const baseUrl = "https://generative.neef.co/_next/";
-    const metaImageUrl: string = await import(`../${importPath}`)
+    const metaImageUrl: string = await import(`../${sketchImportPath}`)
         .then(module => (module.metaImage ? baseUrl + module.metaImage : null))
         .catch(() => null);
 
     return {
         props: {
             sketchId,
-            importPath,
+            sketchImportPath,
             gitHubUrl,
             SEOTitle,
             metaImageUrl,
         },
     };
 };
-
-export default SketchPage;

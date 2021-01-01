@@ -122,6 +122,8 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
     );
 };
 
+export default Home;
+
 export const getStaticProps: GetStaticProps = async () => {
     const sketchArray = getSketches(path, fs).reverse();
     const draftsArray = getDrafts(path, fs).reverse();
@@ -133,5 +135,3 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return { props: { sketchArray, draftsArray, archiveArray } };
 };
-
-export default Home;

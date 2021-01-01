@@ -20,8 +20,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
     frag: glsl`
         precision highp float;
 
-        #pragma glslify: smin = require(glsl-smooth-min/poly);
-        #pragma glslify: rotate = require(glsl-rotate);
+        #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+        #pragma glslify: smin = require("../../utils/shaders/smin/poly.glsl");
         #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
 
         #define PI 3.1415;

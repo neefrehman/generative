@@ -25,8 +25,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
     frag: glsl`
         precision highp float;
 
-        #pragma glslify: smin = require(glsl-smooth-min/poly);
-        #pragma glslify: rotate = require(glsl-rotate);
+        #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+        #pragma glslify: smin = require("../../utils/shaders/smin/poly.glsl");
         #pragma glslify: filmGrain = require("../../utils/shaders/filmGrain.frag");
 
         #define PI 3.1415
@@ -61,8 +61,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
 
             for (float i = 0.0; i < 12.0; i++) {
                 float randomOffset = rand(vec2(i, 0.0)) * 10.0;
-                float progress = 1.0 - fract(time + randomOffset);
-                vec3 spherePos = vec3(sin(randomOffset * 2.0 * PI), cos(randomOffset * 2.0 * PI), 0.0) * 2.0 * progress;
+                float progress = 1.0 - fract(time * 0.15 * i + randomOffset);
+                vec3 spherePos = vec3(
+                    sin(randomOffset * 2.0 * PI),
+                    cos(randomOffset * 2.0 * PI), 
+                    0.0
+                ) * 2.0 * progress;
                 float goToCenter = sdSphere(pos - spherePos, 0.1);
                 final = smin(final, goToCenter, 0.3);
             } 

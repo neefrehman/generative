@@ -8,7 +8,7 @@ export interface RendererProps<SketchFunction> {
     /** The setting for the sketch */
     settings?: RendererSettings;
     className?: string;
-    style: CSSProperties;
+    style?: CSSProperties;
     children?: ReactNode | HTMLElement;
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-new */ /* <- p5 constructor required */
 /* eslint-disable new-cap */ /* <- p5 constructor used with lowercase p */
 import React, { useRef, useEffect } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import p5 from "p5";
 
 /**
@@ -42,5 +42,6 @@ interface P5RendererProps {
     /** If true, the canvas will resize to window whenever the window is resized */
     autoResizeToWindow?: boolean;
     className?: string;
+    style?: CSSProperties;
     children?: ReactNode | HTMLElement;
 }

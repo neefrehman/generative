@@ -1,6 +1,3 @@
-import path from "path";
-import fs from "fs";
-
 import React, { useContext } from "react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
@@ -125,12 +122,12 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const sketchArray = getSketches(path, fs).reverse();
-    const draftsArray = getDrafts(path, fs).reverse();
-    const archiveArray = getArchived(path, fs).reverse();
+    const sketchArray = getSketches().reverse();
+    const draftsArray = getDrafts().reverse();
+    const archiveArray = getArchived().reverse();
 
     if (process.env.NODE_ENV === "production") {
-        generateSitemap(path, fs);
+        generateSitemap();
     }
 
     return { props: { sketchArray, draftsArray, archiveArray } };

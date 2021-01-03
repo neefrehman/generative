@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-
 import React, { lazy, Suspense } from "react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
@@ -9,8 +6,9 @@ import styled from "@emotion/styled";
 
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
-import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 import { useHasMounted } from "hooks/useHasMounted";
+import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
+import { isFolderSketch, sketchExists } from "helpers/sketchTests";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -62,7 +60,9 @@ const SketchPage = ({
 }: SketchPageProps) => {
     const hasMounted = useHasMounted();
 
-    const Sketch = lazy(() => import(`../${sketchImportPath}`));
+    const Sketch = lazy(
+        () => import(/* webpackInclude: /sketches\/*./ */ `../${sketchImportPath}`)
+    );
 
     return (
         <StyledSketchPage>
@@ -102,9 +102,9 @@ const SketchPage = ({
 export default SketchPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const sketchArray = getSketches(path, fs);
-    const draftsArray = getDrafts(path, fs);
-    const archiveArray = getArchived(path, fs);
+    const sketchArray = getSketches();
+    const draftsArray = getDrafts();
+    const archiveArray = getArchived();
     const allSketchesArray = [...sketchArray, ...draftsArray, ...archiveArray];
 
     const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));
@@ -122,20 +122,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         const month = sketchId.substr(2, 2);
         sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
     } else {
-        sketchImportPath = `sketches/_drafts/${sketchId}`;
-        const isArchived =
-            !fs.existsSync(`src/${sketchImportPath}`) && // folder
-            !fs.existsSync(`src/${sketchImportPath}.tsx`); // file
-        if (isArchived) sketchImportPath = `sketches/_drafts/_archive/${sketchId}`;
+        sketchImportPath = sketchExists(`sketches/_drafts/${sketchId}`)
+            ? `sketches/_drafts/${sketchId}`
+            : `sketches/_drafts/_archive/${sketchId}`;
     }
 
-    let gitHubPath = `src/${sketchImportPath}`;
-    gitHubPath += fs.existsSync(`${gitHubPath}.tsx`) ? ".tsx" : "/index.tsx";
-    const gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/${gitHubPath}`;
+    let gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/src/${sketchImportPath}`;
+    gitHubUrl += isFolderSketch(sketchImportPath) ? "/index.tsx" : ".tsx";
 
     const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
     const baseUrl = "https://generative.neef.co/_next/";
-    const metaImageUrl: string = await import(`../${sketchImportPath}`)
+    const metaImageUrl = await import(`../${sketchImportPath}`)
         .then(module => (module.metaImage ? baseUrl + module.metaImage : null))
         .catch(() => null);
 

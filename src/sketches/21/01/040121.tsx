@@ -1,5 +1,3 @@
-// From Akella's raymarching tutorial: https://youtu.be/q2WcGi3Cr9w
-
 import glsl from "glslify";
 import React from "react";
 

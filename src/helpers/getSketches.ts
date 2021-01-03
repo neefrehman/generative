@@ -1,29 +1,26 @@
-import type fs from "fs";
-import type path from "path";
+import fs from "fs";
+import path from "path";
 
 /**
  * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
  */
-export const getSketches = (
-    pathInstance: typeof path,
-    fsInstance: typeof fs
-): string[] => {
+export const getSketches = (): string[] => {
     const sketchArray: string[] = [];
 
-    const sketchPath = pathInstance.resolve("src/sketches");
-    const yearFolders = fsInstance
+    const sketchPath = path.resolve("src/sketches");
+    const yearFolders = fs
         .readdirSync(sketchPath)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearPath = pathInstance.resolve(`${sketchPath}/${yearFolder}`);
-        const monthFolders = fsInstance
+        const yearPath = path.resolve(`${sketchPath}/${yearFolder}`);
+        const monthFolders = fs
             .readdirSync(yearPath)
             .filter(folderName => folderName.length === 2);
 
         monthFolders.forEach(monthFolder => {
-            const monthPath = pathInstance.resolve(`${yearPath}/${monthFolder}`);
-            const sketches = fsInstance
+            const monthPath = path.resolve(`${yearPath}/${monthFolder}`);
+            const sketches = fs
                 .readdirSync(monthPath)
                 .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)?$/).test(fileName))
                 .map(fileName => fileName.replace(".tsx", ""));
@@ -38,12 +35,9 @@ export const getSketches = (
 /**
  * Gets all draft sketches from the `_drafts` folder
  */
-export const getDrafts = (
-    pathInstance: typeof path,
-    fsInstance: typeof fs
-): string[] => {
-    const draftsPath = pathInstance.resolve("src/sketches/_drafts");
-    const draftsArray = fsInstance
+export const getDrafts = (): string[] => {
+    const draftsPath = path.resolve("src/sketches/_drafts");
+    const draftsArray = fs
         .readdirSync(draftsPath)
         .map(fileName => fileName.replace(".tsx", ""));
 
@@ -53,12 +47,9 @@ export const getDrafts = (
 /**
  * Gets all archived drafts sketches from the `_drafts/_archive` folder
  */
-export const getArchived = (
-    pathInstance: typeof path,
-    fsInstance: typeof fs
-): string[] => {
-    const archivePath = pathInstance.resolve("src/sketches/_drafts/_archive");
-    const archiveArray = fsInstance
+export const getArchived = (): string[] => {
+    const archivePath = path.resolve("src/sketches/_drafts/_archive");
+    const archiveArray = fs
         .readdirSync(archivePath)
         .map(fileName => fileName.replace(".tsx", ""));
 

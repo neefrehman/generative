@@ -23,7 +23,10 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             aspect: { value: aspect },
             time: { value: inRange(200, 600), type: "1f" },
             resolution: { value: [actualWidth, actualHeight], type: "2f" },
-            mousePosition: { value: [width / 2, height / 2], type: "2f" },
+            mousePosition: {
+                value: [actualWidth / 2, actualHeight / 2],
+                type: "2f",
+            },
             baseOffset: { value: Math.random(), type: "1f" },
             colorToMix: {
                 value: hexToVec3(

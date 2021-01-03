@@ -32,8 +32,13 @@ module.exports = {
                 loader: "file-loader",
                 options: {
                     name: path => {
-                        const sketchId = path.match(/([0-9]{6})/)[0];
-                        return `${sketchId ? `${sketchId}-meta` : "[name]"}.[ext]`;
+                        const isBundledWithSketch = path.match(/([0-9]{6})/);
+                        if (isBundledWithSketch) {
+                            const sketchId = path.match(/([0-9]{6})/)[0];
+                            return `${sketchId}-meta.[ext]`;
+                        } else {
+                            return "[name].[ext]";
+                        }
                     },
                     outputPath: `static/images`,
                 },

@@ -6,12 +6,15 @@ import { css, Global, useTheme } from "@emotion/react";
  * @link https://github.com/emotion-js/emotion/issues/2154#issuecomment-737482603
  */
 export const FontFaceWorkaround = () => (
-    <style
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-            __html: `@font-face{font-family:"Fleuron";font-weight:normal;font-display:block;src:url("/static/fonts/fleuronregular.woff2");}`,
-        }}
-    />
+    <>
+        <link rel="preload" href="/static/fonts/fleuronregular.woff2" />
+        <style
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+                __html: `@font-face{font-family:"Fleuron";font-weight:normal;font-display:block;src:url("/static/fonts/fleuronregular.woff2");}`,
+            }}
+        />
+    </>
 );
 
 export const GlobalStyles = () => {

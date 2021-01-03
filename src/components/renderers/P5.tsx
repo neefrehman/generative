@@ -11,6 +11,7 @@ export const P5Renderer = ({
     sketch,
     autoResizeToWindow = true,
     className,
+    style,
     children,
 }: P5RendererProps) => {
     const wrapperElement = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ export const P5Renderer = ({
 
     return (
         <>
-            <div ref={wrapperElement} className={className} />
+            <div ref={wrapperElement} className={className} style={style} />
             {children}
         </>
     );

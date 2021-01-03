@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import type { OnFrameProps } from "hooks/useAnimationFrame";
 
@@ -8,6 +8,7 @@ export interface RendererProps<SketchFunction> {
     /** The setting for the sketch */
     settings?: RendererSettings;
     className?: string;
+    style: CSSProperties;
     children?: ReactNode | HTMLElement;
 }
 

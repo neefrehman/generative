@@ -67,7 +67,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             float sdf(vec3 pos) {
                 vec3 p1 = rotate(pos, vec3(1.0), time * 2.0);
                 float box = sdBox(p1, vec3(0.27));
-                float sphere = sdSphere(pos - vec3(vec2(mousePosition / resolution - 0.5) * 3.0, 0.0), 0.36);
+                float sphere = sdSphere(pos - vec3(vec2(mousePosition / resolution - 0.5) * 3.0, 0.0), 0.34);
                 float final = mix(box, sphere, 0.0);
 
                 for (float i = 0.0; i < 7.0; i++) {

@@ -19,5 +19,6 @@ Some of my favourite resources that I've learned a lot from:
 -   [Three.js Fundamentals](https://threejsfundamentals.org/)
 -   [WebGL Fundamentals](https://webglfundamentals.org/) / [WebGL2 Fundamentals](https://webgl2fundamentals.org/)
 -   [Inigo Quilez's blog](https://iquilezles.org/)
+-   [Electric Square's Raymarching workshop](https://github.com/electricsquare/raymarching-workshop)
 <!-- -   https://github.com/lettier/3d-game-shaders-for-beginners
 -   https://github.com/stackgl/shader-school -->

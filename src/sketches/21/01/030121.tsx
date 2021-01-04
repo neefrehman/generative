@@ -77,7 +77,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                         noise(vec3(vec2(time * randomOffset * 1.2), 0.0)),
                         noise(vec3(vec2(time * randomOffset * 1.0), 0.0)), 
                         0.0
-                    );
+                    ) * 0.85;
 
                     float newSphere = sdSphere(pos - spherePos, 0.13);
                     final = smin(final, newSphere, 0.3);

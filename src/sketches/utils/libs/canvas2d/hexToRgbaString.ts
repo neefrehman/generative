@@ -2,7 +2,7 @@
  * Converts a hex code to an rgba string, to be used by the canvas context.
  *
  * @param hex - the hex string to be converted
- * @param alpha - The alpha value — defaults to 255
+ * @param alpha - The alpha value — defaults to 1
  */
 export const hexToRgbaString = (hex: string, alpha = 1) => {
     if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) throw new Error("Bad Hex");

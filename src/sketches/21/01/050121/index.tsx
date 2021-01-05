@@ -9,13 +9,13 @@ import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { generateTextPath } from "LibUtils/canvas2d";
 
-import { getShortestViewportDimension } from "Utils/math";
+import { getShortestViewportDimension, lerpVector } from "Utils/math";
 import { createChance, inRange, pick } from "Utils/random";
 import { simplex3D } from "Utils/random/noise/simplex";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["mini", "hello", "GENERATIVE", "hi", "LOVE", ":)"]);
-    const SCALE = getShortestViewportDimension({ cap: 600 }) / (WORD.length / 1.8);
+    const WORD = pick(["mini", "hello", "generative", "love", "dots"]);
+    const SCALE = getShortestViewportDimension({ cap: 600 }) / (WORD.length / 2);
 
     ctx.font = createChance() ? `${SCALE}px Fleuron` : `${SCALE}px Arial`;
     ctx.textBaseline = "middle";
@@ -26,32 +26,47 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const pallette = pick(pallettes);
 
     const points = generateTextPath(ctx, WORD, width / 2, height / 2, {
-        decimation: 5,
+        decimation: 7,
         outline: false,
-    }).map(vector => ({
-        vector,
-        color: pick(pallette),
-        offsetAmount: {
-            x: inRange(2.4) + (Math.sin(vector[1] / 40) - 0.5),
-            y: inRange(0.9) + (Math.sin(vector[0] + inRange(10) / 900) - 0.5) * 3,
-        },
-    }));
+    }).map(position => {
+        const [x, y] = position;
+        return {
+            position,
+            color: pick(pallette),
+            offsetAmount: {
+                x: inRange(2) + (Math.sin(y / 40) - 0.5) * 1.2,
+                y: inRange(1) + (Math.sin(x + inRange(10) / 900) - 0.5) * 3,
+            },
+        };
+    });
 
     const randomTimeStart = inRange(10000);
 
-    return ({ frameCount, mousePosition, mouseHasEntered }) => {
+    const mousePositionStart = [width / 2 + 38, height / 2 + 60];
+    let previousMousePosition = mousePositionStart;
+
+    return ({ frameCount, mousePosition, mouseIsIdle }) => {
         ctx.clearRect(0, 0, width, height);
 
-        const [mouseX, mouseY] = mouseHasEntered
-            ? mousePosition
-            : [width / 2 + 38, height / 2 + 60];
+        previousMousePosition = lerpVector(
+            previousMousePosition,
+            mouseIsIdle ? mousePositionStart : mousePosition,
+            0.4
+        );
 
-        const xOffset = Math.max(Math.abs((width / 2 - mouseX) / 1.5), 12);
-        const yOffset = Math.max(Math.abs((height / 2 - mouseY) / 2.5), 20);
+        const [mouseX, mouseY] = previousMousePosition;
 
-        const timeStart = (frameCount + randomTimeStart) / 110;
+        const pulse = Math.sin(frameCount / 10) * 5;
 
-        points.forEach(({ vector: [x, y], color, offsetAmount }) => {
+        const xOffset = Math.max(Math.abs((width / 2 - mouseX + pulse) / 1.5), 12);
+        const yOffset = Math.max(
+            Math.abs((height / 2 - mouseY + pulse) / 2.5),
+            20
+        );
+
+        const timeStart = (frameCount + randomTimeStart) / 120;
+
+        points.forEach(({ position: [x, y], color, offsetAmount }) => {
             const u = simplex3D(x, y, timeStart + 999) * xOffset * offsetAmount.x;
             const v = simplex3D(x, y, timeStart) * yOffset * offsetAmount.y;
 
@@ -68,12 +83,13 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S080121 = () => (
+const S050121 = () => (
     <>
         <Canvas2DRenderer
             sketch={sketch}
             settings={{ animationSettings: { fps: 14 } }}
         />
+
         <SketchBackground color="#bfbfbf" />
 
         <ControlsContainer>
@@ -82,6 +98,6 @@ const S080121 = () => (
     </>
 );
 
-export default S080121;
+export default S050121;
 
 export { default as metaImage } from "./meta-image.png";

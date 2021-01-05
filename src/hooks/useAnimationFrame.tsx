@@ -117,7 +117,7 @@ export const useAnimationFrame = (
             clearTimeout(idleTimeout);
             idleTimeout = setTimeout(() => {
                 mouseIsIdle.current = true;
-            }, 3000);
+            }, 3500);
         };
 
         const updateMousePosition = (x: number, y: number) => {

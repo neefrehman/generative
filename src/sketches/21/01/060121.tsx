@@ -4,45 +4,56 @@ import pallettes from "nice-color-palettes";
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { SketchBackground } from "components/SketchBackground";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
-import { generateTextPath } from "LibUtils/canvas2d";
+import { sampleCanvasPixels } from "LibUtils/canvas2d";
 
 import { getShortestViewportDimension, lerpVector } from "Utils/math";
-import { createChance, inRange, pick } from "Utils/random";
+import { inRange, pick } from "Utils/random";
 import { simplex3D } from "Utils/random/noise/simplex";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["mini", "hello", "generative", "love", "dots"]);
-    const SCALE = getShortestViewportDimension({ cap: 600 }) / (WORD.length / 2);
+    const SCALE = getShortestViewportDimension({ cap: 600 });
 
-    ctx.font = createChance() ? `${SCALE}px Fleuron` : `${SCALE}px Arial`;
-    ctx.textBaseline = "middle";
-    ctx.textAlign = "center";
     ctx.fillStyle = "rgb(76, 41, 41)";
     ctx.strokeStyle = "rgb(255, 255, 255)";
+    ctx.lineWidth = 10;
 
     const pallette = pick(pallettes);
 
-    const points = generateTextPath(ctx, WORD, width / 2, height / 2, {
-        decimation: 6,
-        outline: false,
-    }).map(position => {
+    const points = sampleCanvasPixels(
+        ctx,
+        () => {
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, inRange(20, SCALE / 2), 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.closePath();
+        },
+        {
+            decimation: 5,
+        }
+    ).map(position => {
         const [x, y] = position;
         return {
             position,
             color: pick(pallette),
             offsetAmount: {
-                x: inRange(2) + (Math.sin(y / 40) - 0.5) * 1.2,
-                y: inRange(1) + (Math.sin(x + inRange(10) / 900) - 0.5) * 3,
+                x:
+                    inRange(1, 4) +
+                    (Math.sin(y / inRange(20, 40)) - 0.5) * inRange(10),
+                y:
+                    inRange(1, 4) +
+                    (Math.sin(x + inRange(10) / inRange(20, 900)) - 0.5) *
+                        inRange(10),
             },
         };
     });
 
     const randomTimeStart = inRange(10000);
+    const pulseFrequency = inRange(4, 20);
+    const pulseAmplitude = inRange(4, 20);
 
-    const mousePositionStart = [width / 2 + 38, height / 2 + 60];
+    const mousePositionStart = [width / 2 + inRange(99), height / 2 + inRange(99)];
     let previousMousePosition = mousePositionStart;
 
     return ({ frameCount, mousePosition, mouseIsIdle }) => {
@@ -56,7 +67,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
         const [mouseX, mouseY] = previousMousePosition;
 
-        const pulse = Math.sin(frameCount / 10) * 5;
+        const pulse = Math.sin(frameCount / pulseFrequency) * pulseAmplitude;
 
         const xOffset = Math.max(Math.abs((width / 2 - mouseX + pulse) / 1.5), 4);
         const yOffset = Math.max(Math.abs((height / 2 - mouseY + pulse) / 2.5), 4);
@@ -87,14 +98,12 @@ const S050121 = () => (
             settings={{ animationSettings: { fps: 14 } }}
         />
 
-        <SketchBackground color="#bfbfbf" />
-
         <ControlsContainer>
-            <RefreshButton>Change text</RefreshButton>
+            <RefreshButton>Re-generate circle</RefreshButton>
         </ControlsContainer>
     </>
 );
 
 export default S050121;
 
-export { default as metaImage } from "./meta-image.png";
+export { default as metaImage } from "./050121/meta-image.png";

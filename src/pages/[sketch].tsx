@@ -8,7 +8,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { useHasMounted } from "hooks/useHasMounted";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
-import { isFolderSketch, sketchExists } from "helpers/sketchTests";
+import { isFolderSketch, sketchIsNotFound } from "helpers/sketchTests";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -122,9 +122,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         const month = sketchId.substr(2, 2);
         sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
     } else {
-        sketchImportPath = sketchExists(`sketches/_drafts/${sketchId}`)
-            ? `sketches/_drafts/${sketchId}`
-            : `sketches/_drafts/_archive/${sketchId}`;
+        sketchImportPath = sketchIsNotFound(`sketches/_drafts/${sketchId}`)
+            ? `sketches/_drafts/_archive/${sketchId}`
+            : `sketches/_drafts/${sketchId}`;
     }
 
     let gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/src/${sketchImportPath}`;

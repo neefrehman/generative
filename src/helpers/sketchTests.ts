@@ -12,6 +12,6 @@ export const isFolderSketch = (sketchImportPath: string): boolean =>
  * Returns true if a sketch can be found at a location
  * @param sketchImportPath - The import path to the sketch
  */
-export const sketchExists = (sketchImportPath: string): boolean =>
+export const sketchIsNotFound = (sketchImportPath: string): boolean =>
     !fs.existsSync(`src/${sketchImportPath}`) && // folder
     !fs.existsSync(`src/${sketchImportPath}.tsx`); // file

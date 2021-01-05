@@ -7,7 +7,6 @@ import { css, Global, useTheme } from "@emotion/react";
  */
 export const FontFaceWorkaround = () => (
     <>
-        <link rel="preload" href="/static/fonts/fleuronregular.woff2" />
         <style
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{

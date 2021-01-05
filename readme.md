@@ -20,5 +20,6 @@ Some of my favourite resources that I've learned a lot from:
 -   [WebGL Fundamentals](https://webglfundamentals.org/) / [WebGL2 Fundamentals](https://webgl2fundamentals.org/)
 -   [Inigo Quilez's blog](https://iquilezles.org/)
 -   [Electric Square's Raymarching workshop](https://github.com/electricsquare/raymarching-workshop)
+-   [Luigi De Rosa's list of case studies on WebGL and creative code](https://github.com/luruke/awesome-casestudy)
 <!-- -   https://github.com/lettier/3d-game-shaders-for-beginners
 -   https://github.com/stackgl/shader-school -->

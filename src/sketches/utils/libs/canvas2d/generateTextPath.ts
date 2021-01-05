@@ -22,15 +22,20 @@ export const generateTextPath = (
     x: number,
     y: number,
     options: {
+        /** If the text should be outlined */
+        outline?: boolean;
         /** How large a gap to leave between sampling pixels */
         gap?: number;
         /** how big a reduction to make in the sampled point array */
         decimation?: number;
-    } = {}
+    } = { outline: true }
 ): Vector<2>[] => {
     const points = sampleCanvasPixels(
         ctx,
-        () => ctx.strokeText(text, x, y),
+        () =>
+            options.outline
+                ? ctx.strokeText(text, x, y)
+                : ctx.fillText(text, x, y),
         options
     );
 

@@ -12,3 +12,7 @@ https://youtu.be/dyvhB6UVxwE
 http://36xp5.site/
 https://tympanus.net/codrops/2020/09/30/creating-mirrors-in-react-three-fiber-and-three-js/
 https://thebookofshaders.com/13/
+https://codesandbox.io/s/perlin-cubes-forked-w9myx
+https://tympanus.net/codrops/2020/12/17/recreating-a-dave-whyte-animation-in-react-three-fiber/
+https://tympanus.net/codrops/2020/01/28/how-to-create-procedural-clouds-using-three-js-sprites/
+https://tympanus.net/codrops/2019/12/20/how-to-create-the-apple-fifth-avenue-cube-in-webgl/

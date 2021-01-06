@@ -8,7 +8,7 @@ import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { sampleCanvasPixels } from "LibUtils/canvas2d";
 
-import { getShortestViewportDimension, lerpVector } from "Utils/math";
+import { getShortestViewportDimension, lerp, lerpVector } from "Utils/math";
 import { inRange, pick } from "Utils/random";
 import { simplex3D } from "Utils/random/noise/simplex";
 
@@ -55,28 +55,34 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
     const mousePositionStart = [width / 2 + inRange(99), height / 2 + inRange(99)];
     let previousMousePosition = mousePositionStart;
+    let clickDepth = 1;
 
-    return ({ frameCount, mousePosition, mouseIsIdle }) => {
+    return ({ frameCount, mousePosition, mouseIsIdle, mouseIsDown }) => {
         ctx.clearRect(0, 0, width, height);
 
         previousMousePosition = lerpVector(
             previousMousePosition,
             mouseIsIdle ? mousePositionStart : mousePosition,
-            0.4
+            0.33
         );
+
+        clickDepth = lerp(clickDepth, mouseIsDown ? 2 : 1, 0.33);
 
         const [mouseX, mouseY] = previousMousePosition;
 
         const pulse = Math.sin(frameCount / pulseFrequency) * pulseAmplitude;
 
-        const xOffset = Math.max(Math.abs((width / 2 - mouseX + pulse) / 1.5), 4);
-        const yOffset = Math.max(Math.abs((height / 2 - mouseY + pulse) / 2.5), 4);
+        const xOff = Math.max(Math.abs((width / 2 - mouseX + pulse) / 1.5), 4);
+        const yOff = Math.max(Math.abs((height / 2 - mouseY + pulse) / 2.5), 4);
 
-        const timeStart = (frameCount + randomTimeStart) / 120;
+        const timeStartX = (frameCount + randomTimeStart) / 120;
+        const timeStartY = (frameCount + randomTimeStart) / 120 + 999;
 
         points.forEach(({ position: [x, y], color, offsetAmount }) => {
-            const u = simplex3D(x, y, timeStart + 999) * xOffset * offsetAmount.x;
-            const v = simplex3D(x, y, timeStart) * yOffset * offsetAmount.y;
+            const u =
+                simplex3D(x, y, timeStartX) * xOff * offsetAmount.x * clickDepth;
+            const v =
+                simplex3D(x, y, timeStartY) * yOff * offsetAmount.y * clickDepth;
 
             ctx.fillStyle = color;
 

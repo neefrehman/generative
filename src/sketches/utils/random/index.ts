@@ -1,9 +1,11 @@
+export { beta } from "./beta";
 export { createChance } from "./createChance";
 export { createSign } from "./createSign";
 export { gaussian } from "./gaussian";
 export { onCircle, insideCircle, onSphere, insideSphere } from "./inCircle";
 export { inRange } from "./inRange";
 export { pick } from "./pick";
+export { poisson } from "./poisson";
 export { shuffle } from "./shuffle";
 export {
     perlin1D,

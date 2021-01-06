@@ -4,9 +4,12 @@
  *
  * @param mean - The mean average of the distribution
  * @param standardDeviation - The standard deviation of returned values form the mean
+ *
  * @returns A random number within the Gaussian distribution
+ *
+ * @link https://en.wikipedia.org/wiki/Normal_distribution
  */
-export function gaussian(mean = 0, standardDeviation = 1) {
+export const gaussian = (mean = 0, standardDeviation = 1) => {
     let v1 = 0;
     let v2 = 0;
     let s = 0;
@@ -18,5 +21,6 @@ export function gaussian(mean = 0, standardDeviation = 1) {
     } while (s >= 1 || s === 0);
 
     const multiplier = Math.sqrt((-2 * Math.log(s)) / s);
+
     return mean + standardDeviation * (v1 * multiplier);
-}
+};

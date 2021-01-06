@@ -1,8 +1,5 @@
 // from https://stackoverflow.com/questions/9590225/is-there-a-library-to-generate-random-numbers-according-to-a-beta-distribution-f/24144830
-
 /* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-constant-condition */
-/* eslint-disable no-continue */
 
 /**
  * Produces a random number from a beta distribution
@@ -19,7 +16,9 @@ export const inBeta = (A = 0.5, B = 0.5) => {
     return baseGamma / (baseGamma + _inBeta(B, 1));
 };
 
-// eslint-disable-next-line no-underscore-dangle
+/* eslint-disable no-constant-condition */
+/* eslint-disable no-continue */
+/* eslint-disable-next-line no-underscore-dangle */
 function _inBeta(alpha: number, beta: number) {
     const SG_MAGICCONST = 1 + Math.log(4.5);
     const LOG4 = Math.log(4.0);

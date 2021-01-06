@@ -9,7 +9,7 @@
  *
  * @link https://en.wikipedia.org/wiki/Normal_distribution
  */
-export const gaussian = (mean = 0, standardDeviation = 1) => {
+export const inGaussian = (mean = 0, standardDeviation = 1) => {
     let v1 = 0;
     let v2 = 0;
     let s = 0;

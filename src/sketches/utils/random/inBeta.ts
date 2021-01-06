@@ -13,7 +13,7 @@
  *
  * @link https://en.wikipedia.org/wiki/Beta_distribution
  */
-const generateFromBetaDistribution = (A = 0.5, B = 0.5) => {
+export const inBeta = (A = 0.5, B = 0.5) => {
     const baseGenerator = (alpha: number, beta: number) => {
         const SG_MAGICCONST = 1 + Math.log(4.5);
         const LOG4 = Math.log(4.0);
@@ -80,7 +80,6 @@ const generateFromBetaDistribution = (A = 0.5, B = 0.5) => {
     };
 
     const baseGamma = baseGenerator(A, 1);
+
     return baseGamma / (baseGamma + baseGenerator(B, 1));
 };
-
-export { generateFromBetaDistribution as beta };

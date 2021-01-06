@@ -5,7 +5,7 @@ import palettes from "nice-color-palettes";
 import { ThreeRenderer } from "Renderers/Three";
 import type { ThreeSetupFn } from "Renderers/Three";
 
-import { gaussian, pick } from "Utils/random";
+import { inGaussian, pick } from "Utils/random";
 import { expoInOut } from "Utils/eases";
 
 const sketch: ThreeSetupFn = ({ scene, aspect }) => {
@@ -27,8 +27,8 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
         const material = new THREE.MeshStandardMaterial({ color: pick(palette) });
         const cube = new THREE.Mesh(geometry, material);
 
-        cube.position.set(gaussian(0, 1), gaussian(0, 1), gaussian(0, 1));
-        cube.scale.set(gaussian(0, 1), gaussian(0, 1), gaussian(0, 1));
+        cube.position.set(inGaussian(0, 1), inGaussian(0, 1), inGaussian(0, 1));
+        cube.scale.set(inGaussian(0, 1), inGaussian(0, 1), inGaussian(0, 1));
         cube.scale.multiplyScalar(0.4);
 
         scene.add(cube);

@@ -10,11 +10,11 @@ import { ControlsContainer, RefreshButton } from "components/SketchControls";
 import { generateTextPath } from "LibUtils/canvas2d";
 
 import { getShortestViewportDimension, lerp, lerpVector } from "Utils/math";
-import { createChance, inRange, pick } from "Utils/random";
+import { inBeta, createChance, inRange, pick } from "Utils/random";
 import { simplex3D } from "Utils/random/noise/simplex";
 
 const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
-    const WORD = pick(["mini", "hello", "generative", "love", "dots"]);
+    const WORD = pick(["mini", "hello", "generative", "love", "dots", "bread"]);
     const SCALE = getShortestViewportDimension({ cap: 600 }) / (WORD.length / 2);
 
     ctx.font = createChance() ? `${SCALE}px Fleuron` : `${SCALE}px Arial`;
@@ -30,15 +30,14 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
         outline: false,
     }).map(position => {
         const [x, y] = position;
-        const baseYOff = inRange(0.9);
-        const yOff = baseYOff < 0.8 ? baseYOff : baseYOff * 1.3;
+        const yOff = inBeta(2, 2.4);
 
         return {
             position,
             color: pick(pallette),
             offsetAmount: {
                 x: inRange(2) + (Math.sin(y / 40) - 0.5) * 1.2,
-                y: yOff + (Math.sin(x + inRange(10) / 900) - 0.5) * 3,
+                y: yOff + (Math.sin(x + inRange(10) / 900) - 0.5) * 5.5 * yOff,
             },
         };
     });

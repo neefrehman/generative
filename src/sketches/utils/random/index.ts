@@ -1,18 +1,10 @@
-export { beta } from "./beta";
 export { createChance } from "./createChance";
 export { createSign } from "./createSign";
-export { gaussian } from "./gaussian";
+export { inBeta } from "./inBeta";
 export { onCircle, insideCircle, onSphere, insideSphere } from "./inCircle";
+export { inGaussian } from "./inGaussian";
+export { inPoisson } from "./inPoisson";
 export { inRange } from "./inRange";
 export { pick } from "./pick";
-export { poisson } from "./poisson";
 export { shuffle } from "./shuffle";
-export {
-    perlin1D,
-    perlin2D,
-    perlin3D,
-    simplex1D,
-    simplex2D,
-    simplex3D,
-    simplex4D,
-} from "./noise/index";
+export * from "./noise/index";

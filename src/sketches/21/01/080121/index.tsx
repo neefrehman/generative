@@ -13,7 +13,7 @@ import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const S030121 = () => {
-    const [PIXELATION] = useState(() => inRange(2.5, 8.5));
+    const [PIXELATION] = useState(() => inRange(2.5, 7.5));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -181,3 +181,5 @@ const S030121 = () => {
 };
 
 export default S030121;
+
+export { default as metaImage } from "./meta-image.png";

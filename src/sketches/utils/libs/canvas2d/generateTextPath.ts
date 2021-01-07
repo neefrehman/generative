@@ -31,6 +31,7 @@ export const generateTextPath = (
     }
 ): Vector<2>[] => {
     const { outline = true } = options;
+
     const points = sampleCanvasPixels(
         ctx,
         () => (outline ? ctx.strokeText(text, x, y) : ctx.fillText(text, x, y)),

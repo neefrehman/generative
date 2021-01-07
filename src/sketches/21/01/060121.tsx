@@ -97,7 +97,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S050121 = () => (
+const S060121 = () => (
     <>
         <Canvas2DRenderer
             sketch={sketch}
@@ -110,6 +110,6 @@ const S050121 = () => (
     </>
 );
 
-export default S050121;
+export default S060121;
 
 export { default as metaImage } from "./050121/meta-image.png";

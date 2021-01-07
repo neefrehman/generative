@@ -144,7 +144,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S010121 = () => (
+const S030121 = () => (
     <ShaderRenderer
         sketch={sketch}
         settings={settings}
@@ -152,4 +152,4 @@ const S010121 = () => (
     />
 );
 
-export default S010121;
+export default S030121;

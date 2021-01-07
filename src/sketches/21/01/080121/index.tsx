@@ -13,7 +13,7 @@ import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const S030121 = () => {
-    const [PIXELATION] = useState(inRange(2.5, 8.5));
+    const [PIXELATION] = useState(() => inRange(2.5, 8.5));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -45,9 +45,9 @@ const S030121 = () => {
                 frag: glsl`
                 precision highp float;
 
-                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
+                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -63,12 +63,12 @@ const S030121 = () => {
 
                 uniform int baseShape;
 
-                #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-                #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-                #pragma glslify: sdTorus = require("../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-                #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-                #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+                #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+                #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+                #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+                #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
                 float sineNoise(vec3 p) {
                     return 1.0 - (sin(p.x) + sin(p.y) + sin(p.z)) / 3.0; 
@@ -174,7 +174,7 @@ const S030121 = () => {
                 style={{ width: "100%", height: "100vh" }}
             />
             <ControlsContainer>
-                <RefreshButton>Change base shape</RefreshButton>
+                <RefreshButton>Re-generate scene</RefreshButton>
             </ControlsContainer>
         </>
     );

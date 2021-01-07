@@ -12,37 +12,27 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-const S030121 = () => {
-    const [PIXELATION] = useState(() => inRange(2.5, 7.5));
+const createSketch = (PIXELATION: number) => {
+    const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
+        const actualWidth = width * PIXELATION;
+        const actualHeight = height * PIXELATION;
 
-    const settings: ShaderRendererSettings = {
-        dimensions: [
-            window.innerWidth / PIXELATION,
-            window.innerHeight / PIXELATION,
-        ],
-    };
+        let idleMousePosition = inSquare(actualWidth, actualHeight);
 
-    const sketch: ShaderSetupFn = useCallback(
-        ({ width, height, aspect }) => {
-            const actualWidth = width * PIXELATION;
-            const actualHeight = height * PIXELATION;
-
-            let idleMousePosition = inSquare(actualWidth, actualHeight);
-
-            return {
-                uniforms: {
-                    aspect: { value: aspect },
-                    time: { value: inRange(200, 600), type: "1f" },
-                    resolution: { value: [actualWidth, actualHeight], type: "2f" },
-                    mousePosition: { value: [0, actualHeight], type: "2f" },
-                    baseShape: {
-                        value: inRange(0, 5, { isInteger: true }),
-                        type: "1i",
-                    },
-                    colorStart: { value: hexToVec3(createHex()), type: "3f" },
-                    colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+        return {
+            uniforms: {
+                aspect: { value: aspect },
+                time: { value: inRange(200, 600), type: "1f" },
+                resolution: { value: [actualWidth, actualHeight], type: "2f" },
+                mousePosition: { value: [0, actualHeight], type: "2f" },
+                baseShape: {
+                    value: inRange(0, 5, { isInteger: true }),
+                    type: "1i",
                 },
-                frag: glsl`
+                colorStart: { value: hexToVec3(createHex()), type: "3f" },
+                colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+            },
+            frag: glsl`
                 precision highp float;
 
                 #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
@@ -143,28 +133,37 @@ const S030121 = () => {
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
-                onFrame: ({
-                    uniforms,
-                    mousePosition,
-                    mouseIsIdle,
-                    frameCount,
-                }) => {
-                    uniforms.time.value += 0.002;
+            onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
+                uniforms.time.value += 0.002;
 
-                    if (frameCount % 180 === 0) {
-                        idleMousePosition = inSquare(actualWidth, actualHeight);
-                    }
+                if (frameCount % 180 === 0) {
+                    idleMousePosition = inSquare(actualWidth, actualHeight);
+                }
 
-                    uniforms.mousePosition.value = lerpVector(
-                        uniforms.mousePosition.value,
-                        !mouseIsIdle ? mousePosition : idleMousePosition,
-                        0.05
-                    );
-                },
-            };
-        },
-        [PIXELATION]
-    );
+                uniforms.mousePosition.value = lerpVector(
+                    uniforms.mousePosition.value,
+                    !mouseIsIdle ? mousePosition : idleMousePosition,
+                    0.05
+                );
+            },
+        };
+    };
+
+    return sketch;
+};
+
+const S030121 = () => {
+    const [pixelation] = useState(() => inRange(2.5, 7.5));
+
+    const settings: ShaderRendererSettings = {
+        dimensions: [
+            window.innerWidth / pixelation,
+            window.innerHeight / pixelation,
+        ],
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const sketch = useCallback(createSketch(pixelation), [pixelation]);
 
     return (
         <>

@@ -158,7 +158,7 @@ const S030121 = () => {
                     uniforms.mousePosition.value = lerpVector(
                         uniforms.mousePosition.value,
                         !mouseIsIdle ? mousePosition : idleMousePosition,
-                        0.03
+                        0.05
                     );
                 },
             };

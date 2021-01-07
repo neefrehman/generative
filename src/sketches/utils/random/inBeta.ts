@@ -4,16 +4,16 @@
 /**
  * Produces a random number from a beta distribution
  *
- * @param A - Shape parameter Alpha
- * @param B - Shape parameter Beta
+ * @param alpha - Shape parameter Alpha
+ * @param beta - Shape parameter Beta
  *
  * @returns A random number within the Beta distribution
  *
  * @link https://en.wikipedia.org/wiki/Beta_distribution
  */
-export const inBeta = (A = 0.5, B = 0.5) => {
-    const baseGamma = _inBeta(A, 1);
-    return baseGamma / (baseGamma + _inBeta(B, 1));
+export const inBeta = (alpha = 0.5, beta = 0.5) => {
+    const baseGamma = _inBeta(alpha, 1);
+    return baseGamma / (baseGamma + _inBeta(beta, 1));
 };
 
 /* eslint-disable no-constant-condition */

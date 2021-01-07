@@ -72,8 +72,14 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
         const pulse = Math.sin(frameCount / pulseFrequency) * pulseAmplitude;
 
-        const xOff = Math.max(Math.abs((width / 2 - mouseX + pulse) / 1.5), 4);
-        const yOff = Math.max(Math.abs((height / 2 - mouseY + pulse) / 2.5), 4);
+        const xOff = Math.max(
+            Math.abs((width / 2 - mouseX / 1.5 + pulse) / 1.5),
+            4
+        );
+        const yOff = Math.max(
+            Math.abs((height / 2 - mouseY / 1.5 + pulse) / 2.5),
+            4
+        );
 
         const timeStartX = (frameCount + randomTimeStart) / 120;
         const timeStartY = (frameCount + randomTimeStart) / 120 + 999;

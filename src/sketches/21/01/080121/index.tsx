@@ -71,20 +71,20 @@ const createSketch = (PIXELATION: number) => {
 
                     float shape = 0.0;
 
-                    // if (baseShape == 0) {
-                    //     shape = sdSphere(p1, 0.45);
-                    // } else if (baseShape == 1) {
-                    //     shape = sdEllipsoid(p1, vec3(0.45, 0.2, 0.32));
-                    // } else if (baseShape == 2) {
+                    if (baseShape == 0) {
+                        shape = sdSphere(p1, 0.45);
+                    } else if (baseShape == 1) {
+                        shape = sdEllipsoid(p1, vec3(0.45, 0.2, 0.32));
+                    } else if (baseShape == 2) {
                         p1 = rotate(pos, vec3(0.0, 1.0, 0.0), time * TAU);
                         shape = sdOctahedron(p1, 0.45);
-                    // } else if (baseShape == 3) {
-                    //     shape = sdTorus(p1, vec2(0.45, 0.2));
-                    // } else if (baseShape == 4) {
-                    //     shape = sdCappedCone(p1, 0.45, 0.4, 0.25);
-                    // } else if (baseShape == 5) {
-                    //     shape = sdPyramid(p1, 0.45);
-                    // }
+                    } else if (baseShape == 3) {
+                        shape = sdTorus(p1, vec2(0.45, 0.2));
+                    } else if (baseShape == 4) {
+                        shape = sdCappedCone(p1, 0.45, 0.4, 0.25);
+                    } else if (baseShape == 5) {
+                        shape = sdPyramid(p1, 0.45);
+                    }
                     
                     vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
                     float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
@@ -117,7 +117,7 @@ const createSketch = (PIXELATION: number) => {
                         rayLength +=  0.536 * curDist;
                         currentRayPos = camPos + ray * rayLength;
                         
-                        if (curDist < 0.001 || curDist > 1.39) {
+                        if (curDist < 0.001 || curDist > 2.0) {
                             break;
                         }
 
@@ -154,7 +154,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S030121 = () => {
-    const [pixelation] = useState(() => inRange(2.5, 7.5));
+    const [pixelation] = useState(() => inRange(1.0, 7.5));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -175,6 +175,7 @@ const S030121 = () => {
             />
             <ControlsContainer>
                 <RefreshButton>Re-generate scene</RefreshButton>
+                <button type="button">Pixelation: {pixelation.toFixed(3)}</button>
             </ControlsContainer>
         </>
     );

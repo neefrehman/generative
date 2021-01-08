@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import glsl from "glslify";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
+import { useTimeout } from "hooks/useTimeout";
 
 import type { UniformDict, UniformType } from "Utils/shaders";
 
@@ -155,6 +156,10 @@ export const ShaderRenderer = ({
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         };
+
+        // Fix for intermittent lack of rendering on Safari/iOs. resizing causes this to work for some reason
+        /* prettier-ignore */
+        setTimeout(() => { canvas.width += 1; canvas.width -= 1; }, 1);
 
         return () => {
             gl.deleteBuffer(positionAttr.buffer);

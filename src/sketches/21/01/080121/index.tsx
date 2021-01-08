@@ -12,6 +12,8 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
+// sketch creation function used with react state to ensure pixelation value
+// refreshes on component remount (for DX and reset button in client)
 const createSketch = (PIXELATION: number) => {
     const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
         const actualWidth = width * PIXELATION;
@@ -175,7 +177,6 @@ const S030121 = () => {
             />
             <ControlsContainer>
                 <RefreshButton>Re-generate scene</RefreshButton>
-                <button type="button">Pixelation: {pixelation.toFixed(3)}</button>
             </ControlsContainer>
         </>
     );

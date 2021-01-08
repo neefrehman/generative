@@ -33,14 +33,16 @@ const createSketch = (PIXELATION: number) => {
                 },
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-                noiseScale: { value: inRange(11, 20), type: "1f" },
+                noiseScale: { value: inRange(5, 12), type: "1f" },
+                simplexIntensity: { value: inRange(0.5, 4.5), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
 
-                #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: noise = require("glsl-noise/simplex/4d");
+                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
+                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -54,18 +56,21 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorStart;
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
+                uniform float simplexIntensity;
 
                 uniform int baseShape;
 
-                #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-                #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-                #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-                #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-                #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+                #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+                #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: sdTorus = require("../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+                #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+                #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
-                float sineNoise(vec3 p) {
-                    return 1.0 - (sin(p.x) + sin(p.y) + sin(p.z)) / 3.0; 
+                float sineNoise(vec3 pos) {
+                    return 
+                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
+                        noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;
                 }
 
                 float sdf(vec3 pos) {
@@ -119,7 +124,7 @@ const createSketch = (PIXELATION: number) => {
                         rayLength +=  0.536 * curDist;
                         currentRayPos = camPos + ray * rayLength;
                         
-                        if (curDist < 0.001 || curDist > 2.0) {
+                        if (curDist < 0.001 || curDist > 2.2) {
                             break;
                         }
 
@@ -137,16 +142,16 @@ const createSketch = (PIXELATION: number) => {
                 }
             `,
             onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-                uniforms.time.value += 0.002;
+                uniforms.time.value += 0.0004;
 
-                if (frameCount % 180 === 0) {
+                if (frameCount % 200 === 0) {
                     idleMousePosition = inSquare(actualWidth, actualHeight);
                 }
 
                 uniforms.mousePosition.value = lerpVector(
                     uniforms.mousePosition.value,
                     !mouseIsIdle ? mousePosition : idleMousePosition,
-                    0.05
+                    0.02
                 );
             },
         };
@@ -155,8 +160,8 @@ const createSketch = (PIXELATION: number) => {
     return sketch;
 };
 
-const S070121 = () => {
-    const [pixelation] = useState(() => inRange(1.0, 6.5));
+const S130121 = () => {
+    const [pixelation] = useState(() => inRange(1.8, 3));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -182,6 +187,6 @@ const S070121 = () => {
     );
 };
 
-export default S070121;
+export default S130121;
 
-export { default as metaImage } from "./meta-image.png";
+export { default as metaImage } from "./070121/meta-image.png";

@@ -9,7 +9,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerpVector } from "Utils/math";
-import { createHex, inRange, inSquare } from "Utils/random";
+import { createHex, createSign, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 // sketch creation function used with react state to ensure pixelation value
@@ -21,24 +21,31 @@ const createSketch = (PIXELATION: number) => {
 
         let idleMousePosition = inSquare(actualWidth, actualHeight);
 
+        const baseShape1Num = inRange(0, 5, { isInteger: true });
+        const baseShape2Num = inRange(0, 5, {
+            isInteger: true,
+            not: baseShape1Num,
+        });
+
         return {
             uniforms: {
                 aspect: { value: aspect },
                 time: { value: inRange(200, 600), type: "1f" },
                 resolution: { value: [actualWidth, actualHeight], type: "2f" },
                 mousePosition: { value: [0, actualHeight], type: "2f" },
-                baseShape: {
-                    value: inRange(0, 5, { isInteger: true }),
-                    type: "1i",
-                },
+                baseShape1: { value: baseShape1Num, type: "1i" },
+                baseShape2: { value: baseShape2Num, type: "1i" },
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(5, 12), type: "1f" },
+                simplexIntensity: { value: inRange(0.5, 4.5), type: "1f" },
+                invertedNoise: { value: createSign(0.6), type: "1i" },
             },
             frag: glsl`
                 precision highp float;
 
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
+                #pragma glslify: smin = require("../../utils/shaders/smin/poly.glsl");
                 #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
                 #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
                 #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
@@ -55,8 +62,11 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorStart;
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
+                uniform float simplexIntensity;
+                uniform int invertedNoise;
 
-                uniform int baseShape;
+                uniform int baseShape1;
+                uniform int baseShape2;
 
                 #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
                 #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
@@ -66,39 +76,57 @@ const createSketch = (PIXELATION: number) => {
                 #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
                 float sineNoise(vec3 pos) {
-                    return 
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / 10.0) +
-                        noise(vec4(pos * 0.65, time * 25.0)) / 1.8;
+                    return (invertedNoise == 1)
+                        ? noise(vec4(pos * 0.25, time * 22.0)) * simplexIntensity + 0.55
+                        : 1.0 - noise(vec4(pos * 0.25, time * 22.0)) * simplexIntensity;
                 }
 
                 float sdf(vec3 pos) {
-                    vec3 p1 = rotate(pos, vec3(1.0, 1.0, 0.0), time * TAU);
+                    vec3 pShape1 = rotate(pos, vec3(1.0, 1.0, 0.0), time * TAU);
+                    vec3 pShape2 = rotate(pos, vec3(1.0, 1.0, 0.0), -time * 4.0 * TAU);
 
-                    float shape = 0.0;
+                    float shape1 = 0.0;
+                    float shape2 = 0.0;
 
-                    if (baseShape == 0) {
-                        shape = sdSphere(p1, 0.45);
-                    } else if (baseShape == 1) {
-                        shape = sdEllipsoid(p1, vec3(0.45, 0.2, 0.32));
-                    } else if (baseShape == 2) {
-                        p1 = rotate(pos, vec3(0.0, 1.0, 0.0), time * TAU);
-                        shape = sdOctahedron(p1, 0.45);
-                    } else if (baseShape == 3) {
-                        shape = sdTorus(p1, vec2(0.45, 0.2));
-                    } else if (baseShape == 4) {
-                        shape = sdCappedCone(p1, 0.45, 0.4, 0.25);
-                    } else if (baseShape == 5) {
-                        shape = sdPyramid(p1, 0.45);
+                    if (baseShape1 == 0) {
+                        shape1 = sdSphere(pShape1, 0.45);
+                    } else if (baseShape1 == 1) {
+                        shape1 = sdEllipsoid(pShape1, vec3(0.45, 0.2, 0.32));
+                    } else if (baseShape1 == 2) {
+                        pShape1 = rotate(pos, vec3(0.0, 1.0, 0.0), time * TAU);
+                        shape1 = sdOctahedron(pShape1, 0.45);
+                    } else if (baseShape1 == 3) {
+                        shape1 = sdTorus(pShape1, vec2(0.45, 0.2));
+                    } else if (baseShape1 == 4) {
+                        shape1 = sdCappedCone(pShape1, 0.45, 0.4, 0.25);
+                    } else if (baseShape1 == 5) {
+                        shape1 = sdPyramid(pShape1, 0.45);
                     }
-                    
-                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
-                    float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
 
-                    return max(shape, sineNoiseValue);
+                    if (baseShape2 == 0) {
+                        shape2 = sdSphere(pShape2, 0.4);
+                    } else if (baseShape2 == 1) {
+                        shape2 = sdEllipsoid(pShape2, vec3(0.4, 0.2, 0.3));
+                    } else if (baseShape2 == 2) {
+                        shape2 = sdOctahedron(pShape2, 0.4);
+                    } else if (baseShape2 == 3) {
+                        shape2 = sdTorus(pShape2, vec2(0.4, 0.2));
+                    } else if (baseShape2 == 4) {
+                        shape2 = sdCappedCone(pShape2, 0.4, 0.4, 0.22);
+                    } else if (baseShape2 == 5) {
+                        shape2 = sdPyramid(pShape2, 0.4);
+                    }
+
+                    float mixedShaped = smin(shape1, shape2, 0.66);
+                    
+                    vec3 pNoise = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                    float sineNoiseValue = (0.83 - sineNoise((pNoise + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
+
+                    return max(mixedShaped, sineNoiseValue);
                 }
 
                 vec3 getColor(vec3 pos) {
-                    float amount = clamp((1.5 - length(pos)) / 2.3, 0.0, 1.0);
+                    float amount = clamp((1.8 - length(pos)) / 2.3, 0.0, 1.0);
                     vec3 color = 0.588 + 0.708 * cos(TAU * (colorStart + amount * colorEnd));
 
                     return color * amount;
@@ -122,7 +150,7 @@ const createSketch = (PIXELATION: number) => {
                         rayLength +=  0.536 * curDist;
                         currentRayPos = camPos + ray * rayLength;
                         
-                        if (curDist < 0.001 || curDist > 2.0) {
+                        if (curDist < 0.001 || curDist > 2.2) {
                             break;
                         }
 
@@ -159,7 +187,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S110121 = () => {
-    const [pixelation] = useState(() => inRange(2, 4));
+    const [pixelation] = useState(() => inRange(1.8, 2.7));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

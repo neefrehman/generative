@@ -34,7 +34,6 @@ const createSketch = (PIXELATION: number) => {
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(5, 12), type: "1f" },
-                simplexIntensity: { value: inRange(0.5, 5), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
@@ -56,7 +55,6 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorStart;
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
-                uniform float simplexIntensity;
 
                 uniform int baseShape;
 
@@ -69,8 +67,8 @@ const createSketch = (PIXELATION: number) => {
 
                 float sineNoise(vec3 pos) {
                     return 
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
-                        noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;
+                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / 10.0) +
+                        noise(vec4(pos * 0.65, time * 25.0)) / 1.8;
                 }
 
                 float sdf(vec3 pos) {
@@ -124,7 +122,7 @@ const createSketch = (PIXELATION: number) => {
                         rayLength +=  0.536 * curDist;
                         currentRayPos = camPos + ray * rayLength;
                         
-                        if (curDist < 0.001 || curDist > 2.2) {
+                        if (curDist < 0.001 || curDist > 2.0) {
                             break;
                         }
 
@@ -161,7 +159,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S120121 = () => {
-    const [pixelation] = useState(() => inRange(1.8, 3));
+    const [pixelation] = useState(() => inRange(2, 4));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

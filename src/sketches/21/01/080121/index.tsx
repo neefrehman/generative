@@ -12,27 +12,32 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-const createSketch = (PIXELATION: number) => {
-    const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-        const actualWidth = width * PIXELATION;
-        const actualHeight = height * PIXELATION;
+const PIXELATION = inRange(2.5, 7.5);
 
-        let idleMousePosition = inSquare(actualWidth, actualHeight);
+const settings: ShaderRendererSettings = {
+    dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
+};
 
-        return {
-            uniforms: {
-                aspect: { value: aspect },
-                time: { value: inRange(200, 600), type: "1f" },
-                resolution: { value: [actualWidth, actualHeight], type: "2f" },
-                mousePosition: { value: [0, actualHeight], type: "2f" },
-                baseShape: {
-                    value: inRange(0, 5, { isInteger: true }),
-                    type: "1i",
-                },
-                colorStart: { value: hexToVec3(createHex()), type: "3f" },
-                colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
+    const actualWidth = width * PIXELATION;
+    const actualHeight = height * PIXELATION;
+
+    let idleMousePosition = inSquare(actualWidth, actualHeight);
+
+    return {
+        uniforms: {
+            aspect: { value: aspect },
+            time: { value: inRange(200, 600), type: "1f" },
+            resolution: { value: [actualWidth, actualHeight], type: "2f" },
+            mousePosition: { value: [0, actualHeight], type: "2f" },
+            baseShape: {
+                value: inRange(0, 5, { isInteger: true }),
+                type: "1i",
             },
-            frag: glsl`
+            colorStart: { value: hexToVec3(createHex()), type: "3f" },
+            colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+        },
+        frag: glsl`
                 precision highp float;
 
                 #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
@@ -84,7 +89,7 @@ const createSketch = (PIXELATION: number) => {
                         shape = sdPyramid(p1, 0.45);
                     }
                     
-                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                    vec3 p2 = rotate(pos, vec3(mousePosition * 10.0, 1.0), -time * TAU);
                     float noiseScale = 15.0;
                     float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
 
@@ -133,52 +138,46 @@ const createSketch = (PIXELATION: number) => {
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
-            onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-                uniforms.time.value += 0.002;
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
+            uniforms.time.value += 0.002;
 
-                if (frameCount % 180 === 0) {
-                    idleMousePosition = inSquare(actualWidth, actualHeight);
-                }
+            if (frameCount % 180 === 0) {
+                idleMousePosition = inSquare(actualWidth, actualHeight);
+            }
 
-                uniforms.mousePosition.value = lerpVector(
-                    uniforms.mousePosition.value,
-                    !mouseIsIdle ? mousePosition : idleMousePosition,
-                    0.05
-                );
-            },
-        };
+            uniforms.mousePosition.value = lerpVector(
+                uniforms.mousePosition.value,
+                !mouseIsIdle ? mousePosition : idleMousePosition,
+                0.05
+            );
+        },
     };
-
-    return sketch;
 };
 
-const S030121 = () => {
-    const [pixelation] = useState(() => inRange(2.5, 7.5));
+const S030121 = () => (
+    // const [pixelation] = useState(() => inRange(2.5, 7.5));
 
-    const settings: ShaderRendererSettings = {
-        dimensions: [
-            window.innerWidth / pixelation,
-            window.innerHeight / pixelation,
-        ],
-    };
+    // const settings: ShaderRendererSettings = {
+    //     dimensions: [
+    //         window.innerWidth / pixelation,
+    //         window.innerHeight / pixelation,
+    //     ],
+    // };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const sketch = useCallback(createSketch(pixelation), [pixelation]);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // const sketch = useCallback(createSketch(pixelation), [pixelation]);
 
-    return (
-        <>
-            <ShaderRenderer
-                sketch={sketch}
-                settings={settings}
-                style={{ width: "100%", height: "100vh" }}
-            />
-            <ControlsContainer>
-                <RefreshButton>Re-generate scene</RefreshButton>
-            </ControlsContainer>
-        </>
-    );
-};
-
+    <>
+        <ShaderRenderer
+            sketch={sketch}
+            settings={settings}
+            style={{ width: "100%", height: "100vh" }}
+        />
+        <ControlsContainer>
+            <RefreshButton>Re-generate scene</RefreshButton>
+        </ControlsContainer>
+    </>
+);
 export default S030121;
 
 export { default as metaImage } from "./meta-image.png";

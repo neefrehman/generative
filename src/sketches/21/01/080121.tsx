@@ -38,9 +38,9 @@ const createSketch = (PIXELATION: number) => {
             frag: glsl`
                 precision highp float;
 
-                #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
+                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -57,15 +57,15 @@ const createSketch = (PIXELATION: number) => {
 
                 uniform int baseShape;
 
-                #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-                #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-                #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-                #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-                #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+                #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+                #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: sdTorus = require("../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+                #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+                #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
                 float sineNoise(vec3 p) {
-                    return 1.0 - (sin(p.x) + sin(p.y) + sin(p.z)) / 3.0; 
+                    return (sin(p.x) + sin(p.y) + sin(p.z)) / (noiseScale / 10.0); 
                 }
 
                 float sdf(vec3 pos) {
@@ -88,7 +88,7 @@ const createSketch = (PIXELATION: number) => {
                         shape = sdPyramid(p1, 0.45);
                     }
                     
-                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * 2.0 * TAU);
                     float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
 
                     return max(shape, sineNoiseValue);
@@ -155,8 +155,8 @@ const createSketch = (PIXELATION: number) => {
     return sketch;
 };
 
-const S030121 = () => {
-    const [pixelation] = useState(() => inRange(1.0, 7.5));
+const S080121 = () => {
+    const [pixelation] = useState(() => inRange(1, 3));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -182,6 +182,6 @@ const S030121 = () => {
     );
 };
 
-export default S030121;
+export default S080121;
 
-export { default as metaImage } from "./meta-image.png";
+export { default as metaImage } from "./070121/meta-image.png";

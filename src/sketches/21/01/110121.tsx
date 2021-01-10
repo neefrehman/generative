@@ -1,5 +1,3 @@
-// heavily inspired by ggsim's raymarching experiments https://github.com/gsimone/r3f-raymarching :)
-
 import glsl from "glslify";
 import React, { useCallback, useState } from "react";
 
@@ -13,7 +11,7 @@ import { createHex, createSign, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 // sketch creation function used with react state to ensure pixelation value
-// refreshes on component remount (for DX and reset button in client)
+// refreshes on component remount (just helpful for DX - otherwise the canvas size varies when i change the code)
 const createSketch = (PIXELATION: number) => {
     const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
         const actualWidth = width * PIXELATION;

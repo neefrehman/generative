@@ -34,7 +34,7 @@ const createSketch = (PIXELATION: number) => {
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(5, 12), type: "1f" },
-                simplexIntensity: { value: inRange(0.5, 4.5), type: "1f" },
+                simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
@@ -42,7 +42,6 @@ const createSketch = (PIXELATION: number) => {
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
                 #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
                 #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -68,9 +67,16 @@ const createSketch = (PIXELATION: number) => {
                 #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
                 float sineNoise(vec3 pos) {
-                    return 
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
-                        noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;
+                    if (baseShape == 0 || baseShape == 1) {
+                        return min(
+                            sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
+                            noise(vec4(pos * 0.6, time * 25.0)) * simplexIntensity
+                        );
+                    } else {
+                        return
+                            sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
+                            noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;
+                    }
                 }
 
                 float sdf(vec3 pos) {
@@ -160,7 +166,7 @@ const createSketch = (PIXELATION: number) => {
     return sketch;
 };
 
-const S130121 = () => {
+const S140121 = () => {
     const [pixelation] = useState(() => inRange(1.8, 3));
 
     const settings: ShaderRendererSettings = {
@@ -187,6 +193,6 @@ const S130121 = () => {
     );
 };
 
-export default S130121;
+export default S140121;
 
 export { default as metaImage } from "./070121/meta-image.png";

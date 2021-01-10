@@ -40,7 +40,6 @@ const createSketch = (PIXELATION: number) => {
 
                 #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
                 #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI

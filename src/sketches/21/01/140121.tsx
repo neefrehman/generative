@@ -68,12 +68,17 @@ const createSketch = (PIXELATION: number) => {
                     if (baseShape == 0 || baseShape == 1) {
                         return min(
                             sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                            noise(vec4(pos * 0.6, time * 25.0)) * simplexIntensity
+                            noise(vec4(pos * 0.6, time * 7.0)) * simplexIntensity
                         );
-                    } else {
+                    } else if (baseShape == 2 || baseShape == 3) {
                         return
                             sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
                             noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;
+                    } else {
+                        return max(
+                            sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * noiseScale),
+                            sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * noiseScale) + noise(vec4(pos * 0.65, time * 20.0)) * simplexIntensity
+                        );
                     }
                 }
 
@@ -132,7 +137,7 @@ const createSketch = (PIXELATION: number) => {
                             break;
                         }
 
-                        finalColor += (0.052 * getColor(currentRayPos));
+                        finalColor += (0.082 * getColor(currentRayPos));
                     }
 
                     vec3 color = finalColor;
@@ -165,7 +170,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S140121 = () => {
-    const [pixelation] = useState(() => inRange(1.8, 3));
+    const [pixelation] = useState(() => inRange(1.8, 2.0));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

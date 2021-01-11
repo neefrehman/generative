@@ -74,7 +74,7 @@ const createSketch = (PIXELATION: number) => {
                 float sineNoise(vec3 pos) {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * noiseScale),
-                        noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity
+                        noise(vec4(pos * 0.65, time * 20.0)) * simplexIntensity
                     );
                 }
 
@@ -124,7 +124,7 @@ const createSketch = (PIXELATION: number) => {
 
                 vec3 getColor(vec3 pos) {
                     float amount = clamp((1.5 - length(pos)) / 2.3, 0.0, 1.0);
-                    vec3 color = 0.588 + 0.708 * cos(TAU * (colorStart + amount * colorEnd));
+                    vec3 color = 0.6 + 0.71 * cos(TAU * (colorStart + amount * colorEnd));
 
                     return color * amount;
                 }
@@ -151,7 +151,7 @@ const createSketch = (PIXELATION: number) => {
                             break;
                         }
 
-                        finalColor += (0.052 * getColor(currentRayPos));
+                        finalColor += (0.082 * getColor(currentRayPos));
                     }
 
                     vec3 color = finalColor;

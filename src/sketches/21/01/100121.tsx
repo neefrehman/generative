@@ -7,7 +7,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerpVector } from "Utils/math";
-import { createHex, createSign, inRange, inSquare } from "Utils/random";
+import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 // sketch creation function used with react state to ensure pixelation value
@@ -31,13 +31,11 @@ const createSketch = (PIXELATION: number) => {
                 },
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-                noiseScale: { value: inRange(7, 13), type: "1f" },
-                colorScheme: { value: createSign(), type: "1i" },
+                noiseScale: { value: inRange(11, 20), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
 
-                #pragma glslify: noise = require("glsl-noise/simplex/4d");
                 #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
                 #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
@@ -53,7 +51,6 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorStart;
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
-                uniform int colorScheme;
 
                 uniform int baseShape;
 
@@ -64,8 +61,8 @@ const createSketch = (PIXELATION: number) => {
                 #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
                 #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
-                float sineNoise(vec3 pos) {
-                    return noise(vec4(pos, time * 1.0)) * 5.0;
+                float sineNoise(vec3 p) {
+                    return (sin(p.x) + sin(p.y) + sin(p.z)) / (noiseScale / 10.0); 
                 }
 
                 float sdf(vec3 pos) {
@@ -88,7 +85,7 @@ const createSketch = (PIXELATION: number) => {
                         shape = sdPyramid(p1, 0.45);
                     }
                     
-                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                    vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * 2.0 * TAU);
                     float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
 
                     return max(shape, sineNoiseValue);
@@ -112,7 +109,7 @@ const createSketch = (PIXELATION: number) => {
                     float curDist = 0.0;
                     float rayLength = 0.0;
 
-                    vec3 finalColor = vec3(colorScheme == -1 ? 0.0 : 0.9);
+                    vec3 finalColor = vec3(1.0);
 
                     for (int i = 0; i <= 256; i++) {
                         curDist = sdf(currentRayPos);
@@ -123,15 +120,13 @@ const createSketch = (PIXELATION: number) => {
                             break;
                         }
 
-                        float colorSchemeTransform = colorScheme == -1 ? 1.0 : -1.0;
-
-                        finalColor += 0.052 * getColor(currentRayPos) * colorSchemeTransform;
+                        finalColor -= (0.052 * getColor(currentRayPos));
                     }
 
                     vec3 color = finalColor;
 
                     if (curDist > 0.1) {
-                        color = colorScheme == -1 ? max(finalColor, 0.0) : min(finalColor, 1.0);
+                        color = max(finalColor, 0.0);
                     }
 
                     float grainAmount = filmGrain(vUv * time) * 0.1;
@@ -158,7 +153,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S100121 = () => {
-    const [pixelation] = useState(() => inRange(1.5, 2.2));
+    const [pixelation] = useState(() => inRange(1, 3));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -186,4 +181,4 @@ const S100121 = () => {
 
 export default S100121;
 
-export { default as metaImage } from "./070121/meta-image.png";
+export { default as metaImage } from "./080121/meta-image.png";

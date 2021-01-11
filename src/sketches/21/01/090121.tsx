@@ -109,7 +109,7 @@ const createSketch = (PIXELATION: number) => {
                     float curDist = 0.0;
                     float rayLength = 0.0;
 
-                    vec3 finalColor = vec3(1.0);
+                    vec3 finalColor = vec3(0.0);
 
                     for (int i = 0; i <= 256; i++) {
                         curDist = sdf(currentRayPos);
@@ -120,7 +120,7 @@ const createSketch = (PIXELATION: number) => {
                             break;
                         }
 
-                        finalColor -= (0.052 * getColor(currentRayPos));
+                        finalColor += (0.052 * getColor(currentRayPos));
                     }
 
                     vec3 color = finalColor;
@@ -181,4 +181,4 @@ const S090121 = () => {
 
 export default S090121;
 
-export { default as metaImage } from "./070121/meta-image.png";
+export { default as metaImage } from "./080121/meta-image.png";

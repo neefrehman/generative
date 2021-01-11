@@ -154,8 +154,8 @@ const createSketch = (PIXELATION: number) => {
     return sketch;
 };
 
-const S070121 = () => {
-    const [pixelation] = useState(() => inRange(1.3, 6));
+const S080121 = () => {
+    const [pixelation] = useState(() => inRange(1, 6));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -181,6 +181,6 @@ const S070121 = () => {
     );
 };
 
-export default S070121;
+export default S080121;
 
 export { default as metaImage } from "./meta-image.png";

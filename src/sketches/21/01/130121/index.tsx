@@ -74,7 +74,7 @@ const createSketch = (PIXELATION: number) => {
                 float sineNoise(vec3 pos) {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * noiseScale),
-                        noise(vec4(pos * 0.65, time * 20.0)) * simplexIntensity
+                        noise(vec4(vec3(pos.x * 0.65, sin(pos.y * 1.25), pos.z * 0.65), time * 18.0)) * simplexIntensity
                     );
                 }
 

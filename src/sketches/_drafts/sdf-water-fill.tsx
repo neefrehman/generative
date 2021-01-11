@@ -67,7 +67,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             float sineNoise(vec3 pos) {
                 return 
-                    pos.y - 0.5 +
+                    pos.y +
                     noise(vec4(vec3(pos.x * 0.6, sin(pos.y * 4.0), pos.z * 0.13), time * 22.0)) / 2.5;
             }
 
@@ -79,7 +79,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (baseShape == 0) {
                     shape = sdSphere(p1, 0.5);
                 } else if (baseShape == 1) {
-                    shape = sdCappedCone(p1, 0.45, 0.5, 0.4);
+                    shape = sdCappedCone(p1, 0.45, 0.5, 0.47);
                 } else if (baseShape == 2) {
                     shape = sdCuboid(p1, vec3(0.4));
                 }

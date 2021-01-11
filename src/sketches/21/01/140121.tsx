@@ -1,7 +1,7 @@
 import glsl from "glslify";
 import React, { useCallback, useState } from "react";
 
-import type { ShaderRendererSettings, ShaderSetupFn } from "Renderers/WebGL";
+import type { ShaderSetupFn } from "Renderers/WebGL";
 import { ShaderRenderer } from "Renderers/WebGL";
 
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
@@ -12,29 +12,25 @@ import { hexToVec3 } from "Utils/shaders";
 
 // sketch creation function used with react state to ensure pixelation value
 // refreshes on component remount (just helpful for DX - otherwise the canvas size varies when i change the code)
-const createSketch = (PIXELATION: number) => {
-    const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-        const actualWidth = width * PIXELATION;
-        const actualHeight = height * PIXELATION;
+const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
+    let idleMousePosition = inSquare(width, height);
 
-        let idleMousePosition = inSquare(actualWidth, actualHeight);
-
-        return {
-            uniforms: {
-                aspect: { value: aspect },
-                time: { value: inRange(200, 600), type: "1f" },
-                resolution: { value: [actualWidth, actualHeight], type: "2f" },
-                mousePosition: { value: [0, actualHeight], type: "2f" },
-                baseShape: {
-                    value: inRange(0, 5, { isInteger: true }),
-                    type: "1i",
-                },
-                colorStart: { value: hexToVec3(createHex()), type: "3f" },
-                colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-                noiseScale: { value: inRange(5, 12), type: "1f" },
-                simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
+    return {
+        uniforms: {
+            aspect: { value: aspect },
+            time: { value: inRange(200, 600), type: "1f" },
+            resolution: { value: [width, height], type: "2f" },
+            mousePosition: { value: [0, height], type: "2f" },
+            baseShape: {
+                value: inRange(0, 5, { isInteger: true }),
+                type: "1i",
             },
-            frag: glsl`
+            colorStart: { value: hexToVec3(createHex()), type: "3f" },
+            colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+            noiseScale: { value: inRange(5, 12), type: "1f" },
+            simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
+        },
+        frag: glsl`
                 precision highp float;
 
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
@@ -150,51 +146,30 @@ const createSketch = (PIXELATION: number) => {
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
-            onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-                uniforms.time.value += 0.0004;
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
+            uniforms.time.value += 0.0004;
 
-                if (frameCount % 200 === 0) {
-                    idleMousePosition = inSquare(actualWidth, actualHeight);
-                }
+            if (frameCount % 200 === 0) {
+                idleMousePosition = inSquare(width, height);
+            }
 
-                uniforms.mousePosition.value = lerpVector(
-                    uniforms.mousePosition.value,
-                    !mouseIsIdle ? mousePosition : idleMousePosition,
-                    0.02
-                );
-            },
-        };
+            uniforms.mousePosition.value = lerpVector(
+                uniforms.mousePosition.value,
+                !mouseIsIdle ? mousePosition : idleMousePosition,
+                0.02
+            );
+        },
     };
-
-    return sketch;
 };
 
-const S140121 = () => {
-    const [pixelation] = useState(() => inRange(1.8, 2.0));
-
-    const settings: ShaderRendererSettings = {
-        dimensions: [
-            window.innerWidth / pixelation,
-            window.innerHeight / pixelation,
-        ],
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const sketch = useCallback(createSketch(pixelation), [pixelation]);
-
-    return (
-        <>
-            <ShaderRenderer
-                sketch={sketch}
-                settings={settings}
-                style={{ width: "100%", height: "100vh" }}
-            />
-            <ControlsContainer>
-                <RefreshButton>Re-generate scene</RefreshButton>
-            </ControlsContainer>
-        </>
-    );
-};
+const S140121 = () => (
+    <>
+        <ShaderRenderer sketch={sketch} />
+        <ControlsContainer>
+            <RefreshButton>Re-generate scene</RefreshButton>
+        </ControlsContainer>
+    </>
+);
 
 export default S140121;
 

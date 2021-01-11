@@ -184,7 +184,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S130121 = () => {
-    const [pixelation] = useState(() => inRange(1.6, 2.4));
+    const [pixelation] = useState(() => inRange(1.4, 1.6));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

@@ -28,6 +28,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             noiseScale: { value: inRange(5, 12), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
+            grainIntensity: { value: inRange(0, 0.04), type: "1f" },
         },
         frag: glsl`
             precision highp float;
@@ -50,6 +51,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float noiseScale;
             uniform float simplexIntensity;
             uniform int noiseStyle;
+            uniform float grainIntensity;
 
             uniform int baseShape;
 
@@ -142,7 +144,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     color = max(finalColor, 0.0);
                 }
 
-                float grainAmount = filmGrain(vUv * time) * 0.1;
+                float grainAmount = filmGrain(vUv * time) * grainIntensity;
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,

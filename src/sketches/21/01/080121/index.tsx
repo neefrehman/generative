@@ -12,8 +12,9 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-// sketch creation function used with react state to ensure pixelation value
-// refreshes on component remount (just helpful for DX - otherwise the canvas size varies when i change the code)
+// `createSketch` function used with react state to ensure pixelation value
+// refreshes on component remount (just helpful for DX - otherwise the canvas
+// size varies when the code changes)
 const createSketch = (PIXELATION: number) => {
     const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
         const actualWidth = width * PIXELATION;

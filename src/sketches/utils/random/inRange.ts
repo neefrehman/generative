@@ -19,11 +19,11 @@ export const inRange = (
     const upperBound = max ?? min;
     const lowerBound = max ? min : 0;
 
-    let generatedNumber = isInteger
-        ? Math.floor(
+    let generatedNumber = !isInteger
+        ? Math.random() * (upperBound - lowerBound) + lowerBound
+        : Math.floor(
               Math.random() * (Math.ceil(upperBound) - Math.floor(lowerBound) + 1)
-          ) + Math.floor(lowerBound)
-        : Math.random() * (upperBound - lowerBound) + lowerBound;
+          ) + Math.floor(lowerBound);
 
     if (not !== undefined && generatedNumber === not) {
         generatedNumber = inRange(min, max, options);

@@ -7,7 +7,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerpVector } from "Utils/math";
-import { createHex, inRange, inSquare, pick } from "Utils/random";
+import { createHex, inBeta, inRange, inSquare, pick } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
@@ -23,12 +23,13 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: inRange(0, 5, { isInteger: true }),
                 type: "1i",
             },
+            bgBrightness: { value: inBeta(1, 3) * 0.05, type: "1f" },
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
             noiseScale: { value: inRange(5, 12), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
-            grainIntensity: { value: inRange(0, 0.04), type: "1f" },
+            grainIntensity: { value: inRange(0, 0.038), type: "1f" },
         },
         frag: glsl`
             precision highp float;
@@ -46,6 +47,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float aspect;
             uniform vec2 resolution;
             uniform vec2 mousePosition;
+            uniform float bgBrightness;
             uniform vec3 colorStart;
             uniform vec3 colorEnd;
             uniform float noiseScale;
@@ -66,7 +68,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * 0.6, time * 7.0)) * simplexIntensity
+                        noise(vec4(pos * 0.6, time * 5.4)) * simplexIntensity
                     );
                 } else if (noiseStyle == 1) {
                     return
@@ -124,7 +126,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 float curDist = 0.0;
                 float rayLength = 0.0;
 
-                vec3 finalColor = vec3(0.0);
+                vec3 finalColor = vec3(bgBrightness);
 
                 for (int i = 0; i <= 256; i++) {
                     curDist = sdf(currentRayPos);
@@ -135,7 +137,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                         break;
                     }
 
-                    finalColor += (0.082 * getColor(currentRayPos));
+                    finalColor += (0.087 * getColor(currentRayPos));
                 }
 
                 vec3 color = finalColor;
@@ -149,7 +151,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             }
         `,
         onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.0004;
+            uniforms.time.value += 0.00035;
 
             if (frameCount % 200 === 0) {
                 idleMousePosition = inSquare(width, height);
@@ -158,7 +160,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.02
+                0.012
             );
         },
     };

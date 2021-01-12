@@ -121,7 +121,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
  */
 export const setUniform = (
     location: WebGLUniformLocation,
-    value: any, // TODO: UniformValue - use same type guards as above, or is there a better way?
+    value: any, // TODO: UniformValue type - use same type guards as above, or is there a better way?
     type = getUniformTypeFromValue(value),
     gl: GLContext
 ): void => {
@@ -133,7 +133,7 @@ export const setUniform = (
 
     if (type === "1i") gl.uniform1i(location, value);
     if (type === "2i") gl.uniform2i(location, value[0], value[1]);
-    if (type === "3f") gl.uniform3f(location, value[0], value[1], value[2]);
-    if (type === "4f")
-        gl.uniform4f(location, value[0], value[1], value[2], value[3]);
+    if (type === "3i") gl.uniform3i(location, value[0], value[1], value[2]);
+    if (type === "4i")
+        gl.uniform4i(location, value[0], value[1], value[2], value[3]);
 };

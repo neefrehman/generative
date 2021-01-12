@@ -7,7 +7,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerpVector } from "Utils/math";
-import { createHex, inRange, inSquare } from "Utils/random";
+import { createHex, inRange, inSquare, pick } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
@@ -27,6 +27,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
             noiseScale: { value: inRange(5, 12), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
+            noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
         },
         frag: glsl`
             precision highp float;
@@ -48,6 +49,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 colorEnd;
             uniform float noiseScale;
             uniform float simplexIntensity;
+            uniform int noiseStyle;
 
             uniform int baseShape;
 
@@ -59,12 +61,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
             float sineNoise(vec3 pos) {
-                if (baseShape == 0 || baseShape == 1) {
+                if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
                         noise(vec4(pos * 0.6, time * 7.0)) * simplexIntensity
                     );
-                } else if (baseShape == 2 || baseShape == 3) {
+                } else if (noiseStyle == 1) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (noiseScale / (noiseScale * 9.0)) +
                         noise(vec4(pos * 0.65, time * 25.0)) * simplexIntensity;

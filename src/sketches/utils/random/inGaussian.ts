@@ -2,8 +2,8 @@
  * Produces a random Gaussian (Normal) distribution. There is no minimum or maximum
  * value that might return. There is just a lower probability the further from the mean.
  *
- * @param mean - The mean average of the distribution
- * @param standardDeviation - The standard deviation of returned values form the mean
+ * @param mean - The mean average in the distribution
+ * @param standardDeviation - The standard deviation of returned values from the mean
  *
  * @returns A random number within the Gaussian distribution
  *

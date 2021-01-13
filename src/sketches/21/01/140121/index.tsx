@@ -18,7 +18,7 @@ import {
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    let idleMousePosition = inSquare(width, height);
+    const idleMousePosition = inSquare(width, height);
 
     return {
         uniforms: {
@@ -31,8 +31,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            sinNoiseScale: { value: inRange(4.5, 11), type: "1f" },
-            simplexNoiseScale: { value: inRange(0.5, 0.72), type: "1f" },
+            sinNoiseScale: { value: inRange(4.5, 9), type: "1f" },
+            simplexNoiseScale: { value: inRange(0.56, 0.7), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
@@ -46,9 +46,9 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             shapeDimension3: { value: inRange(0.32, 0.4), type: "1f" },
             shapePosition: {
                 value: [
-                    inGaussian(0, 0.09) * aspect,
-                    inGaussian(0, 0.09),
-                    inGaussian(0, 0.082),
+                    inGaussian(0, 0.08) * aspect,
+                    inGaussian(0, 0.08),
+                    inBeta(1, 3) * 0.1,
                 ],
                 type: "3f",
             },
@@ -99,16 +99,16 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 5.4)) * simplexIntensity
+                        noise(vec4(pos * simplexNoiseScale, time * 6.15)) * simplexIntensity
                     );
                 } else if (noiseStyle == 1) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
-                        noise(vec4(pos * simplexNoiseScale, time * 25.0)) * simplexIntensity;
+                        noise(vec4(pos * simplexNoiseScale, time * 22.0)) * simplexIntensity;
                 } else {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 15.0)) * simplexIntensity)
+                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 10.0)) * simplexIntensity)
                     );
                 }
             }
@@ -134,7 +134,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 } else if (baseShape == 6) {
                     shape = sdCone(p1, vec2(shapeDimension3, shapeDimension2), shapeDimension1);
                 } else if (baseShape == 7) {
-                    shape = sdCuboid(p1, vec3(shapeDimension3, shapeDimension2, shapeDimension1));
+                    shape = sdCuboid(p1, vec3(shapeDimension1 * 0.88));
                 }
                 
                 
@@ -186,17 +186,13 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.00035;
-
-            if (frameCount % 200 === 0) {
-                idleMousePosition = inSquare(width, height);
-            }
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+            uniforms.time.value += 0.0002;
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.0077
+                0.005
             );
         },
     };

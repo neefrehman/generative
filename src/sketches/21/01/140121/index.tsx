@@ -16,20 +16,26 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     return {
         uniforms: {
             aspect: { value: aspect },
-            time: { value: inRange(200, 600), type: "1f" },
+            time: { value: inRange(100, 1000), type: "1f" },
             resolution: { value: [width, height], type: "2f" },
             mousePosition: { value: [0, height], type: "2f" },
-            baseShape: {
-                value: inRange(0, 5, { isInteger: true }),
-                type: "1i",
-            },
-            bgBrightness: { value: inBeta(1, 3) * 0.05, type: "1f" },
+
+            bgBrightness: { value: inBeta(1, 3) * 0.054, type: "1f" },
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+
             noiseScale: { value: inRange(5, 12), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
+
+            baseShape: {
+                value: inRange(0, 7, { isInteger: true }),
+                type: "1i",
+            },
+            shapeDimension1: { value: inRange(0.4, 0.54), type: "1f" },
+            shapeDimension2: { value: inRange(0.2, 0.36), type: "1f" },
+            shapeDimension3: { value: inRange(0.32, 0.41), type: "1f" },
         },
         frag: glsl`
             precision highp float;
@@ -47,20 +53,27 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float aspect;
             uniform vec2 resolution;
             uniform vec2 mousePosition;
+
             uniform float bgBrightness;
             uniform vec3 colorStart;
             uniform vec3 colorEnd;
+
             uniform float noiseScale;
             uniform float simplexIntensity;
             uniform int noiseStyle;
             uniform float grainIntensity;
 
             uniform int baseShape;
-
+            uniform float shapeDimension1;
+            uniform float shapeDimension2;
+            uniform float shapeDimension3;
+            
             #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
             #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
             #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
             #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+            #pragma glslify: sdCone = require("../../../utils/shaders/sdShapes/3d/sdCone.glsl");
             #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
             #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
@@ -88,19 +101,24 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 float shape = 0.0;
 
                 if (baseShape == 0) {
-                    shape = sdSphere(p1, 0.45);
+                    shape = sdSphere(p1, shapeDimension1);
                 } else if (baseShape == 1) {
-                    shape = sdEllipsoid(p1, vec3(0.45, 0.2, 0.32));
+                    shape = sdEllipsoid(p1, vec3(shapeDimension1, shapeDimension2, shapeDimension3));
                 } else if (baseShape == 2) {
                     p1 = rotate(pos, vec3(0.0, 1.0, 0.0), time * TAU);
-                    shape = sdOctahedron(p1, 0.45);
+                    shape = sdOctahedron(p1, shapeDimension1);
                 } else if (baseShape == 3) {
-                    shape = sdTorus(p1, vec2(0.45, 0.2));
+                    shape = sdTorus(p1, vec2(shapeDimension1, shapeDimension2));
                 } else if (baseShape == 4) {
-                    shape = sdCappedCone(p1, 0.45, 0.4, 0.25);
+                    shape = sdCappedCone(p1, shapeDimension1, shapeDimension3, shapeDimension2);
                 } else if (baseShape == 5) {
-                    shape = sdPyramid(p1, 0.45);
+                    shape = sdPyramid(p1, shapeDimension1);
+                } else if (baseShape == 6) {
+                    shape = sdCone(p1, vec2(shapeDimension3, shapeDimension2), shapeDimension1);
+                } else if (baseShape == 7) {
+                    shape = sdCuboid(p1, vec3(shapeDimension3, shapeDimension2, shapeDimension1));
                 }
+                
                 
                 vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
                 float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
@@ -160,7 +178,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.012
+                0.0077
             );
         },
     };

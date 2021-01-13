@@ -6,7 +6,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
-import { lerpVector } from "Utils/math";
+import { lerp, lerpVector } from "Utils/math";
 import {
     createHex,
     inBeta,
@@ -20,6 +20,9 @@ import { hexToVec3 } from "Utils/shaders";
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     let idleMousePosition = inSquare(width, height);
 
+    const initialPlaybackSpeed = inRange(0.00016, 0.0002);
+    let playbackSpeed = initialPlaybackSpeed;
+
     return {
         uniforms: {
             aspect: { value: aspect },
@@ -32,8 +35,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
             sinNoiseScale: { value: inRange(3.5, 9), type: "1f" },
-            simplexNoiseScale: { value: inRange(2, 5.5), type: "1f" },
-            simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
+            simplexNoiseScale: {
+                value: 2 + inBeta(1, 3) * 50,
+                type: "1f",
+            },
+            simplexIntensity: { value: inRange(0.5, 10), type: "1f" },
             noiseStyle: { value: pick([0, 1]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
 
@@ -94,7 +100,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             float sineNoise(vec3 pos) {
                 if (noiseStyle == 0) {
                     return
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
+                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 7.0)) +
                         noise(vec4(pos * simplexNoiseScale, time * 18.0)) * simplexIntensity;
                 } else {
                     return max(
@@ -129,7 +135,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 }
                 
                 
-                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU * 0.9);
                 float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * sinNoiseScale)) / sinNoiseScale;
 
                 return max(shape, sineNoiseValue);
@@ -177,8 +183,16 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.00024;
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount, fps }) => {
+            playbackSpeed = lerp(
+                playbackSpeed,
+                fps < 40
+                    ? initialPlaybackSpeed * Math.min(60 / fps, 2)
+                    : initialPlaybackSpeed,
+                0.33
+            );
+
+            uniforms.time.value += playbackSpeed;
 
             if (frameCount % 200 === 0) {
                 idleMousePosition = inSquare(width, height);
@@ -187,7 +201,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.0077
+                0.0045
             );
         },
     };

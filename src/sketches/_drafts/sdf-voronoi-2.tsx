@@ -11,7 +11,7 @@ import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    let idleMousePosition = inSquare(width, height);
+    const idleMousePosition = inSquare(width, height);
 
     return {
         uniforms: {
@@ -92,7 +92,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     float curDist = 0.0;
                     float rayLength = 0.0;
 
-                    vec3 finalColor = vec3(0.0);
+                    vec3 finalColor = vec3(0.01);
 
                     for (int i = 0; i <= 256; i++) {
                         curDist = sdf(currentRayPos);
@@ -112,16 +112,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                         color = min(finalColor, 0.8);
                     }
 
-                    float grainAmount = filmGrain(vUv * time) * 0.05;
+                    float grainAmount = filmGrain(vUv * time) * 0.03;
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.0004;
-
-            if (frameCount % 200 === 0) {
-                idleMousePosition = inSquare(width, height);
-            }
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+            uniforms.time.value += 0.0003;
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,

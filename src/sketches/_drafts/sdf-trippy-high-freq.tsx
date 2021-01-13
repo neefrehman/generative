@@ -95,11 +95,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
-                        noise(vec4(pos * simplexNoiseScale, time * 25.0)) * simplexIntensity;
+                        noise(vec4(pos * simplexNoiseScale, time * 18.0)) * simplexIntensity;
                 } else {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 16.0)) * simplexIntensity)
+                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 12.0)) * simplexIntensity)
                     );
                 }
             }
@@ -178,7 +178,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             }
         `,
         onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.00035;
+            uniforms.time.value += 0.00024;
 
             if (frameCount % 200 === 0) {
                 idleMousePosition = inSquare(width, height);

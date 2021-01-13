@@ -19,7 +19,7 @@ import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
-    const playbackSpeed = inRange(0.00017, 0.00028);
+    const playbackSpeed = inRange(0.00016, 0.00023);
 
     return {
         uniforms: {
@@ -196,7 +196,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.005
+                0.004
             );
         },
     };

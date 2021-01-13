@@ -35,7 +35,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
             noiseRotationSpeed: { value: inRange(0.66, 1.15), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
-            simplexNoiseScale: { value: inRange(0.6, 0.66), type: "1f" },
+            simplexNoiseScale: { value: inRange(0.6, 0.67), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
 
@@ -102,7 +102,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 6.15)) * simplexIntensity
+                        noise(vec4(pos * simplexNoiseScale, time * 6.48)) * simplexIntensity
                     );
                 } else if (noiseStyle == 1) {
                     return

@@ -23,7 +23,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     return {
         uniforms: {
             aspect: { value: aspect },
-            time: { value: inRange(100, 1000), type: "1f" },
+            time: { value: inRange(0, 500), type: "1f" },
             resolution: { value: [width, height], type: "2f" },
             mousePosition: { value: [0, height], type: "2f" },
 
@@ -31,8 +31,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            sinNoiseScale: { value: inRange(4.5, 9), type: "1f" },
-            simplexNoiseScale: { value: inRange(0.56, 0.7), type: "1f" },
+            sinNoiseScale: { value: inRange(5, 12), type: "1f" },
+            simplexNoiseScale: { value: inRange(0.6, 0.66), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
             noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },

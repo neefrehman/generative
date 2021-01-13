@@ -19,6 +19,7 @@ import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
+    const playbackSpeed = inRange(0.00018, 0.0003);
 
     return {
         uniforms: {
@@ -31,10 +32,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
+            noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
+            noiseRotationSpeed: { value: inRange(0.66, 1.15), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
             simplexNoiseScale: { value: inRange(0.6, 0.66), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
-            noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
 
             baseShape: {
@@ -75,6 +77,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 colorEnd;
 
             uniform int noiseStyle;
+            uniform float noiseRotationSpeed;
             uniform float sinNoiseScale;
             uniform float simplexNoiseScale;
             uniform float simplexIntensity;
@@ -138,7 +141,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 }
                 
                 
-                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
+                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU * noiseRotationSpeed);
                 float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * sinNoiseScale)) / sinNoiseScale;
 
                 return max(shape, sineNoiseValue);
@@ -187,7 +190,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             }
         `,
         onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-            uniforms.time.value += 0.0002;
+            uniforms.time.value += playbackSpeed;
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,

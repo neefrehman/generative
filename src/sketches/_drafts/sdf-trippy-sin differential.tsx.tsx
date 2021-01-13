@@ -19,7 +19,7 @@ import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
-    const playbackSpeed = inRange(0.00017, 0.00028);
+    const playbackSpeed = inRange(0.00018, 0.0003);
 
     return {
         uniforms: {
@@ -59,17 +59,17 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
-            #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
-            #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
+            #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
+            #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
 
-            #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-            #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-            #pragma glslify: sdCuboid = require("../../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
-            #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-            #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-            #pragma glslify: sdCone = require("../../../utils/shaders/sdShapes/3d/sdCone.glsl");
-            #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-            #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+            #pragma glslify: sdEllipsoid = require("../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+            #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+            #pragma glslify: sdOctahedron = require("../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+            #pragma glslify: sdTorus = require("../utils/shaders/sdShapes/3d/sdTorus.glsl");
+            #pragma glslify: sdCone = require("../utils/shaders/sdShapes/3d/sdCone.glsl");
+            #pragma glslify: sdCappedCone = require("../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+            #pragma glslify: sdPyramid = require("../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
             #define PI 3.1415
             #define TAU 2.0 * PI
@@ -99,21 +99,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 shapePositionOffset;
 
             float sineNoise(vec3 pos) {
-                if (noiseStyle == 0) {
-                    return min(
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 6.48)) * simplexIntensity
-                    );
-                } else if (noiseStyle == 1) {
-                    return
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
-                        noise(vec4(pos * simplexNoiseScale, time * 13.0)) * simplexIntensity;
-                } else {
-                    return max(
-                        sin(pos.x * 1.96) + sin(pos.y * 1.96) + (sin(pos.z * 1.96) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 10.0)) * simplexIntensity)
-                    );
-                }
+                return max(
+                    // HERE change scalar multiplication values
+                    sin(pos.x) + sin(pos.y) + (sin(pos.z) * sinNoiseScale),
+                    sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 10.0)) * simplexIntensity)
+                );
             }
 
             float sdf(vec3 pos) {
@@ -212,5 +202,3 @@ const S140121 = () => (
 );
 
 export default S140121;
-
-export { default as metaImage } from "./meta-image.png";

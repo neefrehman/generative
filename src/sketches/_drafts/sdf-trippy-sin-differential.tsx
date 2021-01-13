@@ -7,7 +7,14 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerp, lerpVector } from "Utils/math";
-import { createHex, inBeta, inGaussian, inRange, inSquare } from "Utils/random";
+import {
+    createHex,
+    createSign,
+    inBeta,
+    inGaussian,
+    inRange,
+    inSquare,
+} from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
@@ -29,7 +36,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             sinScalar1: { value: inRange(0, 25), type: "1f" },
             sinScalar2: { value: inRange(0, 3), type: "1f" },
-            noiseRotationSpeed: { value: inRange(0.66, 1.15), type: "1f" },
+            scalarSwap: { value: createSign(0.6), type: "1i" },
+            noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
             simplexNoiseScale: { value: inRange(0.6, 0.67), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4.3), type: "1f" },
@@ -83,6 +91,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             uniform float sinScalar1;
             uniform float sinScalar2;
+            uniform int scalarSwap;
             uniform float noiseRotationSpeed;
             uniform float sinNoiseScale;
             uniform float simplexNoiseScale;
@@ -96,9 +105,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 shapePositionOffset;
 
             float sineNoise(vec3 pos) {
+                float scalar1 = scalarSwap == 1 ? sinScalar1 : sinScalar2;
+                float scalar2 = scalarSwap == 1 ? sinScalar2 : sinScalar1;
+
                 return max(
-                    sin(pos.x * sinScalar1) + sin(pos.y * sinScalar1) + (sin(pos.z * sinScalar1) * sinNoiseScale),
-                    sin(pos.x * sinScalar2) + sin(pos.y * sinScalar2) + (sin(pos.z * sinScalar2) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 10.0)) * simplexIntensity)
+                    sin(pos.x * scalar1) + sin(pos.y * scalar1) + (sin(pos.z * scalar1) * sinNoiseScale),
+                    sin(pos.x * scalar2) + sin(pos.y * scalar2) + (sin(pos.z * scalar2) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 10.0)) * simplexIntensity)
                 );
             }
 

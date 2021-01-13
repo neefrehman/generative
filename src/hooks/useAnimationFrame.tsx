@@ -32,7 +32,7 @@ export const useAnimationFrame = (
     const isPlaying = useRef(false);
     const elapsedTime = useRef(0);
     const frameCount = useRef(1);
-    const fpsArray = useRef<number[]>(new Array(10).fill(throttledFps ?? 60));
+    const fpsArray = useRef<number[]>(new Array(20).fill(throttledFps ?? 60));
     const averageFps = useRef(throttledFps ?? 60);
 
     const mousePosition = useRef<Vector<2>>([0, 0]);
@@ -213,7 +213,7 @@ export interface OnFrameProps {
     frameCount?: number;
     /** The current elapsed time of the animation in ms */
     elapsedTime?: number;
-    /** The current fps of the animation (averaged over the last 10 frames) */
+    /** The current fps of the animation (averaged over the last 20 frames) */
     fps?: number;
     /** A function that will stop the animation when called */
     stopAnimation?: () => void;

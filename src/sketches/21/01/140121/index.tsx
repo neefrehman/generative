@@ -6,7 +6,7 @@ import { ShaderRenderer } from "Renderers/WebGL";
 
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
-import { lerpVector } from "Utils/math";
+import { lerp, lerpVector } from "Utils/math";
 import {
     createHex,
     inBeta,
@@ -19,7 +19,9 @@ import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
-    const playbackSpeed = inRange(0.00016, 0.00023);
+
+    const initialPlaybackSpeed = inRange(0.00008, 0.00011);
+    let playbackSpeed = initialPlaybackSpeed;
 
     return {
         uniforms: {
@@ -102,7 +104,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 6.48)) * simplexIntensity
+                        noise(vec4(pos * simplexNoiseScale, time * 6.6)) * simplexIntensity
                     );
                 } else if (noiseStyle == 1) {
                     return
@@ -190,7 +192,15 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+        onFrame: ({ uniforms, mousePosition, mouseIsIdle, fps }) => {
+            playbackSpeed = lerp(
+                playbackSpeed,
+                fps < 40
+                    ? initialPlaybackSpeed * Math.min(60 / fps, 2)
+                    : initialPlaybackSpeed,
+                0.033
+            );
+
             uniforms.time.value += playbackSpeed;
 
             uniforms.mousePosition.value = lerpVector(

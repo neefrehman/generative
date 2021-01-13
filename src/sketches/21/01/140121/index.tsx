@@ -135,6 +135,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 } else if (baseShape == 5) {
                     shape = sdPyramid(p1, shapeDimension1);
                 } else if (baseShape == 6) {
+                    p1 = p1 - vec3(0.2, 0.2, 0.0);
                     shape = sdCone(p1, vec2(shapeDimension3, shapeDimension2), shapeDimension1);
                 } else if (baseShape == 7) {
                     shape = sdCuboid(p1, vec3(shapeDimension1 * 0.88));

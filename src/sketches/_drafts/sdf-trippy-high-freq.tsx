@@ -27,38 +27,34 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             resolution: { value: [width, height], type: "2f" },
             mousePosition: { value: [0, height], type: "2f" },
 
-            bgBrightness: { value: inBeta(1, 3) * 0.057, type: "1f" },
+            bgBrightness: { value: inBeta(1, 3) * 0.056, type: "1f" },
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            sinNoiseScale: { value: inRange(4.5, 11), type: "1f" },
-            simplexNoiseScale: { value: inRange(0.5, 0.72), type: "1f" },
+            sinNoiseScale: { value: inRange(3.5, 9), type: "1f" },
+            simplexNoiseScale: { value: inRange(2, 5.5), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4), type: "1f" },
-            noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
+            noiseStyle: { value: pick([0, 1]), type: "1i" },
             grainIntensity: { value: inRange(0, 0.038), type: "1f" },
 
             baseShape: {
                 value: inRange(0, 7, { isInteger: true }),
                 type: "1i",
             },
-            shapeDimension1: { value: inRange(0.4, 0.52), type: "1f" },
-            shapeDimension2: { value: inRange(0.2, 0.35), type: "1f" },
-            shapeDimension3: { value: inRange(0.32, 0.4), type: "1f" },
-            shapePosition: {
-                value: [
-                    inGaussian(0, 0.09) * aspect,
-                    inGaussian(0, 0.09),
-                    inGaussian(0, 0.082),
-                ],
-                type: "3f",
+            shapeDimension1: { value: inRange(0.4, 0.54), type: "1f" },
+            shapeDimension2: { value: inRange(0.2, 0.36), type: "1f" },
+            shapeDimension3: { value: inRange(0.32, 0.41), type: "1f" },
+            shapePosision: {
+                value: [inGaussian(0, 0.084), inGaussian(0, 0.084)],
+                type: "2f",
             },
         },
         frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
-            #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
-            #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
+            #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
+            #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
 
             #define PI 3.1415
             #define TAU 2.0 * PI
@@ -84,37 +80,32 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float shapeDimension1;
             uniform float shapeDimension2;
             uniform float shapeDimension3;
-            uniform vec3 shapePosition;
+            uniform vec2 shapePosision;
             
-            #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-            #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-            #pragma glslify: sdCuboid = require("../../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
-            #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-            #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-            #pragma glslify: sdCone = require("../../../utils/shaders/sdShapes/3d/sdCone.glsl");
-            #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-            #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+            #pragma glslify: sdEllipsoid = require("../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+            #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+            #pragma glslify: sdOctahedron = require("../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+            #pragma glslify: sdTorus = require("../utils/shaders/sdShapes/3d/sdTorus.glsl");
+            #pragma glslify: sdCone = require("../utils/shaders/sdShapes/3d/sdCone.glsl");
+            #pragma glslify: sdCappedCone = require("../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+            #pragma glslify: sdPyramid = require("../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
             float sineNoise(vec3 pos) {
                 if (noiseStyle == 0) {
-                    return min(
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 5.4)) * simplexIntensity
-                    );
-                } else if (noiseStyle == 1) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
                         noise(vec4(pos * simplexNoiseScale, time * 25.0)) * simplexIntensity;
                 } else {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 15.0)) * simplexIntensity)
+                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 16.0)) * simplexIntensity)
                     );
                 }
             }
 
             float sdf(vec3 pos) {
-                vec3 p1 = rotate(vec3(pos + shapePosition), vec3(1.0, 1.0, 0.0), time * TAU);
+                vec3 p1 = rotate(vec3(pos.x + shapePosision.x, pos.y + shapePosision.y, pos.z), vec3(1.0, 1.0, 0.0), time * TAU);
 
                 float shape = 0.0;
 
@@ -212,5 +203,3 @@ const S140121 = () => (
 );
 
 export default S140121;
-
-export { default as metaImage } from "./meta-image.png";

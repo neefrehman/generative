@@ -1,4 +1,11 @@
 /**
+ * Tests that a hex code is valid
+ * @param hex a hex code
+ */
+export const testHex = (hex: string): boolean =>
+    /^#([A-Fa-f0-9]{3}){1,2}$/.test(hex);
+
+/**
  * Produces a random hex code
  */
 export const createHex = (): string => {

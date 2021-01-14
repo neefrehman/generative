@@ -1,5 +1,5 @@
 export { createChance } from "./createChance";
-export { createHex } from "./createHex";
+export { testHex, createHex } from "./createHex";
 export { createSign } from "./createSign";
 export { inBeta } from "./inBeta";
 export { onCircle, insideCircle, onSphere, insideSphere } from "./inCircle";

@@ -54,7 +54,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [
                     inGaussian(0, 0.08) * aspect,
                     inGaussian(0, 0.08),
-                    inBeta(1, 3) * 0.66,
+                    inBeta(1, 3) * 0.5,
                 ],
                 type: "3f",
             },

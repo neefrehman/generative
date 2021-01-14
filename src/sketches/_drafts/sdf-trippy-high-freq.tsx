@@ -50,9 +50,13 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             shapeDimension1: { value: inRange(0.4, 0.54), type: "1f" },
             shapeDimension2: { value: inRange(0.2, 0.36), type: "1f" },
             shapeDimension3: { value: inRange(0.32, 0.41), type: "1f" },
-            shapePosision: {
-                value: [inGaussian(0, 0.084), inGaussian(0, 0.084)],
-                type: "2f",
+            shapePositionOffsetOffset: {
+                value: [
+                    inGaussian(0, 0.08) * aspect,
+                    inGaussian(0, 0.08),
+                    inBeta(1, 3) * 0.15,
+                ],
+                type: "3f",
             },
         },
         frag: glsl`
@@ -86,7 +90,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float shapeDimension1;
             uniform float shapeDimension2;
             uniform float shapeDimension3;
-            uniform vec2 shapePosision;
+            uniform vec3 shapePositionOffset;
             
             #pragma glslify: sdEllipsoid = require("../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
             #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
@@ -111,7 +115,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             }
 
             float sdf(vec3 pos) {
-                vec3 p1 = rotate(vec3(pos.x + shapePosision.x, pos.y + shapePosision.y, pos.z), vec3(1.0, 1.0, 0.0), time * TAU);
+                vec3 p1 = rotate(vec3(pos + shapePositionOffset), vec3(1.0, 1.0, 0.0), time * TAU);
 
                 float shape = 0.0;
 
@@ -151,7 +155,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             void main()	{
                 vec2 uv = vUv * vec2(aspect, 1.0) + vec2((1.0 - aspect) / 2.0, 0.0);
             
-                vec3 camPos = vec3(0.0, 0.0, 2.0);
+                vec3 camPos = vec3(0.0, 0.0, 1.9);
                 vec2 pos = uv - vec2(0.5);
                 vec3 ray = normalize(vec3(pos, -1.0));
 

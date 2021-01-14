@@ -50,9 +50,9 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             shapeDimension3: { value: inRange(0.32, 0.4), type: "1f" },
             shapePositionOffset: {
                 value: [
-                    inGaussian(0, 0.08) * aspect,
-                    inGaussian(0, 0.08),
-                    inBeta(1, 3) * 0.1,
+                    inGaussian(0, 0.085) * aspect,
+                    inGaussian(0, 0.085),
+                    inBeta(1, 3) * 0.66,
                 ],
                 type: "3f",
             },

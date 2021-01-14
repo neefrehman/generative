@@ -52,7 +52,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [
                     inGaussian(0, 0.085) * aspect,
                     inGaussian(0, 0.085),
-                    inBeta(1, 3) * 0.5,
+                    (inBeta(1.8, 5) - 0.1) * 0.6,
                 ],
                 type: "3f",
             },
@@ -192,7 +192,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, fps }) => {
+        onFrame: ({ uniforms, mousePosition, mouseHasEntered, fps }) => {
             playbackSpeed = lerp(
                 playbackSpeed,
                 fps < 40
@@ -205,8 +205,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
-                !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.004
+                mouseHasEntered ? mousePosition : idleMousePosition,
+                0.0022
             );
         },
     };

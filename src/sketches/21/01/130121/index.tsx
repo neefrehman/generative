@@ -10,7 +10,7 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-const PIXELATION = 1.45;
+const PIXELATION = 1.4;
 
 const settings: ShaderRendererSettings = {
     dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
@@ -163,7 +163,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     color = max(finalColor, 0.0);
                 }
 
-                float grainAmount = filmGrain(vUv * time) * 0.04;
+                float grainAmount = filmGrain(vUv * time) * 0.015;
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,

@@ -130,7 +130,7 @@ const createSketch = (PIXELATION: number) => {
                         color = max(finalColor, 0.0);
                     }
 
-                    float grainAmount = filmGrain(vUv * time) * 0.1;
+                    float grainAmount = filmGrain(vUv * time) * 0.07;
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
@@ -144,7 +144,7 @@ const createSketch = (PIXELATION: number) => {
                 uniforms.mousePosition.value = lerpVector(
                     uniforms.mousePosition.value,
                     !mouseIsIdle ? mousePosition : idleMousePosition,
-                    0.05
+                    0.035
                 );
             },
         };

@@ -132,7 +132,7 @@ const createSketch = (PIXELATION: number) => {
                         color = max(finalColor, 0.0);
                     }
 
-                    float grainAmount = filmGrain(vUv * time) * 0.1;
+                    float grainAmount = filmGrain(vUv * time) * 0.08;
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
@@ -156,7 +156,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S080121 = () => {
-    const [pixelation] = useState(() => inRange(1, 6));
+    const [pixelation] = useState(() => inRange(1, 6.2));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

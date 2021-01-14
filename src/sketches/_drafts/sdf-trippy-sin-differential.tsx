@@ -34,8 +34,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            sinScalar1: { value: inRange(0, 25), type: "1f" },
-            sinScalar2: { value: inRange(0, 3), type: "1f" },
+            sinScalar1: { value: inRange(0, 30), type: "1f" },
+            sinScalar2: { value: inRange(0, 5), type: "1f" },
             scalarSwap: { value: createSign(0.6), type: "1i" },
             noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
@@ -54,7 +54,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [
                     inGaussian(0, 0.08) * aspect,
                     inGaussian(0, 0.08),
-                    inBeta(1, 3) * 0.5,
+                    (inBeta(1.8, 5) - 0.1) * 0.6,
                 ],
                 type: "3f",
             },
@@ -188,21 +188,21 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, fps }) => {
+        onFrame: ({ uniforms, mousePosition, mouseHasEntered, fps }) => {
             playbackSpeed = lerp(
                 playbackSpeed,
                 fps < 40
                     ? initialPlaybackSpeed * Math.min(60 / fps, 2)
                     : initialPlaybackSpeed,
-                0.33
+                0.033
             );
 
             uniforms.time.value += playbackSpeed;
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
-                !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.005
+                mouseHasEntered ? mousePosition : idleMousePosition,
+                0.002
             );
         },
     };

@@ -133,7 +133,7 @@ const createSketch = (PIXELATION: number) => {
                         color = max(finalColor, 0.0);
                     }
 
-                    float grainAmount = filmGrain(vUv * time) * 0.1;
+                    float grainAmount = filmGrain(vUv * time) * 0.06;
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,

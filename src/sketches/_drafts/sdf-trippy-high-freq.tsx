@@ -54,7 +54,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [
                     inGaussian(0, 0.08) * aspect,
                     inGaussian(0, 0.08),
-                    inBeta(1, 3) * 0.15,
+                    (inBeta(1.8, 5) - 0.1) * 0.4,
                 ],
                 type: "3f",
             },
@@ -105,11 +105,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 7.0)) +
-                        noise(vec4(pos * simplexNoiseScale, time * 18.0)) * simplexIntensity;
+                        noise(vec4(pos * simplexNoiseScale, time * 14.0)) * simplexIntensity;
                 } else {
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 12.0)) * simplexIntensity)
+                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * simplexNoiseScale, time * 8.0)) * simplexIntensity)
                     );
                 }
             }
@@ -139,7 +139,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 }
                 
                 
-                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU * 0.9);
+                vec3 p2 = rotate(pos, vec3(mousePosition, 1.0), -time * TAU * 0.7);
                 float sineNoiseValue = (0.83 - sineNoise((p2 + vec3(0.0, 0.2, 0.0)) * sinNoiseScale)) / sinNoiseScale;
 
                 return max(shape, sineNoiseValue);
@@ -193,7 +193,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 fps < 40
                     ? initialPlaybackSpeed * Math.min(60 / fps, 2)
                     : initialPlaybackSpeed,
-                0.33
+                0.033
             );
 
             uniforms.time.value += playbackSpeed;
@@ -205,7 +205,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.0045
+                0.0019
             );
         },
     };

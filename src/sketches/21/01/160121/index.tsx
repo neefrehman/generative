@@ -52,8 +52,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             shapeDimension3: { value: inRange(0.32, 0.41), type: "1f" },
             shapePositionOffsetOffset: {
                 value: [
-                    inGaussian(0, 0.08) * aspect,
-                    inGaussian(0, 0.08),
+                    inGaussian(0, 0.09) * aspect,
+                    inGaussian(0, 0.09),
                     (inBeta(1.8, 5) - 0.1) * 0.4,
                 ],
                 type: "3f",
@@ -124,7 +124,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 } else if (baseShape == 1) {
                     shape = sdEllipsoid(p1, vec3(shapeDimension1, shapeDimension2, shapeDimension3));
                 } else if (baseShape == 2) {
-                    p1 = rotate(pos, vec3(0.0, 1.0, 0.0), time * TAU);
+                    p1 = rotate(pos, vec3(0.0, 1.0, 0.1), time * TAU);
                     shape = sdOctahedron(p1, shapeDimension1);
                 } else if (baseShape == 3) {
                     shape = sdTorus(p1, vec2(shapeDimension1, shapeDimension2));

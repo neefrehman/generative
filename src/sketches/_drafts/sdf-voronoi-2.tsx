@@ -117,12 +117,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 }
             `,
         onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-            uniforms.time.value += 0.0003;
+            uniforms.time.value += 0.00018;
 
             uniforms.mousePosition.value = lerpVector(
                 uniforms.mousePosition.value,
                 !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.02
+                0.007
             );
         },
     };

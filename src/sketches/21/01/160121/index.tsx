@@ -20,7 +20,7 @@ import { hexToVec3 } from "Utils/shaders";
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     let idleMousePosition = inSquare(width, height);
 
-    const initialPlaybackSpeed = inRange(0.00016, 0.0002);
+    const initialPlaybackSpeed = inRange(0.00009, 0.00017);
     let playbackSpeed = initialPlaybackSpeed;
 
     return {
@@ -36,7 +36,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             sinNoiseScale: { value: inRange(3.5, 9), type: "1f" },
             simplexNoiseScale: {
-                value: 2 + inBeta(1, 3) * 50,
+                value: 2 + inBeta(1, 3) * 45,
                 type: "1f",
             },
             simplexIntensity: { value: inRange(0.5, 10), type: "1f" },
@@ -63,8 +63,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
-            #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
-            #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
+            #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
+            #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
 
             #define PI 3.1415
             #define TAU 2.0 * PI
@@ -92,14 +92,14 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform float shapeDimension3;
             uniform vec3 shapePositionOffset;
             
-            #pragma glslify: sdEllipsoid = require("../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-            #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
-            #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
-            #pragma glslify: sdOctahedron = require("../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-            #pragma glslify: sdTorus = require("../utils/shaders/sdShapes/3d/sdTorus.glsl");
-            #pragma glslify: sdCone = require("../utils/shaders/sdShapes/3d/sdCone.glsl");
-            #pragma glslify: sdCappedCone = require("../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-            #pragma glslify: sdPyramid = require("../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+            #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+            #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+            #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+            #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+            #pragma glslify: sdCone = require("../../../utils/shaders/sdShapes/3d/sdCone.glsl");
+            #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+            #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
             float sineNoise(vec3 pos) {
                 if (noiseStyle == 0) {
@@ -211,7 +211,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S140121 = () => (
+const S160121 = () => (
     <>
         <ShaderRenderer sketch={sketch} />
         <ControlsContainer>
@@ -220,4 +220,6 @@ const S140121 = () => (
     </>
 );
 
-export default S140121;
+export default S160121;
+
+export { default as metaImage } from "./meta-image.png";

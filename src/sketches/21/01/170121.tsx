@@ -20,7 +20,7 @@ import { hexToVec3 } from "Utils/shaders";
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
 
-    const initialPlaybackSpeed = inRange(0.00008, 0.00015);
+    const initialPlaybackSpeed = inRange(0.000065, 0.00015);
     let playbackSpeed = initialPlaybackSpeed;
 
     return {
@@ -63,17 +63,17 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
-            #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
-            #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
+            #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+            #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
-            #pragma glslify: sdEllipsoid = require("../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-            #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
-            #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
-            #pragma glslify: sdOctahedron = require("../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-            #pragma glslify: sdTorus = require("../utils/shaders/sdShapes/3d/sdTorus.glsl");
-            #pragma glslify: sdCone = require("../utils/shaders/sdShapes/3d/sdCone.glsl");
-            #pragma glslify: sdCappedCone = require("../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-            #pragma glslify: sdPyramid = require("../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+            #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+            #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+            #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+            #pragma glslify: sdTorus = require("../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+            #pragma glslify: sdCone = require("../../utils/shaders/sdShapes/3d/sdCone.glsl");
+            #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+            #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
             #define PI 3.1415
             #define TAU 2.0 * PI
@@ -208,7 +208,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S140121 = () => (
+const S170121 = () => (
     <>
         <ShaderRenderer sketch={sketch} />
         <ControlsContainer>
@@ -217,4 +217,6 @@ const S140121 = () => (
     </>
 );
 
-export default S140121;
+export default S170121;
+
+export { default as metaImage } from "./150121/meta-image.png";

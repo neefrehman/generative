@@ -163,7 +163,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     color = max(finalColor, 0.0);
                 }
 
-                float grainAmount = filmGrain(vUv * time) * 0.015;
+                float grainAmount = filmGrain(vUv * time) * 0.023;
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,

@@ -20,7 +20,7 @@ import { hexToVec3 } from "Utils/shaders";
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
 
-    const initialPlaybackSpeed = inRange(0.00008, 0.00011);
+    const initialPlaybackSpeed = inRange(0.000065, 0.00009);
     let playbackSpeed = initialPlaybackSpeed;
 
     return {
@@ -52,7 +52,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [
                     inGaussian(0, 0.085) * aspect,
                     inGaussian(0, 0.085),
-                    (inBeta(1.8, 5) - 0.1) * 0.6,
+                    (inBeta(1.8, 5) - 0.1) * 0.63,
                 ],
                 type: "3f",
             },
@@ -104,7 +104,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 if (noiseStyle == 0) {
                     return min(
                         sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale, time * 6.7)) * simplexIntensity
+                        noise(vec4(pos * simplexNoiseScale * 0.94, time * 6.7)) * simplexIntensity
                     );
                 } else if (noiseStyle == 1) {
                     return
@@ -212,7 +212,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S140121 = () => (
+const S150121 = () => (
     <>
         <ShaderRenderer sketch={sketch} />
         <ControlsContainer>
@@ -221,6 +221,6 @@ const S140121 = () => (
     </>
 );
 
-export default S140121;
+export default S150121;
 
 export { default as metaImage } from "./meta-image.png";

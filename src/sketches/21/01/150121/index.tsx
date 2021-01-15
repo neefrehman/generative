@@ -39,7 +39,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
             simplexNoiseScale: { value: inRange(0.58, 0.67), type: "1f" },
             simplexIntensity: { value: inRange(0.5, 4.3), type: "1f" },
-            grainIntensity: { value: inRange(0, 0.038), type: "1f" },
+            grainIntensity: { value: inRange(0.005, 0.035), type: "1f" },
 
             baseShape: {
                 value: inRange(0, 7, { isInteger: true }),

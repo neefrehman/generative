@@ -36,7 +36,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             sinNoiseScale: { value: inRange(3.5, 9), type: "1f" },
             simplexNoiseScale: {
-                value: 2 + inBeta(1, 3) * 45,
+                value: 1.7 + inBeta(1, 3) * 45,
                 type: "1f",
             },
             simplexIntensity: { value: inRange(0.5, 10), type: "1f" },

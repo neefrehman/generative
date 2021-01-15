@@ -48,12 +48,12 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 value: [inRange(0.4, 0.6), inRange(0.4, 0.6), inRange(0.4, 0.6)],
                 type: "3f",
             },
-            HighFrequencysimplexNoiseScale: {
-                value: 2 + inBeta(1, 3) * 50,
+            highFrequencysimplexNoiseScale: {
+                value: 1.5 + inBeta(1, 3) * 50,
                 type: "1f",
             },
             simplexIntensity: { value: inRange(0.5, 4.3), type: "1f" },
-            grainIntensity: { value: inRange(0, 0.038), type: "1f" },
+            grainIntensity: { value: inRange(0.005, 0.034), type: "1f" },
 
             baseShape: {
                 value: inRange(0, 7, { isInteger: true }),
@@ -109,7 +109,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform int scalarSwap;
             uniform float simplexNoiseScale;
             uniform vec3 stretchedSimplexNoiseScale;
-            uniform float HighFrequencysimplexNoiseScale;
+            uniform float highFrequencysimplexNoiseScale;
             uniform float simplexIntensity;
             uniform float grainIntensity;
 
@@ -149,7 +149,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     // high-freq — 160121
                     return max(
                         sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale),
-                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * HighFrequencysimplexNoiseScale, time * 8.0)) * simplexIntensity * 2.0)
+                        sin(pos.x * 2.0) + sin(pos.y * 2.0) + (sin(pos.z * 2.0) * sinNoiseScale) + (noise(vec4(pos * highFrequencysimplexNoiseScale, time * 8.0)) * simplexIntensity * 2.0)
                     );
                 } else {
                     // stretched-spawn — 180121

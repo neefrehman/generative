@@ -27,7 +27,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            noiseRotationSpeed: { value: inRange(0.66, 1.15), type: "1f" },
+            noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 10), type: "1f" },
             simplexNoiseScale: {
                 value: [inRange(0.4, 0.6), inRange(0.4, 0.6), inRange(0.4, 0.6)],

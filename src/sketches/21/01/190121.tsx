@@ -23,7 +23,7 @@ import { hexToVec3 } from "Utils/shaders";
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
 
-    const initialPlaybackSpeed = inRange(0.000065, 0.000085);
+    const initialPlaybackSpeed = inRange(0.000065, 0.00008);
     let playbackSpeed = initialPlaybackSpeed;
 
     return {
@@ -38,7 +38,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
             noiseStyle: { value: pick([0, 1, 2, 3, 4, 5]), type: "1i" },
-            noiseRotationSpeed: { value: inRange(0.66, 1.15), type: "1f" },
+            noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
             sinScalar1: { value: inRange(0, 30), type: "1f" },
             sinScalar2: { value: inRange(0, 5), type: "1f" },

@@ -34,7 +34,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            noiseStyle: { value: pick([0, 1, 2]), type: "1i" },
+            noiseStyle: { value: pick([0, 1]), type: "1i" },
             noiseRotationSpeed: { value: inRange(0.66, 1.1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 12), type: "1f" },
             simplexNoiseScale: { value: inRange(0.58, 0.67), type: "1f" },
@@ -102,11 +102,6 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             float sineNoise(vec3 pos) {
                 if (noiseStyle == 0) {
-                    return min(
-                        sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                        noise(vec4(pos * simplexNoiseScale * 0.94, time * 6.7)) * simplexIntensity
-                    );
-                } else if (noiseStyle == 1) {
                     return
                         sin(pos.x) + sin(pos.y) + sin(pos.z) / (sinNoiseScale / (sinNoiseScale * 9.0)) +
                         noise(vec4(pos * simplexNoiseScale, time * 13.0)) * simplexIntensity;

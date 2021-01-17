@@ -7,8 +7,15 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { lerp, lerpVector } from "Utils/math";
-import { createHex, inBeta, inGaussian, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
+import {
+    createHex,
+    inBeta,
+    inGaussian,
+    inRange,
+    inSquare,
+    pick,
+} from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     const idleMousePosition = inSquare(width, height);
@@ -27,9 +34,11 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             colorStart: { value: hexToVec3(createHex()), type: "3f" },
             colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
+            noiseStyle: { value: pick([0, 1]), type: "1i" },
             noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
             sinNoiseScale: { value: inRange(5, 10), type: "1f" },
-            simplexNoiseScale: {
+            simplexNoiseScale: { value: inRange(0.58, 0.67), type: "1f" },
+            stretchedSimplexNoiseScale: {
                 value: [inRange(0.4, 0.6), inRange(0.4, 0.6), inRange(0.4, 0.6)],
                 type: "3f",
             },
@@ -82,8 +91,10 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 colorStart;
             uniform vec3 colorEnd;
 
+            uniform int noiseStyle;
             uniform float noiseRotationSpeed;
-            uniform vec3 simplexNoiseScale;
+            uniform float simplexNoiseScale;
+            uniform vec3 stretchedSimplexNoiseScale;
             uniform float sinNoiseScale;
             uniform float simplexIntensity;
             uniform float grainIntensity;
@@ -95,15 +106,22 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             uniform vec3 shapePositionOffset;
 
             float sineNoise(vec3 pos) {
-                return min(
-                    sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
-                    noise(vec4(
-                        pos.x * simplexNoiseScale.x,
-                        pos.y * simplexNoiseScale.y,
-                        pos.x * simplexNoiseScale.z,
-                        time * 8.0
-                    )) * simplexIntensity
-                );
+                if (noiseStyle == 0) {
+                    return min(
+                        sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
+                        noise(vec4(pos * simplexNoiseScale * 0.94, time * 6.7)) * simplexIntensity
+                    );
+                } else {
+                    return min(
+                        sin(pos.x) + sin(pos.y) + sin(pos.z) * 9.0,
+                        noise(vec4(
+                            pos.x * stretchedSimplexNoiseScale.x,
+                            pos.y * stretchedSimplexNoiseScale.y,
+                            pos.x * stretchedSimplexNoiseScale.z,
+                            time * 8.0
+                        )) * simplexIntensity
+                    );
+                }
             }
 
             float sdf(vec3 pos) {

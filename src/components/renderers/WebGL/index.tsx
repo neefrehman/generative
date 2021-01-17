@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import glsl from "glslify";
 
 import { useAnimationFrame } from "hooks/useAnimationFrame";
-import { useTimeout } from "hooks/useTimeout";
 
 import type { UniformDict, UniformType } from "Utils/shaders";
 

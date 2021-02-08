@@ -22,6 +22,7 @@
         "glsl-worley": "^1.0.2",
         "glslify": "^7.1.1",
         "glslify-hex": "^2.1.1",
+        "gsap": "^3.6.0",
         "ml5": "^0.6.0",
         "next": "^10.0.4",
         "nice-color-palettes": "^3.0.0",

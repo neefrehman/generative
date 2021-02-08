@@ -31,6 +31,7 @@ export const useAnimationFrame = (
 
     const isPlaying = useRef(false);
     const elapsedTime = useRef(0);
+    const deltaTime = useRef(0);
     const frameCount = useRef(1);
     const fpsArray = useRef<number[]>(new Array(20).fill(throttledFps ?? 60));
     const averageFps = useRef(throttledFps ?? 60);
@@ -43,12 +44,13 @@ export const useAnimationFrame = (
     const animate = useCallback(
         (timestamp: DOMHighResTimeStamp) => {
             elapsedTime.current = Math.round(timestamp - startTimeRef.current);
-            const deltaTime = (timestamp - prevFrameTimeRef.current) / 1000;
-            const currentFps = Math.round(1 / deltaTime);
+            deltaTime.current = timestamp - prevFrameTimeRef.current;
+            const currentFps = Math.round(1 / deltaTime.current);
 
             const runFrame = () => {
                 onFrame?.({
                     elapsedTime: elapsedTime.current,
+                    deltaTime: deltaTime.current,
                     frameCount: frameCount.current,
                     fps: averageFps.current,
                     isPlaying: isPlaying.current,
@@ -66,7 +68,7 @@ export const useAnimationFrame = (
             };
 
             if (throttledFps) {
-                if (deltaTime >= 1 / throttledFps) runFrame();
+                if (deltaTime.current >= 1000 / throttledFps) runFrame();
             } else {
                 runFrame();
             }
@@ -213,6 +215,8 @@ export interface OnFrameProps {
     frameCount?: number;
     /** The current elapsed time of the animation in ms */
     elapsedTime?: number;
+    /** The difference between the current and previous frames in ms */
+    deltaTime?: number;
     /** The current fps of the animation (averaged over the last 20 frames) */
     fps?: number;
     /** A function that will stop the animation when called */

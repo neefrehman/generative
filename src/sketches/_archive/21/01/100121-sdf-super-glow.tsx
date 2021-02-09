@@ -40,9 +40,9 @@ const createSketch = (PIXELATION: number) => {
                 precision highp float;
 
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
-                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: rotate = require("../../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../../utils/shaders/grain.glsl");
+                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -60,12 +60,12 @@ const createSketch = (PIXELATION: number) => {
 
                 uniform int baseShape;
 
-                #pragma glslify: sdEllipsoid = require("../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
-                #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
-                #pragma glslify: sdOctahedron = require("../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
-                #pragma glslify: sdTorus = require("../../utils/shaders/sdShapes/3d/sdTorus.glsl");
-                #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
-                #pragma glslify: sdPyramid = require("../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
+                #pragma glslify: sdEllipsoid = require("../../../utils/shaders/sdShapes/3d/sdEllipsoid.glsl");
+                #pragma glslify: sdSphere = require("../../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+                #pragma glslify: sdOctahedron = require("../../../utils/shaders/sdShapes/3d/sdOctahedron.glsl");
+                #pragma glslify: sdTorus = require("../../../utils/shaders/sdShapes/3d/sdTorus.glsl");
+                #pragma glslify: sdCappedCone = require("../../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+                #pragma glslify: sdPyramid = require("../../../utils/shaders/sdShapes/3d/sdPyramid.glsl");
 
                 float sineNoise(vec3 pos) {
                     return 

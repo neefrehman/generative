@@ -3,19 +3,22 @@ import * as THREE from "three";
 import palettes from "nice-color-palettes";
 
 import { ThreeRenderer } from "Renderers/Three";
-import type { ThreeSetupFn } from "Renderers/Three";
+import type { ThreeSetupFn, ThreeRendererSettings } from "Renderers/Three";
 
 import { inGaussian, pick } from "Utils/random";
 import { expoInOut } from "Utils/eases";
 
-const sketch: ThreeSetupFn = ({ scene, aspect }) => {
-    const CAM_PLANES = aspect * 2.5;
-    const camera = new THREE.OrthographicCamera(
+const CAM_PLANES = (window.innerHeight / window.innerHeight) * 2.5;
+const settings: ThreeRendererSettings = {
+    camera: new THREE.OrthographicCamera(
         -CAM_PLANES,
         CAM_PLANES,
         CAM_PLANES,
         -CAM_PLANES
-    );
+    ),
+};
+
+const sketch: ThreeSetupFn = ({ scene, camera }) => {
     camera.position.z = 5;
 
     const CUBOID_COUNT = 40;
@@ -41,15 +44,13 @@ const sketch: ThreeSetupFn = ({ scene, aspect }) => {
     const ambientLight = new THREE.AmbientLight("white", 0.5);
     scene.add(ambientLight);
 
-    return ({ renderer, elapsedTime }) => {
+    return ({ elapsedTime }) => {
         const t = Math.sin(elapsedTime * 0.00055 * Math.PI);
         scene.rotation.x = expoInOut(t);
         scene.rotation.y = expoInOut(t);
-
-        renderer.render(scene, camera);
     };
 };
 
-const S311020 = () => <ThreeRenderer sketch={sketch} />;
+const S311020 = () => <ThreeRenderer sketch={sketch} settings={settings} />;
 
 export default S311020;

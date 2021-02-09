@@ -21,7 +21,7 @@ export const ThreeRenderer = ({
     style,
     children,
 }: ThreeRendererProps) => {
-    const canvasEl = useRef<HTMLCanvasElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const drawProps = useRef<ThreeDrawProps>({} as ThreeDrawProps);
     const drawFunction = useRef<ThreeDrawFn>();
 
@@ -47,7 +47,7 @@ export const ThreeRenderer = ({
             fps: throttledFps,
             delay,
             endAfter,
-            domElementRef: canvasEl,
+            domElementRef: canvasRef,
         }
     );
 
@@ -55,16 +55,20 @@ export const ThreeRenderer = ({
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer({
             antialias: true,
-            canvas: canvasEl.current,
+            canvas: canvasRef.current,
         });
+        const camera =
+            settings.camera ??
+            new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
 
         const initialSketchProps: ThreeDrawProps = {
+            camera,
             scene,
             renderer,
-            canvas: canvasEl.current,
+            canvas: canvasRef.current,
             width,
             height,
             aspect: width / height,
@@ -75,7 +79,10 @@ export const ThreeRenderer = ({
         const drawSketch = setupSketch(initialSketchProps);
 
         drawProps.current = initialSketchProps;
-        drawFunction.current = drawSketch;
+        drawFunction.current = (props: ThreeDrawProps) => {
+            drawSketch(props);
+            renderer.render(scene, camera);
+        };
 
         return () => {
             scene.children.forEach(child => scene.remove(child));
@@ -88,7 +95,7 @@ export const ThreeRenderer = ({
 
     return (
         <>
-            <canvas ref={canvasEl} className={className} style={style} />
+            <canvas ref={canvasRef} className={className} style={style} />
             {children}
         </>
     );
@@ -96,17 +103,25 @@ export const ThreeRenderer = ({
 
 // <- TYPES ->
 
-export type ThreeRendererProps = RendererProps<ThreeSetupFn>;
+export type ThreeRendererProps = RendererProps<
+    ThreeSetupFn,
+    ThreeRendererSettings
+>;
 
 /**
  * Settings for the Three sketch
  */
-export type { RendererSettings as ThreeRendererSettings };
+export type ThreeRendererSettings = RendererSettings & {
+    /** The camera */
+    camera?: THREE.Camera;
+};
 
 /**
  * Props to be recieved by the Three sketch.
  */
 export type ThreeDrawProps = {
+    /** The camera */
+    camera: THREE.Camera;
     /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
     scene: THREE.Scene;
     /** The WebGL renderer for the scene */

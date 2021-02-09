@@ -3,13 +3,14 @@ import * as THREE from "three";
 import glsl from "glslify";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import type { ThreeSetupFn } from "Renderers/Three";
+import type { ThreeRendererSettings, ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
 import { TextOverlay } from "components/TextOverlay";
 
 import { inRange, perlin3D, pick } from "Utils/random";
+import { getAspectRatio } from "Utils/math";
 
 import { s221120NiceBlendedColors, s221120vertexShader } from "./221120";
 
@@ -38,8 +39,11 @@ export const s231120GeneratePerlinCubeMap = (
     texture.needsUpdate = true;
 };
 
-const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
+const settings: ThreeRendererSettings = {
+    camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
+};
+
+const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     camera.position.set(1.2, -0.9, -1.5);
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
@@ -151,7 +155,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     const timeStart = inRange(1000);
 
-    return ({ renderer, elapsedTime }) => {
+    return ({ elapsedTime }) => {
         material.uniforms.cameraPos.value.copy(camera.position);
         s231120GeneratePerlinCubeMap(
             size,
@@ -160,14 +164,12 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             texture,
             timeStart + elapsedTime / 20000
         );
-
-        renderer.render(scene, camera);
     };
 };
 
 const S231120 = () =>
     isWebGL2Supported() ? (
-        <ThreeRenderer sketch={sketch} />
+        <ThreeRenderer sketch={sketch} settings={settings} />
     ) : (
         <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
     );

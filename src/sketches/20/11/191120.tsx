@@ -3,14 +3,16 @@ import * as THREE from "three";
 import glsl from "glslify";
 import palettes from "nice-color-palettes";
 
-import type { ThreeSetupFn } from "Renderers/Three";
+import type { ThreeRendererSettings, ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
 import { inRange, pick } from "Utils/random";
 
-const sketch: ThreeSetupFn = ({ scene }) => {
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const settings: ThreeRendererSettings = {
+    camera: new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1),
+};
 
+const sketch: ThreeSetupFn = ({ scene }) => {
     const PLANE_COUNT = 5; // max 10
     const PLANE_OFFSET = 0.02;
 
@@ -87,15 +89,13 @@ const sketch: ThreeSetupFn = ({ scene }) => {
 
     scene.background = new THREE.Color(0x000);
 
-    return ({ renderer }) => {
+    return () => {
         planes.forEach(plane => {
             plane.material.uniforms.time.value -= 0.018;
         });
-
-        renderer.render(scene, camera);
     };
 };
 
-const S191120 = () => <ThreeRenderer sketch={sketch} />;
+const S191120 = () => <ThreeRenderer sketch={sketch} settings={settings} />;
 
 export default S191120;

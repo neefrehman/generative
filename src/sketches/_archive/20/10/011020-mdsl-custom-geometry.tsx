@@ -5,8 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import type { ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
-const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const sketch: ThreeSetupFn = ({ scene, canvas, camera }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
@@ -35,11 +34,9 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     scene.add(new THREE.GridHelper(10, 10));
 
-    return ({ renderer }) => {
+    return () => {
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
-
-        renderer.render(scene, camera);
     };
 };
 

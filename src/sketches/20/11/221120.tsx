@@ -3,7 +3,7 @@ import * as THREE from "three";
 import glsl from "glslify";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import type { ThreeSetupFn } from "Renderers/Three";
+import type { ThreeRendererSettings, ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
 import { isWebGL2Supported } from "helpers/isWebGL2Supported";
@@ -11,6 +11,7 @@ import { TextOverlay } from "components/TextOverlay";
 import { ControlsContainer, RefreshButton } from "components/SketchControls";
 
 import { inRange, perlin3D, pick } from "Utils/random";
+import { getAspectRatio } from "Utils/math";
 
 export const s221120NiceBlendedColors = [
     "#40d6ff",
@@ -33,8 +34,11 @@ export const s221120vertexShader = glsl`
     }
 `;
 
-const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
+const settings: ThreeRendererSettings = {
+    camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
+};
+
+const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     camera.position.set(0, 0, 2);
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
@@ -164,7 +168,7 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
 
     let thresholdDirection = +1;
 
-    return ({ renderer }) => {
+    return () => {
         const currentThreshold = material.uniforms.threshold.value;
         if (currentThreshold > 0.91) thresholdDirection = -1;
         if (currentThreshold < 0.15) thresholdDirection = +1;
@@ -174,15 +178,13 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
             currentThreshold + 0.0005 * thresholdDirection;
 
         mesh.rotation.y += 0.0008;
-
-        renderer.render(scene, camera);
     };
 };
 
 const S221120 = () =>
     isWebGL2Supported() ? (
         <>
-            <ThreeRenderer sketch={sketch} />
+            <ThreeRenderer sketch={sketch} settings={settings} />
             <ControlsContainer>
                 <RefreshButton>Re-seed volume</RefreshButton>
             </ControlsContainer>

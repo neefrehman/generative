@@ -11,8 +11,7 @@ import { inRange } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({ cap: 900 });
 
-const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
 
@@ -90,12 +89,10 @@ const sketch: ThreeSetupFn = ({ scene, width, height, canvas }) => {
     camera.position.z = 2;
     scene.background = new THREE.Color(0xffffff);
 
-    return ({ renderer }) => {
+    return () => {
         planes.forEach(plane => {
             plane.material.uniforms.time.value += 0.02;
         });
-
-        renderer.render(scene, camera);
     };
 };
 

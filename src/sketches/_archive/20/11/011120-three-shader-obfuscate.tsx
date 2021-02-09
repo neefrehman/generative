@@ -7,9 +7,7 @@ import { ThreeRenderer } from "Renderers/Three";
 
 import { inRange } from "Utils/random";
 
-const sketch: ThreeSetupFn = ({ scene, width, height }) => {
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-
+const sketch: ThreeSetupFn = ({ scene, camera }) => {
     const sphereGeometry = new THREE.SphereGeometry();
     const sphereMaterial = new THREE.MeshStandardMaterial({
         color: "#f32d94",
@@ -53,13 +51,11 @@ const sketch: ThreeSetupFn = ({ scene, width, height }) => {
     sphere.position.z = -1;
     camera.position.z = 2.3;
 
-    return ({ renderer }) => {
+    return () => {
         sphere.rotation.x += 0.01;
         sphere.rotation.y += 0.01;
 
         plane.material.uniforms.time.value += 0.01;
-
-        renderer.render(scene, camera);
     };
 };
 

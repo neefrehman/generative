@@ -2,6 +2,7 @@ export { clamp } from "./clamp";
 export { createMatrix } from "./createMatrix";
 export { decimateArray } from "./decimateArray";
 export { getAngle } from "./getAngle";
+export { getAspectRatio } from "./getAspectRatio";
 export { getDifference } from "./getDifference";
 export { getDistance } from "./getDistance";
 export { getMean } from "./getMean";

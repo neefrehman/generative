@@ -32,6 +32,9 @@ export const ThreeRenderer = ({
     } = settings;
 
     const [width, height] = dimensions;
+    const isFullscreen =
+        width === window.innerWidth && height === window.innerHeight;
+
     const { fps: throttledFps, delay, endAfter } = animationSettings;
 
     const { startAnimation, stopAnimation } = useAnimationFrame(
@@ -52,7 +55,7 @@ export const ThreeRenderer = ({
     );
 
     useEffect(() => {
-        const camera: THREE.PerspectiveCamera | THREE.Camera =
+        const camera =
             settings.camera ??
             new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         const scene = new THREE.Scene();
@@ -61,7 +64,7 @@ export const ThreeRenderer = ({
             canvas: canvasRef.current,
         });
 
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
         renderer.setSize(width, height);
 
         const initialSketchProps: ThreeDrawProps = {
@@ -103,7 +106,9 @@ export const ThreeRenderer = ({
             }, 160);
         };
 
-        window.addEventListener("resize", handleResize);
+        if (isFullscreen) {
+            window.addEventListener("resize", handleResize);
+        }
 
         return () => {
             window.removeEventListener("resize", handleResize);

@@ -52,14 +52,14 @@ export const ThreeRenderer = ({
     );
 
     useEffect(() => {
+        const camera: THREE.PerspectiveCamera | THREE.Camera =
+            settings.camera ??
+            new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer({
             antialias: true,
             canvas: canvasRef.current,
         });
-        const camera =
-            settings.camera ??
-            new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(width, height);
@@ -84,7 +84,29 @@ export const ThreeRenderer = ({
             renderer.render(scene, camera);
         };
 
+        let resizeTimeout: ReturnType<typeof setTimeout>;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const { innerWidth, innerHeight } = window;
+                canvasRef.current.width = innerWidth;
+                canvasRef.current.height = innerHeight;
+                drawProps.current = {
+                    ...drawProps.current,
+                    width: innerWidth,
+                    height: innerHeight,
+                };
+                (camera as THREE.PerspectiveCamera).aspect =
+                    innerWidth / innerHeight;
+                (camera as THREE.PerspectiveCamera)?.updateProjectionMatrix?.();
+                renderer.setSize(innerWidth, innerHeight);
+            }, 160);
+        };
+
+        window.addEventListener("resize", handleResize);
+
         return () => {
+            window.removeEventListener("resize", handleResize);
             scene.children.forEach(child => scene.remove(child));
             scene.clear();
             scene.remove();

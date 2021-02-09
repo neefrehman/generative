@@ -25,7 +25,7 @@ const sketch: ThreeSetupFn = ({ scene, camera }) => {
         camera.position.x = Math.sin(mouseX * Math.PI * 2) * 3;
         camera.position.z = Math.cos(mouseX * Math.PI * 2) * 3;
         // camera.position.y = Math.cos(mouseY * Math.PI * 2) * 3;
-        camera.position.y = (mouseY - 0.5) * 5;
+        camera.position.y = (mouseY - 0.5) * 6;
         camera.lookAt(cube.position);
     };
 };

@@ -115,15 +115,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const sketchId = typeof params.sketch === "string" ? params.sketch : "";
     const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
+    const year = sketchId.substr(4, 2);
+    const month = sketchId.substr(2, 2);
     let sketchImportPath: string;
 
     if (isPublished) {
-        const year = sketchId.substr(4, 2);
-        const month = sketchId.substr(2, 2);
         sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
     } else {
         sketchImportPath = sketchIsNotFound(`sketches/_drafts/${sketchId}`)
-            ? `sketches/_drafts/_archive/${sketchId}`
+            ? `sketches/_archive/${year}/${month}/${sketchId}`
             : `sketches/_drafts/${sketchId}`;
     }
 

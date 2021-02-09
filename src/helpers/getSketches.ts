@@ -2,18 +2,17 @@ import fs from "fs";
 import path from "path";
 
 /**
- * Gets all finished sketches, by recursively walking the `{year}/{month}/{day}` folders
+ * Gets sketches in a folder, by recursively walking it's `{year}/{month}/{day}` subfolders
  */
-export const getSketches = (): string[] => {
+const walkDateFolders = (folderPath: string): string[] => {
     const sketchArray: string[] = [];
 
-    const sketchPath = path.resolve("src/sketches");
     const yearFolders = fs
-        .readdirSync(sketchPath)
+        .readdirSync(folderPath)
         .filter(folderName => folderName.length === 2);
 
     yearFolders.forEach(yearFolder => {
-        const yearPath = path.resolve(`${sketchPath}/${yearFolder}`);
+        const yearPath = path.resolve(`${folderPath}/${yearFolder}`);
         const monthFolders = fs
             .readdirSync(yearPath)
             .filter(folderName => folderName.length === 2);
@@ -22,7 +21,6 @@ export const getSketches = (): string[] => {
             const monthPath = path.resolve(`${yearPath}/${monthFolder}`);
             const sketches = fs
                 .readdirSync(monthPath)
-                .filter(fileName => RegExp(/^[0-9]{6}(\.tsx)?$/).test(fileName))
                 .map(fileName => fileName.replace(".tsx", ""));
 
             sketches.forEach(sketchId => sketchArray.push(sketchId));
@@ -30,6 +28,26 @@ export const getSketches = (): string[] => {
     });
 
     return sketchArray;
+};
+
+/**
+ * Gets all published sketches
+ */
+export const getSketches = (): string[] => {
+    const sketchArray = walkDateFolders("src/sketches").filter(fileName =>
+        RegExp(/^[0-9]{6}?$/).test(fileName)
+    );
+
+    return sketchArray;
+};
+
+/**
+ * Gets all archived sketches from the `_archive` folder
+ */
+export const getArchived = (): string[] => {
+    const archiveArray = walkDateFolders("src/sketches/_archive");
+
+    return archiveArray;
 };
 
 /**
@@ -42,16 +60,4 @@ export const getDrafts = (): string[] => {
         .map(fileName => fileName.replace(".tsx", ""));
 
     return draftsArray.filter(name => name !== "_archive");
-};
-
-/**
- * Gets all archived drafts sketches from the `_drafts/_archive` folder
- */
-export const getArchived = (): string[] => {
-    const archivePath = path.resolve("src/sketches/_drafts/_archive");
-    const archiveArray = fs
-        .readdirSync(archivePath)
-        .map(fileName => fileName.replace(".tsx", ""));
-
-    return archiveArray;
 };

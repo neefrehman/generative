@@ -37,6 +37,7 @@ export const useAnimationFrame = (
     const averageFps = useRef(throttledFps ?? 60);
 
     const mousePosition = useRef<Vector<2>>([0, 0]);
+    const normalisedMousePosition = useRef<Vector<2>>([0, 0]);
     const mouseHasEntered = useRef(false);
     const mouseIsIdle = useRef(true);
     const mouseIsDown = useRef(false);
@@ -56,6 +57,7 @@ export const useAnimationFrame = (
                     isPlaying: isPlaying.current,
                     mouseHasEntered: mouseHasEntered.current,
                     mousePosition: mousePosition.current,
+                    normalisedMousePosition: normalisedMousePosition.current,
                     mouseIsDown: mouseIsDown.current,
                     mouseIsIdle: mouseIsIdle.current,
                 });
@@ -127,6 +129,10 @@ export const useAnimationFrame = (
             const posX = x - canvasBounds.left;
             const posY = y - canvasBounds.top;
             mousePosition.current = [posX, posY];
+            normalisedMousePosition.current = [
+                posX / canvasBounds.width,
+                posY / canvasBounds.height,
+            ];
 
             mouseHasEntered.current = true;
             handleIdleChange();
@@ -182,6 +188,7 @@ export const useAnimationFrame = (
         isPlaying,
         mouseHasEntered,
         mousePosition,
+        normalisedMousePosition,
         mouseIsDown,
         mouseIsIdle,
     };
@@ -229,6 +236,8 @@ export interface OnFrameProps {
     mouseHasEntered?: boolean;
     /** The position of the mouse over the DOM element housing the animation */
     mousePosition?: Vector<2>;
+    /** The position of the mouse normalised between 0 and 1 */
+    normalisedMousePosition?: Vector<2>;
     /** Whether the mouse is currently pressed */
     mouseIsDown?: boolean;
     /** Whether the mouse has been idle for three seconds */
@@ -255,6 +264,8 @@ interface UseAnimationFrameResult {
     mouseHasEntered: MutableRefObject<boolean>;
     /** Reference to the position of the mouse over the DOM element housing the animation */
     mousePosition: MutableRefObject<Vector<2>>;
+    /** The position of the mouse normalised between 0 and 1 */
+    normalisedMousePosition: MutableRefObject<Vector<2>>;
     /** Reference to whether the mouse is currently pressed */
     mouseIsDown: MutableRefObject<boolean>;
     /** Reference to whether the mouse has been idle for three seconds */

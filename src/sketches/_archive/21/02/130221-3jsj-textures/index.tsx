@@ -85,10 +85,10 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
 
     /**
      * Where to find textures?
-     * @link poliigon.com
-     * @link 3dtextures.me
-     * @link arroway-textures.ch
-     * @link Substance Designer
+     * @link https://poliigon.com
+     * @link https://3dtextures.me
+     * @link https://arroway-textures.ch
+     * @link https://substance3d.com/products/substance-designer/
      */
 
     /**

@@ -70,7 +70,7 @@ const SketchPage = ({
                 <title>{sketchId} — Generative</title>
                 <meta property="og:title" content={SEOTitle} />
                 <meta property="twitter:title" content={SEOTitle} />
-                {metaImageUrl && (
+                {!!metaImageUrl && (
                     <>
                         <meta property="og:image" content={metaImageUrl} />
                         <meta property="twitter:image" content={metaImageUrl} />

@@ -95,18 +95,14 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
                     <SketchLink key={sketchId} id={sketchId} />
                 ))}
 
-                {isDebug && draftsArray.length > 0 && (
+                {isDebug && (
                     <>
                         <ColumnBreak aria-label="separator" />
                         <li>DRAFTS:</li>
                         {draftsArray.map(draftName => (
                             <SketchLink key={draftName} id={draftName} />
                         ))}
-                    </>
-                )}
 
-                {isDebug && archiveArray.length > 0 && (
-                    <>
                         <ColumnBreak aria-label="separator" />
                         <li>ARCHIVE:</li>
                         {archiveArray.map(archivedName => (

@@ -9,9 +9,9 @@ module.exports = {
                 {
                     loader: "glslify-loader",
                     options: {
+                        // Transforms must also go into package.json, for when babel is handling inline glsl
                         transform: [
                             [
-                                // Transfroms must also go into package.json for when babel is handling inline glsl
                                 "glslify-hex",
                                 { "option-1": true, "option-2": 42 },
                             ],

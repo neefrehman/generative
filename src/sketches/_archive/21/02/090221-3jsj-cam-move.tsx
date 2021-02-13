@@ -1,4 +1,4 @@
-// lesson 7
+// lesson 7 https://threejs-journey.xyz/lessons/7
 
 import React from "react";
 import * as THREE from "three";

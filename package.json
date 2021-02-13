@@ -38,9 +38,7 @@
         "react-xr": "^1.1.0",
         "simplex-noise": "^2.4.0",
         "three": "^0.124.0",
-        "tweakpane": "^1.5.7",
-        "use-cannon": "^0.5.3",
-        "use-tweaks": "^0.3.1"
+        "use-cannon": "^0.5.3"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",

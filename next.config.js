@@ -35,7 +35,10 @@ module.exports = {
                         const isBundledWithSketch = path.match(/([0-9]{6})/);
                         if (isBundledWithSketch) {
                             const sketchId = path.match(/([0-9]{6})/)[0];
-                            return `${sketchId}-meta.[ext]`;
+                            const isMetaImage = path.includes("meta-image");
+                            return isMetaImage
+                                ? `${sketchId}-meta.[ext]`
+                                : `${sketchId}-[name].[ext]`;
                         } else {
                             return "[name].[ext]";
                         }

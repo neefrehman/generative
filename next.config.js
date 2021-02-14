@@ -34,11 +34,21 @@ module.exports = {
                     name: path => {
                         const isBundledWithSketch = path.match(/([0-9]{6})/);
                         if (isBundledWithSketch) {
-                            const sketchId = path.match(/([0-9]{6})/)[0];
-                            const isMetaImage = path.includes("meta-image");
-                            return isMetaImage
-                                ? `${sketchId}-meta.[ext]`
-                                : `${sketchId}-[name].[ext]`;
+                            const [basePath, sketchId, subPath] = path.split(
+                                /([0-9]{6})/
+                            );
+
+                            const [_, relevantBasePath] = basePath.split(
+                                "sketches/"
+                            );
+
+                            const filename = subPath.split("/").slice(-1);
+                            const [subPathWithoutFilename] = subPath.split(
+                                `/${filename}`
+                            );
+                            return `sketches/${relevantBasePath}/${
+                                sketchId + subPathWithoutFilename
+                            }/[name].[ext]`;
                         } else {
                             return "[name].[ext]";
                         }

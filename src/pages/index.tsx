@@ -30,8 +30,7 @@ const StyledSketchList = styled.ul`
     padding: 0;
     list-style: none;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
     width: max-content;
     height: calc(100% - 70px);
 

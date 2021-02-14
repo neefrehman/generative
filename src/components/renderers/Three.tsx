@@ -118,7 +118,7 @@ export const ThreeRenderer = ({
             renderer.clear();
             renderer.dispose();
         };
-    }, [setupSketch, settings, width, height]);
+    }, [setupSketch, settings, width, height, isFullscreen]);
 
     return (
         <>

@@ -8,13 +8,13 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { ThreeRenderer } from "Renderers/Three";
 import type { ThreeSetupFn } from "Renderers/Three";
 
-import color from "./textures/door/color.jpg";
-import alpha from "./textures/door/alpha.jpg";
-import height from "./textures/door/height.jpg";
-import normal from "./textures/door/normal.jpg";
-import ambientOcclusion from "./textures/door/ambientOcclusion.jpg";
-import metalness from "./textures/door/metalness.jpg";
-import roughness from "./textures/door/roughness.jpg";
+// import color from "./textures/door/color.jpg";
+// import alpha from "./textures/door/alpha.jpg";
+// import height from "./textures/door/height.jpg";
+// import normal from "./textures/door/normal.jpg";
+// import ambientOcclusion from "./textures/door/ambientOcclusion.jpg";
+// import metalness from "./textures/door/metalness.jpg";
+// import roughness from "./textures/door/roughness.jpg";
 // import matcap from "./textures/matcaps/7.png";
 // import gradient from "./textures/gradients/5.jpg";
 import cubenx from "./textures/environmentMaps/3/nx.jpg";
@@ -30,13 +30,13 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     controls.enableDamping = true;
 
     const textureLoader = new THREE.TextureLoader();
-    const doorColorTexture = textureLoader.load(color);
-    const doorAlphaTexture = textureLoader.load(alpha);
-    const doorHeightTexture = textureLoader.load(height);
-    const doorNormalTexture = textureLoader.load(normal);
-    const doorAOTexture = textureLoader.load(ambientOcclusion);
-    const doorMetalnessTexture = textureLoader.load(metalness);
-    const doorRoughnessTexture = textureLoader.load(roughness);
+    // const doorColorTexture = textureLoader.load(color);
+    // const doorAlphaTexture = textureLoader.load(alpha);
+    // const doorHeightTexture = textureLoader.load(height);
+    // const doorNormalTexture = textureLoader.load(normal);
+    // const doorAOTexture = textureLoader.load(ambientOcclusion);
+    // const doorMetalnessTexture = textureLoader.load(metalness);
+    // const doorRoughnessTexture = textureLoader.load(roughness);
 
     /** Find matcaps at: https://github.com/nidorx/matcaps */
     // const matcapTexture = textureLoader.load(matcap);

@@ -57,7 +57,7 @@ export const ThreeRenderer = ({
     useEffect(() => {
         const camera =
             settings.camera ??
-            new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer({
             antialias: true,

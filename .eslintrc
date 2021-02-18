@@ -61,7 +61,8 @@
                     "scene",
                     "t",
                     "mesh",
-                    "uniforms"
+                    "uniforms",
+                    "renderer"
                 ]
             }
         ],

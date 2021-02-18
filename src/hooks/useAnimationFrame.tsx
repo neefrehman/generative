@@ -124,58 +124,65 @@ export const useAnimationFrame = (
             }, 3500);
         };
 
-        const updateMousePosition = (x: number, y: number) => {
-            const canvasBounds = domElementRef.current.getBoundingClientRect();
-            const posX = x - canvasBounds.left;
-            const posY = y - canvasBounds.top;
-            mousePosition.current = [posX, posY];
-            normalisedMousePosition.current = [
-                posX / canvasBounds.width,
-                posY / canvasBounds.height,
-            ];
+        const updateMousePosition = (x: number, y: number): void => {
+            if (element) {
+                const canvasBounds = element.getBoundingClientRect();
+                const posX = x - canvasBounds.left;
+                const posY = y - canvasBounds.top;
 
-            mouseHasEntered.current = true;
-            handleIdleChange();
+                mousePosition.current = [posX, posY];
+                normalisedMousePosition.current = [
+                    posX / canvasBounds.width,
+                    posY / canvasBounds.height,
+                ];
+
+                mouseHasEntered.current = true;
+                handleIdleChange();
+            }
         };
 
-        const handleMouseDown = (e: MouseEvent) => {
+        const handleMouseDown = (e: MouseEvent): void => {
             updateMousePosition(e.clientX, e.clientY);
             mouseIsDown.current = true;
         };
 
-        const handleMouseMove = (e: MouseEvent) => {
+        const handleMouseMove = (e: MouseEvent): void => {
             updateMousePosition(e.clientX, e.clientY);
         };
 
-        const handleTouchStart = (e: TouchEvent) => {
+        const handleTouchStart = (e: TouchEvent): void => {
             const touch = e.touches[0];
             updateMousePosition(touch.clientX, touch.clientY);
             mouseIsDown.current = true;
         };
 
-        const handleTouchMove = (e: TouchEvent) => {
+        const handleTouchMove = (e: TouchEvent): void => {
             const touch = e.touches[0];
             updateMousePosition(touch.clientX, touch.clientY);
         };
 
-        const handleMouseAndTouchUp = () => {
+        const handleMouseAndTouchUp = (): void => {
             mouseIsDown.current = false;
         };
 
-        element?.addEventListener("mousedown", handleMouseDown);
-        element?.addEventListener("mousemove", handleMouseMove);
-        element?.addEventListener("mouseup", handleMouseAndTouchUp);
-        element?.addEventListener("touchstart", handleTouchStart);
-        element?.addEventListener("touchmove", handleTouchMove);
-        element?.addEventListener("touchend", handleMouseAndTouchUp);
+        if (element) {
+            element.addEventListener("mousedown", handleMouseDown);
+            element.addEventListener("mousemove", handleMouseMove);
+            element.addEventListener("mouseup", handleMouseAndTouchUp);
+            element.addEventListener("touchstart", handleTouchStart);
+            element.addEventListener("touchmove", handleTouchMove);
+            element.addEventListener("touchend", handleMouseAndTouchUp);
+        }
 
         return () => {
-            element?.removeEventListener("mousedown", handleMouseDown);
-            element?.removeEventListener("mousemove", handleMouseMove);
-            element?.removeEventListener("mouseup", handleMouseAndTouchUp);
-            element?.removeEventListener("touchstart", handleTouchStart);
-            element?.removeEventListener("touchmove", handleTouchMove);
-            element?.removeEventListener("touchend", handleMouseAndTouchUp);
+            if (element) {
+                element.removeEventListener("mousedown", handleMouseDown);
+                element.removeEventListener("mousemove", handleMouseMove);
+                element.removeEventListener("mouseup", handleMouseAndTouchUp);
+                element.removeEventListener("touchstart", handleTouchStart);
+                element.removeEventListener("touchmove", handleTouchMove);
+                element.removeEventListener("touchend", handleMouseAndTouchUp);
+            }
         };
     }, [domElementRef]);
 

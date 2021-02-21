@@ -7,7 +7,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { ThreeRenderer } from "Renderers/Three";
 import type { ThreeSetupFn } from "Renderers/Three";
 
-import bakedShadow from "./bakedShadow.jpg";
+// import bakedShadow from "./bakedShadow.jpg";
 import simpleShadow from "./simpleShadow.jpg";
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas, renderer }) => {

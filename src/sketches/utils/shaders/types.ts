@@ -7,13 +7,6 @@ export type UniformType = `${UniformDimensions}${UniformValueType}`;
 export type UniformValue = number | Vector | Float32List | Int32List;
 
 /**
- * A simplified uniform containing only a key and value
- */
-export interface SimpleUniforms {
-    [uniform: string]: any; // UniformValue // TODO: type guards for accessing these with safety in sketches
-}
-
-/**
  * A uniform value to interface with shaders
  */
 export interface Uniform<T extends UniformType> {

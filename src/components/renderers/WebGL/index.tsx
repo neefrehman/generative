@@ -5,7 +5,13 @@ import { useAnimationFrame } from "hooks/useAnimationFrame";
 
 import type { UniformDict, UniformType } from "Utils/shaders";
 
-import type { RendererProps, RendererSettings, DrawProps, DrawFn } from "../types";
+import type {
+    RendererProps,
+    RendererSettings,
+    DrawProps,
+    DrawFn,
+    SetupProps,
+} from "../types";
 
 import {
     compileShader,
@@ -197,14 +203,16 @@ export type { RendererSettings as ShaderRendererSettings };
 /**
  * Props to be recieved by the sketch.
  */
-export type ShaderDrawProps = {
+export type ShaderSetupProps = {
     /** The WebGL context of the sketch */
     gl: GLContext;
     /** The shader uniforms that you created in the sketches retiurn object. Update these by changing their `value` property */
     uniforms?: UniformDict;
     /** The WebGl program */
     program?: WebGLProgram;
-} & DrawProps;
+} & SetupProps;
+
+export type ShaderDrawProps = ShaderSetupProps & DrawProps;
 
 /**
  * The setup function to be passed into the React component, with access to `ShaderDrawProps`.
@@ -213,7 +221,7 @@ export type ShaderDrawProps = {
  * and an onFrame callback function
  */
 export type ShaderSetupFn = (
-    props?: ShaderDrawProps
+    props?: ShaderSetupProps
 ) => {
     /**
      * The uniforms to interface with the shaders. The renderer will autmatically detect their gl type (floats must contain a decimal)

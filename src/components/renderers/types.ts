@@ -32,16 +32,21 @@ export interface RendererSettings {
 }
 
 /**
- * Props to be recieved by the sketch.
+ * Props to be recieved by the sketch's setup function
  */
-export type DrawProps = {
+export type SetupProps = {
     /** The width of the sketch - maps to dimensions[0] from the sketch settings */
     width?: number;
     /** The width of the sketch - maps to dimensions[1] from the sketch settings */
     height?: number;
     /** The aspect ratio of the sketch */
     aspect?: number;
-} & OnFrameProps;
+};
+
+/**
+ * Props to be recieved by the sketch's draw function
+ */
+export type DrawProps = SetupProps & OnFrameProps;
 
 /**
  * The setup function to be passed into the React component, with access to `DrawProps`.
@@ -49,11 +54,11 @@ export type DrawProps = {
  * The contents of this function should contain all sketch state, with the drawing happening
  * inside it's returned draw function.
  */
-export type SetupFn<DrawProps_, DrawFn> = (props?: DrawProps_) => DrawFn;
+export type SetupFn<Props extends SetupProps, DrawFn> = (props?: Props) => DrawFn;
 
 /**
  * The draw function returned by `SetupFn`, with access to `DrawProps`.
  *
  * If the sketch is animated, this function will be called every frame.
  */
-export type DrawFn<DrawProps_> = (props?: DrawProps_) => void;
+export type DrawFn<Props extends DrawProps> = (props?: Props) => void;

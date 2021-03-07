@@ -10,6 +10,7 @@ import type {
     DrawProps,
     SetupFn,
     DrawFn,
+    SetupProps,
 } from "./types";
 
 /**
@@ -101,12 +102,17 @@ export type { RendererSettings as Canvas2DRendererSettings };
 /**
  * Props to be recieved by the Canvas 2D sketch.
  */
-export type Canvas2DDrawProps = {
+export type Canvas2DSetupProps = {
     /** the rendering context to call canvas methods on - in this case 2d */
     ctx: CanvasRenderingContext2D;
     /** The DOM canvas element that is rendering the sketch */
     canvas: HTMLCanvasElement;
-} & DrawProps;
+} & SetupProps;
+
+/**
+ * Props to be recieved by the Canvas 2D sketch.
+ */
+export type Canvas2DDrawProps = Canvas2DSetupProps & DrawProps;
 
 /**
  * The setup function to be passed into the React component, with access to `Canvas2DDrawProps`.
@@ -114,7 +120,7 @@ export type Canvas2DDrawProps = {
  * The contents of this function should contain all sketch state, with the drawing happening
  * inside it's returned draw function.
  */
-export type Canvas2DSetupFn = SetupFn<Canvas2DDrawProps, Canvas2DDrawFn>;
+export type Canvas2DSetupFn = SetupFn<Canvas2DSetupProps, Canvas2DDrawFn>;
 
 /**
  * The draw function returned by `Canvas2DSetupFn`, with access to `Canvas2DSketchProps`.

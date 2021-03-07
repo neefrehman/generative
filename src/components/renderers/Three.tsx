@@ -9,6 +9,7 @@ import type {
     DrawProps,
     SetupFn,
     DrawFn,
+    SetupProps,
 } from "./types";
 
 /**
@@ -146,7 +147,7 @@ export type ThreeRendererSettings = RendererSettings & {
 /**
  * Props to be recieved by the Three sketch.
  */
-export type ThreeDrawProps = {
+export type ThreeSetupProps = {
     /** The camera */
     camera: THREE.Camera;
     /** Scenes allow you to set up what and where is to be rendered by three.js. This is where you place objects, lights and cameras. */
@@ -155,7 +156,12 @@ export type ThreeDrawProps = {
     renderer: THREE.WebGLRenderer;
     /** The `canvas` DOM element */
     canvas: HTMLCanvasElement;
-} & DrawProps;
+} & SetupProps;
+
+/**
+ * Props to be recieved by the Three sketch.
+ */
+export type ThreeDrawProps = ThreeSetupProps & DrawProps;
 
 /**
  * The setup function to be passed into the React component, with access to `ThreeDrawProps`.
@@ -163,7 +169,7 @@ export type ThreeDrawProps = {
  * The contents of this function should contain all sketch state, with the drawing happening
  * inside it's returned draw function.
  */
-export type ThreeSetupFn = SetupFn<ThreeDrawProps, ThreeDrawFn>;
+export type ThreeSetupFn = SetupFn<ThreeSetupProps, ThreeDrawFn>;
 
 /**
  * The draw function returned by `ThreeSetupFn`, with access to `ThreeDrawProps`.

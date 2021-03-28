@@ -7,12 +7,8 @@ import { styled } from "linaria/react";
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { useHasMounted } from "hooks/useHasMounted";
-import { getSketches } from "helpers/getSketches";
-import {
-    isFolderSketch,
-    sketchExists,
-    sketchIsNotFound,
-} from "helpers/sketchTests";
+import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
+import { isFolderSketch, sketchExists, sketchIsFound } from "helpers/sketchTests";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -106,15 +102,16 @@ const SketchPage = ({
 export default SketchPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = getSketches().map(sketch => ({ params: { sketch } }));
+    const allSketchesArray = [...getSketches(), ...getDrafts(), ...getArchived()];
+    const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));
 
-    return { paths, fallback: "blocking" };
+    return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
     params: { sketch: sketchId },
 }) => {
-    if (typeof sketchId !== "string" || !sketchExists(sketchId)) {
+    if (typeof sketchId !== "string") {
         return { notFound: true };
     }
 
@@ -124,9 +121,9 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
     let sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
 
     if (!isPublished) {
-        sketchImportPath = sketchIsNotFound(`sketches/_drafts/${sketchId}`)
-            ? `sketches/_archive/${year}/${month}/${sketchId}`
-            : `sketches/_drafts/${sketchId}`;
+        sketchImportPath = sketchIsFound(`sketches/_drafts/${sketchId}`)
+            ? `sketches/_drafts/${sketchId}`
+            : `sketches/_archive/${year}/${month}/${sketchId}`;
     }
 
     let gitHubUrl = `https://github.com/neefrehman/Generative/blob/master/src/${sketchImportPath}`;

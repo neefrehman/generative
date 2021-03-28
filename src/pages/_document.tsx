@@ -1,8 +1,6 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
-import { FontFaceWorkaround } from "styles/GlobalStyles";
-
 const title = "Generative — a digital sketchbook by Neef Rehman";
 const description =
     "A playground for experimenting with generative art, WebGL, and machine learning.";
@@ -14,8 +12,6 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <FontFaceWorkaround />
-
                     <meta name="author" content="Neef Rehman" />
                     <link rel="icon" href="/static/favicon.ico" />
                     <meta name="title" content={title} />

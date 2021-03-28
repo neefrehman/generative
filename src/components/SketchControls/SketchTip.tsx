@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import styled from "@emotion/styled";
+import { styled } from "linaria/react";
 
 const StyledTipContainer = styled.div<{ isVisible: boolean }>`
     overflow-x: hidden;
@@ -28,8 +28,8 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
         :focus,
         :focus-within {
             transform: translateX(0);
-            background-color: #eee;
-            color: #212121;
+            background-color: var(--offWhite);
+            color: var(--offBlack);
         }
 
         /* :focus {outline: none;} */

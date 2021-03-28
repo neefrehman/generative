@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import { styled } from "linaria/react";
 
 import { useIsomorphicLayoutEffect } from "hooks/useIsomorphicLayouteffect";
 
@@ -13,8 +13,8 @@ const AlertModal = styled.div`
         calc(var(--edgeButtonMargin)),
         calc(var(--edgeButtonMargin))
     );
-    background-color: ${({ theme }) => theme.colors.offBlack};
-    border: 3px solid ${({ theme }) => theme.colors.offWhite};
+    background-color: var(--offBlack);
+    border: 3px solid var(--offWhite);
     display: flex;
     flex-direction: column;
     align-items: center;

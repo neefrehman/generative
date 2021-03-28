@@ -1,5 +1,7 @@
+const withLinaria = require("next-linaria");
+
 /* eslint-disable */
-module.exports = {
+module.exports = withLinaria({
     webpack(config) {
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
@@ -11,10 +13,7 @@ module.exports = {
                     options: {
                         // Transforms must also go into package.json, for when babel is handling inline glsl
                         transform: [
-                            [
-                                "glslify-hex",
-                                { "option-1": true, "option-2": 42 },
-                            ],
+                            ["glslify-hex", { "option-1": true, "option-2": 42 }],
                         ],
                     },
                 },
@@ -60,4 +59,4 @@ module.exports = {
 
         return config;
     },
-};
+});

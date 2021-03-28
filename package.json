@@ -51,7 +51,7 @@
         "react-use-gesture": "^9.0.4",
         "react-xr": "^1.1.0",
         "simplex-noise": "^2.4.0",
-        "three": "^0.124.0",
+        "three": "^0.125.0",
         "use-cannon": "^0.5.3"
     },
     "devDependencies": {

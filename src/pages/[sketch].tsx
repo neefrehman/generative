@@ -8,7 +8,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { useHasMounted } from "hooks/useHasMounted";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
-import { isFolderSketch, sketchExists, sketchIsFound } from "helpers/sketchTests";
+import { isFolderSketch, sketchIsFound } from "helpers/sketchTests";
 
 export const StyledSketchPage = styled.div`
     canvas {

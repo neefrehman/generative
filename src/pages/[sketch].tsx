@@ -7,8 +7,12 @@ import { styled } from "linaria/react";
 import { ErrorBoundary } from "components/ErrorBoundary";
 import { TextOverlay } from "components/TextOverlay";
 import { useHasMounted } from "hooks/useHasMounted";
-import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
-import { isFolderSketch, sketchIsNotFound } from "helpers/sketchTests";
+import { getSketches } from "helpers/getSketches";
+import {
+    isFolderSketch,
+    sketchExists,
+    sketchIsNotFound,
+} from "helpers/sketchTests";
 
 export const StyledSketchPage = styled.div`
     canvas {
@@ -102,26 +106,24 @@ const SketchPage = ({
 export default SketchPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const sketchArray = getSketches();
-    const draftsArray = getDrafts();
-    const archiveArray = getArchived();
-    const allSketchesArray = [...sketchArray, ...draftsArray, ...archiveArray];
+    const paths = getSketches().map(sketch => ({ params: { sketch } }));
 
-    const paths = allSketchesArray.map(sketch => ({ params: { sketch } }));
-
-    return { paths, fallback: false };
+    return { paths, fallback: "blocking" };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const sketchId = typeof params.sketch === "string" ? params.sketch : "";
+export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
+    params: { sketch: sketchId },
+}) => {
+    if (typeof sketchId !== "string" || !sketchExists(sketchId)) {
+        return { notFound: true };
+    }
+
     const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
-    let sketchImportPath: string;
+    let sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
 
-    if (isPublished) {
-        sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
-    } else {
+    if (!isPublished) {
         sketchImportPath = sketchIsNotFound(`sketches/_drafts/${sketchId}`)
             ? `sketches/_archive/${year}/${month}/${sketchId}`
             : `sketches/_drafts/${sketchId}`;

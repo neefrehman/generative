@@ -36,9 +36,9 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 vec3 colourFrom = vec3(0.0, 0.2, 0.0);
                 vec3 colourTo = vec3(0.1, 1.0, 0.5);
                 // colourFrom *= time;
-                // colourTo *= time;     👇🏾
+                // colourTo *= time;     
                 float intensity = clamp((1.0 - distanceToMouse) / 2.0, 0.0, 1.0);
-                                              👇🏾
+                                              
                 vec3 color = 0.3 + 0.8 * cos(40.0 * (colourFrom + intensity * colourTo));
                 return color * intensity;
             }
@@ -67,4 +67,6 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-export const Scene = () => <ShaderRenderer sketch={sketch} />;
+const Scene = () => <ShaderRenderer sketch={sketch} />;
+
+export default Scene;

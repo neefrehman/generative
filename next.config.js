@@ -2,6 +2,7 @@ const withLinaria = require("next-linaria");
 
 /* eslint-disable */
 module.exports = withLinaria({
+    target: "serverless",
     webpack(config) {
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,

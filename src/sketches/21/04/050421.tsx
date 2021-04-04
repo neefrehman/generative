@@ -29,6 +29,7 @@ const createSketch = (PIXELATION: number) => {
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(3, 9), type: "1f" },
                 noiseY: { value: createSign(), type: "1i" },
+                noiseMinDist: { value: inRange(0.8, 1.5), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
@@ -51,11 +52,12 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
                 uniform int noiseY;
+                uniform float noiseMinDist;
 
                 float sineNoise(vec3 pos) {
                     const int CELL_COUNT = 2;
                     vec3 voronoiCells[CELL_COUNT];
-                    float min_dist = 1.0;
+                    float min_dist = noiseMinDist;
 
                     for (int i = 0; i < CELL_COUNT; i++) {
                         voronoiCells[i] = vec3(

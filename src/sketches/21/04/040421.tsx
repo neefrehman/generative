@@ -45,7 +45,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 uniform float noiseScale;
 
                 float sineNoise(vec3 pos) {
-                    const int CELL_COUNT = 2;
+                    const int CELL_COUNT = 3;
                     vec3 voronoiCells[CELL_COUNT];
                     float min_dist = 1.0;
 

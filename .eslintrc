@@ -28,8 +28,7 @@
         "plugin:import/warnings",
         "plugin:import/typescript",
         "plugin:react-hooks/recommended",
-        "prettier",
-        "prettier/@typescript-eslint"
+        "prettier"
     ],
     "settings": {
         "import/resolver": {

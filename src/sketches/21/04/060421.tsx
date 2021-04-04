@@ -29,6 +29,7 @@ const createSketch = (PIXELATION: number) => {
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(2.3, 6), type: "1f" },
                 noiseY: { value: createSign(), type: "1i" },
+                noiseMinDist: { value: inRange(0.9, 1.5), type: "1f" },
             },
             frag: glsl`
                 precision highp float;
@@ -51,11 +52,12 @@ const createSketch = (PIXELATION: number) => {
                 uniform vec3 colorEnd;
                 uniform float noiseScale;
                 uniform int noiseY;
+                uniform float noiseMinDist;
 
                 float sineNoise(vec3 pos) {
                     const int CELL_COUNT = 2;
                     vec3 voronoiCells[CELL_COUNT];
-                    float min_dist = 1.0;
+                    float min_dist = noiseMinDist;
 
                     for (int i = 0; i < CELL_COUNT; i++) {
                         voronoiCells[i] = vec3(
@@ -73,7 +75,7 @@ const createSketch = (PIXELATION: number) => {
 
                 float sdf(vec3 pos) {
                     vec3 pShape = rotate(pos, vec3(1.0, 1.0, 0.0), time * TAU);
-                    float shape = sdCuboid(pShape, vec3(0.3));
+                    float shape = sdCuboid(pShape, vec3(0.25));
                     
                     vec3 pNoise = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
                     float sineNoiseValue = (0.83 - sineNoise((pNoise + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
@@ -143,7 +145,7 @@ const createSketch = (PIXELATION: number) => {
 };
 
 const S050421 = () => {
-    const [pixelation] = useState(() => inRange(3.2, 4));
+    const [pixelation] = useState(() => inRange(3.5, 4.2));
 
     const settings: ShaderRendererSettings = {
         dimensions: [

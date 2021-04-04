@@ -51,7 +51,6 @@ export const getUniformLocation = (
 ): WebGLUniformLocation => {
     const uniformLocation = gl.getUniformLocation(program, name);
 
-    // @ts-expect-error: this can happen i promise!
     if (uniformLocation === -1) {
         throw new Error(`Can not find uniform ${name}`);
     }
@@ -81,12 +80,14 @@ export const createAttribute = (
 
 /**
  * Utility to get the type of a uniform from it's value
+ * 
+ * @remarks Doesn't parse `n.0` as a float
  */
 const getUniformTypeFromValue = (value: UniformValue): UniformType => {
     let type: UniformType;
 
     const isInt = (num: number) => num.toString().indexOf(".") === -1;
-    const isFloat = (num: number) => num.toString().indexOf(".") !== -1; // FIXME: doesn't work for x.0
+    const isFloat = (num: number) => num.toString().indexOf(".") !== -1;
 
     const isVec2 = (vec: Vector): vec is Vector<2> => vec.length === 2;
     const isVec3 = (vec: Vector): vec is Vector<3> => vec.length === 3;

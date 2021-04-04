@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
-import { Canvas, useFrame, useThree } from "react-three-fiber";
-import { Physics, usePlane, useSphere, useBox } from "use-cannon";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Physics, usePlane, useSphere, useBox } from "@react-three/cannon";
 import { BlendFunction, KernelSize } from "postprocessing";
-import { EffectComposer, Bloom, SSAO } from "react-postprocessing";
+import { EffectComposer, Bloom, SSAO } from "@react-three/postprocessing";
 
 const InvisibleBorders = () => {
     const { viewport } = useThree();
@@ -92,9 +92,7 @@ const Post = () => (
                 bias={0.5}
                 samples={21}
                 radius={7}
-                intensity={30}
                 luminanceInfluence={0.6}
-                color="red"
             />
         </EffectComposer>
     </Suspense>
@@ -102,7 +100,6 @@ const Post = () => (
 
 const S280720 = () => (
     <Canvas
-        shadowMap
         gl={{
             powerPreference: "high-performance",
             stencil: false,
@@ -114,7 +111,6 @@ const S280720 = () => (
         style={{ height: "100vh", width: "100vw" }}
     >
         <fog attach="fog" args={["red", 25, 40]} />
-        {/* @ts-expect-error - https://github.com/react-spring/react-three-fiber/issues/581 */}
         <color attach="background" args={["#ffdd41"]} />
         <ambientLight intensity={2} />
         <directionalLight

@@ -2,6 +2,9 @@ const withLinaria = require("next-linaria");
 
 /* eslint-disable */
 module.exports = withLinaria({
+    future: {
+        webpack5: true,
+    },
     webpack(config) {
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
@@ -22,7 +25,7 @@ module.exports = withLinaria({
         config.module.rules.push({
             test: /\.(obj|gltf|mtl)$/,
             exclude: /node_modules/,
-            use: ["url-loader"],
+            use: ["file-loader"],
         });
         config.module.rules.push({
             test: /\.(png|jpeg|jpg)$/,

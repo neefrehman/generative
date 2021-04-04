@@ -26,11 +26,10 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
         frag: glsl`
                 precision highp float;
 
-                #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+                #pragma glslify: sdCuboid = require("../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
-                #pragma glslify: smin = require("../utils/shaders/smin/poly.glsl");
-                #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
+                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -128,7 +127,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S110121 = () => (
+const S040421 = () => (
     <>
         <ShaderRenderer sketch={sketch} />
         <ControlsContainer>
@@ -137,4 +136,4 @@ const S110121 = () => (
     </>
 );
 
-export default S110121;
+export default S040421;

@@ -11,6 +11,7 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     controls.enableZoom = false;
 
     const baseGeometry = new THREE.IcosahedronGeometry(1, 1);
+    // @ts-ignore - deprecated in three
     const points = baseGeometry.vertices;
 
     const geometry = new THREE.SphereGeometry(1, 32, 16);

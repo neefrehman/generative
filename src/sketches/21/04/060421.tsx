@@ -27,17 +27,16 @@ const createSketch = (PIXELATION: number) => {
                 mousePosition: { value: [0, actualHeight], type: "2f" },
                 colorStart: { value: hexToVec3(createHex()), type: "3f" },
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-                noiseScale: { value: inRange(3, 9), type: "1f" },
+                noiseScale: { value: inRange(2.3, 6), type: "1f" },
                 noiseY: { value: createSign(), type: "1i" },
             },
             frag: glsl`
                 precision highp float;
 
-                #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+                #pragma glslify: sdCuboid = require("../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
                 #pragma glslify: noise = require("glsl-noise/simplex/4d");
-                #pragma glslify: smin = require("../utils/shaders/smin/poly.glsl");
-                #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
-                #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
+                #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+                #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
                 #define PI 3.1415
                 #define TAU 2.0 * PI
@@ -74,12 +73,12 @@ const createSketch = (PIXELATION: number) => {
 
                 float sdf(vec3 pos) {
                     vec3 pShape = rotate(pos, vec3(1.0, 1.0, 0.0), time * TAU);
-                    float shape = sdCuboid(pShape, vec3(0.4));
+                    float shape = sdCuboid(pShape, vec3(0.3));
                     
                     vec3 pNoise = rotate(pos, vec3(mousePosition, 1.0), -time * TAU);
                     float sineNoiseValue = (0.83 - sineNoise((pNoise + vec3(0.0, 0.2, 0.0)) * noiseScale)) / noiseScale;
 
-                    return max(shape, sineNoiseValue);
+                    return min(shape, sineNoiseValue);
                 }
 
                 vec3 getColor(vec3 pos) {
@@ -143,8 +142,8 @@ const createSketch = (PIXELATION: number) => {
     return sketch;
 };
 
-const S110121 = () => {
-    const [pixelation] = useState(() => inRange(2.2, 2.4));
+const S050421 = () => {
+    const [pixelation] = useState(() => inRange(3.2, 4));
 
     const settings: ShaderRendererSettings = {
         dimensions: [
@@ -170,4 +169,4 @@ const S110121 = () => {
     );
 };
 
-export default S110121;
+export default S050421;

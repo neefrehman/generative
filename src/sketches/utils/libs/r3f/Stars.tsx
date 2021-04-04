@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useFrame } from "react-three-fiber";
+import { useFrame } from "@react-three/fiber";
 
 export const Stars = ({ count = 1000, xOff = 0, yOff = 0, zOff = 50 }) => {
     const [starOpacity, setStarOpacity] = useState(0);

@@ -8,7 +8,7 @@ import { inRange } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 import { lerp, mapToRange, lerpVector, getMean } from "Utils/math";
 
-const pixelation = 1.4;
+const pixelation = 1.2;
 
 const settings: ShaderRendererSettings = {
     dimensions: [window.innerWidth / pixelation, window.innerHeight / pixelation],
@@ -42,8 +42,8 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
-            #pragma glslify: rotate = require("../utils/shaders/rotate.glsl");
-            #pragma glslify: filmGrain = require("../utils/shaders/grain.glsl");
+            #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
+            #pragma glslify: filmGrain = require("../../utils/shaders/grain.glsl");
 
             #define PI 3.1415
             #define TAU 2.0 * PI
@@ -61,9 +61,9 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
 
             uniform int baseShape;
 
-            #pragma glslify: sdSphere = require("../utils/shaders/sdShapes/3d/sdSphere.glsl");
-            #pragma glslify: sdCuboid = require("../utils/shaders/sdShapes/3d/sdCuboid.glsl");
-            #pragma glslify: sdCappedCone = require("../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
+            #pragma glslify: sdSphere = require("../../utils/shaders/sdShapes/3d/sdSphere.glsl");
+            #pragma glslify: sdCuboid = require("../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
+            #pragma glslify: sdCappedCone = require("../../utils/shaders/sdShapes/3d/sdCappedCone.glsl");
 
             float sineNoise(vec3 pos) {
                 return 
@@ -174,7 +174,7 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
     };
 };
 
-const S120121 = () => (
+const S010421 = () => (
     <ShaderRenderer
         sketch={sketch}
         settings={settings}
@@ -182,4 +182,4 @@ const S120121 = () => (
     />
 );
 
-export default S120121;
+export default S010421;

@@ -13,7 +13,7 @@ const StyledTipContainer = styled.div<{ isVisible: boolean }>`
         background-color: rgb(85, 85, 85, 0.7);
 
         transform: translateX(
-            ${({ isVisible }) => (isVisible ? 0 : "calc(100% - 1.5em)")}
+            ${({ isVisible }) => (isVisible ? 0 : "calc(100% - 1.3em)")}
         );
         transition: transform 500ms;
 

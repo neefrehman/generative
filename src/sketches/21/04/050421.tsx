@@ -29,7 +29,7 @@ const createSketch = (PIXELATION: number) => {
                 colorEnd: { value: hexToVec3(createHex()), type: "3f" },
                 noiseScale: { value: inRange(3, 9), type: "1f" },
                 noiseY: { value: createSign(), type: "1i" },
-                noiseMinDist: { value: inRange(0.8, 1.5), type: "1f" },
+                noiseMinDist: { value: inRange(0.82, 1.3), type: "1f" },
             },
             frag: glsl`
                 precision highp float;

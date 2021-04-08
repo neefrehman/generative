@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define, no-underscore-dangle, no-nested-ternary */
-import type { Vector, Matrix } from "./types";
-
-/**
- * Provides type safety for values as well as functions that return values
- * for `createMatrix`'s `initialValues` parameter.
- */
-type ValueOrFunction<D extends number, T> = T | ((vector: Vector<D>) => T) | null;
+import type { Vector } from "./types";
 
 /**
  * Returns a matrix (multi-dimensional array) with your desired dimensions and
@@ -31,7 +25,7 @@ type ValueOrFunction<D extends number, T> = T | ((vector: Vector<D>) => T) | nul
  * const twoDVectorArray = createMatrix([3, 3], vector => vector.join()); // A 3x3 array initialised with each point's co-ordinate as a string
  */
 export const createMatrix = <D extends number, T>(
-    dimensions: number | Vector<D>,
+    dimensions: D | Vector<D>,
     initialValues: ValueOrFunction<D, T> = null
 ): Matrix<D, T> => {
     const dimensionCount =
@@ -42,29 +36,25 @@ export const createMatrix = <D extends number, T>(
 };
 
 /**
- * Recursively creates the matrix to be returned to createMatrix
- * and populates the initialValues callback with the current vector co-ordinate
+ * Recursively creates a matrix, and keeps track of the current vactor.
  */
 function _createMatrix<D extends number, T>(
-    dimensions: number | Vector<D>,
+    dimensions: D | Vector<D>,
     initialValues: ValueOrFunction<D, T> = null,
     currentPosition: Vector<D>
 ): Matrix<D, T> {
     let currentDimensionLength: number;
     let remainingDimensions: number | Vector;
     let remainingDimensionCount: number;
-    let needsRecursion: boolean;
 
     if (typeof dimensions === "number") {
         currentDimensionLength = dimensions;
         remainingDimensions = dimensions - 1;
         remainingDimensionCount = remainingDimensions;
-        needsRecursion = remainingDimensions > 0;
     } else {
-        currentDimensionLength = dimensions[0];
+        currentDimensionLength = dimensions[0] ?? 0;
         remainingDimensions = dimensions.slice(1);
         remainingDimensionCount = remainingDimensions.length;
-        needsRecursion = remainingDimensions.length > 0;
     }
 
     if (!Number.isInteger(currentDimensionLength)) {
@@ -72,11 +62,17 @@ function _createMatrix<D extends number, T>(
     }
 
     const currentDimension = currentPosition.length - 1 - remainingDimensionCount;
+    const needsRecursion = remainingDimensionCount > 0;
 
     const finalMatrix = [...Array(currentDimensionLength)].map((_, i) => {
         currentPosition[currentDimension] = i;
+        // @ts-ignore — `Type instantiation is excessively deep...` - investigate https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
         return needsRecursion
-            ? _createMatrix(remainingDimensions, initialValues, currentPosition)
+            ? _createMatrix(
+                  remainingDimensions as D | Vector<D>,
+                  initialValues,
+                  currentPosition
+              )
             : initialValues instanceof Function
             ? initialValues(currentPosition.slice() as Vector<D>)
             : initialValues;
@@ -85,4 +81,43 @@ function _createMatrix<D extends number, T>(
     return finalMatrix as Matrix<D, T>;
 }
 
-// const m1: number[][] = createMatrix([1, 1]); // FIXME: https://github.com/microsoft/TypeScript/issues/40081
+export default createMatrix;
+
+export type { Matrix };
+
+/**
+ * A typed multidimensional array returned by `makeMatrix`
+ * @remarks literals will be widened to their primitive types
+ */
+type Matrix<
+    D extends number = 1,
+    T = unknown,
+    RecursionCount extends unknown[] = []
+> = D extends RecursionCount["length"]
+    ? WidenLiterals<T>
+    : Matrix<D, T[], PlusOne<RecursionCount>>;
+
+/**
+ * Provides type safety for values as well as functions that return values
+ * for `createMatrix`'s `initialValues` parameter.
+ */
+type ValueOrFunction<D extends number, T = unknown> =
+    | T
+    | ((vector: Vector<D>) => T)
+    | null;
+
+/**
+ * Expands literal types to their primitive
+ */
+type WidenLiterals<T> = T extends boolean
+    ? boolean
+    : T extends string
+    ? string
+    : T extends number
+    ? number
+    : T;
+
+/**
+ * Adds one to the length of an array
+ */
+type PlusOne<Array extends unknown[] = []> = [unknown, ...Array];

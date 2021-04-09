@@ -1,4 +1,5 @@
 import React from "react";
+import { makeMatrix } from "make-matrix";
 
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 import type {
@@ -6,7 +7,7 @@ import type {
     Canvas2DSetupFn,
 } from "Renderers/Canvas2D";
 
-import { createMatrix, getShortestViewportDimension, lerp } from "Utils/math";
+import { getShortestViewportDimension, lerp } from "Utils/math";
 import { simplex3D } from "Utils/random";
 
 const shortestDimension = getShortestViewportDimension({
@@ -25,7 +26,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
 
     ctx.font = `${SCALE}px Fleuron`;
 
-    const letterGrid = createMatrix(
+    const letterGrid = makeMatrix(
         [Math.ceil(width / SCALE), Math.ceil(height / SCALE)],
         ([x, y]) => [x * SCALE, y * SCALE] as [number, number]
     ).flat(1);

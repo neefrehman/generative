@@ -2,6 +2,7 @@
 // https://medium.com/hypersphere-codes/conways-game-of-life-in-typescript-a955aec3bd49
 
 import React from "react";
+import { makeMatrix } from "make-matrix";
 
 import type {
     Canvas2DRendererSettings,
@@ -13,7 +14,6 @@ import { SketchTip } from "components/SketchControls/SketchTip";
 import { ControlsContainer } from "components/SketchControls";
 
 import { rgbaToString } from "Utils/libs/canvas2d";
-import { createMatrix } from "Utils/math";
 import { createChance } from "Utils/random";
 
 const settings: Canvas2DRendererSettings = {
@@ -30,7 +30,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     const TOTAL_CELLS = TILES_X * TILES_Y;
     const INITIAL_LIVING_CELLS = TOTAL_CELLS / 5;
 
-    let board = createMatrix([TILES_X, TILES_Y], () =>
+    let board = makeMatrix([TILES_X, TILES_Y], () =>
         createChance(INITIAL_LIVING_CELLS / TOTAL_CELLS)
     );
 
@@ -55,7 +55,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 
     const computeNextGeneration = () => {
-        const newBoard = createMatrix([TILES_X, TILES_Y], false);
+        const newBoard = makeMatrix([TILES_X, TILES_Y], false);
 
         for (let i = 0; i < TILES_X; i++) {
             for (let j = 0; j < TILES_Y; j++) {

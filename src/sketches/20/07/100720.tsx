@@ -1,10 +1,11 @@
 import React from "react";
 import palettes from "nice-color-palettes";
+import { makeMatrix } from "make-matrix";
 
 import type { Canvas2DSetupFn } from "Renderers/Canvas2D";
 import { Canvas2DRenderer } from "Renderers/Canvas2D";
 
-import { lerp, getAngle, getDistance, mapToRange, createMatrix } from "Utils/math";
+import { lerp, getAngle, getDistance, mapToRange } from "Utils/math";
 import type { Vector } from "Utils/math";
 import { shuffle, pick, inRange } from "Utils/random";
 import { roundedRect } from "Utils/libs/canvas2d";
@@ -15,7 +16,7 @@ const sketch: Canvas2DSetupFn = ({ width, height }) => {
     const lineColor = pick(randomPalette);
 
     const SCALE = 56;
-    const lines = createMatrix(
+    const lines = makeMatrix(
         [Math.floor(width / SCALE) - 1, Math.floor(height / SCALE) - 1],
         ([x, y]) => [x * SCALE, y * SCALE] as Vector<2>
     ).flat(1);

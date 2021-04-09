@@ -3,7 +3,7 @@ import type p5 from "p5";
 
 import { P5Renderer } from "Renderers/P5";
 
-import { createMatrix } from "Utils/math";
+import { makeMatrix } from "make-matrix";
 
 const sketch = (p: p5) => {
     let longestDimension: number;
@@ -37,7 +37,7 @@ const sketch = (p: p5) => {
         numRows = 2;
 
         // Add one extra column as we'll be removing horizontal lines from the last one
-        grid = createMatrix([numColumns + 1, numRows, numColumns + 5], 0);
+        grid = makeMatrix([numColumns + 1, numRows, numColumns + 5], 0);
 
         camZStart = p.width > 800 ? (-res * numColumns) / 2 : 1 * res;
         camZ = camZStart;

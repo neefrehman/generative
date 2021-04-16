@@ -45,4 +45,4 @@ export const generateSitemap = async () => {
     });
 
     fs.writeFileSync("public/sitemap.xml", formattedSitemap);
-};;
+};

@@ -80,7 +80,7 @@ export const createAttribute = (
 
 /**
  * Utility to get the type of a uniform from it's value
- * 
+ *
  * @remarks Doesn't parse `n.0` as a float
  */
 const getUniformTypeFromValue = (value: UniformValue): UniformType => {

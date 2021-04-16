@@ -1,9 +1,8 @@
 import React from "react";
 import type p5 from "p5";
+import { makeMatrix } from "make-matrix";
 
 import { P5Renderer } from "Renderers/P5";
-
-import { makeMatrix } from "make-matrix";
 
 const sketch = (p: p5) => {
     let longestDimension: number;

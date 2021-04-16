@@ -8,18 +8,17 @@ import { lerpVector } from "Utils/math";
 import { createHex, inRange } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
-const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    return {
-        uniforms: {
-            aspect: { value: aspect, type: "1f" },
-            time: { value: inRange(0, 999), type: "1f" },
-            resolution: { value: [width, height], type: "2f" },
-            mousePosition: {
-                value: [width / 2, height / 2],
-                type: "2f",
-            },
+const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
+    uniforms: {
+        aspect: { value: aspect, type: "1f" },
+        time: { value: inRange(0, 999), type: "1f" },
+        resolution: { value: [width, height], type: "2f" },
+        mousePosition: {
+            value: [width / 2, height / 2],
+            type: "2f",
         },
-        frag: glsl`
+    },
+    frag: glsl`
             precision highp float;
 
             varying vec2 vUv; // pixel co-ordinates — recieved by the renderer via the vertex shader
@@ -56,16 +55,15 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color, 1.0);
             }
         `,
-        onFrame: ({ uniforms, ...props }) => {
-            uniforms.time.value = props.elapsedTime;
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                props.normalisedMousePosition,
-                0.1
-            );
-        },
-    };
-};
+    onFrame: ({ uniforms, ...props }) => {
+        uniforms.time.value = props.elapsedTime;
+        uniforms.mousePosition.value = lerpVector(
+            uniforms.mousePosition.value,
+            props.normalisedMousePosition,
+            0.1
+        );
+    },
+});
 
 const Scene = () => <ShaderRenderer sketch={sketch} />;
 

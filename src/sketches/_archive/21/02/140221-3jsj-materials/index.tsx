@@ -29,7 +29,7 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
 
-    const textureLoader = new THREE.TextureLoader();
+    // const textureLoader = new THREE.TextureLoader();
     // const doorColorTexture = textureLoader.load(color);
     // const doorAlphaTexture = textureLoader.load(alpha);
     // const doorHeightTexture = textureLoader.load(height);

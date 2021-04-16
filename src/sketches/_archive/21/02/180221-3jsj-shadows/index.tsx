@@ -10,7 +10,7 @@ import type { ThreeSetupFn } from "Renderers/Three";
 // import bakedShadow from "./bakedShadow.jpg";
 import simpleShadow from "./simpleShadow.jpg";
 
-const sketch: ThreeSetupFn = ({ scene, camera, canvas, renderer }) => {
+const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
     camera.position.z = 5;
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;

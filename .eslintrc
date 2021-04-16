@@ -11,13 +11,13 @@
         "browser": true,
         "node": true
     },
+    "globals": { "JSX": true },
     "plugins": [
         "react",
         "jsx-a11y",
         "prettier",
         "import",
-        "@typescript-eslint",
-        "@emotion"
+        "@typescript-eslint"
     ],
     "extends": [
         "plugin:react/recommended",
@@ -141,8 +141,8 @@
         ],
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
-        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/consistent-type-imports": ["warn"]
+        "@typescript-eslint/consistent-type-imports": ["warn"],
+        "@typescript-eslint/ban-ts-comment": "off"
     }
 }

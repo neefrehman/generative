@@ -31,19 +31,16 @@ const StyledSketchList = styled.ul`
     list-style: none;
     display: flex;
     flex-flow: column wrap;
+    gap: 1em;
     width: max-content;
     height: calc(100% - 70px);
 
-    li {
-        margin: 0 1em 1em 0; /* TODO: replace with gap: 1em on parent once safari support hits: https://caniuse.com/flexbox-gap */
+    li a:visited {
+        color: var(--offBlack);
+        background-color: var(--offWhite);
 
-        a:visited {
-            color: var(--offBlack);
-            background-color: var(--offWhite);
-
-            :hover {
-                background-color: var(--offWhiteHover);
-            }
+        :hover {
+            background-color: var(--offWhiteHover);
         }
     }
 `;

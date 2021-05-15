@@ -42,12 +42,18 @@ export const getSketches = (): string[] => {
 };
 
 /**
+ * Filter out hidden files from an array of filenames
+ */
+const filterHiddenFiles = (stringArray: string[]): string[] =>
+    stringArray.filter(item => !/(^|\/)\.[^/.]/g.test(item));
+
+/**
  * Gets all archived sketches from the `_archive` folder
  */
 export const getArchived = (): string[] => {
     const archiveArray = walkDateFolders("src/sketches/_archive");
 
-    return archiveArray;
+    return filterHiddenFiles(archiveArray);
 };
 
 /**
@@ -59,5 +65,5 @@ export const getDrafts = (): string[] => {
         .readdirSync(draftsPath)
         .map(fileName => fileName.replace(".tsx", ""));
 
-    return draftsArray.filter(name => name !== "_archive");
+    return filterHiddenFiles(draftsArray.filter(name => name !== "_archive"));
 };

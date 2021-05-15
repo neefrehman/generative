@@ -237,13 +237,13 @@ export interface OnFrameProps {
     stopAnimation?: () => void;
     /** A function that will restart the animation when called */
     startAnimation?: () => void;
-    /** True if the animation is currenty running, otherwise false */
+    /** True if the animation is currently running, otherwise false */
     isPlaying?: boolean;
     /** A boolean that is true if the mouse has interacted with the animation */
     mouseHasEntered?: boolean;
     /** The position of the mouse over the DOM element housing the animation */
     mousePosition?: Vector<2>;
-    /** The position of the mouse normalised between 0 and 1 */
+    /** The position of the mouse over the DOM element, normalised between 0 and 1 */
     normalisedMousePosition?: Vector<2>;
     /** Whether the mouse is currently pressed */
     mouseIsDown?: boolean;
@@ -265,7 +265,7 @@ interface UseAnimationFrameResult {
     stopAnimation: () => void;
     /** A function that will restart the animation when called */
     startAnimation: () => void;
-    /** Reference to a boolean that is true if the animation is currenty running, otherwise false */
+    /** Reference to a boolean that is true if the animation is currently running, otherwise false */
     isPlaying: MutableRefObject<boolean>;
     /** Reference to a boolean that is true if the mouse has interacted with the animation */
     mouseHasEntered: MutableRefObject<boolean>;

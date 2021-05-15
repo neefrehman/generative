@@ -220,9 +220,7 @@ export type ShaderDrawProps = ShaderSetupProps & DrawProps;
  * The contents of this function should contain all sketch state, and can return shaders, uniforms,
  * and an onFrame callback function
  */
-export type ShaderSetupFn = (
-    props?: ShaderSetupProps
-) => {
+export type ShaderSetupFn = (props?: ShaderSetupProps) => {
     /**
      * The uniforms to interface with the shaders. The renderer will autmatically detect their gl type (floats must contain a decimal)
      * If auto-detection doesn't work, add `type: "1f"` to the uniform, alongside `value`

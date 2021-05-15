@@ -1,6 +1,6 @@
 import SimplexNoise from "simplex-noise";
 
-import type { NoiseOptions } from "./index";
+import type { NoiseOptions } from "./types";
 
 /** Instantiate the generator */
 const noiseGenerator = new SimplexNoise();

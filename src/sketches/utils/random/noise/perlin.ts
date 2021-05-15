@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign, no-bitwise, no-nested-ternary */
 import { inRange } from "../inRange";
 
-import type { NoiseOptions } from "./index";
+import type { NoiseOptions } from "./types";
 
 // Adapted from http://mrl.nyu.edu/~perlin/noise/ via THREE — with added random seeding
 

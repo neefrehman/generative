@@ -5,6 +5,9 @@ module.exports = withLinaria({
     future: {
         webpack5: true,
     },
+    experimental: {
+        eslint: true,
+    },
     webpack(config) {
         config.module.rules.push({
             test: /\.(glsl|vs|fs|vert|frag)$/,
@@ -36,13 +39,11 @@ module.exports = withLinaria({
                     name: path => {
                         const isBundledWithSketch = path.match(/([0-9]{6})/);
                         if (isBundledWithSketch) {
-                            const [basePath, sketchId, subPath] = path.split(
-                                /([0-9]{6})/
-                            );
+                            const [basePath, sketchId, subPath] =
+                                path.split(/([0-9]{6})/);
 
-                            const [_, relevantBasePath] = basePath.split(
-                                "sketches/"
-                            );
+                            const [_, relevantBasePath] =
+                                basePath.split("sketches/");
 
                             const filename = subPath.split("/").slice(-1);
                             const [subPathWithoutFilename] = subPath.split(

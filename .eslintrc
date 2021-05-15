@@ -13,21 +13,19 @@
     },
     "globals": { "JSX": true },
     "plugins": [
-        "react",
         "jsx-a11y",
         "prettier",
         "import",
         "@typescript-eslint"
     ],
     "extends": [
-        "plugin:react/recommended",
         "airbnb",
         "plugin:@typescript-eslint/recommended",
         "plugin:jsx-a11y/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
-        "plugin:react-hooks/recommended",
+        "next",
         "prettier"
     ],
     "settings": {

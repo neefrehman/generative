@@ -21,6 +21,7 @@ export const useAnimationFrame = (
         delay,
         endAfter,
         fps: throttledFps,
+        mouseIdleTimeout = 3500,
         willPlay = true,
         domElementRef,
     } = options;
@@ -121,7 +122,7 @@ export const useAnimationFrame = (
             clearTimeout(idleTimeout);
             idleTimeout = setTimeout(() => {
                 mouseIsIdle.current = true;
-            }, 3500);
+            }, mouseIdleTimeout);
         };
 
         const updateMousePosition = (x: number, y: number): void => {
@@ -184,7 +185,7 @@ export const useAnimationFrame = (
                 element.removeEventListener("touchend", handleMouseAndTouchUp);
             }
         };
-    }, [domElementRef]);
+    }, [domElementRef, mouseIdleTimeout]);
 
     return {
         elapsedTime,
@@ -215,6 +216,8 @@ interface UseAnimationFrameOptions {
     endAfter?: number;
     /** The desired fps that the animation will be throttled to */
     fps?: number;
+    /** The timeout in ms after which the mouse is set to idle */
+    mouseIdleTimeout?: number;
     /** Determines if the animation will run or not. Used to invoke the hook without starting an animation. Defaults to true */
     willPlay?: boolean;
     /** A ref to be passed of the dom element that is being animated. Used to get the mouse position over the element */

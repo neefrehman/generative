@@ -81,6 +81,7 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
                 ctx.beginPath();
                 ctx.arc(nX, nY, 1, 0, Math.PI * 2);
                 ctx.strokeStyle = pick(pallette);
+                ctx.lineWidth = inRange(1, 1.5);
                 ctx.stroke();
                 ctx.closePath();
 

@@ -2,11 +2,11 @@ const withLinaria = require("next-linaria");
 
 /* eslint-disable */
 module.exports = withLinaria({
-    future: {
-        webpack5: true,
-    },
     experimental: {
         eslint: true,
+    },
+    images: {
+        disableStaticImages: true,
     },
     webpack(config) {
         config.module.rules.push({

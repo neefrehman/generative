@@ -25,7 +25,7 @@
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
-        "next",
+        "plugin:@next/next/recommended",
         "prettier"
     ],
     "settings": {

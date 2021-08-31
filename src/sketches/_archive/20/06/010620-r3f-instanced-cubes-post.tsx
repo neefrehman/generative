@@ -55,7 +55,7 @@ const InstancedBoxes = () => {
 
     const [ref] = useBox(() => ({
         mass: 100,
-        position: [4 - Math.random() * 8, viewport.height, 0, 0],
+        position: [4 - Math.random() * 8, viewport.height, 0],
         args: [boxRadius, boxRadius, boxRadius],
     }));
 

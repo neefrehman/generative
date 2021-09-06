@@ -25,7 +25,7 @@ export const inRange = (
               Math.random() * (Math.ceil(upperBound) - Math.floor(lowerBound) + 1)
           ) + Math.floor(lowerBound);
 
-    if (not !== undefined && generatedNumber === not) {
+    while (typeof not === "number" && generatedNumber === not) {
         generatedNumber = inRange(min, max, options);
     }
 

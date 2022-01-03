@@ -10,6 +10,7 @@
  * @returns A random number within the Beta distribution
  *
  * @link https://en.wikipedia.org/wiki/Beta_distribution
+ * @link https://keisan.casio.com/exec/system/1180573226
  */
 export const inBeta = (alpha = 0.5, beta = 0.5) => {
     const baseGamma = _inBeta(alpha, 1);

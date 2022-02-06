@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
         return { notFound: true };
     }
 
-    const isPublished = RegExp(/^[0-9]{6}$/).test(sketchId);
+    const isPublished = /^[0-9]{6}$/.test(sketchId);
     const year = sketchId.substr(4, 2);
     const month = sketchId.substr(2, 2);
     let sketchImportPath = `sketches/${year}/${month}/${sketchId}`;

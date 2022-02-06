@@ -35,7 +35,7 @@ const walkDateFolders = (folderPath: string): string[] => {
  */
 export const getSketches = (): string[] => {
     const sketchArray = walkDateFolders("src/sketches").filter(fileName =>
-        RegExp(/^[0-9]{6}?$/).test(fileName)
+        /^[0-9]{6}?$/.test(fileName)
     );
 
     return sketchArray;

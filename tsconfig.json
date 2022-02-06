@@ -1,26 +1,27 @@
 {
-    "compilerOptions": {
-        "target": "ES2018",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "strictNullChecks": false, // Nightmare with useRef() — maybe try this at some point: https://twitter.com/steveruizok/status/1333359432298864640
-        "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
-        "baseUrl": "src",
-        "paths": {
-            "Renderers/*": ["components/renderers/*"],
-            "Utils/*": ["sketches/utils/*"],
-            "LibUtils/*": ["sketches/utils/libs/*"]
-        }
+  "compilerOptions": {
+    "target": "ES2018",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": false, // Nightmare with useRef() — maybe try this at some point: https://twitter.com/steveruizok/status/1333359432298864640
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": "src",
+    "paths": {
+      "Renderers/*": ["components/renderers/*"],
+      "Utils/*": ["sketches/utils/*"],
+      "LibUtils/*": ["sketches/utils/libs/*"]
     },
-    "exclude": ["node_modules"],
-    "include": ["next-env.d.ts", "files.d.ts", "**/*.ts", "**/*.tsx"]
+    "incremental": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "files.d.ts", "**/*.ts", "**/*.tsx"]
 }

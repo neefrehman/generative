@@ -129,6 +129,7 @@
         "react/no-danger": "warn",
         "react/require-default-props": "off",
         "react/no-unused-prop-types": "off",
+        "react/function-component-definition": "off",
         "jsx-a11y/anchor-is-valid": [
             "error",
             {

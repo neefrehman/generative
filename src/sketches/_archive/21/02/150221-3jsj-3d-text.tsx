@@ -4,6 +4,7 @@ import React from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import helvetikerRegular from "three/examples/fonts/helvetiker_regular.typeface.json";
+import { Font, TextGeometry } from "three-stdlib";
 
 import { ThreeRenderer } from "Renderers/Three";
 import type { ThreeSetupFn } from "Renderers/Three";
@@ -27,8 +28,8 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
 
     const BEVEL_THICKNESS = 0.03;
     const BEVEL_SIZE = 0.02;
-    const textGeometry = new THREE.TextGeometry("hello it's neef :—)", {
-        font: new THREE.Font(helvetikerRegular),
+    const textGeometry = new TextGeometry("hello it's neef :—)", {
+        font: new Font(helvetikerRegular as any),
         size: 0.6,
         height: 0.2,
         curveSegments: 5,
@@ -36,7 +37,6 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
         bevelThickness: BEVEL_THICKNESS,
         bevelSize: BEVEL_SIZE,
         bevelOffset: 0,
-        bevelSegments: 4,
     });
     textGeometry.center();
     /** manual centering below */

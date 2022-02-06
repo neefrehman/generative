@@ -123,7 +123,7 @@ const getUniformTypeFromValue = (value: UniformValue): UniformType => {
 export const setUniform = (
     location: WebGLUniformLocation,
     value: any, // TODO: UniformValue type - use same type guards as above, or is there a better way?
-    type = getUniformTypeFromValue(value),
+    type = getUniformTypeFromValue(value), // eslint-disable-line default-param-last
     gl: GLContext
 ): void => {
     if (type === "1f") gl.uniform1f(location, value);

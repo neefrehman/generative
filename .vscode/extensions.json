@@ -2,14 +2,11 @@
     "recommendations": [
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
-        "coenraads.bracket-pair-colorizer-2",
         "vincaslt.highlight-matching-tag",
         "visualstudioexptteam.vscodeintellicode",
         "mgmcdermott.vscode-language-babel",
-        "jpoissonnier.vscode-styled-components",
         "steoates.autoimport",
         "slevesque.shader",
-        "cadenas.vscode-glsllint",
         "xaver.clang-format",
         "raczzalan.webgl-glsl-editor"
     ],

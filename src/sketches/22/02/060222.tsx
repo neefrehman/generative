@@ -43,8 +43,8 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     return ({ frameCount, mousePosition }) => {
         ctx.clearRect(0, 0, width, height);
 
-        const timeStartX = (frameCount / 6 + randomTimeStart) / 300;
-        const timeStartY = (frameCount / 6 + randomTimeStart) / 300 + 999;
+        const timeStartX = (frameCount / 3 + randomTimeStart) / 300;
+        const timeStartY = (frameCount / 3 + randomTimeStart) / 300 + 999;
 
         const repellorPositions = [
             mousePosition,
@@ -80,6 +80,11 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S060222 = () => <Canvas2DRenderer sketch={sketch} />;
+const S060222 = () => (
+    <Canvas2DRenderer
+        sketch={sketch}
+        settings={{ animationSettings: { fps: 14 } }}
+    />
+);
 
 export default S060222;

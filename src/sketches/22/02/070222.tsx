@@ -78,6 +78,11 @@ const sketch: Canvas2DSetupFn = ({ width, height, ctx }) => {
     };
 };
 
-const S060222 = () => <Canvas2DRenderer sketch={sketch} />;
+const S060222 = () => (
+    <Canvas2DRenderer
+        sketch={sketch}
+        settings={{ animationSettings: { fps: 24 } }}
+    />
+);
 
 export default S060222;

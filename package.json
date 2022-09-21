@@ -53,7 +53,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.17.0",
-        "@netlify/plugin-nextjs": "^4.2.4",
+        "@netlify/plugin-nextjs": "^4.23.1",
         "@types/node": "^17.0.15",
         "@types/p5": "^1.4.0",
         "@types/prettier": "^2.4.3",

@@ -10,22 +10,22 @@ import type { Vector } from "Utils/math";
  * @param b - the point the line will be drawn two
  */
 export const bezierCurveBetween = (
-    ctx: CanvasRenderingContext2D,
-    a: Vector,
-    cp1: Vector,
-    cp2: Vector,
-    b: Vector
+  ctx: CanvasRenderingContext2D,
+  a: Vector,
+  cp1: Vector,
+  cp2: Vector,
+  b: Vector
 ) => {
-    const [ax, ay] = a;
-    const [bx, by] = b;
-    const [cp1x, cp1y] = cp1;
-    const [cp2x, cp2y] = cp2;
+  const [ax, ay] = a;
+  const [bx, by] = b;
+  const [cp1x, cp1y] = cp1;
+  const [cp2x, cp2y] = cp2;
 
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(ax, ay);
-    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, bx, by);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.restore();
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(ax, ay);
+  ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, bx, by);
+  ctx.stroke();
+  ctx.closePath();
+  ctx.restore();
 };

@@ -67,7 +67,6 @@ button {
     padding: 0 0.1em;
     cursor: pointer;
     line-height: normal;
-
 }
 
 :is(a, a:visited, button):hover {

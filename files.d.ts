@@ -8,6 +8,6 @@ declare module "*.jpg";
 
 declare module "postprocessing";
 declare module "glslify" {
-    function glsl(shader?: TemplateStringsArray): string;
-    export = glsl;
+  function glsl(shader?: TemplateStringsArray): string;
+  export = glsl;
 }

@@ -7,4 +7,4 @@
  * @returns The vector with each point multiplied by the scalar value
  */
 export const multiplyScalar = (vector: number[], scalar: number): number[] =>
-    vector.map(point => point * scalar);
+  vector.map(point => point * scalar);

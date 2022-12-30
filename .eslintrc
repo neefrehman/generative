@@ -1,147 +1,135 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module",
-        "allowImportExportEverywhere": true,
-        "project": "./tsconfig.json",
-        "tsconfigRootDir": "./"
-    },
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "globals": { "JSX": true },
-    "plugins": [
-        "jsx-a11y",
-        "prettier",
-        "import",
-        "@typescript-eslint"
-    ],
-    "extends": [
-        "airbnb",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:jsx-a11y/recommended",
-        "plugin:import/errors",
-        "plugin:import/warnings",
-        "plugin:import/typescript",
-        "next",
-        "prettier"
-    ],
-    "settings": {
-        "import/resolver": {
-            "typescript": {}
-        }
-    },
-    "rules": {
-        "strict": 0,
-        "no-console": "warn",
-        "no-plusplus": [
-            "warn",
-            {
-                "allowForLoopAfterthoughts": true
-            }
-        ],
-        "no-unused-expressions": "off",
-        "no-undef": "error",
-        "no-param-reassign": [
-            "error",
-            {
-                "props": true,
-                "ignorePropertyModificationsForRegex": [
-                    "p",
-                    "context",
-                    "ctx",
-                    "canvas",
-                    "camera",
-                    "current",
-                    "scene",
-                    "t",
-                    "mesh",
-                    "uniforms",
-                    "renderer"
-                ]
-            }
-        ],
-        "lines-between-class-members": [
-            "warn",
-            "always",
-            {
-                "exceptAfterSingleLine": true
-            }
-        ],
-        "prefer-destructuring": [
-            "error",
-            {
-                "AssignmentExpression": {
-                    "array": false
-                }
-            }
-        ],
-        "prefer-const": ["warn"],
-        "import/order": [
-            "warn",
-            {
-                "newlines-between": "always",
-                "groups": [
-                    "builtin",
-                    "external",
-                    "internal",
-                    "parent",
-                    "sibling",
-                    "index"
-                ],
-                "pathGroups": [
-                    {
-                        "pattern": "Renderers/**",
-                        "group": "internal",
-                        "position": "before"
-                    },
-                    {
-                        "pattern": "LibUtils/**",
-                        "group": "internal",
-                        "position": "after"
-                    },
-                    {
-                        "pattern": "Utils/**",
-                        "group": "internal",
-                        "position": "after"
-                    }
-                ]
-            }
-        ],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "js": "never",
-                "ts": "never",
-                "tsx": "never"
-            }
-        ],
-        "import/prefer-default-export": "off",
-        "prettier/prettier": "warn",
-        "react/prop-types": "off",
-        "react/jsx-filename-extension": "off",
-        "react/jsx-indent": [2, 4],
-        "react/jsx-indent-props": [2, 4],
-        "react/jsx-one-expression-per-line": "off",
-        "react/no-danger": "warn",
-        "react/require-default-props": "off",
-        "react/no-unused-prop-types": "off",
-        "react/function-component-definition": "off",
-        "jsx-a11y/anchor-is-valid": [
-            "error",
-            {
-                "components": ["Link"],
-                "specialLink": ["href"],
-                "aspects": ["invalidHref", "preferButton"]
-            }
-        ],
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"],
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/consistent-type-imports": ["warn"],
-        "@typescript-eslint/ban-ts-comment": "off"
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": { "JSX": true },
+  "plugins": ["jsx-a11y", "prettier", "import", "@typescript-eslint"],
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "next",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
     }
+  },
+  "rules": {
+    "strict": 0,
+    "no-console": "warn",
+    "no-plusplus": [
+      "warn",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-unused-expressions": "off",
+    "no-undef": "error",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsForRegex": [
+          "p",
+          "context",
+          "ctx",
+          "canvas",
+          "camera",
+          "current",
+          "scene",
+          "t",
+          "mesh",
+          "uniforms",
+          "renderer"
+        ]
+      }
+    ],
+    "lines-between-class-members": [
+      "warn",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "AssignmentExpression": {
+          "array": false
+        }
+      }
+    ],
+    "prefer-const": ["warn"],
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "Renderers/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "LibUtils/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "Utils/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "prettier/prettier": "warn",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-one-expression-per-line": "off",
+    "react/no-danger": "warn",
+    "react/require-default-props": "off",
+    "react/no-unused-prop-types": "off",
+    "react/function-component-definition": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["href"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/consistent-type-imports": ["warn"],
+    "@typescript-eslint/ban-ts-comment": "off"
+  }
 }

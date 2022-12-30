@@ -10,13 +10,13 @@ import { lerpVector } from "Utils/math";
 import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
-    uniforms: {
-        aspect: { value: aspect },
-        time: { value: inRange(10000), type: "1f" },
-        resolution: { value: [width, height], type: "2f" },
-        mousePosition: { value: [width / 2, height / 2], type: "2f" },
-    },
-    frag: glsl`
+  uniforms: {
+    aspect: { value: aspect },
+    time: { value: inRange(10000), type: "1f" },
+    resolution: { value: [width, height], type: "2f" },
+    mousePosition: { value: [width / 2, height / 2], type: "2f" },
+  },
+  frag: glsl`
         precision highp float;
 
         #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
@@ -93,15 +93,15 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             gl_FragColor = vec4(color - grainAmount, 1.0);
         }
     `,
-    onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-        uniforms.time.value += 0.01;
+  onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+    uniforms.time.value += 0.01;
 
-        uniforms.mousePosition.value = lerpVector(
-            uniforms.mousePosition.value,
-            !mouseIsIdle ? mousePosition : [width / 2, height / 2],
-            0.05
-        );
-    },
+    uniforms.mousePosition.value = lerpVector(
+      uniforms.mousePosition.value,
+      !mouseIsIdle ? mousePosition : [width / 2, height / 2],
+      0.05
+    );
+  },
 });
 
 const S010121 = () => <ShaderRenderer sketch={sketch} />;

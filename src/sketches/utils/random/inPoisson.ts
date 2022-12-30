@@ -7,14 +7,14 @@
  * @link https://en.wikipedia.org/wiki/Poisson_distribution
  */
 export const inPoisson = (lambda = 0) => {
-    const L = Math.exp(-lambda);
-    let p = 1.0;
-    let k = 0;
+  const L = Math.exp(-lambda);
+  let p = 1.0;
+  let k = 0;
 
-    do {
-        k += 1;
-        p *= Math.random();
-    } while (p > L);
+  do {
+    k += 1;
+    p *= Math.random();
+  } while (p > L);
 
-    return k - 1;
+  return k - 1;
 };

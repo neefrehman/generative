@@ -8,4 +8,4 @@
  * @returns The interpolated value
  */
 export const lerp = (start: number, end: number, alpha: number): number =>
-    start * (1 - alpha) + end * alpha;
+  start * (1 - alpha) + end * alpha;

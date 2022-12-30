@@ -5,10 +5,10 @@ import type { ShaderSetupFn } from "Renderers/WebGL";
 import { ShaderRenderer } from "Renderers/WebGL";
 
 const sketch: ShaderSetupFn = () => ({
-    uniforms: {
-        time: { value: 0, type: "1f" },
-    },
-    frag: glsl`
+  uniforms: {
+    time: { value: 0, type: "1f" },
+  },
+  frag: glsl`
         precision highp float;
         varying vec2 vUv;
         uniform float time;
@@ -22,9 +22,9 @@ const sketch: ShaderSetupFn = () => ({
             gl_FragColor = vec4(vec3(mask), 0.5);
         }
     `,
-    onFrame: ({ uniforms }) => {
-        uniforms.time.value += 2;
-    },
+  onFrame: ({ uniforms }) => {
+    uniforms.time.value += 2;
+  },
 });
 
 const S081120 = () => <ShaderRenderer sketch={sketch} />;

@@ -11,15 +11,15 @@ import { hexToVec3 } from "Utils/shaders";
 const palette = pick(palettes);
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
-    uniforms: {
-        aspect: { value: aspect, type: "1f" },
-        time: { value: inRange(0, 999), type: "1f" },
-        resolution: { value: [width, height], type: "2f" },
-        mousePosition: { value: [width / 2, height / 2], type: "2f" },
-        color1: { value: hexToVec3(palette[0]), type: "3f" },
-        color2: { value: hexToVec3(palette[1]), type: "3f" },
-    },
-    frag: glsl`
+  uniforms: {
+    aspect: { value: aspect, type: "1f" },
+    time: { value: inRange(0, 999), type: "1f" },
+    resolution: { value: [width, height], type: "2f" },
+    mousePosition: { value: [width / 2, height / 2], type: "2f" },
+    color1: { value: hexToVec3(palette[0]), type: "3f" },
+    color2: { value: hexToVec3(palette[1]), type: "3f" },
+  },
+  frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/2d");
@@ -53,10 +53,10 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
                 gl_FragColor = vec4(color, 1.0);
             }
         `,
-    onFrame: ({ uniforms, ...props }) => {
-        uniforms.time.value += props.deltaTime * 0.00015;
-        uniforms.mousePosition.value = props.normalisedMousePosition;
-    },
+  onFrame: ({ uniforms, ...props }) => {
+    uniforms.time.value += props.deltaTime * 0.00015;
+    uniforms.mousePosition.value = props.normalisedMousePosition;
+  },
 });
 
 const Scene = () => <ShaderRenderer sketch={sketch} />;

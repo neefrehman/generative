@@ -17,25 +17,25 @@ import { s221120NiceBlendedColors, s221120vertexShader } from "./221120";
 import { s231120GeneratePerlinCubeMap } from "./231120";
 
 const settings: ThreeRendererSettings = {
-    camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
+  camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
 };
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    camera.position.set(1.2, 0, -1.5);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  camera.position.set(1.2, 0, -1.5);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const size = 64;
-    const data = new Uint8Array(size * size * size);
-    const vector = new THREE.Vector3();
+  const size = 64;
+  const data = new Uint8Array(size * size * size);
+  const vector = new THREE.Vector3();
 
-    const texture = new THREE.DataTexture3D(data, size, size, size);
-    texture.format = THREE.RedFormat;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.unpackAlignment = 1;
+  const texture = new THREE.DataTexture3D(data, size, size, size);
+  texture.format = THREE.RedFormat;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.unpackAlignment = 1;
 
-    const fragmentShader = glsl`
+  const fragmentShader = glsl`
         precision highp sampler3D;
 
         #define epsilon .0001
@@ -112,50 +112,50 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
         }
     `;
 
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    const material = new THREE.ShaderMaterial({
-        uniforms: {
-            map: { value: texture },
-            cameraPos: { value: new THREE.Vector3() },
-            threshold: { value: 0.5 },
-            steps: { value: 200 },
-            noiseFrequency: { value: inRange(1, 12) },
-            blendedColor: {
-                value: new THREE.Color(pick(s221120NiceBlendedColors)),
-            },
-        },
-        vertexShader: s221120vertexShader,
-        fragmentShader,
-        side: THREE.BackSide,
-    });
+  const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: texture },
+      cameraPos: { value: new THREE.Vector3() },
+      threshold: { value: 0.5 },
+      steps: { value: 200 },
+      noiseFrequency: { value: inRange(1, 12) },
+      blendedColor: {
+        value: new THREE.Color(pick(s221120NiceBlendedColors)),
+      },
+    },
+    vertexShader: s221120vertexShader,
+    fragmentShader,
+    side: THREE.BackSide,
+  });
 
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
 
-    const timeStart = inRange(1000);
+  const timeStart = inRange(1000);
 
-    return ({ elapsedTime }) => {
-        material.uniforms.cameraPos.value.copy(camera.position);
-        s231120GeneratePerlinCubeMap(
-            size,
-            data,
-            vector,
-            texture,
-            timeStart + elapsedTime / 20000
-        );
-    };
+  return ({ elapsedTime }) => {
+    material.uniforms.cameraPos.value.copy(camera.position);
+    s231120GeneratePerlinCubeMap(
+      size,
+      data,
+      vector,
+      texture,
+      timeStart + elapsedTime / 20000
+    );
+  };
 };
 
 const S241120 = () =>
-    isWebGL2Supported() ? (
-        <>
-            <ThreeRenderer sketch={sketch} settings={settings} />
-            <ControlsContainer>
-                <RefreshButton>Re-seed volume</RefreshButton>
-            </ControlsContainer>
-        </>
-    ) : (
-        <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
-    );
+  isWebGL2Supported() ? (
+    <>
+      <ThreeRenderer sketch={sketch} settings={settings} />
+      <ControlsContainer>
+        <RefreshButton>Re-seed volume</RefreshButton>
+      </ControlsContainer>
+    </>
+  ) : (
+    <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
+  );
 
 export default S241120;

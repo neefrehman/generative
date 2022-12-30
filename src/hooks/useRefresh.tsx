@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
  * relaod, which would lose `isDebug` context.
  */
 export const useRefresh = () => {
-    const router = useRouter();
-    const refresh = () => router.replace(router.asPath);
+  const router = useRouter();
+  const refresh = () => router.replace(router.asPath);
 
-    return refresh;
+  return refresh;
 };

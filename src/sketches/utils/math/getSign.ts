@@ -11,7 +11,7 @@
  * getSign(0.27, 0.3)   // -1
  */
 export const getSign = (n: number, pivotPoint = 0) => {
-    if (n > pivotPoint) return 1;
-    if (n < pivotPoint) return -1;
-    return 0;
+  if (n > pivotPoint) return 1;
+  if (n < pivotPoint) return -1;
+  return 0;
 };

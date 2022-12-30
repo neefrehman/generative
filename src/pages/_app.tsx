@@ -6,11 +6,11 @@ import { ReducedMotionAlert } from "components/ReducedMotionAlert";
 import "../styles/globals.css";
 
 const App = ({ Component, pageProps }: AppProps) => (
-    <IsDebugProvider>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-        <ReducedMotionAlert />
-    </IsDebugProvider>
+  <IsDebugProvider>
+    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+    <Component {...pageProps} />
+    <ReducedMotionAlert />
+  </IsDebugProvider>
 );
 
 export default App;

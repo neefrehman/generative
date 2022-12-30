@@ -11,43 +11,43 @@
  * @param options.stroke - Whether to stroke the rectangle.
  */
 export const roundedRect = (
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    radius: number | IndividualCornerRadii = 0,
-    options: { fill?: boolean; stroke?: boolean } = {
-        fill: true,
-        stroke: false,
-    }
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number | IndividualCornerRadii = 0,
+  options: { fill?: boolean; stroke?: boolean } = {
+    fill: true,
+    stroke: false,
+  }
 ) => {
-    const { fill, stroke } = options;
+  const { fill, stroke } = options;
 
-    const radii =
-        typeof radius === "number"
-            ? { tl: radius, tr: radius, br: radius, bl: radius }
-            : radius;
+  const radii =
+    typeof radius === "number"
+      ? { tl: radius, tr: radius, br: radius, bl: radius }
+      : radius;
 
-    ctx.beginPath();
-    ctx.moveTo(x + radii.tl, y);
-    ctx.lineTo(x + width - radii.tr, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radii.tr);
-    ctx.lineTo(x + width, y + height - radii.br);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radii.br, y + height);
-    ctx.lineTo(x + radii.bl, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radii.bl);
-    ctx.lineTo(x, y + radii.tl);
-    ctx.quadraticCurveTo(x, y, x + radii.tl, y);
-    ctx.closePath();
+  ctx.beginPath();
+  ctx.moveTo(x + radii.tl, y);
+  ctx.lineTo(x + width - radii.tr, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radii.tr);
+  ctx.lineTo(x + width, y + height - radii.br);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radii.br, y + height);
+  ctx.lineTo(x + radii.bl, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radii.bl);
+  ctx.lineTo(x, y + radii.tl);
+  ctx.quadraticCurveTo(x, y, x + radii.tl, y);
+  ctx.closePath();
 
-    if (fill) ctx.fill();
-    if (stroke) ctx.stroke();
+  if (fill) ctx.fill();
+  if (stroke) ctx.stroke();
 };
 
 interface IndividualCornerRadii {
-    tl?: number;
-    tr?: number;
-    br?: number;
-    bl?: number;
+  tl?: number;
+  tr?: number;
+  br?: number;
+  bl?: number;
 }

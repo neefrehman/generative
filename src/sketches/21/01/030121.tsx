@@ -11,31 +11,31 @@ import { hexToVec3 } from "Utils/shaders";
 const PIXELATION = 2;
 
 const settings: ShaderRendererSettings = {
-    dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
+  dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
 };
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    const actualWidth = width * PIXELATION;
-    const actualHeight = height * PIXELATION;
+  const actualWidth = width * PIXELATION;
+  const actualHeight = height * PIXELATION;
 
-    return {
-        uniforms: {
-            aspect: { value: aspect },
-            time: { value: inRange(200, 600), type: "1f" },
-            resolution: { value: [actualWidth, actualHeight], type: "2f" },
-            mousePosition: {
-                value: [actualWidth / 2, actualHeight / 2],
-                type: "2f",
-            },
-            baseOffset: { value: Math.random(), type: "1f" },
-            colorToMix: {
-                value: hexToVec3(
-                    pick(["#76ffbd", "#b94efc", "#4eb9fc", "#714efc", "#f32d94"])
-                ),
-                type: "3f",
-            },
-        },
-        frag: glsl`
+  return {
+    uniforms: {
+      aspect: { value: aspect },
+      time: { value: inRange(200, 600), type: "1f" },
+      resolution: { value: [actualWidth, actualHeight], type: "2f" },
+      mousePosition: {
+        value: [actualWidth / 2, actualHeight / 2],
+        type: "2f",
+      },
+      baseOffset: { value: Math.random(), type: "1f" },
+      colorToMix: {
+        value: hexToVec3(
+          pick(["#76ffbd", "#b94efc", "#4eb9fc", "#714efc", "#f32d94"])
+        ),
+        type: "3f",
+      },
+    },
+    frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/3d");
@@ -132,24 +132,24 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-            uniforms.time.value += 0.005;
+    onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+      uniforms.time.value += 0.005;
 
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                !mouseIsIdle ? mousePosition : [actualWidth / 2, actualHeight / 2],
-                0.1
-            );
-        },
-    };
+      uniforms.mousePosition.value = lerpVector(
+        uniforms.mousePosition.value,
+        !mouseIsIdle ? mousePosition : [actualWidth / 2, actualHeight / 2],
+        0.1
+      );
+    },
+  };
 };
 
 const S030121 = () => (
-    <ShaderRenderer
-        sketch={sketch}
-        settings={settings}
-        style={{ width: "100%", height: "100vh" }}
-    />
+  <ShaderRenderer
+    sketch={sketch}
+    settings={settings}
+    style={{ width: "100%", height: "100vh" }}
+  />
 );
 
 export default S030121;

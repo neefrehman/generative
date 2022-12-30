@@ -9,10 +9,10 @@ import { ShaderRenderer } from "Renderers/WebGL";
 import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = () => ({
-    uniforms: {
-        time: { value: inRange(10000), type: "1f" },
-    },
-    frag: glsl`
+  uniforms: {
+    time: { value: inRange(10000), type: "1f" },
+  },
+  frag: glsl`
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
@@ -42,9 +42,9 @@ const sketch: ShaderSetupFn = () => ({
             gl_FragColor = vec4(color, 1.0);
         }
     `,
-    onFrame: ({ uniforms }) => {
-        uniforms.time.value += 0.01;
-    },
+  onFrame: ({ uniforms }) => {
+    uniforms.time.value += 0.01;
+  },
 });
 
 const S101112 = () => <ShaderRenderer sketch={sketch} />;

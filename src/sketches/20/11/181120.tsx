@@ -12,29 +12,29 @@ import { createSign, inRange } from "Utils/random";
 const shortestDimension = getShortestViewportDimension({ cap: 900 });
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const PLANE_COUNT = Math.min(16, Math.floor(shortestDimension / 45));
-    const PLANE_OFFSET = 0.035;
+  const PLANE_COUNT = Math.min(16, Math.floor(shortestDimension / 45));
+  const PLANE_OFFSET = 0.035;
 
-    const geometry = new THREE.PlaneBufferGeometry();
-    const material = new THREE.ShaderMaterial({
-        uniforms: {
-            time: { value: inRange(100) },
-            alpha: { value: 1 },
-            u_color: { value: new THREE.Color("#f32d94") },
-        },
-        side: THREE.DoubleSide,
-        transparent: true,
-        vertexShader: glsl`
+  const geometry = new THREE.PlaneBufferGeometry();
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: inRange(100) },
+      alpha: { value: 1 },
+      u_color: { value: new THREE.Color("#f32d94") },
+    },
+    side: THREE.DoubleSide,
+    transparent: true,
+    vertexShader: glsl`
             varying vec2 vUv;
             void main () {
                 vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
             }
         `,
-        fragmentShader: glsl`
+    fragmentShader: glsl`
             #pragma glslify: noise = require("glsl-noise/simplex/2d");
             #define PI 3.1415;
 
@@ -62,44 +62,44 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
                 gl_FragColor = vec4(vec3(1.02 - fragColor / alpha), 1.0 - step(0.7, fract(DF)));
             }
         `,
+  });
+
+  const planes: THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>[] = [];
+  const group = new THREE.Group();
+
+  for (let i = 0; i < PLANE_COUNT; i++) {
+    const materialInstance = material.clone();
+    const meshInstance = new THREE.Mesh(geometry, materialInstance);
+
+    meshInstance.position.x = i * PLANE_OFFSET;
+    meshInstance.position.y = i * PLANE_OFFSET;
+    meshInstance.position.z = i * PLANE_OFFSET;
+    meshInstance.material.uniforms.time.value += i / 2;
+    meshInstance.material.uniforms.alpha.value += i / PLANE_COUNT;
+
+    planes.push(meshInstance);
+    group.add(meshInstance);
+  }
+
+  group.position.x = (PLANE_COUNT / 2) * PLANE_OFFSET;
+  group.position.y = (PLANE_COUNT / 2) * PLANE_OFFSET;
+  group.position.z = (-PLANE_COUNT / 2) * PLANE_OFFSET;
+
+  group.rotation.x = Math.PI;
+  group.rotation.y = Math.PI * 1.1;
+
+  scene.add(group);
+
+  camera.position.z = 2;
+  scene.background = new THREE.Color(0x000);
+
+  const direction = createSign();
+
+  return () => {
+    planes.forEach(plane => {
+      plane.material.uniforms.time.value += 0.025 * direction;
     });
-
-    const planes: THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>[] = [];
-    const group = new THREE.Group();
-
-    for (let i = 0; i < PLANE_COUNT; i++) {
-        const materialInstance = material.clone();
-        const meshInstance = new THREE.Mesh(geometry, materialInstance);
-
-        meshInstance.position.x = i * PLANE_OFFSET;
-        meshInstance.position.y = i * PLANE_OFFSET;
-        meshInstance.position.z = i * PLANE_OFFSET;
-        meshInstance.material.uniforms.time.value += i / 2;
-        meshInstance.material.uniforms.alpha.value += i / PLANE_COUNT;
-
-        planes.push(meshInstance);
-        group.add(meshInstance);
-    }
-
-    group.position.x = (PLANE_COUNT / 2) * PLANE_OFFSET;
-    group.position.y = (PLANE_COUNT / 2) * PLANE_OFFSET;
-    group.position.z = (-PLANE_COUNT / 2) * PLANE_OFFSET;
-
-    group.rotation.x = Math.PI;
-    group.rotation.y = Math.PI * 1.1;
-
-    scene.add(group);
-
-    camera.position.z = 2;
-    scene.background = new THREE.Color(0x000);
-
-    const direction = createSign();
-
-    return () => {
-        planes.forEach(plane => {
-            plane.material.uniforms.time.value += 0.025 * direction;
-        });
-    };
+  };
 };
 
 const S181120 = () => <ThreeRenderer sketch={sketch} />;

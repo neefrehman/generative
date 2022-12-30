@@ -9,23 +9,23 @@ import { ThreeRenderer } from "Renderers/Three";
 import { inRange } from "Utils/random";
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const geometry = new THREE.SphereGeometry(1, 32, 16);
-    const material = new THREE.ShaderMaterial({
-        uniforms: {
-            time: { value: inRange(10000) },
-            color: { value: new THREE.Color("#f32d94") },
-        },
-        vertexShader: glsl`
+  const geometry = new THREE.SphereGeometry(1, 32, 16);
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: inRange(10000) },
+      color: { value: new THREE.Color("#f32d94") },
+    },
+    vertexShader: glsl`
             varying vec2 vUv;
             void main () {
                 vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
             }
         `,
-        fragmentShader: glsl`
+    fragmentShader: glsl`
             #pragma glslify: noise = require("glsl-noise/simplex/3d");
             varying vec2 vUv;
             uniform float time;
@@ -48,17 +48,17 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
                 gl_FragColor = vec4(vec3(fragColor), 0.5);
             }
         `,
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+  });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
 
-    camera.position.z = 2.3;
+  camera.position.z = 2.3;
 
-    return () => {
-        cube.rotation.x += 0.005;
-        cube.rotation.y += 0.005;
-        material.uniforms.time.value += 0.02;
-    };
+  return () => {
+    cube.rotation.x += 0.005;
+    cube.rotation.y += 0.005;
+    material.uniforms.time.value += 0.02;
+  };
 };
 
 const DThreeRendererTest = () => <ThreeRenderer sketch={sketch} />;

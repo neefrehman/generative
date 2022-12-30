@@ -15,50 +15,50 @@ import { getAspectRatio } from "Utils/math";
 import { s221120NiceBlendedColors, s221120vertexShader } from "./221120";
 
 export const s231120GeneratePerlinCubeMap = (
-    size: number,
-    data: Uint8Array,
-    vector: THREE.Vector3,
-    texture: THREE.DataTexture3D,
-    time: number
+  size: number,
+  data: Uint8Array,
+  vector: THREE.Vector3,
+  texture: THREE.DataTexture3D,
+  time: number
 ) => {
-    let i = 0;
-    for (let z = 0; z < size; z++) {
-        for (let y = 0; y < size; y++) {
-            for (let x = 0; x < size; x++) {
-                vector.set(x, y, z).divideScalar(size).addScalar(time);
+  let i = 0;
+  for (let z = 0; z < size; z++) {
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        vector.set(x, y, z).divideScalar(size).addScalar(time);
 
-                const d = perlin3D(vector.x, vector.y, vector.z, {
-                    frequency: 3,
-                });
+        const d = perlin3D(vector.x, vector.y, vector.z, {
+          frequency: 3,
+        });
 
-                data[(i += 1)] = d * 128 + 128;
-            }
-        }
+        data[(i += 1)] = d * 128 + 128;
+      }
     }
+  }
 
-    texture.needsUpdate = true;
+  texture.needsUpdate = true;
 };
 
 const settings: ThreeRendererSettings = {
-    camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
+  camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
 };
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    camera.position.set(1.2, -0.9, -1.5);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  camera.position.set(1.2, -0.9, -1.5);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const size = 64;
-    const data = new Uint8Array(size * size * size);
-    const vector = new THREE.Vector3();
+  const size = 64;
+  const data = new Uint8Array(size * size * size);
+  const vector = new THREE.Vector3();
 
-    const texture = new THREE.DataTexture3D(data, size, size, size);
-    texture.format = THREE.RedFormat;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.unpackAlignment = 1;
+  const texture = new THREE.DataTexture3D(data, size, size, size);
+  texture.format = THREE.RedFormat;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.unpackAlignment = 1;
 
-    const fragmentShader = glsl`
+  const fragmentShader = glsl`
         precision highp sampler3D;
 
         #define epsilon .0001
@@ -134,44 +134,44 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
         }
     `;
 
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    const material = new THREE.ShaderMaterial({
-        uniforms: {
-            map: { value: texture },
-            cameraPos: { value: new THREE.Vector3() },
-            threshold: { value: 0.5 },
-            steps: { value: 200 },
-            blendedColor: {
-                value: new THREE.Color(pick(s221120NiceBlendedColors)),
-            },
-        },
-        vertexShader: s221120vertexShader,
-        fragmentShader,
-        side: THREE.BackSide,
-    });
+  const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: texture },
+      cameraPos: { value: new THREE.Vector3() },
+      threshold: { value: 0.5 },
+      steps: { value: 200 },
+      blendedColor: {
+        value: new THREE.Color(pick(s221120NiceBlendedColors)),
+      },
+    },
+    vertexShader: s221120vertexShader,
+    fragmentShader,
+    side: THREE.BackSide,
+  });
 
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
 
-    const timeStart = inRange(1000);
+  const timeStart = inRange(1000);
 
-    return ({ elapsedTime }) => {
-        material.uniforms.cameraPos.value.copy(camera.position);
-        s231120GeneratePerlinCubeMap(
-            size,
-            data,
-            vector,
-            texture,
-            timeStart + elapsedTime / 20000
-        );
-    };
+  return ({ elapsedTime }) => {
+    material.uniforms.cameraPos.value.copy(camera.position);
+    s231120GeneratePerlinCubeMap(
+      size,
+      data,
+      vector,
+      texture,
+      timeStart + elapsedTime / 20000
+    );
+  };
 };
 
 const S231120 = () =>
-    isWebGL2Supported() ? (
-        <ThreeRenderer sketch={sketch} settings={settings} />
-    ) : (
-        <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
-    );
+  isWebGL2Supported() ? (
+    <ThreeRenderer sketch={sketch} settings={settings} />
+  ) : (
+    <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
+  );
 
 export default S231120;

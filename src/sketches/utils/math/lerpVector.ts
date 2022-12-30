@@ -16,16 +16,16 @@ import type { Vector } from "./types";
  * const point = lerpArray(start, end, Math.random());
  */
 export const lerpVector = <D extends number>(
-    startVector: Vector<D>,
-    endVector: Vector<D>,
-    alpha: number
+  startVector: Vector<D>,
+  endVector: Vector<D>,
+  alpha: number
 ): Vector<D> => {
-    if (startVector.length !== endVector.length)
-        throw new TypeError("start & end vectors should have the same length");
+  if (startVector.length !== endVector.length)
+    throw new TypeError("start & end vectors should have the same length");
 
-    const lerpedVector: Vector = startVector
-        .slice()
-        .map((_, i) => lerp(startVector[i], endVector[i], alpha));
+  const lerpedVector: Vector = startVector
+    .slice()
+    .map((_, i) => lerp(startVector[i], endVector[i], alpha));
 
-    return lerpedVector;
+  return lerpedVector;
 };

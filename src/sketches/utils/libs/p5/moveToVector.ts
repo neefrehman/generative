@@ -8,16 +8,16 @@ import type p5 from "p5";
  * @param p5Instance - The instance of p5 that the sketch is running
  */
 export const moveToVector = (
-    currentPosition: p5.Vector,
-    target: p5.Vector,
-    p5Instance: p5
+  currentPosition: p5.Vector,
+  target: p5.Vector,
+  p5Instance: p5
 ) => {
-    const distance = target.dist(currentPosition);
-    target.sub(currentPosition);
-    target.normalize();
-    const mappedDistance = p5Instance.map(distance, 100, 0, 5, 0.5);
-    target.mult(mappedDistance);
-    currentPosition.add(target);
+  const distance = target.dist(currentPosition);
+  target.sub(currentPosition);
+  target.normalize();
+  const mappedDistance = p5Instance.map(distance, 100, 0, 5, 0.5);
+  target.mult(mappedDistance);
+  currentPosition.add(target);
 
-    return currentPosition;
+  return currentPosition;
 };

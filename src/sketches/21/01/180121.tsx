@@ -9,59 +9,59 @@ import { ControlsContainer, RefreshButton } from "components/SketchControls";
 import { lerp, lerpVector } from "Utils/math";
 import { hexToVec3 } from "Utils/shaders";
 import {
-    createHex,
-    inBeta,
-    inGaussian,
-    inRange,
-    inSquare,
-    pick,
+  createHex,
+  inBeta,
+  inGaussian,
+  inRange,
+  inSquare,
+  pick,
 } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    const idleMousePosition = inSquare(width, height);
+  const idleMousePosition = inSquare(width, height);
 
-    const initialPlaybackSpeed = inRange(0.00007, 0.000125);
-    let playbackSpeed = initialPlaybackSpeed;
+  const initialPlaybackSpeed = inRange(0.00007, 0.000125);
+  let playbackSpeed = initialPlaybackSpeed;
 
-    return {
-        uniforms: {
-            aspect: { value: aspect },
-            time: { value: inRange(0, 500), type: "1f" },
-            resolution: { value: [width, height], type: "2f" },
-            mousePosition: { value: [0, height], type: "2f" },
+  return {
+    uniforms: {
+      aspect: { value: aspect },
+      time: { value: inRange(0, 500), type: "1f" },
+      resolution: { value: [width, height], type: "2f" },
+      mousePosition: { value: [0, height], type: "2f" },
 
-            bgBrightness: { value: inBeta(1, 3) * 0.057, type: "1f" },
-            colorStart: { value: hexToVec3(createHex()), type: "3f" },
-            colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+      bgBrightness: { value: inBeta(1, 3) * 0.057, type: "1f" },
+      colorStart: { value: hexToVec3(createHex()), type: "3f" },
+      colorEnd: { value: hexToVec3(createHex()), type: "3f" },
 
-            noiseStyle: { value: pick([0, 1]), type: "1i" },
-            noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
-            sinNoiseScale: { value: inRange(5, 10), type: "1f" },
-            simplexNoiseScale: { value: inRange(0.58, 0.67), type: "1f" },
-            stretchedSimplexNoiseScale: {
-                value: [inRange(0.4, 0.6), inRange(0.4, 0.6), inRange(0.4, 0.6)],
-                type: "3f",
-            },
-            simplexIntensity: { value: inRange(0.5, 4.3), type: "1f" },
-            grainIntensity: { value: inRange(0, 0.038), type: "1f" },
+      noiseStyle: { value: pick([0, 1]), type: "1i" },
+      noiseRotationSpeed: { value: inRange(0.66, 1), type: "1f" },
+      sinNoiseScale: { value: inRange(5, 10), type: "1f" },
+      simplexNoiseScale: { value: inRange(0.58, 0.67), type: "1f" },
+      stretchedSimplexNoiseScale: {
+        value: [inRange(0.4, 0.6), inRange(0.4, 0.6), inRange(0.4, 0.6)],
+        type: "3f",
+      },
+      simplexIntensity: { value: inRange(0.5, 4.3), type: "1f" },
+      grainIntensity: { value: inRange(0, 0.038), type: "1f" },
 
-            baseShape: {
-                value: inRange(0, 7, { isInteger: true }),
-                type: "1i",
-            },
-            shapeDimension1: { value: inRange(0.4, 0.52), type: "1f" },
-            shapeDimension2: { value: inRange(0.2, 0.35), type: "1f" },
-            shapeDimension3: { value: inRange(0.32, 0.4), type: "1f" },
-            shapePositionOffset: {
-                value: [
-                    inGaussian(0, 0.092) * aspect,
-                    inGaussian(0, 0.092),
-                    (inBeta(1.8, 5) - 0.1) * 0.63,
-                ],
-                type: "3f",
-            },
-        },
-        frag: glsl`
+      baseShape: {
+        value: inRange(0, 7, { isInteger: true }),
+        type: "1i",
+      },
+      shapeDimension1: { value: inRange(0.4, 0.52), type: "1f" },
+      shapeDimension2: { value: inRange(0.2, 0.35), type: "1f" },
+      shapeDimension3: { value: inRange(0.32, 0.4), type: "1f" },
+      shapePositionOffset: {
+        value: [
+          inGaussian(0, 0.092) * aspect,
+          inGaussian(0, 0.092),
+          (inBeta(1.8, 5) - 0.1) * 0.63,
+        ],
+        type: "3f",
+      },
+    },
+    frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
@@ -198,33 +198,33 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseHasEntered, fps }) => {
-            playbackSpeed = lerp(
-                playbackSpeed,
-                fps < 40
-                    ? initialPlaybackSpeed * Math.min(60 / fps, 2)
-                    : initialPlaybackSpeed,
-                0.033
-            );
+    onFrame: ({ uniforms, mousePosition, mouseHasEntered, fps }) => {
+      playbackSpeed = lerp(
+        playbackSpeed,
+        fps < 40
+          ? initialPlaybackSpeed * Math.min(60 / fps, 2)
+          : initialPlaybackSpeed,
+        0.033
+      );
 
-            uniforms.time.value += playbackSpeed;
+      uniforms.time.value += playbackSpeed;
 
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                mouseHasEntered ? mousePosition : idleMousePosition,
-                0.002
-            );
-        },
-    };
+      uniforms.mousePosition.value = lerpVector(
+        uniforms.mousePosition.value,
+        mouseHasEntered ? mousePosition : idleMousePosition,
+        0.002
+      );
+    },
+  };
 };
 
 const S180121 = () => (
-    <>
-        <ShaderRenderer sketch={sketch} />
-        <ControlsContainer>
-            <RefreshButton>Re-generate scene</RefreshButton>
-        </ControlsContainer>
-    </>
+  <>
+    <ShaderRenderer sketch={sketch} />
+    <ControlsContainer>
+      <RefreshButton>Re-generate scene</RefreshButton>
+    </ControlsContainer>
+  </>
 );
 
 export default S180121;

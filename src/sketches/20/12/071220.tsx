@@ -8,13 +8,13 @@ import { lerpVector } from "Utils/math";
 import { inRange } from "Utils/random";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
-    uniforms: {
-        aspect: { value: aspect },
-        time: { value: inRange(10000), type: "1f" },
-        resolution: { value: [width, height], type: "2f" },
-        mousePosition: { value: [width / 2, height / 2], type: "2f" },
-    },
-    frag: glsl`
+  uniforms: {
+    aspect: { value: aspect },
+    time: { value: inRange(10000), type: "1f" },
+    resolution: { value: [width, height], type: "2f" },
+    mousePosition: { value: [width / 2, height / 2], type: "2f" },
+  },
+  frag: glsl`
         precision highp float;
 
         #pragma glslify: worley2x2x2 = require("glsl-worley/worley3D.glsl");
@@ -42,13 +42,13 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             gl_FragColor = vec4(n, n, n, 0.1);
         }
     `,
-    onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
-        uniforms.time.value += 0.02;
+  onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
+    uniforms.time.value += 0.02;
 
-        uniforms.mousePosition.value = mouseHasEntered
-            ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.2)
-            : uniforms.mousePosition.value;
-    },
+    uniforms.mousePosition.value = mouseHasEntered
+      ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.2)
+      : uniforms.mousePosition.value;
+  },
 });
 
 const S271120 = () => <ShaderRenderer sketch={sketch} />;

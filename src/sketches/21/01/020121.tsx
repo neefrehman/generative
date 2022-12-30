@@ -11,19 +11,19 @@ import { inRange, pick } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
-    uniforms: {
-        aspect: { value: aspect },
-        time: { value: inRange(10000), type: "1f" },
-        resolution: { value: [width, height], type: "2f" },
-        mousePosition: { value: [width / 2, height / 2], type: "2f" },
-        colorToMix: {
-            value: hexToVec3(pick(["#b94efc", "#4eb9fc", "#714efc", "#f32d94"])),
-            type: "3f",
-        },
-        mixAmount: { value: inRange(0.45, 0.75), type: "1f" },
-        baseOffset: { value: inRange(3, 300), type: "1f" },
+  uniforms: {
+    aspect: { value: aspect },
+    time: { value: inRange(10000), type: "1f" },
+    resolution: { value: [width, height], type: "2f" },
+    mousePosition: { value: [width / 2, height / 2], type: "2f" },
+    colorToMix: {
+      value: hexToVec3(pick(["#b94efc", "#4eb9fc", "#714efc", "#f32d94"])),
+      type: "3f",
     },
-    frag: glsl`
+    mixAmount: { value: inRange(0.45, 0.75), type: "1f" },
+    baseOffset: { value: inRange(3, 300), type: "1f" },
+  },
+  frag: glsl`
         precision highp float;
 
         #pragma glslify: rotate = require("../../utils/shaders/rotate.glsl");
@@ -131,15 +131,15 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => ({
             gl_FragColor = vec4(color - grainAmount, 1.0);
         }
     `,
-    onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-        uniforms.time.value += 0.007;
+  onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+    uniforms.time.value += 0.007;
 
-        uniforms.mousePosition.value = lerpVector(
-            uniforms.mousePosition.value,
-            !mouseIsIdle ? mousePosition : [width / 2, height / 2],
-            0.15
-        );
-    },
+    uniforms.mousePosition.value = lerpVector(
+      uniforms.mousePosition.value,
+      !mouseIsIdle ? mousePosition : [width / 2, height / 2],
+      0.15
+    );
+  },
 });
 
 const S020121 = () => <ShaderRenderer sketch={sketch} />;

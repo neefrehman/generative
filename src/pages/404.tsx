@@ -7,19 +7,19 @@ import { TextOverlay } from "../components/TextOverlay";
 import { StyledSketchPage } from "./[sketch]";
 
 const FourOhFourPage = () => (
-    <StyledSketchPage>
-        <Head>
-            <title>404 — Generative</title>
-        </Head>
+  <StyledSketchPage>
+    <Head>
+      <title>404 — Generative</title>
+    </Head>
 
-        <TextOverlay text="Page not found" />
+    <TextOverlay text="Page not found" />
 
-        <footer>
-            <Link href="/">
-                <a>← Home</a>
-            </Link>
-        </footer>
-    </StyledSketchPage>
+    <footer>
+      <Link href="/">
+        <a>← Home</a>
+      </Link>
+    </footer>
+  </StyledSketchPage>
 );
 
 export default FourOhFourPage;

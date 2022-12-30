@@ -17,26 +17,26 @@ import { sampleCanvasPixels } from "./sampleCanvasPixels";
  * @returns points - and array of point sampled from the drawn shape
  */
 export const generateTextPath = (
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    x: number,
-    y: number,
-    options: {
-        /** If the text should be outlined */
-        outline?: boolean;
-        /** How large a gap to leave between sampling pixels */
-        gap?: number;
-        /** how big a reduction to make in the sampled point array */
-        decimation?: number;
-    }
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  options: {
+    /** If the text should be outlined */
+    outline?: boolean;
+    /** How large a gap to leave between sampling pixels */
+    gap?: number;
+    /** how big a reduction to make in the sampled point array */
+    decimation?: number;
+  }
 ): Vector<2>[] => {
-    const { outline = true } = options;
+  const { outline = true } = options;
 
-    const points = sampleCanvasPixels(
-        ctx,
-        () => (outline ? ctx.strokeText(text, x, y) : ctx.fillText(text, x, y)),
-        options
-    );
+  const points = sampleCanvasPixels(
+    ctx,
+    () => (outline ? ctx.strokeText(text, x, y) : ctx.fillText(text, x, y)),
+    options
+  );
 
-    return points;
+  return points;
 };

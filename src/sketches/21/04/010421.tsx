@@ -11,34 +11,34 @@ import { lerp, mapToRange, lerpVector, getMean } from "Utils/math";
 const pixelation = 1.2;
 
 const settings: ShaderRendererSettings = {
-    dimensions: [window.innerWidth / pixelation, window.innerHeight / pixelation],
+  dimensions: [window.innerWidth / pixelation, window.innerHeight / pixelation],
 };
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    const actualWidth = width * pixelation;
-    const actualHeight = height * pixelation;
+  const actualWidth = width * pixelation;
+  const actualHeight = height * pixelation;
 
-    let prevMouseXs: number[] = new Array(50).fill(actualWidth / 2);
+  let prevMouseXs: number[] = new Array(50).fill(actualWidth / 2);
 
-    return {
-        uniforms: {
-            aspect: { value: aspect },
-            time: { value: inRange(200, 600), type: "1f" },
-            resolution: { value: [actualWidth, actualHeight], type: "2f" },
-            mousePosition: {
-                value: [actualWidth / 2, actualHeight / 2],
-                type: "2f",
-            },
-            baseShape: {
-                value: inRange(0, 2, { isInteger: true }),
-                type: "1i",
-            },
-            colorStart: { value: hexToVec3("#ffffff"), type: "3f" },
-            colorEnd: { value: hexToVec3("#0088ff"), type: "3f" },
-            noiseScale: { value: inRange(5, 8), type: "1f" },
-            mouseXDifferential: { value: 1, type: "1f" },
-        },
-        frag: glsl`
+  return {
+    uniforms: {
+      aspect: { value: aspect },
+      time: { value: inRange(200, 600), type: "1f" },
+      resolution: { value: [actualWidth, actualHeight], type: "2f" },
+      mousePosition: {
+        value: [actualWidth / 2, actualHeight / 2],
+        type: "2f",
+      },
+      baseShape: {
+        value: inRange(0, 2, { isInteger: true }),
+        type: "1i",
+      },
+      colorStart: { value: hexToVec3("#ffffff"), type: "3f" },
+      colorEnd: { value: hexToVec3("#0088ff"), type: "3f" },
+      noiseScale: { value: inRange(5, 8), type: "1f" },
+      mouseXDifferential: { value: 1, type: "1f" },
+    },
+    frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
@@ -137,49 +137,45 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
-            uniforms.time.value += 0.0004;
+    onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
+      uniforms.time.value += 0.0004;
 
-            const currentMouseX = mouseHasEntered
-                ? mousePosition[0]
-                : prevMouseXs[48];
+      const currentMouseX = mouseHasEntered ? mousePosition[0] : prevMouseXs[48];
 
-            prevMouseXs.shift();
-            prevMouseXs = [...prevMouseXs, currentMouseX];
+      prevMouseXs.shift();
+      prevMouseXs = [...prevMouseXs, currentMouseX];
 
-            const mouseXDifferential = Math.abs(
-                getMean(prevMouseXs) - currentMouseX
-            );
-            const mappedMouseXDifferential = mapToRange(
-                mouseXDifferential,
-                0,
-                width,
-                0.35,
-                2.2,
-                { clamp: true }
-            );
+      const mouseXDifferential = Math.abs(getMean(prevMouseXs) - currentMouseX);
+      const mappedMouseXDifferential = mapToRange(
+        mouseXDifferential,
+        0,
+        width,
+        0.35,
+        2.2,
+        { clamp: true }
+      );
 
-            uniforms.mouseXDifferential.value = lerp(
-                uniforms.mouseXDifferential.value,
-                mappedMouseXDifferential,
-                0.01
-            );
+      uniforms.mouseXDifferential.value = lerp(
+        uniforms.mouseXDifferential.value,
+        mappedMouseXDifferential,
+        0.01
+      );
 
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                mouseHasEntered ? mousePosition : uniforms.mousePosition.value,
-                0.15
-            );
-        },
-    };
+      uniforms.mousePosition.value = lerpVector(
+        uniforms.mousePosition.value,
+        mouseHasEntered ? mousePosition : uniforms.mousePosition.value,
+        0.15
+      );
+    },
+  };
 };
 
 const S010421 = () => (
-    <ShaderRenderer
-        sketch={sketch}
-        settings={settings}
-        style={{ width: "100%", height: "100vh" }}
-    />
+  <ShaderRenderer
+    sketch={sketch}
+    settings={settings}
+    style={{ width: "100%", height: "100vh" }}
+  />
 );
 
 export default S010421;

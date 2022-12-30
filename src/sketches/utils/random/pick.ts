@@ -4,4 +4,4 @@
  * @param array - the array to be chosen from
  */
 export const pick = <T>(array: T[]) =>
-    array[Math.floor(Math.random() * array.length)];
+  array[Math.floor(Math.random() * array.length)];

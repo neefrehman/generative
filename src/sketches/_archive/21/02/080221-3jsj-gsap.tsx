@@ -11,31 +11,31 @@ import { getAspectRatio } from "Utils/math";
 
 const CAM_PLANES = getAspectRatio() * 2.5;
 const settings: ThreeRendererSettings = {
-    camera: new THREE.OrthographicCamera(
-        -CAM_PLANES,
-        CAM_PLANES,
-        CAM_PLANES,
-        -CAM_PLANES
-    ),
+  camera: new THREE.OrthographicCamera(
+    -CAM_PLANES,
+    CAM_PLANES,
+    CAM_PLANES,
+    -CAM_PLANES
+  ),
 };
 
 const sketch: ThreeSetupFn = ({ scene, camera }) => {
-    camera.position.z = 5;
+  camera.position.z = 5;
 
-    const palette = pick(palettes);
+  const palette = pick(palettes);
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: pick(palette) });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color: pick(palette) });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
 
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
-    tl.to(cube.position, { duration: 1, delay: 0.2, x: 2 });
-    tl.to(cube.position, { duration: 1, delay: 0.2, x: 0 });
-    tl.to(cube.position, { duration: 1, delay: 0.2, x: -2 });
-    tl.to(cube.position, { duration: 1, delay: 0.2, x: 0 });
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+  tl.to(cube.position, { duration: 1, delay: 0.2, x: 2 });
+  tl.to(cube.position, { duration: 1, delay: 0.2, x: 0 });
+  tl.to(cube.position, { duration: 1, delay: 0.2, x: -2 });
+  tl.to(cube.position, { duration: 1, delay: 0.2, x: 0 });
 
-    return () => null;
+  return () => null;
 };
 
 const S311020 = () => <ThreeRenderer sketch={sketch} settings={settings} />;

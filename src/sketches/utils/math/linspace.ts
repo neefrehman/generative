@@ -17,12 +17,12 @@
  * // [ 0, 0.25, 0.5, 0.75, 1 ]
  */
 export const linspace = (
-    n: number,
-    options?: { includeEnd?: boolean; offset?: number }
+  n: number,
+  options?: { includeEnd?: boolean; offset?: number }
 ) => {
-    const { includeEnd = false, offset = 0 } = options ?? {};
+  const { includeEnd = false, offset = 0 } = options ?? {};
 
-    return Array.from({ length: n }, (_, i) =>
-        includeEnd ? (i + offset) / (n - 1) : (i + offset) / n
-    );
+  return Array.from({ length: n }, (_, i) =>
+    includeEnd ? (i + offset) / (n - 1) : (i + offset) / n
+  );
 };

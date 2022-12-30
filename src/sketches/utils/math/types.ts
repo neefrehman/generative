@@ -9,6 +9,6 @@
  */
 // New Vector type discourse: https://github.com/microsoft/TypeScript/issues/26223
 export interface Vector<D extends number = any> extends Array<number> {
-    0?: number;
-    length: D;
+  0?: number;
+  length: D;
 }

@@ -10,14 +10,14 @@ import type { Vector } from ".";
  * @returns The angle between the two points
  */
 export const getAngle = (
-    vector1: Vector<2>,
-    vector2: Vector<2>,
-    options?: { inDegrees: boolean }
+  vector1: Vector<2>,
+  vector2: Vector<2>,
+  options?: { inDegrees: boolean }
 ): number => {
-    const [x1, y1] = vector1;
-    const [x2, y2] = vector2;
+  const [x1, y1] = vector1;
+  const [x2, y2] = vector2;
 
-    return options?.inDegrees
-        ? (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI
-        : Math.atan2(y2 - y1, x2 - x1);
+  return options?.inDegrees
+    ? (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI
+    : Math.atan2(y2 - y1, x2 - x1);
 };

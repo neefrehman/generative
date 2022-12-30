@@ -13,35 +13,35 @@ import { hexToVec3 } from "Utils/shaders";
 const PIXELATION = 1.4;
 
 const settings: ShaderRendererSettings = {
-    dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
+  dimensions: [window.innerWidth / PIXELATION, window.innerHeight / PIXELATION],
 };
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    const actualWidth = width * PIXELATION;
-    const actualHeight = height * PIXELATION;
+  const actualWidth = width * PIXELATION;
+  const actualHeight = height * PIXELATION;
 
-    let idleMousePosition = inSquare(actualWidth, actualHeight);
+  let idleMousePosition = inSquare(actualWidth, actualHeight);
 
-    const baseShape1Num = inRange(0, 5, { isInteger: true });
-    const baseShape2Num = inRange(0, 5, {
-        isInteger: true,
-        not: baseShape1Num,
-    });
+  const baseShape1Num = inRange(0, 5, { isInteger: true });
+  const baseShape2Num = inRange(0, 5, {
+    isInteger: true,
+    not: baseShape1Num,
+  });
 
-    return {
-        uniforms: {
-            aspect: { value: aspect },
-            time: { value: inRange(200, 600), type: "1f" },
-            resolution: { value: [actualWidth, actualHeight], type: "2f" },
-            mousePosition: { value: [0, actualHeight], type: "2f" },
-            baseShape1: { value: baseShape1Num, type: "1i" },
-            baseShape2: { value: baseShape2Num, type: "1i" },
-            colorStart: { value: hexToVec3(createHex()), type: "3f" },
-            colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-            noiseScale: { value: inRange(5, 12), type: "1f" },
-            simplexIntensity: { value: inRange(0.5, 5), type: "1f" },
-        },
-        frag: glsl`
+  return {
+    uniforms: {
+      aspect: { value: aspect },
+      time: { value: inRange(200, 600), type: "1f" },
+      resolution: { value: [actualWidth, actualHeight], type: "2f" },
+      mousePosition: { value: [0, actualHeight], type: "2f" },
+      baseShape1: { value: baseShape1Num, type: "1i" },
+      baseShape2: { value: baseShape2Num, type: "1i" },
+      colorStart: { value: hexToVec3(createHex()), type: "3f" },
+      colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+      noiseScale: { value: inRange(5, 12), type: "1f" },
+      simplexIntensity: { value: inRange(0.5, 5), type: "1f" },
+    },
+    frag: glsl`
             precision highp float;
 
             #pragma glslify: noise = require("glsl-noise/simplex/4d");
@@ -167,33 +167,33 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                 gl_FragColor = vec4(color - grainAmount, 1.0);
             }
         `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
-            uniforms.time.value += 0.0004;
+    onFrame: ({ uniforms, mousePosition, mouseIsIdle, frameCount }) => {
+      uniforms.time.value += 0.0004;
 
-            if (frameCount % 200 === 0) {
-                idleMousePosition = inSquare(actualWidth, actualHeight);
-            }
+      if (frameCount % 200 === 0) {
+        idleMousePosition = inSquare(actualWidth, actualHeight);
+      }
 
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.02
-            );
-        },
-    };
+      uniforms.mousePosition.value = lerpVector(
+        uniforms.mousePosition.value,
+        !mouseIsIdle ? mousePosition : idleMousePosition,
+        0.02
+      );
+    },
+  };
 };
 
 const S130121 = () => (
-    <>
-        <ShaderRenderer
-            sketch={sketch}
-            settings={settings}
-            style={{ width: "100%", height: "100vh" }}
-        />
-        <ControlsContainer>
-            <RefreshButton>Re-generate scene</RefreshButton>
-        </ControlsContainer>
-    </>
+  <>
+    <ShaderRenderer
+      sketch={sketch}
+      settings={settings}
+      style={{ width: "100%", height: "100vh" }}
+    />
+    <ControlsContainer>
+      <RefreshButton>Re-generate scene</RefreshButton>
+    </ControlsContainer>
+  </>
 );
 
 export default S130121;

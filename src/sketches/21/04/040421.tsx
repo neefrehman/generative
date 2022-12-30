@@ -11,19 +11,19 @@ import { createHex, inRange, inSquare } from "Utils/random";
 import { hexToVec3 } from "Utils/shaders";
 
 const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
-    const idleMousePosition = inSquare(width, height);
+  const idleMousePosition = inSquare(width, height);
 
-    return {
-        uniforms: {
-            aspect: { value: aspect },
-            time: { value: inRange(200, 600), type: "1f" },
-            resolution: { value: [width, height], type: "2f" },
-            mousePosition: { value: [0, height], type: "2f" },
-            colorStart: { value: hexToVec3(createHex()), type: "3f" },
-            colorEnd: { value: hexToVec3(createHex()), type: "3f" },
-            noiseScale: { value: inRange(3, 9), type: "1f" },
-        },
-        frag: glsl`
+  return {
+    uniforms: {
+      aspect: { value: aspect },
+      time: { value: inRange(200, 600), type: "1f" },
+      resolution: { value: [width, height], type: "2f" },
+      mousePosition: { value: [0, height], type: "2f" },
+      colorStart: { value: hexToVec3(createHex()), type: "3f" },
+      colorEnd: { value: hexToVec3(createHex()), type: "3f" },
+      noiseScale: { value: inRange(3, 9), type: "1f" },
+    },
+    frag: glsl`
                 precision highp float;
 
                 #pragma glslify: sdCuboid = require("../../utils/shaders/sdShapes/3d/sdCuboid.glsl");
@@ -115,25 +115,25 @@ const sketch: ShaderSetupFn = ({ width, height, aspect }) => {
                     gl_FragColor = vec4(color - grainAmount, 1.0);
                 }
             `,
-        onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
-            uniforms.time.value += 0.00018;
+    onFrame: ({ uniforms, mousePosition, mouseIsIdle }) => {
+      uniforms.time.value += 0.00018;
 
-            uniforms.mousePosition.value = lerpVector(
-                uniforms.mousePosition.value,
-                !mouseIsIdle ? mousePosition : idleMousePosition,
-                0.007
-            );
-        },
-    };
+      uniforms.mousePosition.value = lerpVector(
+        uniforms.mousePosition.value,
+        !mouseIsIdle ? mousePosition : idleMousePosition,
+        0.007
+      );
+    },
+  };
 };
 
 const S040421 = () => (
-    <>
-        <ShaderRenderer sketch={sketch} />
-        <ControlsContainer>
-            <RefreshButton>Re-generate scene</RefreshButton>
-        </ControlsContainer>
-    </>
+  <>
+    <ShaderRenderer sketch={sketch} />
+    <ControlsContainer>
+      <RefreshButton>Re-generate scene</RefreshButton>
+    </ControlsContainer>
+  </>
 );
 
 export default S040421;

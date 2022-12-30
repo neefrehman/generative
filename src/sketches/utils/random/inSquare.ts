@@ -8,6 +8,6 @@ import type { Vector } from "../math";
  * @returns A vector point within the square
  */
 export const inSquare = (width = 1, height = 1): Vector<2> => [
-    Math.random() * width,
-    Math.random() * height,
+  Math.random() * width,
+  Math.random() * height,
 ];

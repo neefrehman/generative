@@ -1,7 +1,7 @@
 export const sineIn = (t: number): number => {
-    const v = Math.cos(t * Math.PI * 0.5);
-    if (Math.abs(v) < 1e-14) return 1;
-    return 1 - v;
+  const v = Math.cos(t * Math.PI * 0.5);
+  if (Math.abs(v) < 1e-14) return 1;
+  return 1 - v;
 };
 
 export const sineOut = (t: number): number => Math.sin((t * Math.PI) / 2);

@@ -9,4 +9,4 @@
     );
  */
 export const isWebGL2Supported = (): boolean =>
-    !!document.createElement("canvas").getContext("webgl2");
+  !!document.createElement("canvas").getContext("webgl2");

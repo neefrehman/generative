@@ -13,12 +13,7 @@ import { ControlsContainer, RefreshButton } from "components/SketchControls";
 import { inRange, perlin3D, pick } from "Utils/random";
 import { getAspectRatio } from "Utils/math";
 
-export const s221120NiceBlendedColors = [
-    "#40d6ff",
-    "#40ff43",
-    "#f32d94",
-    "#feed35",
-];
+export const s221120NiceBlendedColors = ["#40d6ff", "#40ff43", "#f32d94", "#feed35"];
 
 export const s221120vertexShader = glsl`
     varying vec3 vOrigin;
@@ -35,42 +30,42 @@ export const s221120vertexShader = glsl`
 `;
 
 const settings: ThreeRendererSettings = {
-    camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
+  camera: new THREE.PerspectiveCamera(60, getAspectRatio(), 0.1, 100),
 };
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    camera.position.set(0, 0, 2);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  camera.position.set(0, 0, 2);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const size = 212;
-    const data = new Uint8Array(size * size * size);
-    const vector = new THREE.Vector3();
-    const frequency = inRange(0.8, 4);
+  const size = 212;
+  const data = new Uint8Array(size * size * size);
+  const vector = new THREE.Vector3();
+  const frequency = inRange(0.8, 4);
 
-    let i = 0;
-    for (let z = 0; z < size; z++) {
-        for (let y = 0; y < size; y++) {
-            for (let x = 0; x < size; x++) {
-                vector.set(x, y, z).divideScalar(size).subScalar(0.5);
+  let i = 0;
+  for (let z = 0; z < size; z++) {
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        vector.set(x, y, z).divideScalar(size).subScalar(0.5);
 
-                const cavernosity = perlin3D(vector.x, vector.y, vector.z, {
-                    frequency,
-                });
-                const addedNoise = Math.random() * 0.04;
+        const cavernosity = perlin3D(vector.x, vector.y, vector.z, {
+          frequency,
+        });
+        const addedNoise = Math.random() * 0.04;
 
-                data[(i += 1)] = (cavernosity + addedNoise) * 128 + 128;
-            }
-        }
+        data[(i += 1)] = (cavernosity + addedNoise) * 128 + 128;
+      }
     }
+  }
 
-    const texture = new THREE.DataTexture3D(data, size, size, size);
-    texture.format = THREE.RedFormat;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.unpackAlignment = 1;
+  const texture = new THREE.DataTexture3D(data, size, size, size);
+  texture.format = THREE.RedFormat;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.unpackAlignment = 1;
 
-    const fragmentShader = glsl`
+  const fragmentShader = glsl`
         precision highp sampler3D;
 
         #define epsilon .0001
@@ -146,51 +141,51 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
         }
     `;
 
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    const material = new THREE.ShaderMaterial({
-        uniforms: {
-            map: { value: texture },
-            cameraPos: { value: new THREE.Vector3() },
-            threshold: { value: 0.45 },
-            steps: { value: 180 },
-            blendedColor: {
-                value: new THREE.Color(pick(s221120NiceBlendedColors)),
-            },
-        },
-        vertexShader: s221120vertexShader,
-        fragmentShader,
-        side: THREE.BackSide,
-    });
+  const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: texture },
+      cameraPos: { value: new THREE.Vector3() },
+      threshold: { value: 0.45 },
+      steps: { value: 180 },
+      blendedColor: {
+        value: new THREE.Color(pick(s221120NiceBlendedColors)),
+      },
+    },
+    vertexShader: s221120vertexShader,
+    fragmentShader,
+    side: THREE.BackSide,
+  });
 
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.rotation.y = Math.random() * 10;
-    scene.add(mesh);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.rotation.y = Math.random() * 10;
+  scene.add(mesh);
 
-    let thresholdDirection = +1;
+  let thresholdDirection = +1;
 
-    return () => {
-        const currentThreshold = material.uniforms.threshold.value;
-        if (currentThreshold > 0.91) thresholdDirection = -1;
-        if (currentThreshold < 0.15) thresholdDirection = +1;
+  return () => {
+    const currentThreshold = material.uniforms.threshold.value;
+    if (currentThreshold > 0.91) thresholdDirection = -1;
+    if (currentThreshold < 0.15) thresholdDirection = +1;
 
-        material.uniforms.cameraPos.value.copy(camera.position);
-        material.uniforms.threshold.value =
-            currentThreshold + 0.0005 * thresholdDirection;
+    material.uniforms.cameraPos.value.copy(camera.position);
+    material.uniforms.threshold.value =
+      currentThreshold + 0.0005 * thresholdDirection;
 
-        mesh.rotation.y += 0.0008;
-    };
+    mesh.rotation.y += 0.0008;
+  };
 };
 
 const S221120 = () =>
-    isWebGL2Supported() ? (
-        <>
-            <ThreeRenderer sketch={sketch} settings={settings} />
-            <ControlsContainer>
-                <RefreshButton>Re-seed volume</RefreshButton>
-            </ControlsContainer>
-        </>
-    ) : (
-        <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
-    );
+  isWebGL2Supported() ? (
+    <>
+      <ThreeRenderer sketch={sketch} settings={settings} />
+      <ControlsContainer>
+        <RefreshButton>Re-seed volume</RefreshButton>
+      </ControlsContainer>
+    </>
+  ) : (
+    <TextOverlay text="Your browser doesn't support WebGL2" timeout={false} />
+  );
 
 export default S221120;

@@ -11,8 +11,8 @@ const noiseGenerator = new SimplexNoise();
  * @returns The generated value of the noise
  */
 export const simplex1D = (
-    x: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) => amplitude * noiseGenerator.noise2D(x * frequency, 0);
 
 /**
@@ -22,9 +22,9 @@ export const simplex1D = (
  * @returns The generated value of the noise
  */
 export const simplex2D = (
-    x: number,
-    y: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  y: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) => amplitude * noiseGenerator.noise2D(x * frequency, y * frequency);
 
 /**
@@ -35,13 +35,11 @@ export const simplex2D = (
  * @returns The generated value of the noise
  */
 export const simplex3D = (
-    x: number,
-    y: number,
-    z: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
-) =>
-    amplitude *
-    noiseGenerator.noise3D(x * frequency, y * frequency, z * frequency);
+  x: number,
+  y: number,
+  z: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+) => amplitude * noiseGenerator.noise3D(x * frequency, y * frequency, z * frequency);
 
 /**
  * Produces 4-dimensional simplex noise.
@@ -52,16 +50,11 @@ export const simplex3D = (
  * @returns The generated value of the noise
  */
 export const simplex4D = (
-    x: number,
-    y: number,
-    z: number,
-    w: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  y: number,
+  z: number,
+  w: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) =>
-    amplitude *
-    noiseGenerator.noise4D(
-        x * frequency,
-        y * frequency,
-        z * frequency,
-        w * frequency
-    );
+  amplitude *
+  noiseGenerator.noise4D(x * frequency, y * frequency, z * frequency, w * frequency);

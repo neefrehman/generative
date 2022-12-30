@@ -11,13 +11,13 @@ import { hexToVec3 } from "Utils/shaders";
 import { s251120NiceColors } from "./251120";
 
 const sketch: ShaderSetupFn = ({ width, height }) => ({
-    uniforms: {
-        time: { value: inRange(10000), type: "1f" },
-        resolution: { value: [width, height], type: "2f" },
-        mousePosition: { value: [width / 2, height / 2], type: "2f" },
-        color: { value: hexToVec3(pick(s251120NiceColors)), type: "3f" },
-    },
-    frag: glsl`
+  uniforms: {
+    time: { value: inRange(10000), type: "1f" },
+    resolution: { value: [width, height], type: "2f" },
+    mousePosition: { value: [width / 2, height / 2], type: "2f" },
+    color: { value: hexToVec3(pick(s251120NiceColors)), type: "3f" },
+  },
+  frag: glsl`
         precision highp float;
 
         #pragma glslify: noise = require("glsl-noise/simplex/2d");
@@ -65,12 +65,12 @@ const sketch: ShaderSetupFn = ({ width, height }) => ({
             gl_FragColor = vec4(cellColor, 1.0);
         }
     `,
-    onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
-        uniforms.time.value += 0.004;
-        uniforms.mousePosition.value = mouseHasEntered
-            ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.15)
-            : uniforms.mousePosition.value;
-    },
+  onFrame: ({ uniforms, mousePosition, mouseHasEntered }) => {
+    uniforms.time.value += 0.004;
+    uniforms.mousePosition.value = mouseHasEntered
+      ? lerpVector(uniforms.mousePosition.value, mousePosition, 0.15)
+      : uniforms.mousePosition.value;
+  },
 });
 
 const S261120 = () => <ShaderRenderer sketch={sketch} />;

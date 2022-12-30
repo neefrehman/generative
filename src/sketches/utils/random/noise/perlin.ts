@@ -19,77 +19,73 @@ const p = [151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225
 
 for (let i = 0; i < 256; i++) p[i] = i;
 for (let i = 0; i < 256; i++) {
-    const r = inRange(0, 256, { isInteger: true });
-    const temp = p[i];
-    p[i] = p[r];
-    p[r] = temp;
+  const r = inRange(0, 256, { isInteger: true });
+  const temp = p[i];
+  p[i] = p[r];
+  p[r] = temp;
 }
 for (let i = 0; i < 256; i++) p[i + 256] = p[i];
 
 function fade(t: number) {
-    return t * t * t * (t * (t * 6 - 15) + 10);
+  return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
 function lerp(t: number, a: number, b: number) {
-    return a + t * (b - a);
+  return a + t * (b - a);
 }
 
 function grad(hash: number, x: number, y: number, z: number) {
-    const h = hash & 15;
-    const u = h < 8 ? x : y;
-    const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
-    return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+  const h = hash & 15;
+  const u = h < 8 ? x : y;
+  const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+  return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
 }
 
 const perlinNoise = (x: number, y: number, z: number) => {
-    const floorX = Math.floor(x);
-    const floorY = Math.floor(y);
-    const floorZ = Math.floor(z);
+  const floorX = Math.floor(x);
+  const floorY = Math.floor(y);
+  const floorZ = Math.floor(z);
 
-    const X = floorX & 255;
-    const Y = floorY & 255;
-    const Z = floorZ & 255;
+  const X = floorX & 255;
+  const Y = floorY & 255;
+  const Z = floorZ & 255;
 
-    x -= floorX;
-    y -= floorY;
-    z -= floorZ;
+  x -= floorX;
+  y -= floorY;
+  z -= floorZ;
 
-    const xMinus1 = x - 1;
-    const yMinus1 = y - 1;
-    const zMinus1 = z - 1;
+  const xMinus1 = x - 1;
+  const yMinus1 = y - 1;
+  const zMinus1 = z - 1;
 
-    const u = fade(x);
-    const v = fade(y);
-    const w = fade(z);
+  const u = fade(x);
+  const v = fade(y);
+  const w = fade(z);
 
-    const A = p[X] + Y;
-    const AA = p[A] + Z;
-    const AB = p[A + 1] + Z;
-    const B = p[X + 1] + Y;
-    const BA = p[B] + Z;
-    const BB = p[B + 1] + Z;
+  const A = p[X] + Y;
+  const AA = p[A] + Z;
+  const AB = p[A + 1] + Z;
+  const B = p[X + 1] + Y;
+  const BA = p[B] + Z;
+  const BB = p[B + 1] + Z;
 
-    return lerp(
-        w,
-        lerp(
-            v,
-            lerp(u, grad(p[AA], x, y, z), grad(p[BA], xMinus1, y, z)),
-            lerp(u, grad(p[AB], x, yMinus1, z), grad(p[BB], xMinus1, yMinus1, z))
-        ),
-        lerp(
-            v,
-            lerp(
-                u,
-                grad(p[AA + 1], x, y, zMinus1),
-                grad(p[BA + 1], xMinus1, y, zMinus1)
-            ),
-            lerp(
-                u,
-                grad(p[AB + 1], x, yMinus1, zMinus1),
-                grad(p[BB + 1], xMinus1, yMinus1, zMinus1)
-            )
-        )
-    );
+  return lerp(
+    w,
+    lerp(
+      v,
+      lerp(u, grad(p[AA], x, y, z), grad(p[BA], xMinus1, y, z)),
+      lerp(u, grad(p[AB], x, yMinus1, z), grad(p[BB], xMinus1, yMinus1, z))
+    ),
+    lerp(
+      v,
+      lerp(u, grad(p[AA + 1], x, y, zMinus1), grad(p[BA + 1], xMinus1, y, zMinus1)),
+      lerp(
+        u,
+        grad(p[AB + 1], x, yMinus1, zMinus1),
+        grad(p[BB + 1], xMinus1, yMinus1, zMinus1)
+      )
+    )
+  );
 };
 
 /**
@@ -98,8 +94,8 @@ const perlinNoise = (x: number, y: number, z: number) => {
  * @returns The generated value of the noise
  */
 export const perlin1D = (
-    x: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) => amplitude * perlinNoise(x * frequency, 0, 0);
 
 /**
@@ -109,9 +105,9 @@ export const perlin1D = (
  * @returns The generated value of the noise
  */
 export const perlin2D = (
-    x: number,
-    y: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  y: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) => amplitude * perlinNoise(x * frequency, y * frequency, 0);
 
 /**
@@ -122,8 +118,8 @@ export const perlin2D = (
  * @returns The generated value of the noise
  */
 export const perlin3D = (
-    x: number,
-    y: number,
-    z: number,
-    { frequency = 1, amplitude = 1 }: NoiseOptions = {}
+  x: number,
+  y: number,
+  z: number,
+  { frequency = 1, amplitude = 1 }: NoiseOptions = {}
 ) => amplitude * perlinNoise(x * frequency, y * frequency, z * frequency);

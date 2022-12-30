@@ -17,20 +17,20 @@ import { clamp } from "./clamp";
  * const pixel = mapToRange(x, -1, 1, 0, width, true);
  */
 export const mapToRange = (
-    value: number,
-    inputMin: number,
-    inputMax: number,
-    outputMin: number,
-    outputMax: number,
-    options?: { clamp?: boolean }
+  value: number,
+  inputMin: number,
+  inputMax: number,
+  outputMin: number,
+  outputMax: number,
+  options?: { clamp?: boolean }
 ) => {
-    if (Math.abs(inputMin - inputMax) < Number.EPSILON) return outputMin;
+  if (Math.abs(inputMin - inputMax) < Number.EPSILON) return outputMin;
 
-    let outputValue =
-        ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) +
-        outputMin;
+  let outputValue =
+    ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) +
+    outputMin;
 
-    if (options?.clamp) outputValue = clamp(outputMin, outputValue, outputMax);
+  if (options?.clamp) outputValue = clamp(outputMin, outputValue, outputMax);
 
-    return outputValue;
+  return outputValue;
 };

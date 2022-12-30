@@ -7,22 +7,22 @@ import type { ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const baseGeometry = new THREE.IcosahedronGeometry(1, 1);
-    // @ts-ignore - deprecated in three
-    const points = baseGeometry.vertices;
+  const baseGeometry = new THREE.IcosahedronGeometry(1, 1);
+  // @ts-ignore - deprecated in three
+  const points = baseGeometry.vertices;
 
-    const geometry = new THREE.SphereGeometry(1, 32, 16);
-    const material = new THREE.ShaderMaterial({
-        defines: { POINT_COUNT: points.length },
-        uniforms: {
-            points: { value: points },
-            time: { value: 0.0 },
-            color: { value: new THREE.Color("#f32d94") },
-        },
-        vertexShader: glsl`
+  const geometry = new THREE.SphereGeometry(1, 32, 16);
+  const material = new THREE.ShaderMaterial({
+    defines: { POINT_COUNT: points.length },
+    uniforms: {
+      points: { value: points },
+      time: { value: 0.0 },
+      color: { value: new THREE.Color("#f32d94") },
+    },
+    vertexShader: glsl`
             varying vec2 vUv;
             varying vec3 vPosition;
             void main () {
@@ -31,7 +31,7 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
             }
         `,
-        fragmentShader: glsl`
+    fragmentShader: glsl`
             varying vec2 vUv;
             varying vec3 vPosition;
 
@@ -56,18 +56,18 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
                 gl_FragColor = vec4(vec3(fragColor), 1.0);
             }
         `,
-    });
+  });
 
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
 
-    camera.position.z = 2.3;
+  camera.position.z = 2.3;
 
-    return () => {
-        cube.rotation.x += 0.005;
-        cube.rotation.y += 0.005;
-        material.uniforms.time.value += 0.02;
-    };
+  return () => {
+    cube.rotation.x += 0.005;
+    cube.rotation.y += 0.005;
+    material.uniforms.time.value += 0.02;
+  };
 };
 
 const DThreeRendererTest = () => <ThreeRenderer sketch={sketch} />;

@@ -7,4 +7,4 @@
  * @returns The scalar distance between the two points
  */
 export const getModularDistance = (value: number, mod: number): number =>
-    Math.min(value % mod, Math.abs(mod - (value % mod)));
+  Math.min(value % mod, Math.abs(mod - (value % mod)));

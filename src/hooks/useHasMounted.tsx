@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
  * Returns true when the component has mounted
  */
 export const useHasMounted = () => {
-    const [hasMounted, setHasMounted] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-    useEffect(() => setHasMounted(true), []);
+  useEffect(() => setHasMounted(true), []);
 
-    return hasMounted;
+  return hasMounted;
 };

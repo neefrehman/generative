@@ -7,20 +7,20 @@ import type { ThreeSetupFn } from "Renderers/Three";
 import { ThreeRenderer } from "Renderers/Three";
 
 const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableZoom = false;
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableZoom = false;
 
-    const geometry = new THREE.SphereGeometry();
-    const material = new THREE.ShaderMaterial({
-        uniforms: { time: { value: 0.0 } },
-        vertexShader: glsl`
+  const geometry = new THREE.SphereGeometry();
+  const material = new THREE.ShaderMaterial({
+    uniforms: { time: { value: 0.0 } },
+    vertexShader: glsl`
             varying vec2 vUv;
             void main () {
                 vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
             }
         `,
-        fragmentShader: glsl`
+    fragmentShader: glsl`
             varying vec2 vUv;
             uniform float time;
             void main () {
@@ -33,17 +33,17 @@ const sketch: ThreeSetupFn = ({ scene, camera, canvas }) => {
                 gl_FragColor = vec4(vec3(mask), 0.5);
             }
         `,
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+  });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
 
-    camera.position.z = 2.3;
+  camera.position.z = 2.3;
 
-    return ({ elapsedTime }) => {
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        material.uniforms.time.value = elapsedTime;
-    };
+  return ({ elapsedTime }) => {
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    material.uniforms.time.value = elapsedTime;
+  };
 };
 
 const S091120 = () => <ThreeRenderer sketch={sketch} />;

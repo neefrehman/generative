@@ -8,10 +8,10 @@
  * @param a - The alpha value — defaults to 255
  */
 export const rgbaToString = (r: number, g?: number, b?: number, a?: number) => {
-    const red = r;
-    const green = g ?? r;
-    const blue = b ?? r;
-    const alpha = a ?? 255;
+  const red = r;
+  const green = g ?? r;
+  const blue = b ?? r;
+  const alpha = a ?? 255;
 
-    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 };

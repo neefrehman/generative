@@ -6,18 +6,18 @@ import { useAnimationFrame } from "hooks/useAnimationFrame";
 import type { UniformDict, UniformType } from "Utils/shaders";
 
 import type {
-    RendererProps,
-    RendererSettings,
-    DrawProps,
-    DrawFn,
-    SetupProps,
+  RendererProps,
+  RendererSettings,
+  DrawProps,
+  DrawFn,
+  SetupProps,
 } from "../types";
 
 import {
-    compileShader,
-    createAttribute,
-    getUniformLocation,
-    setUniform,
+  compileShader,
+  createAttribute,
+  getUniformLocation,
+  setUniform,
 } from "./helpers";
 import type { GLContext } from "./helpers";
 
@@ -25,46 +25,46 @@ import type { GLContext } from "./helpers";
  * A canvas component for running fragment shaders. Handles rendering and cleanup.
  */
 export const ShaderRenderer = ({
-    sketch: setupSketch,
-    settings = {},
-    className,
-    style,
-    children,
+  sketch: setupSketch,
+  settings = {},
+  className,
+  style,
+  children,
 }: ShaderRendererProps) => {
-    const canvasElement = useRef<HTMLCanvasElement>(null);
-    const drawProps = useRef<ShaderDrawProps>({} as ShaderDrawProps);
-    const drawFunction = useRef<ShaderDrawFn>();
-    const uniformsRef = useRef<UniformDict>({});
+  const canvasElement = useRef<HTMLCanvasElement>(null);
+  const drawProps = useRef<ShaderDrawProps>({} as ShaderDrawProps);
+  const drawFunction = useRef<ShaderDrawFn>();
+  const uniformsRef = useRef<UniformDict>({});
 
-    const {
-        dimensions = [window.innerWidth, window.innerHeight],
-        isAnimated = true,
-        animationSettings = {},
-    } = settings;
+  const {
+    dimensions = [window.innerWidth, window.innerHeight],
+    isAnimated = true,
+    animationSettings = {},
+  } = settings;
 
-    const [width, height] = dimensions;
-    const { fps: throttledFps, delay, endAfter } = animationSettings;
+  const [width, height] = dimensions;
+  const { fps: throttledFps, delay, endAfter } = animationSettings;
 
-    const { startAnimation, stopAnimation } = useAnimationFrame(
-        animationProps => {
-            drawFunction.current?.({
-                ...drawProps.current,
-                ...animationProps,
-                startAnimation,
-                stopAnimation,
-                uniforms: uniformsRef.current,
-            });
-        },
-        {
-            willPlay: isAnimated,
-            fps: throttledFps,
-            delay,
-            endAfter,
-            domElementRef: canvasElement,
-        }
-    );
+  const { startAnimation, stopAnimation } = useAnimationFrame(
+    animationProps => {
+      drawFunction.current?.({
+        ...drawProps.current,
+        ...animationProps,
+        startAnimation,
+        stopAnimation,
+        uniforms: uniformsRef.current,
+      });
+    },
+    {
+      willPlay: isAnimated,
+      fps: throttledFps,
+      delay,
+      endAfter,
+      domElementRef: canvasElement,
+    }
+  );
 
-    const defaultVert = glsl`
+  const defaultVert = glsl`
         precision highp float;
         attribute vec2 position;
         attribute vec2 uv;
@@ -75,120 +75,120 @@ export const ShaderRenderer = ({
         }
     `;
 
-    const defaultFrag = glsl`
+  const defaultFrag = glsl`
         void main() {
             gl_FragColor = vec4(1.0);
         }
     `;
 
-    useEffect(() => {
-        const canvas = canvasElement.current;
-        const gl = canvas.getContext("webgl", { antialias: true });
-        const program = gl.createProgram();
+  useEffect(() => {
+    const canvas = canvasElement.current;
+    const gl = canvas.getContext("webgl", { antialias: true });
+    const program = gl.createProgram();
 
-        const initialSketchProps: ShaderDrawProps = {
-            gl,
-            program,
-            uniforms: uniformsRef.current, // TODO: find way to extract types of uniform input and add safety to props output?
-            width,
-            height,
-            aspect: width / height,
-            mouseHasEntered: false,
-            mousePosition: [0, 0],
-        };
+    const initialSketchProps: ShaderDrawProps = {
+      gl,
+      program,
+      uniforms: uniformsRef.current, // TODO: find way to extract types of uniform input and add safety to props output?
+      width,
+      height,
+      aspect: width / height,
+      mouseHasEntered: false,
+      mousePosition: [0, 0],
+    };
 
-        const sketchObject = setupSketch(initialSketchProps);
+    const sketchObject = setupSketch(initialSketchProps);
 
-        // TODO: defines?
-        const uniforms = sketchObject.uniforms;
-        const vert = sketchObject.vert ?? defaultVert;
-        const frag = sketchObject.frag ?? defaultFrag;
-        const onFrame = sketchObject.onFrame;
+    // TODO: defines?
+    const uniforms = sketchObject.uniforms;
+    const vert = sketchObject.vert ?? defaultVert;
+    const frag = sketchObject.frag ?? defaultFrag;
+    const onFrame = sketchObject.onFrame;
 
-        const vertexShader = compileShader(vert, gl.VERTEX_SHADER, gl);
-        const fragmentShader = compileShader(frag, gl.FRAGMENT_SHADER, gl);
+    const vertexShader = compileShader(vert, gl.VERTEX_SHADER, gl);
+    const fragmentShader = compileShader(frag, gl.FRAGMENT_SHADER, gl);
 
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
-        gl.useProgram(program);
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    gl.useProgram(program);
 
-        const createdUniforms: {
-            key: string;
-            handle: WebGLUniformLocation;
-            type: UniformType;
-        }[] = Object.entries(uniforms).reduce((acc, [key, { value, type }]) => {
-            const handle = getUniformLocation(key, program, gl);
-            setUniform(handle, value, type, gl);
-            return [...acc, { key, handle, type }]; // an array we can use later to update the uniforms
-        }, []);
+    const createdUniforms: {
+      key: string;
+      handle: WebGLUniformLocation;
+      type: UniformType;
+    }[] = Object.entries(uniforms).reduce((acc, [key, { value, type }]) => {
+      const handle = getUniformLocation(key, program, gl);
+      setUniform(handle, value, type, gl);
+      return [...acc, { key, handle, type }]; // an array we can use later to update the uniforms
+    }, []);
 
-        /* prettier-ignore */
-        const vertexData = new Float32Array([
+    /* prettier-ignore */
+    const vertexData = new Float32Array([
             -1.0,  1.0,
             -1.0, -1.0,
              1.0,  1.0,
              1.0, -1.0,
         ]);
-        const positionAttr = createAttribute("position", vertexData, program, gl);
+    const positionAttr = createAttribute("position", vertexData, program, gl);
 
-        /* prettier-ignore */
-        const uvData = new Float32Array([
+    /* prettier-ignore */
+    const uvData = new Float32Array([
             0.0,  0.0,
             0.0,  1.0,
             1.0,  0.0,
             1.0,  1.0,
         ]);
-        const uvAttr = createAttribute("uv", uvData, program, gl);
+    const uvAttr = createAttribute("uv", uvData, program, gl);
 
-        drawProps.current = initialSketchProps;
-        uniformsRef.current = uniforms;
+    drawProps.current = initialSketchProps;
+    uniformsRef.current = uniforms;
 
-        drawFunction.current = currentDrawProps => {
-            onFrame?.(currentDrawProps);
+    drawFunction.current = currentDrawProps => {
+      onFrame?.(currentDrawProps);
 
-            createdUniforms.forEach(({ key, handle, type }) => {
-                const newValue = uniformsRef.current[key].value;
-                setUniform(handle, newValue, type, gl);
-            });
+      createdUniforms.forEach(({ key, handle, type }) => {
+        const newValue = uniformsRef.current[key].value;
+        setUniform(handle, newValue, type, gl);
+      });
 
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        };
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
 
-        // Fix for intermittent lack of rendering on Safari/iOs. resizing causes this to work for some reason
-        /* prettier-ignore */
-        setTimeout(() => { canvas.width += 1; canvas.width -= 1; }, 1);
+    // Fix for intermittent lack of rendering on Safari/iOs. resizing causes this to work for some reason
+    /* prettier-ignore */
+    setTimeout(() => { canvas.width += 1; canvas.width -= 1; }, 1);
 
-        return () => {
-            gl.deleteBuffer(positionAttr.buffer);
-            gl.disableVertexAttribArray(positionAttr.handle);
-            gl.deleteBuffer(uvAttr.buffer);
-            gl.disableVertexAttribArray(uvAttr.handle);
-        };
-    }, [setupSketch, settings, width, height, defaultVert, defaultFrag]);
+    return () => {
+      gl.deleteBuffer(positionAttr.buffer);
+      gl.disableVertexAttribArray(positionAttr.handle);
+      gl.deleteBuffer(uvAttr.buffer);
+      gl.disableVertexAttribArray(uvAttr.handle);
+    };
+  }, [setupSketch, settings, width, height, defaultVert, defaultFrag]);
 
-    useEffect(
-        () => () => {
-            const gl = drawProps.current.gl;
-            gl.canvas.width = 1;
-            gl.canvas.height = 1;
-            gl.getExtension("WEBGL_lose_context").loseContext();
-        },
-        []
-    );
+  useEffect(
+    () => () => {
+      const gl = drawProps.current.gl;
+      gl.canvas.width = 1;
+      gl.canvas.height = 1;
+      gl.getExtension("WEBGL_lose_context").loseContext();
+    },
+    []
+  );
 
-    return (
-        <>
-            <canvas
-                ref={canvasElement}
-                width={width}
-                height={height}
-                className={className}
-                style={style}
-            />
-            {children}
-        </>
-    );
+  return (
+    <>
+      <canvas
+        ref={canvasElement}
+        width={width}
+        height={height}
+        className={className}
+        style={style}
+      />
+      {children}
+    </>
+  );
 };
 
 // <- TYPES ->
@@ -204,12 +204,12 @@ export type { RendererSettings as ShaderRendererSettings };
  * Props to be recieved by the sketch.
  */
 export type ShaderSetupProps = {
-    /** The WebGL context of the sketch */
-    gl: GLContext;
-    /** The shader uniforms that you created in the sketches retiurn object. Update these by changing their `value` property */
-    uniforms?: UniformDict;
-    /** The WebGl program */
-    program?: WebGLProgram;
+  /** The WebGL context of the sketch */
+  gl: GLContext;
+  /** The shader uniforms that you created in the sketches retiurn object. Update these by changing their `value` property */
+  uniforms?: UniformDict;
+  /** The WebGl program */
+  program?: WebGLProgram;
 } & SetupProps;
 
 export type ShaderDrawProps = ShaderSetupProps & DrawProps;
@@ -221,17 +221,17 @@ export type ShaderDrawProps = ShaderSetupProps & DrawProps;
  * and an onFrame callback function
  */
 export type ShaderSetupFn = (props?: ShaderSetupProps) => {
-    /**
-     * The uniforms to interface with the shaders. The renderer will autmatically detect their gl type (floats must contain a decimal)
-     * If auto-detection doesn't work, add `type: "1f"` to the uniform, alongside `value`
-     */
-    uniforms?: UniformDict;
-    /** The vertex shader as a glsl string */
-    vert?: string;
-    /** The fragment shader as a glsl string */
-    frag?: string;
-    /** A callback to be run on every frame of the sketch. Here you can update vairables, state, and uniforms */
-    onFrame?: ShaderDrawFn;
+  /**
+   * The uniforms to interface with the shaders. The renderer will autmatically detect their gl type (floats must contain a decimal)
+   * If auto-detection doesn't work, add `type: "1f"` to the uniform, alongside `value`
+   */
+  uniforms?: UniformDict;
+  /** The vertex shader as a glsl string */
+  vert?: string;
+  /** The fragment shader as a glsl string */
+  frag?: string;
+  /** A callback to be run on every frame of the sketch. Here you can update vairables, state, and uniforms */
+  onFrame?: ShaderDrawFn;
 };
 
 /**

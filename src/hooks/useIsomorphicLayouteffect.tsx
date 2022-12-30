@@ -9,4 +9,4 @@ import { useEffect, useLayoutEffect } from "react";
  * @link https://medium.com/alexandereardon/uselayouteffect-and-ssr-192986cdcf7a
  */
 export const useIsomorphicLayoutEffect =
-    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;

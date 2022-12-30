@@ -5,4 +5,4 @@
  * @returns The sum of the array
  */
 export const getSum = (array: number[]): number =>
-    array.reduce((acc, cur) => acc + cur, 0);
+  array.reduce((acc, cur) => acc + cur, 0);

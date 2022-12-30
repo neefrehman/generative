@@ -4,4 +4,4 @@
  * @param probablity - the probability of returning `1`
  */
 export const createSign = (probability = 0.5) =>
-    Math.random() > probability ? 1 : -1;
+  Math.random() > probability ? 1 : -1;

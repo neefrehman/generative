@@ -11,23 +11,23 @@
  * @returns a number between the ranges
  */
 export const inRange = (
-    min: number,
-    max?: number,
-    options?: { isInteger?: boolean; not?: number }
+  min: number,
+  max?: number,
+  options?: { isInteger?: boolean; not?: number }
 ): number => {
-    const { isInteger = false, not = undefined } = options ?? {};
-    const upperBound = max ?? min;
-    const lowerBound = max ? min : 0;
+  const { isInteger = false, not = undefined } = options ?? {};
+  const upperBound = max ?? min;
+  const lowerBound = max ? min : 0;
 
-    let generatedNumber = !isInteger
-        ? Math.random() * (upperBound - lowerBound) + lowerBound
-        : Math.floor(
-              Math.random() * (Math.ceil(upperBound) - Math.floor(lowerBound) + 1)
-          ) + Math.floor(lowerBound);
+  let generatedNumber = !isInteger
+    ? Math.random() * (upperBound - lowerBound) + lowerBound
+    : Math.floor(
+        Math.random() * (Math.ceil(upperBound) - Math.floor(lowerBound) + 1)
+      ) + Math.floor(lowerBound);
 
-    while (typeof not === "number" && generatedNumber === not) {
-        generatedNumber = inRange(min, max, options);
-    }
+  while (typeof not === "number" && generatedNumber === not) {
+    generatedNumber = inRange(min, max, options);
+  }
 
-    return generatedNumber;
+  return generatedNumber;
 };

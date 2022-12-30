@@ -116,8 +116,8 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
   }
 
   const isPublished = /^[0-9]{6}$/.test(sketchId);
-  const year = sketchId.substr(4, 2);
-  const month = sketchId.substr(2, 2);
+  const year = sketchId.substring(4, 6);
+  const month = sketchId.substring(2, 4);
   let sketchImportPath = `sketches/${year}/${month}/${sketchId}`;
 
   if (!isPublished) {
@@ -130,9 +130,9 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
   gitHubUrl += isFolderSketch(sketchImportPath) ? "/index.tsx" : ".tsx";
 
   const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
-  const baseUrl = "https://generative.neef.co/_next/";
+  const baseAssetUrl = "https://generative.neef.co/_next/";
   const metaImageUrl = await import(`../${sketchImportPath}`)
-    .then(module => (module.metaImage ? baseUrl + module.metaImage : null))
+    .then(module => (module.metaImage ? baseAssetUrl + module.metaImage : null))
     .catch(() => null);
 
   return {

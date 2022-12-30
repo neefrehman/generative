@@ -5,7 +5,10 @@ export const fixDevicePixelRatio = (
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D
 ) => {
-  const dpr = window?.devicePixelRatio ?? 1;
+  if (typeof window === undefined) {
+    return;
+  }
+  const dpr = window.devicePixelRatio;
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;

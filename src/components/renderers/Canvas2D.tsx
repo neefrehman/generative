@@ -68,10 +68,8 @@ export const Canvas2DRenderer = ({
       mousePosition: [0, 0],
     };
 
-    const drawSketch = setupSketch(initialSketchProps);
-
+    drawFunction.current = setupSketch(initialSketchProps);
     drawProps.current = initialSketchProps;
-    drawFunction.current = drawSketch;
 
     return () => ctx.clearRect(0, 0, width, height);
   }, [setupSketch, settings, width, height]);

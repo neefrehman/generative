@@ -50,8 +50,8 @@ const ColumnBreak = styled.li`
   width: clamp(60px, 10vw, 100px);
 `;
 
-const SketchLink = ({ id }: { id: string }) => (
-  <li>
+const renderSketchLink = (id: string) => (
+  <li key={id}>
     <Link href={`/${id}`}>{id}</Link>
   </li>
 );
@@ -81,23 +81,17 @@ const Home = ({ sketchArray, draftsArray, archiveArray }: HomePageProps) => {
       </header>
 
       <StyledSketchList>
-        {sketchArray.map(sketchId => (
-          <SketchLink key={sketchId} id={sketchId} />
-        ))}
+        {sketchArray.map(renderSketchLink)}
 
         {isDebug && (
           <>
             <ColumnBreak aria-label="separator" />
             <li>DRAFTS:</li>
-            {draftsArray.map(draftName => (
-              <SketchLink key={draftName} id={draftName} />
-            ))}
+            {draftsArray.map(renderSketchLink)}
 
             <ColumnBreak aria-label="separator" />
             <li>ARCHIVE:</li>
-            {archiveArray.map(archivedName => (
-              <SketchLink key={archivedName} id={archivedName} />
-            ))}
+            {archiveArray.map(renderSketchLink)}
           </>
         )}
       </StyledSketchList>

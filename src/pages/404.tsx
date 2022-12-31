@@ -15,9 +15,7 @@ const FourOhFourPage = () => (
     <TextOverlay text="Page not found" />
 
     <footer>
-      <Link href="/">
-        <a>← Home</a>
-      </Link>
+      <Link href="/">← Home</Link>
     </footer>
   </StyledSketchPage>
 );

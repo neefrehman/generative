@@ -48,7 +48,8 @@ interface SketchPageProps {
   sketchImportPath: string;
   gitHubUrl: string;
   SEOTitle: string;
-  metaImageUrl: string;
+  pageTitle: string;
+  metaImageUrl: string | null;
 }
 
 const SketchPage = ({
@@ -56,6 +57,7 @@ const SketchPage = ({
   sketchImportPath,
   gitHubUrl,
   SEOTitle,
+  pageTitle,
   metaImageUrl,
 }: SketchPageProps) => {
   const hasMounted = useHasMounted();
@@ -67,7 +69,7 @@ const SketchPage = ({
   return (
     <StyledSketchPage>
       <Head>
-        <title>{sketchId} — Generative</title>
+        <title>{pageTitle}</title>
         <meta property="og:title" content={SEOTitle} />
         <meta property="twitter:title" content={SEOTitle} />
         {!!metaImageUrl && (
@@ -87,9 +89,7 @@ const SketchPage = ({
       )}
 
       <footer>
-        <Link href="/">
-          <a>← Home</a>
-        </Link>
+        <Link href="/">← Home</Link>
 
         <a href={gitHubUrl} target="_blank" rel="noopener noreferrer">
           {sketchId}
@@ -130,6 +130,8 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
   gitHubUrl += isFolderSketch(sketchImportPath) ? "/index.tsx" : ".tsx";
 
   const SEOTitle = `${sketchId} — Generative — a digital sketchbook by Neef Rehman`;
+  const pageTitle = `${sketchId} — Generative`;
+
   const baseAssetUrl = "https://generative.neef.co/_next/";
   const metaImageUrl = await import(`../${sketchImportPath}`)
     .then(module => (module.metaImage ? baseAssetUrl + module.metaImage : null))
@@ -141,6 +143,7 @@ export const getStaticProps: GetStaticProps<SketchPageProps> = async ({
       sketchImportPath,
       gitHubUrl,
       SEOTitle,
+      pageTitle,
       metaImageUrl,
     },
   };

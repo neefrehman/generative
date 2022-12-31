@@ -64,6 +64,7 @@ const InstancedSpheres = () => {
 
   return (
     <instancedMesh
+      // @ts-ignore
       ref={ref}
       castShadow
       receiveShadow

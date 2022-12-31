@@ -52,9 +52,7 @@ const ColumnBreak = styled.li`
 
 const SketchLink = ({ id }: { id: string }) => (
   <li>
-    <Link href={`/${id}`}>
-      <a>{id}</a>
-    </Link>
+    <Link href={`/${id}`}>{id}</Link>
   </li>
 );
 

@@ -2,7 +2,7 @@ import React from "react";
 import type { ReactNode } from "react";
 import { styled } from "linaria/react";
 
-import { useRefresh } from "hooks/useRefresh";
+import { useRegenerate } from "context/RegenerationKey";
 
 const StyledButton = styled.button`
   max-width: max-content;
@@ -14,7 +14,9 @@ interface RefreshButtonProps {
 }
 
 export const RefreshButton = ({ children }: RefreshButtonProps) => {
-  const refresh = useRefresh();
+  const { regenerate } = useRegenerate();
 
-  return <StyledButton onClick={refresh}>{children ?? "Regenerate"}</StyledButton>;
+  return (
+    <StyledButton onClick={regenerate}>{children ?? "Regenerate"}</StyledButton>
+  );
 };

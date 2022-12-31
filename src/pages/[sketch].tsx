@@ -9,6 +9,7 @@ import { TextOverlay } from "components/TextOverlay";
 import { useHasMounted } from "hooks/useHasMounted";
 import { getArchived, getDrafts, getSketches } from "helpers/getSketches";
 import { isFolderSketch, sketchIsFound } from "helpers/sketchTests";
+import { useRegenerate } from "context/RegenerationKey";
 
 export const StyledSketchPage = styled.div`
   canvas {
@@ -61,6 +62,7 @@ const SketchPage = ({
   metaImageUrl,
 }: SketchPageProps) => {
   const hasMounted = useHasMounted();
+  const { regenerationKey } = useRegenerate();
 
   const Sketch = lazy(
     () => import(/* webpackInclude: /sketches\/*./ */ `../${sketchImportPath}`)
@@ -83,7 +85,7 @@ const SketchPage = ({
       {hasMounted && (
         <ErrorBoundary fallback={<TextOverlay text="Error" />}>
           <Suspense fallback={<TextOverlay text="Loading" />}>
-            <Sketch />
+            <Sketch key={regenerationKey} />
           </Suspense>
         </ErrorBoundary>
       )}
